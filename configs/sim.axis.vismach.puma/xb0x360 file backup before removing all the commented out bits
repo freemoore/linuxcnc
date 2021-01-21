@@ -1,0 +1,140 @@
+puma560 xbox360 postgui hal backup before removing all the commented out bits
+#andy added everything after this line
+
+# Include your customized HAL commands here
+# The commands in this file are run after the AXIS GUI (including PyVCP panel) starts
+## for adding incremental moves to John's Joypad Simple Remote Pendant
+## need linuxcnc 2.5 or better
+## might want send signal to panel to indicate if continuous or incremental move
+
+## change
+#loadrt or2 count=2
+#loadrt mux4 count=1
+
+## to
+loadrt or2 count=4
+loadrt mux4 count=2
+loadrt toggle count=1
+loadrt near count=6
+loadrt and2 count=6
+loadrt mux2 count=3
+
+addf or2.0 servo-thread
+addf or2.1 servo-thread
+addf mux4.0 servo-thread
+
+## addf new components
+addf or2.2 servo-thread
+addf or2.3 servo-thread
+addf mux4.1 servo-thread
+addf toggle.0 servo-thread
+addf mux2.0 servo-thread
+addf mux2.1 servo-thread
+addf mux2.2 servo-thread
+addf near.0 servo-thread
+addf near.1 servo-thread
+addf near.2 servo-thread
+addf near.3 servo-thread
+addf near.4 servo-thread
+addf near.5 servo-thread
+addf and2.0 servo-thread
+addf and2.1 servo-thread
+addf and2.2 servo-thread
+addf and2.3 servo-thread
+addf and2.4 servo-thread
+addf and2.5 servo-thread
+
+## use near for incremental jog moves, must push stick all the way for movement and to avoid unexpected movement by not
+## pushing stick straight, sensitivity can be adjusted
+
+setp near.0.in1 1
+setp near.1.in1 1
+setp near.2.in1 1
+setp near.3.in1 -1
+setp near.4.in1 -1
+setp near.5.in1 -1
+
+# set the jog speed for the joypad again use numbers that make sense for your machine
+setp mux4.0.in0 0 # this one must be 0 to prevent motion unless a button is pressed
+setp mux4.0.in1 25
+setp mux4.0.in2 100
+setp mux4.0.in3 200
+
+## set the size of incremental moves
+setp mux4.1.in0 0
+setp mux4.1.in1 .001
+setp mux4.1.in2 .005
+setp mux4.1.in3 .010
+
+# To reverse the direction of an axis add the following, for continuous mode only
+setp input.0.abs-y-scale -127.5
+setp input.0.abs-rz-scale -127.5
+
+## add for toggle to toggle between continuous and incremental jog
+net jog-inc toggle.0.in <= input.0.btn-a
+
+# the following does the magic of setting the jog speeds
+
+### change below for change of pin name from 2.n to 2.5
+### net remote-speed-slow or2.0.in0 input.0.btn-trigger
+### net remote-speed-slow or2.0.in0 input.0.btn-joystick
+
+## change below from
+#net remote-speed-slow or2.0.in0 input.0.btn-joystick
+#net remote-speed-medium or2.1.in0 input.0.btn-thumb
+#net remote-speed-fast or2.0.in1 or2.1.in1 input.0.btn-thumb2
+
+## to
+net remote-speed-slow or2.0.in0 or2.2.in0 input.0.btn-x
+net remote-speed-medium or2.1.in0 or2.3.in0 input.0.btn-y
+net remote-speed-fast or2.0.in1 or2.1.in1 or2.2.in1 or2.3.in1 input.0.btn-b
+net joy-speed-1 mux4.0.sel0 <= or2.0.out
+net joy-speed-2 mux4.0.sel1 <= or2.1.out
+net joy-speed-final halui.joint.jog-speed <= mux4.0.out
+
+## add
+net jog-size-1 mux4.1.sel0 <= or2.2.out
+net jog-size-2 mux4.1.sel1 <= or2.3.out
+net jog-size-final halui.joint.0.increment halui.joint.1.increment halui.joint.2.increment <= mux4.1.out
+
+## change below from
+#net joy-x-jog halui.joint.jog.0.analog <= input.0.abs-x-counts
+#net joy-y-jog halui.joint.jog.1.analog <= input.0.abs-y-counts
+#net joy-z-jog halui.joint.jog.2.analog <= input.0.abs-rz-position
+
+## to
+setp mux2.0.in1 0
+setp mux2.1.in1 0
+setp mux2.2.in1 0
+
+## hook up the joysticks
+net joy-x-sig mux2.0.in0 near.0.in2 near.3.in2 <= input.0.abs-x-position
+net joy-y-sig mux2.1.in0 near.1.in2 near.4.in2 <= input.0.abs-y-position
+net joy-z-sig mux2.2.in0 near.2.in2 near.5.in2 <= input.0.abs-rz-position
+
+## send signal to analog jog if not in incremental jog mode
+net joy-x-jog halui.joint.0.analog <= mux2.0.out
+net joy-y-jog halui.joint.1.analog <= mux2.1.out
+net joy-z-jog halui.joint.2.analog <= mux2.2.out
+
+
+## toggle from continuous to incremental jogs
+net joginc and2.0.in1 and2.1.in1 and2.2.in1 and2.3.in1 and2.4.in1 and2.5.in1 mux2.0.sel mux2.1.sel mux2.2.sel <= toggle.0.out
+
+## if toggle is set for incremental and joystick is 1 or -1 make an incremental move
+
+## hook up near outputs to and2. inputs
+net jogincx and2.0.in0 <= near.0.out
+net jogincy and2.1.in0 <= near.1.out
+net jogincz and2.2.in0 <= near.2.out
+net jogincxn and2.3.in0 <= near.3.out
+net jogincyn and2.4.in0 <= near.4.out
+net joginczn and2.5.in0 <= near.5.out
+
+## and2 outputs to halui.joint incremental jog
+net jogincx_final halui.joint.0.increment-plus <= and2.0.out
+net jogincy_final halui.joint.1.increment-plus <= and2.1.out
+net jogincz_final halui.joint.2.increment-plus <= and2.2.out
+net jogincxn_final halui.joint.0.increment-minus <= and2.3.out
+net jogincyn_final halui.joint.1.increment-minus <= and2.4.out
+net joginczn_final halui.joint.2.increment-minus <= and2.5.out 
