@@ -185,12 +185,12 @@ setp genserkins.D-3 1300
 setp genserkins.D-4 0 
 setp genserkins.D-5 -270
 
-#net j0 joint.0.pos-fb puma560gui.joint1
-#net j1 joint.1.pos-fb puma560gui.joint2
-#net j2 joint.2.pos-fb puma560gui.joint3
-#net j3 joint.3.pos-fb puma560gui.joint4
-#net j4 joint.4.pos-fb puma560gui.joint5
-#net j5 joint.5.pos-fb puma560gui.joint6
+net j0 joint.0.pos-fb puma560gui.joint1
+net j1 joint.1.pos-fb puma560gui.joint2
+net j2 joint.2.pos-fb puma560gui.joint3
+net j3 joint.3.pos-fb puma560gui.joint4
+net j4 joint.4.pos-fb puma560gui.joint5
+net j5 joint.5.pos-fb puma560gui.joint6
 
 
 net estop-out <= iocontrol.0.user-enable-out
