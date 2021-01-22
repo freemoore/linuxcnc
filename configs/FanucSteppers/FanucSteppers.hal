@@ -50,44 +50,42 @@ net din-01 => motion.digital-in-01
 net din-02 => motion.digital-in-02
 net din-03 => motion.digital-in-03
 
-net spindle-pwm     => parport.0.pin-01-out
-
-net xstep           => parport.0.pin-02-out
+net xstep           => parport.0.pin-01-out
 setp parport.0.pin-02-out-reset 1
-net xdir            => parport.0.pin-03-out
+net xdir            => parport.0.pin-02-out
 
-net ystep           => parport.0.pin-04-out
+net ystep           => parport.0.pin-03-out
 setp parport.0.pin-04-out-reset 1
-net ydir            => parport.0.pin-05-out
+net ydir            => parport.0.pin-04-out
 
-net zstep           => parport.0.pin-06-out
+net zstep           => parport.0.pin-05-out
 setp parport.0.pin-06-out-reset 1
-net zdir            => parport.0.pin-07-out
+net zdir            => parport.0.pin-06-out
 
-net dout-00         => parport.0.pin-08-out
-net dout-01         => parport.0.pin-09-out
-net dout-02         => parport.0.pin-14-out
-net dout-03         => parport.0.pin-16-out
-net spindle-on      => parport.0.pin-17-out
+net astep           => parport.0.pin-07-out
+setp parport.0.pin-07-out-reset 1
+net adir            => parport.0.pin-08-out
+
+net bstep           => parport.0.pin-09-out
+setp parport.0.pin-09-out-reset 1
+net bdir            => parport.0.pin-14-out
+
+net cstep           => parport.0.pin-16-out
+setp parport.0.pin-16-out-reset 1
+net cdir            => parport.0.pin-17-out
 
 
-#net astep           => parport.1.pin-02-out
-#setp parport.1.pin-02-out-reset 1
-#net adir            => parport.1.pin-03-out
-
-#net bstep           => parport.1.pin-04-out
-#setp parport.1.pin-04-out-reset 1
-#net bdir            => parport.1.pin-05-out
-
-#net cstep           => parport.1.pin-06-out
-#setp parport.1.pin-06-out-reset 1
-#net cdir            => parport.1.pin-07-out
-
-net estop-ext       <= parport.0.pin-10-in-not
-#net din-00          <= parport.0.pin-11-in
-#net din-01          <= parport.0.pin-12-in
-#net din-02          <= parport.0.pin-13-in
-#net din-03          <= parport.0.pin-15-in
+net spindle-pwm     => parport.1.pin-01-out
+net dout-00         => parport.1.pin-02-out
+net dout-01         => parport.1.pin-03-out
+net dout-02         => parport.1.pin-04-out
+net dout-03         => parport.1.pin-05-out
+net spindle-on      => parport.1.pin-06-out
+net estop-ext       <= parport.1.pin-10-in-not
+net din-00          <= parport.1.pin-11-in
+net din-01          <= parport.1.pin-12-in
+net din-02          <= parport.1.pin-13-in
+net din-03          <= parport.1.pin-15-in
 
 
 setp stepgen.0.position-scale [JOINT_0]SCALE
