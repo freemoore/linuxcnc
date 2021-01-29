@@ -17,4 +17,21 @@ to copy fanucSteppergui there, open terminal in desktop and use: sudo cp fanucSt
 
 puma.xml sets joint limits (for sim?)
 
-check what kind of obj file vismach needs to see
+check what kind of obj file vismach needs to see - ascii, but that seems to be the only kind of obj file
+
+now looking at editing /usr/lib/python2.7/dist-packages/vismach.py
+edited fanuc.xml to reflect fanuc's real joint ranges of motion
+
+re-editing DH parameters according to http://linuxcnc.org/docs/2.8/html/motion/dh-parameters.html
+
+RIGHT.
+so on an otherwise untouched puma560 sim config, changing only the DH parameters causes the 'kinematicsInverse failed' error to happen 
+
+it loads the component: puma560gui
+
+edited genserkins.h to match dh parameters from fanucsteppers.hal
+
+right. 
+
+looks like you need to compile linuxcnc from source to try world mode (altered kinematics).
+do 'locate genserkins' to see the few places it exists; in this file.h you can change the default DH parameters

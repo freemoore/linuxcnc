@@ -54,17 +54,17 @@ net din-01 => motion.digital-in-01
 net din-02 => motion.digital-in-02
 net din-03 => motion.digital-in-03
 
-net Xstep       => parport.0.pin-02-out
+net thetastep       => parport.0.pin-02-out
 setp parport.0.pin-02-out-reset 1
-net Xdir        => parport.0.pin-03-out
+net thetadir        => parport.0.pin-03-out
 
-net Ystep           => parport.0.pin-04-out
+net wstep           => parport.0.pin-04-out
 setp parport.0.pin-04-out-reset 1
-net Ydir            => parport.0.pin-05-out
+net wdir            => parport.0.pin-05-out
 
-net Zstep           => parport.0.pin-06-out
+net vstep           => parport.0.pin-06-out
 setp parport.0.pin-06-out-reset 1
-net Zdir            => parport.0.pin-07-out
+net vdir            => parport.0.pin-07-out
 
 net cstep           => parport.1.pin-02-out
 setp parport.1.pin-02-out-reset 1
@@ -99,11 +99,11 @@ setp stepgen.0.stepspace 0
 setp stepgen.0.dirhold 1000
 setp stepgen.0.dirsetup 1000
 setp stepgen.0.maxaccel [JOINT_0]STEPGEN_MAXACCEL
-net Xpos-cmd joint.0.motor-pos-cmd => stepgen.0.position-cmd
-net Xpos-fb stepgen.0.position-fb => joint.0.motor-pos-fb
-net Xstep <= stepgen.0.step
-net Xdir <= stepgen.0.dir
-net Xenable joint.0.amp-enable-out => stepgen.0.enable
+net pos-cmd joint.0.motor-pos-cmd => stepgen.0.position-cmd
+net thetapos-fb stepgen.0.position-fb => joint.0.motor-pos-fb
+net thetastep <= stepgen.0.step
+net thetadir <= stepgen.0.dir
+net thetaenable joint.0.amp-enable-out => stepgen.0.enable
 
 setp stepgen.1.position-scale [JOINT_1]SCALE
 setp stepgen.1.steplen 1
@@ -111,11 +111,11 @@ setp stepgen.1.stepspace 0
 setp stepgen.1.dirhold 1000
 setp stepgen.1.dirsetup 1000
 setp stepgen.1.maxaccel [JOINT_1]STEPGEN_MAXACCEL
-net Ypos-cmd joint.1.motor-pos-cmd => stepgen.1.position-cmd
-net Ypos-fb stepgen.1.position-fb => joint.1.motor-pos-fb
-net Ystep <= stepgen.1.step
-net Ydir <= stepgen.1.dir
-net Yenable joint.1.amp-enable-out => stepgen.1.enable
+net wpos-cmd joint.1.motor-pos-cmd => stepgen.1.position-cmd
+net wpos-fb stepgen.1.position-fb => joint.1.motor-pos-fb
+net wstep <= stepgen.1.step
+net wdir <= stepgen.1.dir
+net wenable joint.1.amp-enable-out => stepgen.1.enable
 
 setp stepgen.2.position-scale [JOINT_2]SCALE
 setp stepgen.2.steplen 1
@@ -123,11 +123,11 @@ setp stepgen.2.stepspace 0
 setp stepgen.2.dirhold 1000
 setp stepgen.2.dirsetup 1000
 setp stepgen.2.maxaccel [JOINT_2]STEPGEN_MAXACCEL
-net Zpos-cmd joint.2.motor-pos-cmd => stepgen.2.position-cmd
-net Zpos-fb stepgen.2.position-fb => joint.2.motor-pos-fb
-net Zstep <= stepgen.2.step
-net Zdir <= stepgen.2.dir
-net Zenable joint.2.amp-enable-out => stepgen.2.enable
+net vpos-cmd joint.2.motor-pos-cmd => stepgen.2.position-cmd
+net vpos-fb stepgen.2.position-fb => joint.2.motor-pos-fb
+net vstep <= stepgen.2.step
+net vdir <= stepgen.2.dir
+net venable joint.2.amp-enable-out => stepgen.2.enable
 
 setp stepgen.3.position-scale [JOINT_3]SCALE
 setp stepgen.3.steplen 1
@@ -172,11 +172,11 @@ setp genserkins.A-3 0
 setp genserkins.A-4 0
 setp genserkins.A-5 0
 
-setp genserkins.ALPHA-0 1.570796327 
+setp genserkins.ALPHA-0 90 
 setp genserkins.ALPHA-1 0
-setp genserkins.ALPHA-2 1.570796327 
-setp genserkins.ALPHA-3 1.570796327 
-setp genserkins.ALPHA-4 1.570796327 
+setp genserkins.ALPHA-2 90 
+setp genserkins.ALPHA-3 90 
+setp genserkins.ALPHA-4 90 
 setp genserkins.ALPHA-5 0
 
 setp genserkins.D-0 1000
@@ -186,7 +186,7 @@ setp genserkins.D-3 1300
 setp genserkins.D-4 0 
 setp genserkins.D-5 -270
 
-net j0u joint.0.pos-fb puma560gui.joint1
+net j0theta joint.0.pos-fb puma560gui.joint1
 net j1w joint.1.pos-fb puma560gui.joint2
 net j2v joint.2.pos-fb puma560gui.joint3
 net j3c joint.3.pos-fb puma560gui.joint4

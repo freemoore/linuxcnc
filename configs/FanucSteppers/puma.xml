@@ -2,19 +2,19 @@
 <pyvcp>
  <vbox>
     <label><text>"Joint 0:"</text></label>
-    <meter><size>100</size><halpin>"joint0"</halpin><max_>170</max_><min_>-170</min_></meter>
+    <meter><size>100</size><halpin>"joint0"</halpin><max_>150</max_><min_>-150</min_></meter>
  </vbox>
  <vbox>
     <label><text>"Joint 1:"</text></label>
-    <meter><size>100</size><halpin>"joint1"</halpin><max_>50</max_><min_>-85</min_></meter>
+    <meter><size>100</size><halpin>"joint1"</halpin><max_>-57.5</max_><min_>57.5</min_></meter>
  </vbox>
  <vbox>
     <label><text>"Joint 2:"</text></label>
-    <meter><size>100</size><halpin>"joint2"</halpin><max_>75</max_><min_>-70</min_></meter>
+    <meter><size>100</size><halpin>"joint2"</halpin><max_>65</max_><min_>-65</min_></meter>
  </vbox>
  <vbox>
     <label><text>"Joint 3:"</text></label>
-    <meter><size>100</size><halpin>"joint3"</halpin><max_>250</max_><min_>-250</min_></meter>
+    <meter><size>100</size><halpin>"joint3"</halpin><max_>360</max_><min_>-360</min_></meter>
  </vbox>
  <vbox>
     <label><text>"Joint 4:"</text></label>
@@ -22,6 +22,7 @@
  </vbox>
  <vbox>
     <label><text>"Joint 5:"</text></label>
-    <meter><size>100</size><halpin>"joint5"</halpin><max_>250</max_><min_>-250</min_></meter>
+    <meter><size>100</size><halpin>"joint5"</halpin><max_>360</max_><min_>-360</min_></meter>
  </vbox>
 </pyvcp>
+<!--this is fanuc.xml, andy edited for fanuc ranges of motion-->

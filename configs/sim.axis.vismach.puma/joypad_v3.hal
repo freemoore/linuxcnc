@@ -62,9 +62,9 @@ loadusr -W hal_input -KRAL Microsoft
 #net velZout joyhandle.2.out => halui.jog.2.analog
 
 # connect hal_joypad directly to halui without joyhandle (in case use your own axes-names)
-#net velX input.0.abs-rz-position => halui.jog.0.analog
-#net velY input.0.abs-z-position => halui.jog.1.analog
-#net velZ input.0.abs-y-position=> halui.jog.2.analog
+net velX input.0.abs-rz-position => halui.jog.0.analog
+net velY input.0.abs-z-position => halui.jog.1.analog
+net velZ input.0.abs-y-position=> halui.jog.2.analog
 
 
 # [BUTTON-SAMPLES] use your own joypad pin-names

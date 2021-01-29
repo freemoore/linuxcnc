@@ -1,6 +1,6 @@
 # LinuxCNC HAL file for XBox One controller to jog and zero axis
 
-loadusr -W hal_input -KRAL Generic X-Box
+loadusr -W hal_input -KRAL Microsoft
 loadrt mult2 count=2
 addf mult2.0 servo-thread
 addf mult2.1 servo-thread
