@@ -126,11 +126,9 @@ link3 = Translate([link3],0,0,-900)
 #LINK YELLOW AND BLACK
 link3 = Collection([link4, link3])
 #move back to j2 in Origin
-link3 = Translate([link3],0,270,900)
+link3 = Translate([link3],0,0,900)
 #and rotate according to kinematics 
-# (coordinates were [link3]-90,1,0,0, changing to -90,0,1,0)
 link3 = Rotate([link3],-90,0,0,1)
-# (coordinates were [link3],c,"joint2",1,1,0,0, changing to 1,0,0,1)
 link3 = HalRotate([link3],c,"joint2",1,0,1,0)
 
 # link 2 - YELLOW - this is the THETA joint on the fanuc?
@@ -139,12 +137,10 @@ link2 = Color([1,1,0,1],[link2])
 #changed next two lines from -90,0,0,1 and -90,0,1,0
 link2 = Rotate([link2], 0,0,0,1)
 link2 = Rotate([link2], 0,0,1,0)
-link2 = Translate([link2], 0,0,-1000) #note: 11.2 = 4 + 7.2 (4 = distance from j1 (rotation centre) to link2 side (obj file sketch origin), 7.2 distance from j1 to j2 - j1-j2 now 270mm per fanuc)
-#7.2 here is 72 mm in the file puma_link2.obj
+link2 = Translate([link2], -270,0,-1000) 
 link2 = Collection([link3, link2])
-link2 = Translate([link2], -0,0,0) # 3 = from j2 to j1 in Z (i.e. the distance in the DH parameters)
+link2 = Translate([link2], 270,0,0) 
 #rotate so X is in X direction
-# (coordinates were [link3]-90,0,0,1; changing to -90,0,1,0) #apply HAL DOF
 link2 = Rotate([link2], -90,0,0,0)
 link2 = HalRotate([link2],c,"joint1",1,0,0,1)
 
