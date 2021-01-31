@@ -46,8 +46,8 @@ c.ready()
 #	Color([1,0,0,1],[Box(19.9,-10,-10,20,10,10)])])
 
 # units are inches - they really aren't. centimetres. they're in centimetres (fusion obj files interpret them as cm) 
-
-floor = Collection([Box(-50,-50,-3,50,50,0)])
+#andy edit next line to try scaling up the environment
+floor = Collection([Box(-500,-500,-3,500,500,0)])
 floor = Color([0,1,0,0],[floor])
 
 work = Capture()
@@ -74,12 +74,12 @@ link6 = AsciiOBJ(filename="puma_link6_v3.obj")
 # rotate and translate it so that the joint 6 is in origin
 link6 = Color([0.5,0.5,0.5,1],[link6])
 link6 = Rotate([link6],-90,0,1,0)
-link6 = Translate([link6],0,0,-27) #note: 1.8 + 0.4 = 2.2 - in the drawing distance from join5 to end effector
-# note - 27 is for 270mm, see if we can match this with edited .obj file. was -1.8 - yes! this worked!
+link6 = Translate([link6],0,0,-270.4) #note: 1.8 + 0.4 = 2.2 - in the drawing distance from join5 to end effector
+# note - 27 is for 270mm, see if we can match this with edited .obj file. was -1.8 - yes! this worked!...kinda. controlled point shown as maybe 27 if obj file shows 270...
 # mount link7 on it
 link6 = Collection([link7, link6])
-#translate it back so joint 5 rotation in origin - changed 1.8 to 27
-link6 = Translate([link6],0,0,27)
+#translate it back so joint 5 rotation in origin - changed 1.8 to 270
+link6 = Translate([link6],0,0,270.4)
 #apply HAL DOF
 link6 = HalRotate([link6],c,"joint5",1,1,0,0)
 
@@ -134,14 +134,15 @@ link2 = AsciiOBJ(filename="puma_link2.obj")
 link2 = Rotate([link2], -90,0,0,1)
 link2 = Rotate([link2], -90,0,1,0)
 link2 = Translate([link2], 11.2,0,0) #note: 11.2 = 4 + 7.2 (4 = distance from j1 to link2 side, 7.2 distance from j1 to j2)
+#7.2 here is 72 mm in the file puma_link2.obj
 link2 = Collection([link3, link2])
 link2 = Translate([link2],-7.2,0,3) # 3 = from j2 to j1 in Z
 #rotate so X is in X direction
 link2 = Rotate([link2], -90,0,0,1)
 link2 = HalRotate([link2],c,"joint1",1,0,0,1)
 
-#move link2 up
-link2 = Translate([link2], 0,0,23.45) #note: 23.45 = 26.45(drawing) - 3 (from j2 to J1 in Z)
+#move link2 up - edit - move it all the way up to 1m, per fanuc s420f
+link2 = Translate([link2], 0,0,1000) #note: 23.45 = 26.45(drawing) - 3 (from j2 to J1 in Z)
 
 link1 = AsciiOBJ(filename="puma_link1.obj");
 link1 = Color([0.18,0.19,0.2,1],[link1])

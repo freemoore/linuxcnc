@@ -51,10 +51,11 @@ setp genserkins.ALPHA-5 1.570796326
 setp genserkins.D-0 26.45
 setp genserkins.D-1 -5.5
 setp genserkins.D-2 0
-setp genserkins.D-3 17.05
+#next line changed from 17.05 just to see
+setp genserkins.D-3 27.05
 setp genserkins.D-4 0 
-# note this 2.2 seems to be 1.8cm + 0.4cm; I've changed obj file to 27cm so this value should be 27.4.
-#setp genserkins.D-5 2.2
+#setp genserkins.D-5 2.2 - was original value
+# note this 2.2 seems to be 1.8cm + 0.4cm; I've changed obj file to 27cm so this value should be 27.4. obj file is edited to 270mm long (origin to tip of joint) and that's showing up in vismach (so now tiny puma560 with huge joint5) but controlled point looks like it's 27.4mm away from axis not 270. try changing DM param to 270.4.
 setp genserkins.D-5 27.4
 
 net j0 joint.0.pos-fb puma560gui.joint1

@@ -1,0 +1,4 @@
+after editing the puma560gui python file for vismach, sudo cp it to /usr/bin
+after editing the vismach.py file, sudo cp it to /usr/lib/python2.7/dist-packages/
+
+YES! editing vismach.py at line 1031 (t.far = size * 10.0 edited to 100.0) stopped the model disappearing in the viewport, making the true-size model viable. 
