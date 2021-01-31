@@ -38,12 +38,12 @@ c.ready()
 
 
 # add a XYZ cross for debug
-floor = Collection([
-	Box(-100,-100,-0.1,100,100,0),
-	Box(-10,-0.1,-10,10,0,10),
-	Box(-0.1,-10,-10,0,10,10),
-	Color([1,0,0,1],[Box(-10,-10,9.9,10,10,10)]),
-	Color([1,0,0,1],[Box(19.9,-10,-10,20,10,10)])])
+#floor = Collection([
+#	Box(-100,-100,-0.1,100,100,0),
+#	Box(-10,-0.1,-10,10,0,10),
+#	Box(-0.1,-10,-10,0,10,10),
+#	Color([1,0,0,1],[Box(-10,-10,9.9,10,10,10)]),
+#	Color([1,0,0,1],[Box(19.9,-10,-10,20,10,10)])])
 
 # units are inches - they really aren't. centimetres. they're in centimetres (fusion obj files interpret them as cm) 
 #andy edit next line to try scaling up the environment - success
@@ -59,28 +59,28 @@ tool = Capture()
 tooltip = Capture()
 tool = Collection([tooltip, tool])
 
-# link 7
+# link 7 - Joint A, mount and rotate end effector
 link7 = AsciiOBJ(filename="fanuc_A_link6_rep_pumalink7.obj")
 #move link7 to 0 pos. so, that tooltip matches
-link7 = Color([0.7,0,0,0.8],[link7])
+link7 = Color([0.9,0,0,0.8],[link7])
 link7 = Rotate([link7], 0,1,0,0)
-link7 = Translate([link7],0,0,50)
+link7 = Translate([link7],0,0,-50)
 link7 = Collection([link7, tool])
 #move back
-link7 = Translate([link7],0,0,0.4)
+link7 = Translate([link7],0,0,0)
 link7 = HalRotate([link7],c,"joint6",1,0,0,1)
 
-# link 6
+# link 6 - Joint B, yaw? joint A
 link6 = AsciiOBJ(filename="fanuc_B_link5_rep_pumalink6.obj")
 # rotate and translate it so that the joint 6 is in origin
-link6 = Color([1,1,0,1],[link6])
-link6 = Rotate([link6],-90,0,1,0)
-link6 = Translate([link6],0,0,-270.4) #note: 1.8 + 0.4 = 2.2 - in the drawing distance from join5 to end effector
+link6 = Color([0.7,0,0.7,0.8],[link6])
+link6 = Rotate([link6],180,0,1,0)
+link6 = Translate([link6],0,0,-270) #note: 1.8 + 0.4 = 2.2 - in the drawing distance from join5 to end effector
 # note - 27 is for 270mm, see if we can match this with edited .obj file. was -1.8 - yes! this worked!...kinda. controlled point shown as maybe 27 if obj file shows 270...
 # mount link7 on it
 link6 = Collection([link7, link6])
 #translate it back so joint 5 rotation in origin - changed 1.8 to 270
-link6 = Translate([link6],0,0,270.4)
+link6 = Translate([link6],0,0,270)
 #apply HAL DOF
 link6 = HalRotate([link6],c,"joint5",1,1,0,0)
 
