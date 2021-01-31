@@ -62,9 +62,9 @@ tool = Collection([tooltip, tool])
 # link 7
 link7 = AsciiOBJ(filename="fanuc_A_link6_rep_pumalink7.obj")
 #move link7 to 0 pos. so, that tooltip matches
-link7 = Color([0,0,0,1],[link7])
-link7 = Rotate([link7], 180,1,0,0)
-link7 = Translate([link7],0,0,0)
+link7 = Color([0.7,0,0,0.8],[link7])
+link7 = Rotate([link7], 0,1,0,0)
+link7 = Translate([link7],0,0,50)
 link7 = Collection([link7, tool])
 #move back
 link7 = Translate([link7],0,0,0.4)
