@@ -1028,7 +1028,7 @@ def main(model, tool, work, size=10, hud=0, rotation_vectors=None, lat=0, lon=0)
     t.distance = size * 3
     t.near = size * 0.01
     #andym changed this from 10.0
-    t.far = size * 100.0
+    t.far = size * 1000.0
     t.tool2view = tool
     t.world2view = world
     t.work2view = work

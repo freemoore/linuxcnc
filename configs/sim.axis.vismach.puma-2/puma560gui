@@ -21,7 +21,7 @@
 
 # link description
 # link1 - stationary base
-# link2 .. link7 - the 6 moving parts of the robot, numbered form base to end effector
+# link2 .. link7 - the 6 moving parts of the robot, numbered from base to end effector
 
 from vismach import *
 import hal
@@ -46,8 +46,8 @@ c.ready()
 #	Color([1,0,0,1],[Box(19.9,-10,-10,20,10,10)])])
 
 # units are inches - they really aren't. centimetres. they're in centimetres (fusion obj files interpret them as cm) 
-#andy edit next line to try scaling up the environment
-floor = Collection([Box(-500,-500,-3,500,500,0)])
+#andy edit next line to try scaling up the environment - success
+floor = Collection([Box(-5000,-5000,-3,5000,5000,0)])
 floor = Color([0,1,0,0],[floor])
 
 work = Capture()
@@ -144,7 +144,7 @@ link2 = HalRotate([link2],c,"joint1",1,0,0,1)
 #move link2 up - edit - move it all the way up to 1m, per fanuc s420f
 link2 = Translate([link2], 0,0,1000) #note: 23.45 = 26.45(drawing) - 3 (from j2 to J1 in Z)
 
-link1 = AsciiOBJ(filename="puma_link1.obj");
+link1 = AsciiOBJ(filename="fanuc_link0_v2.obj");
 link1 = Color([0.18,0.19,0.2,1],[link1])
 link1 = Rotate([link1], 180,0,0,1)
 
