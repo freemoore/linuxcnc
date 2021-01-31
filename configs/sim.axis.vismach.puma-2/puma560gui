@@ -79,20 +79,21 @@ link6 = Translate([link6],0,0,-270) #note: 1.8 + 0.4 = 2.2 - in the drawing dist
 # note - 27 is for 270mm, see if we can match this with edited .obj file. was -1.8 - yes! this worked!...kinda. controlled point shown as maybe 27 if obj file shows 270...
 # mount link7 on it
 link6 = Collection([link7, link6])
-#translate it back so joint 5 rotation in origin - changed 1.8 to 270
+#translate it back so joint 5 rotation in origin - changed 1.8 to 270 to 0
 link6 = Translate([link6],0,0,270)
 #apply HAL DOF
 link6 = HalRotate([link6],c,"joint5",1,1,0,0)
 
-# link 5, wrist
+# link 5 - Joint C - wrist, rolls joints B and A
 link5 = AsciiOBJ(filename="fanuc_C_link4_rep_pumalink5.obj")
-link5 = Color([0,0,0,1],[link5])
+link5 = Color([0,0.5,0,1],[link5])
 #translate it so joint 5 rotation in origin
-link5 = Translate([link5],0,0,-2.8)
+link5 = Rotate([link5],90,1,0,0)
+link5 = Translate([link5],0,-270,270)
 # assemble
 link5 = Collection([link6, link5])
 # translate back to joint4 in origin
-link5 = Translate([link5],0,0,2.8)
+link5 = Translate([link5],0,0,0)
 #apply HAL DOF
 link5 = HalRotate([link5],c,"joint4",1,0,0,1)
 
