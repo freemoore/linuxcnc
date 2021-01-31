@@ -35,3 +35,15 @@ right.
 
 looks like you need to compile linuxcnc from source to try world mode (altered kinematics).
 do 'locate genserkins' to see the few places it exists; in this file.h you can change the default DH parameters
+compiled according to these instructions:
+https://github.com/LinuxCNC/linuxcnc/blob/master/docs/src/code/building-linuxcnc.txt
+
+consider setting HOME = 0 0 0 0 0 0 in TRAJ as per linuxcnc.org/docs/2.7/html/config/ini-config.html
+and later in same document: POSITION_FILE = position.txt for keeping track of position when switched off
+
+this is the system we are running at the moment: freemoore@fanucpc:~/linuxcnc-fanucdev$ linuxcnc /home/freemoore/linuxcnc/configs/FanucSteppers/FanucSteppers.ini
+
+(consider changing DH value  of 6th joint to a mm length, for tooltip 
+according to researchgate post 'what is modified DH parameters' - the difference between DH/modDH is that one set describe the origin of the following frame, the other the origin of the previous frame?
+
+

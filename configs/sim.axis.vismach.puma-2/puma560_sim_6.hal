@@ -16,6 +16,7 @@ net J3pos <= joint.3.motor-pos-cmd
 net J4pos <= joint.4.motor-pos-cmd
 net J5pos <= joint.5.motor-pos-cmd
 
+
 # loop position commands back to motion module feedback
 net J0pos => joint.0.motor-pos-fb
 net J1pos => joint.1.motor-pos-fb
@@ -33,26 +34,28 @@ net tool-change-loop iocontrol.0.tool-change iocontrol.0.tool-changed
 
 loadusr -W puma560gui
 
-setp genserkins.A-0 270
-setp genserkins.A-1 900
-setp genserkins.A-2 270
+setp genserkins.A-0 0
+setp genserkins.A-1 0
+setp genserkins.A-2 17
 setp genserkins.A-3 0
 setp genserkins.A-4 0
 setp genserkins.A-5 0
 
-setp genserkins.ALPHA-0 1.570796327 
-setp genserkins.ALPHA-1 0
-setp genserkins.ALPHA-2 1.570796327 
-setp genserkins.ALPHA-3 1.570796327 
-setp genserkins.ALPHA-4 1.570796327 
-setp genserkins.ALPHA-5 0
+setp genserkins.ALPHA-0 0 
+setp genserkins.ALPHA-1 1.570796326 
+setp genserkins.ALPHA-2 0 
+setp genserkins.ALPHA-3 1.570796326 
+setp genserkins.ALPHA-4 -1.570796326 
+setp genserkins.ALPHA-5 1.570796326 
 
-setp genserkins.D-0 1000
-setp genserkins.D-1 0
+setp genserkins.D-0 26.45
+setp genserkins.D-1 -5.5
 setp genserkins.D-2 0
-setp genserkins.D-3 1300
+setp genserkins.D-3 17.05
 setp genserkins.D-4 0 
-setp genserkins.D-5 -270
+# note this 2.2 seems to be 1.8cm + 0.4cm; I've changed obj file to 27cm so this value should be 27.4.
+#setp genserkins.D-5 2.2
+setp genserkins.D-5 27.4
 
 net j0 joint.0.pos-fb puma560gui.joint1
 net j1 joint.1.pos-fb puma560gui.joint2
