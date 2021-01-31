@@ -131,7 +131,7 @@ link3 = Rotate([link3],-90,0,0,1)
 # (coordinates were [link3],c,"joint2",1,1,0,0, changing to 1,0,0,1)
 link3 = HalRotate([link3],c,"joint2",1,0,0,1)
 
-# link 2
+# link 2 - this is the W joint on the fanuc
 link2 = AsciiOBJ(filename="puma_link2.obj")
 link2 = Rotate([link2], -90,0,0,1)
 link2 = Rotate([link2], -90,0,1,0)
@@ -140,7 +140,8 @@ link2 = Translate([link2], 11.2,0,0) #note: 11.2 = 4 + 7.2 (4 = distance from j1
 link2 = Collection([link3, link2])
 link2 = Translate([link2],-7.2,0,3) # 3 = from j2 to j1 in Z
 #rotate so X is in X direction
-link2 = Rotate([link2], -90,0,0,1)
+# (coordinates were [link3]-90,0,0,1; changing to -90,0,1,0)
+link2 = Rotate([link2], -90,0,0,0)
 link2 = HalRotate([link2],c,"joint1",1,0,0,1)
 
 #move link2 up - edit - move it all the way up to 1m, per fanuc s420f
