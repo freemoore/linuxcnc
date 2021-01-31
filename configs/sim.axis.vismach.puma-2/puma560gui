@@ -59,80 +59,81 @@ tool = Capture()
 tooltip = Capture()
 tool = Collection([tooltip, tool])
 
-# link 7 - Joint A, mount and rotate end effector
+# link 7 - RED - Joint A, mount and rotate end effector
 link7 = AsciiOBJ(filename="fanuc_A_link6_rep_pumalink7.obj")
 #move link7 to 0 pos. so, that tooltip matches
 link7 = Color([0.9,0,0,0.8],[link7])
 link7 = Rotate([link7], 0,1,0,0)
 link7 = Translate([link7],0,0,-50)
+# LINK RED AND TOOLCONTROLLEDPOINT
 link7 = Collection([link7, tool])
 #move back
 link7 = Translate([link7],0,0,0)
 link7 = HalRotate([link7],c,"joint6",1,0,0,1)
 
-# link 6 - Joint B, yaw? joint A
+# link 6 - PURPLE - Joint B, yaw? joint A
 link6 = AsciiOBJ(filename="fanuc_B_link5_rep_pumalink6.obj")
 # rotate and translate it so that the joint 6 is in origin
 link6 = Color([0.7,0,0.7,0.8],[link6])
 link6 = Rotate([link6],180,0,1,0)
-link6 = Translate([link6],0,0,-270) #note: 1.8 + 0.4 = 2.2 - in the drawing distance from join5 to end effector
-# note - 27 is for 270mm, see if we can match this with edited .obj file. was -1.8 - yes! this worked!...kinda. controlled point shown as maybe 27 if obj file shows 270...
-# mount link7 on it
+link6 = Translate([link6],0,0,-270) #distance from join5 to end effector
+# LINK RED AND PURPLE 
 link6 = Collection([link7, link6])
 #translate it back so joint 5 rotation in origin - changed 1.8 to 270 to 0
-link6 = Translate([link6],0,0,270)
+link6 = Translate([link6],0,0,270) #translating purple & red together
 #apply HAL DOF
 link6 = HalRotate([link6],c,"joint5",1,1,0,0)
 
-# link 5 - Joint C - wrist, rolls joints B and A
+# link 5 - GREEN - Joint C - wrist, rolls joints B and A
 link5 = AsciiOBJ(filename="fanuc_C_link4_rep_pumalink5.obj")
 link5 = Color([0,0.5,0,1],[link5])
 #translate it so joint 5 rotation in origin
 link5 = Rotate([link5],90,1,0,0)
-link5 = Translate([link5],0,-270,270)
-# assemble
+link5 = Translate([link5],0,0,0)
+# LINK PURPLE AND GREEN
 link5 = Collection([link6, link5])
 # translate back to joint4 in origin
-link5 = Translate([link5],0,0,0)
+# next line was ,0,-270,270)
+link5 = Translate([link5],0,0,0) #should translate purplered and green together
+#link5 = Rotate([link5],90,0,0,0)
 #apply HAL DOF
 link5 = HalRotate([link5],c,"joint4",1,0,0,1)
 
-# link4, arm, origin is in the joint3 location
+# link4 - YELLOW - arm, origin is in the joint3 location
 link4 = AsciiOBJ(filename="fanuc_V_link3_rep_pumalink4.obj")
 link4 = Color([1,1,0,1],[link4])
 # need to rotate it, and translate it so that joint 4 is in origin
 link4 = Rotate([link4],90,1,0,0)
 link4 = Rotate([link4],0,0,1,0)
 link4 = Rotate([link4],0,0,0,1) 
-link4 = Translate([link4],0,0,-900) # note: 14.25 + 2.8 = 17.05 - distance between j3 and j5
-#assemble 
+link4 = Translate([link4],0,270,-1300) # note: 14.25 + 2.8 = 17.05 - distance between j3 and j5
+# LINK GREEN AND YELLOW 
 link4 = Collection([link5, link4])
 # move back to joint3 in origin
-#next line was this: link4 = Translate([link4],1.85,0,14.25) #note: 14.25 as above, 1.85 = (9.2 - 5.5) / 2
-link4 = Translate([link4],0,0,270) #this is more or less arbitrary
+link4 = Translate([link4],0,-270,1300) 
 link4 = Rotate([link4],-90,1,0,0)
 #apply HAL DOF
 link4 = HalRotate([link4],c,"joint3",1,1,0,0)
 
-# link 3, shoulder
+# link 3 - BLACK - shoulder
 link3 = AsciiOBJ(filename="fanuc_W_link2_rep_pumalink3.obj")
-link3 = Color([0,0,0,1],[link3])
+link3 = Color([0,0,0.9,1],[link3])
 # rotate,translate with joint 3 in origin
-link3 = Rotate([link3],  0,0,1,0)
-link3 = Rotate([link3], 0,0,0,1)
-link3 = Rotate([link3], 0,1,0,0)
-link3 = Translate([link3],0,270,0)
-#assemble
+#link3 = Rotate([link3],  0,0,1,0)
+#link3 = Rotate([link3], 0,0,0,1)
+link3 = Rotate([link3], -90,1,0,0)
+link3 = Translate([link3],0,0,-900)
+#LINK YELLOW AND BLACK
 link3 = Collection([link4, link3])
 #move back to j2 in Origin
-link3 = Translate([link3],0,0,0)
+link3 = Translate([link3],0,270,900)
 #and rotate according to kinematics 
 # (coordinates were [link3]-90,1,0,0, changing to -90,0,1,0)
 link3 = Rotate([link3],-90,0,0,1)
 # (coordinates were [link3],c,"joint2",1,1,0,0, changing to 1,0,0,1)
 link3 = HalRotate([link3],c,"joint2",1,0,1,0)
 
-# link 2 - this is the THETA joint on the fanuc?
+# link 2 - YELLOW - this is the THETA joint on the fanuc?
 link2 = AsciiOBJ(filename="fanuc_THETA_link1_rep_pumalink2.obj")
 link2 = Color([1,1,0,1],[link2])
 #changed next two lines from -90,0,0,1 and -90,0,1,0
