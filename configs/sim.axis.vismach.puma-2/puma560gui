@@ -111,17 +111,12 @@ link4 = Rotate([link4],-90,1,0,0)
 link4 = HalRotate([link4],c,"joint3",1,1,0,0)
 
 # link 3, shoulder
-link3 = AsciiOBJ(filename="puma_link3.obj")
-puma_text = AsciiOBJ(filename="puma_text.obj")
-puma_text = Rotate([puma_text],180,0,0,1)
-puma_text = Translate([puma_text],9,1,4)
-puma_text = Color([0,0,1,1],[puma_text])
-link3 = Collection([link3, puma_text])
+link3 = AsciiOBJ(filename="fanuc_W_link2_rep_pumalink3 v3.obj")
 # rotate,translate with joint 3 in origin
-link3 = Rotate([link3],  90,0,1,0)
+link3 = Rotate([link3],  0,0,1,0)
 link3 = Rotate([link3], 180,0,0,1)
-link3 = Rotate([link3], 180,1,0,0)
-link3 = Translate([link3],0,0,-17)
+link3 = Rotate([link3], 135,1,0,0)
+link3 = Translate([link3],0,270,0)
 #assemble
 link3 = Collection([link4, link3])
 #move back to j2 in Origin
