@@ -125,9 +125,11 @@ link3 = Translate([link3],0,0,-17)
 link3 = Collection([link4, link3])
 #move back to j2 in Origin
 link3 = Translate([link3],0,0,17)
-#and rotate according to kinematics
-link3 = Rotate([link3],-90,1,0,0)
-link3 = HalRotate([link3],c,"joint2",1,1,0,0)
+#and rotate according to kinematics 
+# (coordinates were [link3]-90,1,0,0, changing to -90,0,1,0)
+link3 = Rotate([link3],-90,0,0,1)
+# (coordinates were [link3],c,"joint2",1,1,0,0, changing to 1,0,0,1)
+link3 = HalRotate([link3],c,"joint2",1,0,0,1)
 
 # link 2
 link2 = AsciiOBJ(filename="puma_link2.obj")
@@ -144,7 +146,7 @@ link2 = HalRotate([link2],c,"joint1",1,0,0,1)
 #move link2 up - edit - move it all the way up to 1m, per fanuc s420f
 link2 = Translate([link2], 0,0,1000) #note: 23.45 = 26.45(drawing) - 3 (from j2 to J1 in Z)
 
-link1 = AsciiOBJ(filename="fanuc_link0_v2.obj");
+link1 = AsciiOBJ(filename="fanuc_link0_v4.obj");
 link1 = Color([0.18,0.19,0.2,1],[link1])
 link1 = Rotate([link1], 180,0,0,1)
 
