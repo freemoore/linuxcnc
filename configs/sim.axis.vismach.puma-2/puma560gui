@@ -135,10 +135,10 @@ link3 = HalRotate([link3],c,"joint2",1,0,0,1)
 link2 = AsciiOBJ(filename="puma_link2.obj")
 link2 = Rotate([link2], -90,0,0,1)
 link2 = Rotate([link2], -90,0,1,0)
-link2 = Translate([link2], 11.2,0,0) #note: 11.2 = 4 + 7.2 (4 = distance from j1 to link2 side, 7.2 distance from j1 to j2)
+link2 = Translate([link2], 0,0,0) #note: 11.2 = 4 + 7.2 (4 = distance from j1 (rotation centre) to link2 side (obj file sketch origin), 7.2 distance from j1 to j2 - j1-j2 now 270mm per fanuc)
 #7.2 here is 72 mm in the file puma_link2.obj
 link2 = Collection([link3, link2])
-link2 = Translate([link2],-7.2,0,3) # 3 = from j2 to j1 in Z
+link2 = Translate([link2], -270,0,3) # 3 = from j2 to j1 in Z (i.e. the distance in the DH parameters)
 #rotate so X is in X direction
 # (coordinates were [link3]-90,0,0,1; changing to -90,0,1,0)
 link2 = Rotate([link2], -90,0,0,0)
@@ -150,6 +150,8 @@ link2 = Translate([link2], 0,0,1000) #note: 23.45 = 26.45(drawing) - 3 (from j2 
 link1 = AsciiOBJ(filename="fanuc_link0_v4.obj");
 link1 = Color([0.18,0.19,0.2,1],[link1])
 link1 = Rotate([link1], 180,0,0,1)
+#andy added this to get the base graphic to rotate...in this case base graphic should probably be in place of puma_link2, thought this does work.
+link1 = HalRotate ([link1],c,"joint1",1,0,0,1)
 
 # stationary base
 puma = Collection([link2, link1])
