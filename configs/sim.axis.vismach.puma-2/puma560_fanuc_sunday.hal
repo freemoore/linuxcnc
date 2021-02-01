@@ -34,26 +34,26 @@ net tool-change-loop iocontrol.0.tool-change iocontrol.0.tool-changed
 
 loadusr -W puma560gui
 
-setp genserkins.A-0 270
-setp genserkins.A-1 900
-setp genserkins.A-2 270
-setp genserkins.A-3 0
+setp genserkins.A-0 0
+setp genserkins.A-1 270
+setp genserkins.A-2 900
+setp genserkins.A-3 270
 setp genserkins.A-4 0
 setp genserkins.A-5 0
 
 setp genserkins.ALPHA-0 0 
-setp genserkins.ALPHA-1 1.570796326 
+setp genserkins.ALPHA-1 -1.570796326 
 setp genserkins.ALPHA-2 0 
-setp genserkins.ALPHA-3 1.570796326 
-setp genserkins.ALPHA-4 -1.570796326 
-setp genserkins.ALPHA-5 1.570796326 
+setp genserkins.ALPHA-3 -1.570796326 
+setp genserkins.ALPHA-4 1.570796326 
+setp genserkins.ALPHA-5 -1.570796326 
 
 setp genserkins.D-0 1000
-setp genserkins.D-1 0
-setp genserkins.D-2 0
+setp genserkins.D-1 1000
+setp genserkins.D-2 1000
 setp genserkins.D-3 1300
 setp genserkins.D-4 0 
-setp genserkins.D-5 -270
+setp genserkins.D-5 270
 
 net j0 joint.0.pos-fb puma560gui.joint1
 net j1 joint.1.pos-fb puma560gui.joint2
