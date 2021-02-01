@@ -49,8 +49,8 @@ setp genserkins.ALPHA-4 1.570796326
 setp genserkins.ALPHA-5 -1.570796326 
 
 setp genserkins.D-0 1000
-setp genserkins.D-1 1000
-setp genserkins.D-2 1000
+setp genserkins.D-1 0
+setp genserkins.D-2 0
 setp genserkins.D-3 1300
 setp genserkins.D-4 0 
 setp genserkins.D-5 270
