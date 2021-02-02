@@ -1,5 +1,30 @@
 #! /usr/bin/python2
-#    Copyright 2009 Alex Joni
+#    Copyright 2007 John Kasunich and Jeff Epler
+#       
+# modified by Rudy du Preez to fit with the kinematics component pumakins.c
+# Note: DH parameters in pumakins halfile should bet set to 
+#               A2=400, A3=50, D3=100, D4=400, D6=95
+#
+#                    z |   
+#                      | 
+#                      |__________y  top of the base.
+#                     /
+#                    / A2
+#                 x /
+#                  /_______
+#                   D3  /
+#                      / A3
+#                      |
+#                      |
+#                      | D4
+#                      |___
+#                      |
+#           tooltip    | D6
+#
+# or they should be changed below to fit. Otherwise you wont get straight lines
+# moving x or y or z in world mode. If all is correct the tool should rotate 
+# about its tip with no x,y,z movement for changes in A,B,C at any point in the 
+#  workspace.
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -15,143 +40,124 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-# graphic model of a Unimate Puma 560
-# according to the dimensions from: http://www.juve.ro/blog/puma/
-# the obj files can be downloaded there, and may be included in emc2 later
-
-# link description
-# link1 - stationary base
-# link2 .. link7 - the 6 moving parts of the robot, numbered from base to end effector
-# 
-# you must build your robot from the controlled point backwards to the base. 
 
 from vismach import *
 import hal
 
-c = hal.component("puma560gui")
+c = hal.component("pumagui")
 c.newpin("joint1", hal.HAL_FLOAT, hal.HAL_IN)
 c.newpin("joint2", hal.HAL_FLOAT, hal.HAL_IN)
 c.newpin("joint3", hal.HAL_FLOAT, hal.HAL_IN)
 c.newpin("joint4", hal.HAL_FLOAT, hal.HAL_IN)
 c.newpin("joint5", hal.HAL_FLOAT, hal.HAL_IN)
 c.newpin("joint6", hal.HAL_FLOAT, hal.HAL_IN)
-c.newpin("grip", hal.HAL_FLOAT, hal.HAL_IN)
 c.ready()
 
+###################
 
-# add a XYZ cross for debug
-#floor = Collection([
-#	Box(-100,-100,-0.1,100,100,0),
-#	Box(-10,-0.1,-10,10,0,10),
-#	Box(-0.1,-10,-10,0,10,10),
-#	Color([1,0,0,1],[Box(-10,-10,9.9,10,10,10)]),
-#	Color([1,0,0,1],[Box(19.9,-10,-10,20,10,10)])])
+# tool  or finger 
+finger1 = CylinderZ(0, 5, 50, 5)
 
-# units are inches - they really aren't. centimetres. they're in centimetres (fusion obj files interpret them as cm) 
-#andy edit next line to try scaling up the environment - success
-floor = Collection([Box(-5000,-5000,-10,5000,5000,0)])
-floor = Color([0.4,0.4,0.4,0.8],[floor])
-
-work = Capture()
-
-#tool goes here.. maybe later
-tool = Capture()
-
-# "tooltip" for backplot will be the tip of the tool, for now link7
+# "tooltip" for backplot will be the tip of the finger
 tooltip = Capture()
-tool = Collection([tooltip, tool])
 
-# link 7 - RED - Joint A, mount and rotate end effector
-link7 = AsciiOBJ(filename="link6_fanuc_A.obj")
-# colour link file
-link7 = Color([0.9,0,0,0.8],[link7])
-# LINK RED AND TOOLCONTROLLEDPOINT
-link7 = Collection([link7, tool])
-# link to hal movement pin
-link7 = HalRotate([link7],c,"joint6",1,0,0,1)
+# "hand" - the part the finger is attached to
+link6 = Collection([
+    finger1,
+	Box(-25, -25, -10, 25, 25, 0)])
+link6 = Translate([link6],0,0,-50)
+link6 = Collection([tooltip,link6])
+# assembly fingers, and make it rotate
+link6 = HalRotate([link6],c,"joint6",1,0,0,1)
 
-# link 6 - PURPLE - Joint B, yaw? joint A
-link6 = AsciiOBJ(filename="link5_fanuc_B.obj")
-link6 = Color([0.7,0,0.7,0.8],[link6])
-# rotate and translate it so that the joint 6 is in origin
-link6 = Rotate([link6],270,0,1,0)
-link6 = Translate([link6],0,0,-270) #distance from joint5 to end effector
-# LINK RED AND PURPLE 
-link6 = Collection([link7, link6])
-#translate it back so joint 5 rotation in origin - changed 1.8 to 270 to 0
-link6 = Translate([link6],0,0,270) #translating purple & red together
-#apply HAL DOF
-link6 = HalRotate([link6],c,"joint5",1,1,0,0)
+# moving part of wrist joint
+link5 = Collection([
+	CylinderZ( 27, 30, 35, 30),
+	CylinderX(-13, 25, 13, 25),
+	Box(-11, -25, 0, 11, 25, 27)])
+# move gripper to end of wrist and attach D6=95
+link5 = Collection([
+	link5,
+	Translate([link6],0,0,95)])
+# make wrist bend
+link5 = HalRotate([link5],c,"joint5",1,1,0,0)
 
-# link 5 - GREEN - Joint C - wrist, rolls joints B and A
-link5 = AsciiOBJ(filename="link4_fanuc_C.obj")
-link5 = Color([0,0.5,0,1],[link5])
-#translate it so joint 5 rotation in origin
+# fixed part of wrist joint (rotates on end of arm)
+link4 = Collection([
+	CylinderX(-13, 22, -27, 22),
+	CylinderX( 13, 22,  27, 22),
+	Box(-15, -22, -30, -25, 22, 0),
+	Box( 15, -22, -30,  25, 22, 0),
+	Box(-25, -25, -45,  25, 25, -30)])
+# attach wrist, move whole assembly forward so joint 4 is at origin
+link4 = Translate([link4,link5], 0, 0, 0)
+# make joint 4 rotate
+link4 = HalRotate([link4],c,"joint4",1,0,0,1)
 
-link5 = Translate([link5],0,0,0)
-# LINK PURPLE AND GREEN
-link5 = Collection([link6, link5])
-# translate back to joint4 in origin
-# next line was ,0,-270,270)
-link5 = Translate([link5],0,0,0) #should translate purplered and green together
-#link5 = Rotate([link5],90,0,0,0)
-#apply HAL DOF
-link5 = HalRotate([link5],c,"joint4",1,0,0,1)
+# next chunk  link length is D4=400
+link3 = Collection([
+	CylinderY(-50,35,25,35),
+	CylinderZ(0.0, 35, 400-45, 25)])
+link3 = Translate([link3],0,50,0)
+link3 = Collection([
+    link3,
+    CylinderX(-50,40,40,40)])
+# move link4 forward and sideways (A3=50) and attach
+link3 = Collection([
+	link3,
+	Translate([link4],0.0, 50, 400)])
+# move whole assembly over so joint 3 is at origin (D3=100)
+link3 = Translate([link3],100, 0, 0.0)
+# rotate to J3 zero position
+link3 = Rotate([link3],90,1,0,0)
+# make joint 3 rotate
+link3 = HalRotate([link3],c,"joint3",1,1,0,0)
 
-# link4 - YELLOW - arm, origin is in the joint3 location
-link4 = AsciiOBJ(filename="link3_fanuc_V.obj")
-link4 = Color([1,1,0,1],[link4])
-# need to rotate it, and translate it so that joint 4 is in origin
-link4 = Rotate([link4],90,1,0,0)
-#link4 = Rotate([link4],0,0,1,0)
-link4 = Rotate([link4],-90,0,0,1) 
-link4 = Translate([link4],0,270,-1300) # note: 14.25 + 2.8 = 17.05 - distance between j3 and j5
-# LINK GREEN AND YELLOW 
-link4 = Collection([link5, link4])
-# move back to joint3 in origin
-link4 = Translate([link4],0,-270,1300) 
-link4 = Rotate([link4],-180,1,0,0)
-link4 = Rotate([link4],90,1,0,0)
-#apply HAL DOF
-link4 = HalRotate([link4],c,"joint3",1,1,0,0)
+# elbow stuff
+link2 = CylinderX(-50,50,50,50)
+# move elbow to end of upper arm
+link2 = Translate([link2],0.0,0.0,400)
+# rest of upper arm (A2 = 400)
+link2 = Collection([
+	link2,
+	CylinderZ(400, 40, 0, 50),
+	CylinderX(-70,85,70,85)])
+# move link 3 into place and attach
+link2 = Collection([
+	link2,
+	Translate([link3], 0,0.0,400)])
+# rotate into zero J2 position
+link2 = Rotate([link2],90,1,0,0)
+# make joint 2 rotate
+link2 = HalRotate([link2],c,"joint2",1,1,0,0)
 
-# link 3 - BLUE - shoulder
-link3 = AsciiOBJ(filename="link2_fanuc_W.obj")
-link3 = Color([0,0,0.5,1],[link3])
-# rotate,translate with joint 3 in origin
-link3 = Rotate([link3],  -90,0,1,0)
-link3 = Translate([link3],0,0,-900)
-#LINK YELLOW AND BLUE
-link3 = Collection([link4, link3])
-#move back to j2 in Origin
-link3 = Translate([link3],0,0,900)
-#and rotate according to kinematics 
-link3 = Rotate([link3],-90,0,0,1)
-link3 = Rotate([link3],90,0,1,0)
-link3 = HalRotate([link3],c,"joint2",1,0,1,0)
-
-# link 2 - YELLOW - this is the THETA joint on the fanuc?
-link2 = AsciiOBJ(filename="link1_fanuc_THETA.obj")
-link2 = Color([1,1,0,1],[link2])
-#changed next two lines from -90,0,0,1 and -90,0,1,0
-link2 = Rotate([link2], 0,0,0,1)
-link2 = Rotate([link2], 0,0,1,0)
-link2 = Translate([link2], -270,0,-1000) 
-link2 = Collection([link3, link2])
-link2 = Translate([link2], 270,0,0) 
-#rotate so X is in X direction
-link2 = Rotate([link2], -90,0,0,0)
-link2 = HalRotate([link2],c,"joint1",1,0,0,1)
-
-#move link2 up - edit - move it all the way up to 1m, per fanuc s420f
-link2 = Translate([link2], 0,0,1000) 
-link1 = AsciiOBJ(filename="link0_fanuc_base.obj");
-link1 = Color([0.3,0.3,0.3,0.9],[link1])
-link1 = Rotate([link1], 180,0,0,1)
+# shoulder stuff
+link1 = Collection([
+	CylinderX(-70,70,70,70),
+	Box(-70,-70,0,70,70,-100)])
+# move link2 to end and attach
+link1 = Collection([
+	link1,
+	link2])
+# move whole assembly up so joint 1 is at origin
+link1 = Translate([link1],0.0, 0.0, 100)
+# make joint 1 rotate
+link1 = HalRotate([link1],c,"joint1",1,0,0,1)
 
 # stationary base
-puma = Collection([link2, link1])
-model = Collection([tooltip, puma, floor, work])
+link0 = Collection([
+	CylinderZ(750, 75, 800, 75),
+	CylinderZ(25, 90, 750, 50),
+	CylinderZ(0, 200, 35, 200)])
+# move link1 to top and attach
+link0 = Collection([
+	link0,
+	Translate([link1],0.0,0.0,800)])
 
+# add a floor
+floor = Box(-500,-500,-10,500,500,0.0)
+work = Capture()
 
-main(model, tooltip, work,50)
+model = Collection([link0, floor, work])
+
+main(model, tooltip, work, 1500)
