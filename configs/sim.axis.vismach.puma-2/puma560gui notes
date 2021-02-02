@@ -21,3 +21,5 @@ then recompile just that: in that directory (I think...) do:
 cd linuxcnc-dev/src
 make ../bin/genserkins.h - crap. this seems to have worked once, and now doesn't. 
 in /linuxcnc-fanucdev/src, ran ./autogen.sh then ./configure and it seemed to rebuild lcnc...?
+
+it looks like the z and x axes in fusion 360 are swapped for the purposes of part alignment re the Dh parameters: drawing robot parts with Z being axis of rotation and X being axis of translation (as they appear in fusion) leads to them being 90deg wrong in vismach
