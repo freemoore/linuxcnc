@@ -1,0 +1,23 @@
+in standard build:
+after editing the puma560gui python file for vismach, sudo cp it to /usr/bin
+after editing the vismach.py file, sudo cp it to /usr/lib/python2.7/dist-packages/
+
+in run-in-place build:
+after editing the puma560gui python file (vismach machine definition), copy it to /linuxcnc-fanucdev/src/hal/user_comps/vismach/
+after editing the vismach.py file, copy it to /linuxcnc-fanucdev/lib/python 
+
+editing vismach.py at line 1031 (t.far = size * 10.0 edited to 100.0) stopped the model disappearing in the viewport, making the true-size model viable. 
+
+colours for vismach - values seems to be [r,g,b,a] - some examples:
+black - ([0,0,0,0])
+grey - ([0,0,0,0.5])
+blue - ([0,0,1,1]
+green - ([0,1,0,1]
+red - ([1,0,0,1]
+yellow - ([1,1,0,1]
+
+changing DH parameters in genserkins.h - edit it here:/home/freemoore/linuxcnc-fanucdev/src/emc/kinematics/
+then recompile just that: in that directory (I think...) do:
+cd linuxcnc-dev/src
+make ../bin/genserkins.h - crap. this seems to have worked once, and now doesn't. 
+in /linuxcnc-fanucdev/src, ran ./autogen.sh then ./configure and it seemed to rebuild lcnc...?
