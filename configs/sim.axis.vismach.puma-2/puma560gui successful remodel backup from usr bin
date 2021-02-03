@@ -1,0 +1,160 @@
+#! /usr/bin/python2
+#    Copyright 2009 Alex Joni
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program; if not, write to the Free Software
+#    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+# graphic model of a Unimate Puma 560
+# according to the dimensions from: http://www.juve.ro/blog/puma/
+# the obj files can be downloaded there, and may be included in emc2 later
+
+# link description
+# link1 - stationary base
+# link2 .. link7 - the 6 moving parts of the robot, numbered from base to end effector
+# 
+# you must build your robot from the controlled point backwards to the base. 
+
+from vismach import *
+import hal
+
+c = hal.component("puma560gui")
+c.newpin("joint0", hal.HAL_FLOAT, hal.HAL_IN)
+c.newpin("joint1", hal.HAL_FLOAT, hal.HAL_IN)
+c.newpin("joint2", hal.HAL_FLOAT, hal.HAL_IN)
+c.newpin("joint3", hal.HAL_FLOAT, hal.HAL_IN)
+c.newpin("joint4", hal.HAL_FLOAT, hal.HAL_IN)
+c.newpin("joint5", hal.HAL_FLOAT, hal.HAL_IN)
+c.newpin("grip", hal.HAL_FLOAT, hal.HAL_IN)
+c.ready()
+
+
+# add a XYZ cross for debug
+#floor = Collection([
+#	Box(-100,-100,-0.1,100,100,0),
+#	Box(-10,-0.1,-10,10,0,10),
+#	Box(-0.1,-10,-10,0,10,10),
+#	Color([1,0,0,1],[Box(-10,-10,9.9,10,10,10)]),
+#	Color([1,0,0,1],[Box(19.9,-10,-10,20,10,10)])])
+
+# units are inches - they really aren't. centimetres. they're in centimetres (fusion obj files interpret them as cm) 
+#andy edit next line to try scaling up the environment - success. viewport settings are in the vismach.py file.
+floor = Collection([Box(-50,-50,-10,50,50,0)])
+#floor = Collection([Box(-5000,-5000,-10,5000,5000,0)])
+#floor = Color([0.4,0.4,0.4,0.8],[floor]) blank floor for great rotate
+floor = Color([0,0,0,0],[floor])
+
+myhud = Hud()
+work = Capture()
+
+#tool goes here.. maybe later
+tool = Capture()
+
+# "tooltip" for backplot will be the tip of the tool, for now link7
+tooltip = Capture()
+#tool = AsciiOBJ(filename="fanuc_tool v0.obj")
+#tool = Color([0.9,1,1,0.8],[tool])
+#tool = Translate([tool],-100,0,0)
+tool = Collection([tooltip, tool])
+#tool = Translate([tool],100,0,0)
+#tool = Rotate([tool],270,0,1,0)
+
+# link 7 - RED - this is fanuc A, the end effector mount/rotator 
+link7 = AsciiOBJ(filename="link6_fanuc_A.obj")
+# colour link file
+link7 = Color([0.9,0,0,0.8],[link7])
+#link7 = Rotate([link7],270,0,1,0)
+# LINK red to (tool controlled point)
+link7 = Collection([link7, tool])
+# link to hal movement pin
+link7 = HalRotate([link7],c,"joint5",-1,1,0,0)
+
+# link 6 - PURPLE - this is fanuc B, the wrist-yaw
+link6 = AsciiOBJ(filename="link5_fanuc_B.obj")
+link6 = Color([0.7,0,0.7,0.8],[link6])
+# translate it so that the joint 6 is in origin
+link6 = Translate([link6],0,0,-270) #distance from joint5 to end effector
+link6 = Rotate([link6],90,0,1,0)
+# LINK purple to (red & tcp) 
+link6 = Collection([link7, link6])
+# translate it back so joint 5 rotation in origin
+link6 = Translate([link6],270,0,0) #translating purple & red together
+# apply HAL DOF
+link6 = HalRotate([link6],c,"joint4",-1,0,0,1)
+
+# link 5 - GREEN - this is fanuc C, the wrist-roll
+link5 = AsciiOBJ(filename="link4_fanuc_C.obj")
+link5 = Color([0,0.5,0,1],[link5])
+# translate it so joint 5 rotation in origin
+link5 = Rotate([link5],90,1,0,0)
+link5 = Rotate([link5],90,0,0,1)
+# LINK green to (purple & red & tcp)
+link5 = Collection([link6, link5])
+# translate back to joint4 in origin
+#link5 = Translate([link5],0,0,0) #should translate purplered and green together
+#apply HAL DOF
+link5 = HalRotate([link5],c,"joint3",-1,1,0,0)
+
+# link4 - YELLOW - this is fanuc U(V in lcnc), the long arm
+link4 = AsciiOBJ(filename="link3_fanuc_V.obj")
+link4 = Color([1,1,0,1],[link4])
+# need to rotate it, and translate it so that joint 4 is in origin
+link4 = Rotate([link4],90,1,0,0)
+link4 = Rotate([link4],90,0,1,0)
+link4 = Translate([link4],-1300,270,0)
+# LINK yellow to (green & purple & red & tcp) 
+link4 = Collection([link5, link4])
+# move back to joint3 in origin
+link4 = Translate([link4],1300,-270,0) 
+#link4 = Rotate([link4],-90,1,0,0)
+# apply HAL DOF
+link4 = HalRotate([link4],c,"joint2",-1,0,0,1)
+
+# link 3 - BLUE - this is fanuc W, the shoulder
+link3 = AsciiOBJ(filename="link2_fanuc_W.obj")
+link3 = Color([0,0,0.5,1],[link3])
+# rotate,translate with joint 3 in origin
+link3 = Rotate([link3], 270,0,0,1)
+link3 = Translate([link3],0,900,0)
+# LINK blue to (yellow & green & purple & red & tcp)
+link3 = Collection([link4, link3])
+#m ove back to j2 in Origin
+link3 = Translate([link3],0,-900,0)
+# and rotate according to kinematics 
+link3 = Rotate([link3],-90,0,0,1)
+link3 = Rotate([link3],90,0,1,0)
+link3 = Rotate([link3],90,1,0,0)
+# apply HAL DOF
+link3 = HalRotate([link3],c,"joint1",1,1,0,0)
+
+# link 2 - YELLOW - this is fanuc THETA, the base
+link2 = AsciiOBJ(filename="link1_fanuc_THETA.obj")
+link2 = Color([1,1,0,1],[link2])
+link2 = Rotate([link2], -90,0,0,1)
+link2 = Translate([link2], 0,270,-1000) 
+# LINK yellowbase to (blue & yellow & green & purple & red & tcp)
+link2 = Collection([link3, link2])
+link2 = Translate([link2], 0,-270,1000) 
+# apply HAL DOF
+link2 = HalRotate([link2],c,"joint0",1,0,0,1)
+#link2 = Translate([link2], 270,0,1000) 
+
+# stationary base
+link1 = AsciiOBJ(filename="link0_fanuc_base.obj");
+link1 = Color([0.3,0.3,0.3,0.9],[link1])
+#link1 = Translate([link1],0,270,0)
+
+puma = Collection([link2, link1])
+model = Collection([tooltip, puma, floor, work])
+
+main(model, tooltip, work, 60, lat=-50, lon=90)
