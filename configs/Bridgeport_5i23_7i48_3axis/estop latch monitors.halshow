@@ -1,0 +1,12 @@
+# halshow watchlist created Thu Apr 27 15:04:34 BST 2023
+
+pin+estop-latch.0.fault-in
+pin+estop-latch.0.fault-out
+pin+estop-latch.0.ok-in
+pin+estop-latch.0.ok-out
+pin+estop-latch.0.reset
+sig+estop-loopin
+sig+estop-loopout
+sig+estop-reset
+pin+iocontrol.0.emc-enable-in
+pin+iocontrol.0.user-enable-out

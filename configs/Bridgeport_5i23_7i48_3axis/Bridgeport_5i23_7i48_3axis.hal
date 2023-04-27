@@ -12,7 +12,7 @@ loadrt hm2_pci config="firmware=hm2/5i23/5i23_7i48_7i52.BIT num_encoders=7 num_p
 setp     hm2_5i23.0.pwmgen.pwm_frequency 24000
 setp     hm2_5i23.0.pwmgen.pdm_frequency 6000
 setp     hm2_5i23.0.watchdog.timeout_ns 10000000
-loadrt estop_latch
+#loadrt estop_latch
 loadrt mux16 names=mux16.0,jogincr,foincr,soincr
 loadrt pid names=pid.x,pid.y,pid.z,pid.s
 loadrt abs names=abs.spindle
@@ -22,28 +22,28 @@ loadrt scale names=scale.spindle,scale.feedrate-override,scale.spindle-override,
 
 
 
-
+#addf estop-latch.0 					servo-thread
 addf mux16.0              			servo-thread
 addf jogincr              			servo-thread
 addf foincr               			servo-thread
-addf soincr               			servo-thread
+addf soincr               				servo-thread
 
-addf hm2_5i23.0.read 				servo-thread
+addf hm2_5i23.0.read 					servo-thread
 addf motion-command-handler 			servo-thread
-addf motion-controller 			servo-thread
+addf motion-controller 					servo-thread
 addf pid.x.do-pid-calcs                 servo-thread
 addf pid.y.do-pid-calcs                 servo-thread
 addf pid.z.do-pid-calcs                 servo-thread
 addf pid.s.do-pid-calcs                 servo-thread
 addf abs.spindle                 		servo-thread
-addf scale.spindle                 	servo-thread
+addf scale.spindle                 		servo-thread
 addf scale.feedrate-override            servo-thread
 addf scale.spindle-override             servo-thread
 addf scale.spindle-load                 servo-thread
 addf scale.velocity-override            servo-thread
-addf scale.jog-incr				servo-thread
+addf scale.jog-incr						servo-thread
 addf lowpass.spindle             		servo-thread
-addf hm2_5i23.0.write         		servo-thread
+addf hm2_5i23.0.write         			servo-thread
 
 
 
@@ -52,7 +52,15 @@ addf hm2_5i23.0.write         		servo-thread
 
 
 # --- ESTOP-OUT ---
-net estop-out hm2_5i23.0.7i84.0.0.output-00
+# net estop-out hm2_5i23.0.7i84.0.0.output-00
+setp iocontrol.0.emc-enable-in TRUE
+#net estop-loopout iocontrol.0.emc-enable-in <= estop-latch.0.ok-out
+#net estop-loopin iocontrol.0.user-enable-out => estop-latch.0.ok-in
+#net estop-reset iocontrol.0.user-request-enable => estop-latch.0.reset
+#net remote-estop estop-latch.0.fault-in <=  hm2_5i23.0.7i84.0.0.input-05
+
+# --- ESTOP-EXT ---
+#net estop-ext     	<=  hm2_5i23.0.7i84.0.0.input-04
 
 # --- SPINDLE-ON ---
 net spindle-on hm2_5i23.0.7i84.0.0.output-05
@@ -101,8 +109,7 @@ net machine-is-enabled hm2_5i23.0.7i84.0.0.output-07
 # --- MODE SELECT SWITCH ---		Analogue Input 
 #net so-incr-a     	<=  hm2_5i23.0.7i84.0.1.analogin3
 
-# --- ESTOP-EXT ---
-net estop-ext     	<=  hm2_5i23.0.7i84.0.0.input-04
+
 
 # --- ALL-LIMIT ---
 #net all-limit     	<=  hm2_5i23.0.7i84.0.0.input-19
@@ -453,8 +460,8 @@ net machine-is-enabled        <=  motion.motion-enabled
 
 #  ---estop signals---
 
-net estop-out     <=  iocontrol.0.user-enable-out
-net estop-ext     =>  iocontrol.0.emc-enable-in
+#net estop-out     <=  iocontrol.0.user-enable-out
+#net estop-ext     =>  iocontrol.0.emc-enable-in
 
 #  ---manual tool change signals---
 
