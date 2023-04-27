@@ -1,0 +1,219 @@
+# Include your custom_postgui HAL commands here
+# This file will not be overwritten when you run PNCconf again
+
+# --- SCALE NAMES LOADED IN MAIN HAL ---
+
+#loadrt scale names=scale.spindle,scale.feedrate-override,scale.spindle-#override,scale.spindle-load,scale.velocity-override,scale.jog-incr,scale.man-jog-incr
+
+# --- LOAD FLOAT-S32 CONVERTERS ---
+
+loadrt conv_float_s32 names=conv_float_s32.fro,conv_float_s32.sso,conv_float_s32.sp-load,conv_float_s32.vor
+
+# --- LOAD WCOMP FOR RESISTOR LADDER INTERPRETATION ---
+
+loadrt wcomp names=wcomp.mpg-incr1,wcomp.mpg-incr2,wcomp.axis-sel1,wcomp.axis-sel2,wcomp.axis-sel3
+
+
+
+addf conv_float_s32.fro 		servo-thread
+addf conv_float_s32.sso 		servo-thread
+addf conv_float_s32.sp-load 		servo-thread
+addf conv_float_s32.vor 		servo-thread
+addf wcomp.mpg-incr1			servo-thread
+addf wcomp.mpg-incr2			servo-thread
+addf wcomp.axis-sel1			servo-thread 
+addf wcomp.axis-sel2			servo-thread 
+addf wcomp.axis-sel3			servo-thread 
+
+
+
+	#  ---FEED RATE OVERRIDE ANALOGUE CONDITIONING---
+
+setp halui.feed-override.count-enable true
+setp halui.feed-override.direct-value true
+setp halui.feed-override.scale 0.01
+
+#-set input gain and offset 0-150
+
+setp scale.feedrate-override.gain 62.5
+setp scale.feedrate-override.offset 0
+
+#-send analogue signal to scale function
+
+net fro-adc-input => scale.feedrate-override.in
+
+#-convert output from scale to s32
+
+net scale-output-fro <= scale.feedrate-override.out
+net scale-output-fro => conv_float_s32.fro.in
+net conv-output-fro <= conv_float_s32.fro.out 
+net conv-output-fro => halui.feed-override.counts
+
+
+
+	#  ---SPINDLE SPEED OVERRIDE ANALOGUE CONDITIONING---
+
+setp halui.spindle-override.count-enable true
+setp halui.spindle-override.direct-value true
+setp halui.spindle-override.scale 0.01
+
+#-set input gain and offset 50-150
+
+setp scale.spindle-override.gain 41.666
+setp scale.spindle-override.offset 50
+
+#-send analogue signal to scale function
+
+net sso-adc-input     => scale.spindle-override.in
+
+#-convert output from scale to s32
+
+net scale-output-sso <= scale.spindle-override.out
+net scale-output-sso => conv_float_s32.sso.in
+net conv-output-sso <= conv_float_s32.sso.out 
+net conv-output-sso => halui.spindle-override.counts
+
+
+	#  ---MAX VELOCITY (RAPID) OVERRIDE ANALOGUE CONDITIONING---
+
+setp halui.max-velocity.count-enable true
+setp halui.max-velocity.direct-value true
+setp halui.max-velocity.scale 0.01
+
+#-set input gain and offset 10-100% => 0-24v
+
+setp scale.velocity-override.gain 41.666
+setp scale.velocity-override.offset 10
+
+#-send analogue signal to scale function
+
+net vro-adc-input     => scale.velocity-override.in
+
+#-convert output from scale to s32
+
+net scale-output-vor <= scale.velocity-override.out
+net scale-output-vor => conv_float_s32.vor.in
+net conv-output-vor <= conv_float_s32.vor.out 
+net conv-output-vor => halui.max-velocity.counts
+
+
+	
+
+
+	#  ---MANUAL JOG SPEED ANALOGUE CONDITIONING---
+
+
+#-set input gain and offset 0-750mm/min => 0-24v
+
+setp scale.man-jog-incr.gain 31.25
+setp scale.man-jog-incr.offset 0
+
+#-send analogue signal from FRO pot to scale function for manual Jog feedrate!!!!
+
+net fro-adc-input     => scale.man-jog-incr.in
+
+#-send output from scale to jog increment
+
+net halui.jog.speed <= scale.man-jog-incr.out
+
+
+
+
+ 
+#  ---MPG JOG SPEED ANALOGUE CONDITIONING---
+
+
+#-set input gain and offset 0-24=> 0-24v not strictly required
+
+setp scale.jog-incr.gain 1
+setp scale.jog-incr.offset 0
+
+#-send analogue signal from MPG pot to scale function for mpg Jog!!!!
+
+net mpg-incr-input     => scale.jog-incr.in
+
+#-send output from scale to window comparitors
+
+setp wcomp.mpg-incr1.min 6
+setp wcomp.mpg-incr1.max 12
+setp wcomp.mpg-incr2.min 12.01
+setp wcomp.mpg-incr2.max 18
+
+net mpg-incr scale.jog-incr.out
+
+net mpg-incr 	=> 	wcomp.mpg-incr1.in
+net mpg-incr 	=> 	wcomp.mpg-incr2.in
+
+
+
+#-connect comparitor output to mux 16 inputs
+
+
+net      jog-incr-a 	<=	wcomp.mpg-incr1.under 	
+net      jog-incr-b    <=	wcomp.mpg-incr1.out		
+net      jog-incr-c    <=	wcomp.mpg-incr2.out		
+net      jog-incr-d 	<=	wcomp.mpg-incr2.over  	
+   	 
+
+net jog-incr-a           =>  jogincr.sel0
+net jog-incr-b           =>  jogincr.sel1
+net jog-incr-c           =>  jogincr.sel2
+net jog-incr-d           =>  jogincr.sel3
+net selected-jog-incr    <=  jogincr.out-f
+    setp jogincr.debounce-time      0.200000
+    setp jogincr.use-graycode      True
+    setp jogincr.suppress-no-input True
+    
+#--use 01,03,07,15--
+
+    setp jogincr.in00          0.000000
+    setp jogincr.in01          0.000100
+    setp jogincr.in02          0.000000
+    setp jogincr.in03          0.001000
+    setp jogincr.in04          0.000000
+    setp jogincr.in05          0.000000
+    setp jogincr.in06          0.000000
+    setp jogincr.in07          0.100000
+    setp jogincr.in08          0.000000
+    setp jogincr.in09          0.000000
+    setp jogincr.in10          0.000000
+    setp jogincr.in11          0.000000
+    setp jogincr.in12          0.000000
+    setp jogincr.in13          0.000000
+    setp jogincr.in14          0.000000
+    setp jogincr.in15          1.000000
+
+
+
+
+
+
+
+#  ---MODE SELECT ROTARY ANALOGUE CONDITIONING---
+
+#-when MPG selected axis.N.jog-enable => true
+
+
+
+
+#  ---MPG JOG AXIS SELECT ROTARY ANALOGUE CONDITIONING---
+
+net mpg-axis => wcomp.axis-sel1.in wcomp.axis-sel2.in  wcomp.axis-sel3.in 
+
+setp wcomp.axis-sel1.min 4.8
+setp wcomp.axis-sel1.max 9.6
+setp wcomp.axis-sel2.min 9.6
+setp wcomp.axis-sel2.max 14.4
+setp wcomp.axis-sel3.min 14.4
+setp wcomp.axis-sel3.max 19.2
+
+#-connect wcomp outputs to mode select pins halui if more modes required, #seperate adjacent max/min and use overs
+
+#net 			<=	wcomp.axis-sel1.under
+#net 			<=	wcomp.axis-sel1.out
+#net NOT USED	<=	wcomp.axis-sel1.over
+#net 			<=	wcomp.axis-sel2.out
+#net NOT USED	<=	wcomp.axis-sel2.over
+#net 			<=	wcomp.axis-sel3.out
+#net 			<=	wcomp.axis-sel3.over
+     
