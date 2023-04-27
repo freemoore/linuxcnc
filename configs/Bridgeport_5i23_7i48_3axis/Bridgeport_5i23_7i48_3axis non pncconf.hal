@@ -23,9 +23,9 @@ loadrt scale names=scale.spindle,scale.feedrate-override,scale.spindle-override,
 
 
 #addf estop-latch.0 					servo-thread
-addf mux16.0              			servo-thread
-addf jogincr              			servo-thread
-addf foincr               			servo-thread
+addf mux16.0              				servo-thread
+addf jogincr              				servo-thread
+addf foincr               				servo-thread
 addf soincr               				servo-thread
 
 addf hm2_5i23.0.read 					servo-thread

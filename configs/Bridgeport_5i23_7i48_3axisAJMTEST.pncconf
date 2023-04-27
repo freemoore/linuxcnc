@@ -169,8 +169,8 @@
   <property name="frontend" type="int" value="1"/>
   <property name="gearselect" type="bool" value="False"/>
   <property name="geometry" type="string" value="xyz"/>
-  <property name="gladeexists" type="bool" value="False"/>
-  <property name="gladesample" type="bool" value="True"/>
+  <property name="gladeexists" type="bool" value="True"/>
+  <property name="gladesample" type="bool" value="False"/>
   <property name="gladevcp" type="bool" value="True"/>
   <property name="gladevcpforcemax" type="bool" value="False"/>
   <property name="gladevcphaluicmds" type="int" value="0"/>
@@ -287,10 +287,10 @@
   <property name="loadcompservo" type="eval" value="['']"/>
   <property name="lowpassnames" type="string" value="lowpass.spindle"/>
   <property name="machinename" type="string" value="Bridgeport_5i23_7i48_3axisAJMTEST"/>
-  <property name="max_angular_velocity" type="float" value="1.0"/>
+  <property name="max_angular_velocity" type="float" value="10.0"/>
   <property name="max_feed_override" type="float" value="2.0"/>
-  <property name="max_linear_velocity" type="float" value="1.0"/>
-  <property name="max_spindle_override" type="float" value="1.5"/>
+  <property name="max_linear_velocity" type="float" value="20.0"/>
+  <property name="max_spindle_override" type="float" value="2.0"/>
   <property name="maxspeeddisplay" type="float" value="4000.0"/>
   <property name="md5sums" type="eval" value="[]"/>
   <property name="mesa0_3pwm_frequency" type="float" value="20000.0"/>
@@ -1144,7 +1144,7 @@
   <property name="mesa0sserial0_0pin9inv" type="bool" value="False"/>
   <property name="mesa0sserial0_0pin9type" type="string" value="GPIO Input"/>
   <property name="mesa0sserial0_0subboard" type="string" value="7i64"/>
-  <property name="mesa0sserial0_1pin0" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_1pin0" type="string" value="estop-ext"/>
   <property name="mesa0sserial0_1pin0inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin0type" type="string" value="GPIO Input"/>
   <property name="mesa0sserial0_1pin1" type="string" value="unused-input"/>
@@ -1166,40 +1166,40 @@
   <property name="mesa0sserial0_1pin15" type="string" value="unused-input"/>
   <property name="mesa0sserial0_1pin15inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin15type" type="string" value="GPIO Input"/>
-  <property name="mesa0sserial0_1pin16" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_1pin16" type="string" value="force-pin-true"/>
   <property name="mesa0sserial0_1pin16inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin16type" type="string" value="GPIO Output"/>
   <property name="mesa0sserial0_1pin17" type="string" value="unused-output"/>
   <property name="mesa0sserial0_1pin17inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin17type" type="string" value="GPIO Output"/>
-  <property name="mesa0sserial0_1pin18" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_1pin18" type="string" value="coolant-flood"/>
   <property name="mesa0sserial0_1pin18inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin18type" type="string" value="GPIO Output"/>
-  <property name="mesa0sserial0_1pin19" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_1pin19" type="string" value="coolant-mist"/>
   <property name="mesa0sserial0_1pin19inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin19type" type="string" value="GPIO Output"/>
   <property name="mesa0sserial0_1pin1inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin1type" type="string" value="GPIO Input"/>
   <property name="mesa0sserial0_1pin2" type="string" value="unused-input"/>
-  <property name="mesa0sserial0_1pin20" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_1pin20" type="string" value="spindle-enable"/>
   <property name="mesa0sserial0_1pin20inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin20type" type="string" value="GPIO Output"/>
-  <property name="mesa0sserial0_1pin21" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_1pin21" type="string" value="spindle-cw"/>
   <property name="mesa0sserial0_1pin21inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin21type" type="string" value="GPIO Output"/>
-  <property name="mesa0sserial0_1pin22" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_1pin22" type="string" value="spindle-ccw"/>
   <property name="mesa0sserial0_1pin22inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin22type" type="string" value="GPIO Output"/>
-  <property name="mesa0sserial0_1pin23" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_1pin23" type="string" value="machine-is-enabled"/>
   <property name="mesa0sserial0_1pin23inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin23type" type="string" value="GPIO Output"/>
-  <property name="mesa0sserial0_1pin24" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_1pin24" type="string" value="both-home-x"/>
   <property name="mesa0sserial0_1pin24inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin24type" type="string" value="GPIO Input"/>
-  <property name="mesa0sserial0_1pin25" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_1pin25" type="string" value="both-home-y"/>
   <property name="mesa0sserial0_1pin25inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin25type" type="string" value="GPIO Input"/>
-  <property name="mesa0sserial0_1pin26" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_1pin26" type="string" value="both-home-z"/>
   <property name="mesa0sserial0_1pin26inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin26type" type="string" value="GPIO Input"/>
   <property name="mesa0sserial0_1pin27" type="string" value="unused-input"/>
