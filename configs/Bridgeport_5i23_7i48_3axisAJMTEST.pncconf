@@ -1169,7 +1169,7 @@
   <property name="mesa0sserial0_1pin16" type="string" value="force-pin-true"/>
   <property name="mesa0sserial0_1pin16inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin16type" type="string" value="GPIO Output"/>
-  <property name="mesa0sserial0_1pin17" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_1pin17" type="string" value="spindle-ccw"/>
   <property name="mesa0sserial0_1pin17inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin17type" type="string" value="GPIO Output"/>
   <property name="mesa0sserial0_1pin18" type="string" value="coolant-flood"/>
@@ -1187,7 +1187,7 @@
   <property name="mesa0sserial0_1pin21" type="string" value="spindle-cw"/>
   <property name="mesa0sserial0_1pin21inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin21type" type="string" value="GPIO Output"/>
-  <property name="mesa0sserial0_1pin22" type="string" value="spindle-ccw"/>
+  <property name="mesa0sserial0_1pin22" type="string" value="x-enable"/>
   <property name="mesa0sserial0_1pin22inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin22type" type="string" value="GPIO Output"/>
   <property name="mesa0sserial0_1pin23" type="string" value="machine-is-enabled"/>
@@ -4425,7 +4425,7 @@
   <property name="xencoder_wormdriven" type="int" value="1"/>
   <property name="xencoder_wormdriver" type="int" value="1"/>
   <property name="xencodercounts" type="int" value="4000"/>
-  <property name="xencoderscale" type="float" value="6553.6"/>
+  <property name="xencoderscale" type="float" value="4096.0"/>
   <property name="xhomefinalvel" type="float" value="0.0"/>
   <property name="xhomelatchvel" type="float" value="0.816666666667"/>
   <property name="xhomepos" type="float" value="-365.0"/>
@@ -4438,12 +4438,12 @@
   <property name="xinvertmotor" type="bool" value="False"/>
   <property name="xlatchdir" type="int" value="1"/>
   <property name="xmaxacc" type="float" value="250.0"/>
-  <property name="xmaxferror" type="float" value="0.005"/>
+  <property name="xmaxferror" type="float" value="1.0"/>
   <property name="xmaxlim" type="float" value="10.5"/>
   <property name="xmaxoutput" type="float" value="8.8"/>
   <property name="xmaxvel" type="float" value="83.3333333333"/>
   <property name="xmicrostep" type="int" value="1"/>
-  <property name="xminferror" type="float" value="0.0005"/>
+  <property name="xminferror" type="float" value="1.0"/>
   <property name="xminlim" type="float" value="-740.5"/>
   <property name="xmotor_leadscrew" type="int" value="5"/>
   <property name="xmotor_leadscrew_tpi" type="int" value="5"/>
