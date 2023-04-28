@@ -39,40 +39,40 @@ addf hm2_5i23.0.write         servo-thread
 
 
 # --- FORCE-PIN-TRUE ---
-setp hm2_5i23.0.7i84.0.0.output-00 true
+#setp hm2_5i23.0.7i84.0.0.output-00 true
 
 # --- SPINDLE-CCW ---
-net spindle-ccw  =>     hm2_5i23.0.7i84.0.0.output-01
+net spindle-ccw  =>     		hm2_5i23.0.7i84.0.0.output-01
 
 # --- COOLANT-FLOOD ---
-net coolant-flood  =>     hm2_5i23.0.7i84.0.0.output-02
+net coolant-flood  =>     		hm2_5i23.0.7i84.0.0.output-02
 
 # --- COOLANT-MIST ---
-net coolant-mist  =>     hm2_5i23.0.7i84.0.0.output-03
+net coolant-mist  =>     		hm2_5i23.0.7i84.0.0.output-03
 
 # --- SPINDLE-ENABLE ---
-net spindle-enable  =>     hm2_5i23.0.7i84.0.0.output-04
+net spindle-enable  =>   		hm2_5i23.0.7i84.0.0.output-04
 
 # --- SPINDLE-CW ---
-net spindle-cw  =>     hm2_5i23.0.7i84.0.0.output-05
+net spindle-cw  =>    			hm2_5i23.0.7i84.0.0.output-05
 
 # --- X-ENABLE ---
-net x-enable  =>     hm2_5i23.0.7i84.0.0.output-06
+#net x-enable  =>     			hm2_5i23.0.7i84.0.0.output-06
 
 # --- MACHINE-IS-ENABLED ---
-net machine-is-enabled  =>     hm2_5i23.0.7i84.0.0.output-07
+#net machine-is-enabled  =>     	hm2_5i23.0.7i84.0.0.output-07
 
 # external input signals
 
 
 # --- ESTOP-EXT ---
-net estop-ext     <=  hm2_5i23.0.7i84.0.0.input-00
+net estop-ext     <=  			hm2_5i23.0.7i84.0.0.input-00
 
 # --- BOTH-HOME-X ---
-net both-home-x     <=  hm2_5i23.0.7i84.0.0.input-16
+net both-home-x     <=  		hm2_5i23.0.7i84.0.0.input-16
 
 # --- BOTH-HOME-Y ---
-net both-home-y     <=  hm2_5i23.0.7i84.0.0.input-17
+net both-home-y     <=  		hm2_5i23.0.7i84.0.0.input-17
 
 # --- BOTH-HOME-Z ---
 net both-home-z     <=  hm2_5i23.0.7i84.0.0.input-18
