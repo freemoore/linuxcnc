@@ -169,9 +169,9 @@
   <property name="frontend" type="int" value="1"/>
   <property name="gearselect" type="bool" value="False"/>
   <property name="geometry" type="string" value="xyz"/>
-  <property name="gladeexists" type="bool" value="True"/>
-  <property name="gladesample" type="bool" value="False"/>
-  <property name="gladevcp" type="bool" value="True"/>
+  <property name="gladeexists" type="bool" value="False"/>
+  <property name="gladesample" type="bool" value="True"/>
+  <property name="gladevcp" type="bool" value="False"/>
   <property name="gladevcpforcemax" type="bool" value="False"/>
   <property name="gladevcphaluicmds" type="int" value="0"/>
   <property name="gladevcpheight" type="float" value="0.0"/>
@@ -286,7 +286,7 @@
   <property name="loadcompbase" type="eval" value="['']"/>
   <property name="loadcompservo" type="eval" value="['']"/>
   <property name="lowpassnames" type="string" value="lowpass.spindle"/>
-  <property name="machinename" type="string" value="Bridgeport_5i23_7i48_3axisAJMTEST"/>
+  <property name="machinename" type="string" value="wtf"/>
   <property name="max_angular_velocity" type="float" value="10.0"/>
   <property name="max_feed_override" type="float" value="2.0"/>
   <property name="max_linear_velocity" type="float" value="20.0"/>
