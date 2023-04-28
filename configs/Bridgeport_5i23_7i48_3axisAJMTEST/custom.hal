@@ -11,4 +11,4 @@ setp timedelay.0.on-delay 0
 
 net machine-is-enabled  => hm2_5i23.0.7i84.0.0.output-07 timedelay.0.in
 
-net timedelay.0.out hm2_5i23.0.7i84.0.0.output-06
+net dc-brake-open-delay timedelay.0.out hm2_5i23.0.7i84.0.0.output-06
