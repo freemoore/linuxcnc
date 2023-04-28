@@ -39,7 +39,7 @@ addf hm2_5i23.0.write         servo-thread
 
 
 # --- FORCE-PIN-TRUE ---
-#setp hm2_5i23.0.7i84.0.0.output-00 true
+setp hm2_5i23.0.7i84.0.0.output-00 true
 
 # --- SPINDLE-CCW ---
 net spindle-ccw  =>     		hm2_5i23.0.7i84.0.0.output-01
