@@ -6,7 +6,7 @@
 loadrt [KINS]KINEMATICS
 loadrt [EMCMOT]EMCMOT servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[KINS]JOINTS
 loadrt hostmot2
-loadrt hm2_pci config="firmware=hm2/5i23/5i23_7i48_7i52.BIT num_encoders=6 num_pwmgens=4 num_stepgens=0 sserial_port_0=00xxxx" 
+loadrt hm2_pci config="firmware=hm2/5i23/5i23_7i48_7i52.BIT num_encoders=6 num_pwmgens=6 num_stepgens=0 sserial_port_0=00xxxx" 
 setp    hm2_5i23.0.pwmgen.pwm_frequency 24000
 setp    hm2_5i23.0.pwmgen.pdm_frequency 6000
 setp    hm2_5i23.0.watchdog.timeout_ns 10000000
@@ -42,52 +42,34 @@ addf hm2_5i23.0.write         servo-thread
 setp hm2_5i23.0.7i84.0.0.output-00 true
 
 # --- SPINDLE-CCW ---
-net spindle-ccw  		=> hm2_5i23.0.7i84.0.0.output-01
+net spindle-ccw  =>     hm2_5i23.0.7i84.0.0.output-01
 
 # --- COOLANT-FLOOD ---
-net coolant-flood  		=> hm2_5i23.0.7i84.0.0.output-02
+net coolant-flood  =>     hm2_5i23.0.7i84.0.0.output-02
 
 # --- COOLANT-MIST ---
-net coolant-mist  		=> hm2_5i23.0.7i84.0.0.output-03
+net coolant-mist  =>     hm2_5i23.0.7i84.0.0.output-03
 
 # --- SPINDLE-ENABLE ---
-#net spindle-enable not currently connected		
-
-# fan relay on - relay no 18, controlled by wire77, switching wire18
-# fan relay, if we can find this function => hm2_5i23.0.7i84.0.0.output-04
+net spindle-enable  =>     hm2_5i23.0.7i84.0.0.output-04
 
 # --- SPINDLE-CW ---
-#net spindle-cw  not currently connected
-
-# marked 'brepa solenoid +24v' - spindle brake solenoid? 
-# relay no 19, controlled by wire78, switched by wire19
-# spindle brake, if we can find this function => hm2_5i23.0.7i84.0.0.output-05
+net spindle-cw  =>     hm2_5i23.0.7i84.0.0.output-05
 
 # external input signals
 
 
 # --- ESTOP-EXT ---
-net estop-ext     		<=  hm2_5i23.0.7i84.0.0.input-00
+net estop-ext     <=  hm2_5i23.0.7i84.0.0.input-00
 
-# --- HOME-X ---
-net home-x     			<=  hm2_5i23.0.7i84.0.0.input-16
+# --- BOTH-HOME-X ---
+net both-home-x     <=  hm2_5i23.0.7i84.0.0.input-16
 
-# --- HOME-Y ---
-net home-y     			<=  hm2_5i23.0.7i84.0.0.input-17
+# --- BOTH-HOME-Y ---
+net both-home-y     <=  hm2_5i23.0.7i84.0.0.input-17
 
-# ---HOME-Z ---
-net home-z     			<=  hm2_5i23.0.7i84.0.0.input-18
-
-# --- ALL-LIMIT ---
-net all-limit     		<=  hm2_5i23.0.7i84.0.0.input-19-not
-
-
-
-
-
-
-
-
+# --- BOTH-HOME-Z ---
+net both-home-z     <=  hm2_5i23.0.7i84.0.0.input-18
 
 #*******************
 #  AXIS X JOINT 0
@@ -115,30 +97,32 @@ net x-output        <=  pid.x.output
 setp   hm2_5i23.0.pwmgen.00.output-type 2
 setp   hm2_5i23.0.pwmgen.00.scale  [JOINT_0]OUTPUT_SCALE
 
-net x-output                             => hm2_5i23.0.pwmgen.00.value
+net x-output                             => hm2_5i23.0.pwmgen.04.value
 net x-pos-cmd    joint.0.motor-pos-cmd
-net x-enable     joint.0.amp-enable-out  => hm2_5i23.0.pwmgen.00.enable
+net x-enable     joint.0.amp-enable-out  => hm2_5i23.0.pwmgen.04.enable
+
+
 
 # ---Encoder feedback signals/setup---
 
-setp    hm2_5i23.0.encoder.00.counter-mode 0
-setp    hm2_5i23.0.encoder.00.filter 1
-setp    hm2_5i23.0.encoder.00.index-invert 0
-setp    hm2_5i23.0.encoder.00.index-mask 0
-setp    hm2_5i23.0.encoder.00.index-mask-invert 0
-setp    hm2_5i23.0.encoder.00.scale  [JOINT_0]ENCODER_SCALE
+setp    hm2_5i23.0.encoder.04.counter-mode 0
+setp    hm2_5i23.0.encoder.04.filter 1
+setp    hm2_5i23.0.encoder.04.index-invert 0
+setp    hm2_5i23.0.encoder.04.index-mask 0
+setp    hm2_5i23.0.encoder.04.index-mask-invert 0
+setp    hm2_5i23.0.encoder.04.scale  [JOINT_0]ENCODER_SCALE
 
-net x-pos-fb               <=  hm2_5i23.0.encoder.00.position
-net x-vel-fb               <=  hm2_5i23.0.encoder.00.velocity
+net x-pos-fb               <=  hm2_5i23.0.encoder.04.position
+net x-vel-fb               <=  hm2_5i23.0.encoder.04.velocity
 net x-pos-fb               =>  joint.0.motor-pos-fb
-net x-index-enable    joint.0.index-enable  <=>  hm2_5i23.0.encoder.00.index-enable
-net x-pos-rawcounts        <=  hm2_5i23.0.encoder.00.rawcounts
+net x-index-enable    joint.0.index-enable  <=>  hm2_5i23.0.encoder.04.index-enable
+net x-pos-rawcounts        <=  hm2_5i23.0.encoder.04.rawcounts
 
 # ---setup home / limit switch signals---
 
-net home-x     		=>  joint.0.home-sw-in
-net all-limit   	=>  joint.0.neg-lim-sw-in
-net all-limit    	=>  joint.0.pos-lim-sw-in
+net both-home-x     =>  joint.0.home-sw-in
+net both-home-x     =>  joint.0.neg-lim-sw-in
+net both-home-x     =>  joint.0.pos-lim-sw-in
 
 #*******************
 #  AXIS Y JOINT 1
@@ -187,9 +171,9 @@ net y-pos-rawcounts        <=  hm2_5i23.0.encoder.01.rawcounts
 
 # ---setup home / limit switch signals---
 
-net home-y     		=>  joint.1.home-sw-in
-net all-limit     	=>  joint.1.neg-lim-sw-in
-net all-limit     	=>  joint.1.pos-lim-sw-in
+net both-home-y     =>  joint.1.home-sw-in
+net both-home-y     =>  joint.1.neg-lim-sw-in
+net both-home-y     =>  joint.1.pos-lim-sw-in
 
 #*******************
 #  AXIS Z JOINT 2
@@ -238,9 +222,9 @@ net z-pos-rawcounts        <=  hm2_5i23.0.encoder.02.rawcounts
 
 # ---setup home / limit switch signals---
 
-net home-z     =>  joint.2.home-sw-in
-net all-limit     =>  joint.2.neg-lim-sw-in
-net all-limit     =>  joint.2.pos-lim-sw-in
+net both-home-z     =>  joint.2.home-sw-in
+net both-home-z     =>  joint.2.neg-lim-sw-in
+net both-home-z     =>  joint.2.pos-lim-sw-in
 
 #*******************
 #  SPINDLE
@@ -468,3 +452,4 @@ net tool-change-request     iocontrol.0.tool-change       =>  hal_manualtoolchan
 net tool-change-confirmed   iocontrol.0.tool-changed      <=  hal_manualtoolchange.changed
 net tool-number             iocontrol.0.tool-prep-number  =>  hal_manualtoolchange.number
 net tool-prepare-loopback   iocontrol.0.tool-prepare      =>  iocontrol.0.tool-prepared
+
