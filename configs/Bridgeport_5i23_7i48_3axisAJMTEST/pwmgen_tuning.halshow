@@ -16,6 +16,8 @@ pin+hm2_5i23.0.encoder.01.velocity
 pin+hm2_5i23.0.encoder.01.velocity-rpm
 pin+hm2_5i23.0.encoder.01.position
 pin+hm2_5i23.0.encoder.01.rawcounts
+sig+y-pos-cmd
+sig+y-pos-rawcounts
 pin+hm2_5i23.0.pwmgen.02.enable
 pin+hm2_5i23.0.pwmgen.02.value
 pin+hm2_5i23.0.encoder.02.count
@@ -23,3 +25,5 @@ pin+hm2_5i23.0.encoder.02.velocity
 pin+hm2_5i23.0.encoder.02.velocity-rpm
 pin+hm2_5i23.0.encoder.02.position
 pin+hm2_5i23.0.encoder.02.rawcounts
+sig+z-pos-cmd
+sig+z-pos-rawcounts
