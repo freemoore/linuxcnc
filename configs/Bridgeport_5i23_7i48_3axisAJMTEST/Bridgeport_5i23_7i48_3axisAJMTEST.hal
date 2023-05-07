@@ -102,7 +102,7 @@ setp   pid.x.FF1       [JOINT_0]FF1
 setp   pid.x.FF2       [JOINT_0]FF2
 setp   pid.x.deadband  [JOINT_0]DEADBAND
 setp   pid.x.maxoutput [JOINT_0]MAX_OUTPUT
-setp   pid.x.error-previous-target true
+setp   pid.x.error-previous-target 1
 
 net x-index-enable  => pid.x.index-enable
 net x-enable        =>  pid.x.enable
@@ -153,7 +153,7 @@ setp   pid.y.FF1       [JOINT_1]FF1
 setp   pid.y.FF2       [JOINT_1]FF2
 setp   pid.y.deadband  [JOINT_1]DEADBAND
 setp   pid.y.maxoutput [JOINT_1]MAX_OUTPUT
-setp   pid.y.error-previous-target true
+setp   pid.y.error-previous-target 1
 
 net y-index-enable  => pid.y.index-enable
 net y-enable        =>  pid.y.enable
@@ -204,7 +204,7 @@ setp   pid.z.FF1       [JOINT_2]FF1
 setp   pid.z.FF2       [JOINT_2]FF2
 setp   pid.z.deadband  [JOINT_2]DEADBAND
 setp   pid.z.maxoutput [JOINT_2]MAX_OUTPUT
-setp   pid.z.error-previous-target true
+setp   pid.z.error-previous-target 1
 
 net z-index-enable  => pid.z.index-enable
 net z-enable        =>  pid.z.enable
