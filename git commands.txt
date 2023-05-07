@@ -1,0 +1,5 @@
+after a change in a file/folder:
+
+git add .
+git commit -m "make a note of what you changed as a comment, here"
+git push

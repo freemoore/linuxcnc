@@ -1,0 +1,34 @@
+halrun
+loadrt threads name1=th period1=1000000
+loadrt hostmot2
+loadrt hm2_pci
+
+
+loadrt hm2_pci config="firmware=hm2/5i23/5i23_7i48_7i52.BIT num_encoders=7 num_pwmgens=6 num_3pwmgens=0 num_stepgens=0 sserial_port_0=11xxxxxx " 
+
+
+addf hm2_5i23.0.read th
+addf hm2_5i23.0.write th
+start
+setp hm2_5i23.0.pwmgen.00.value 0.5
+getp hm2_5i23.0.pwmgen.00.value
+quit
+
+setp hm2_5i23.0.pwmgen.00.enable TRUE
+getp hm2_5i23.0.pwmgen.00.enable
+
+setp hm2_5i23.0.pwmgen.00.enable TRUE
+
+setp hm2_5i23.0.7i84.0.0.output-06 1
+setp hm2_5i23.0.7i84.0.0.output-07 1
+
+setp hm2_5i23.0.pwmgen.00.enable TRUE
+setp hm2_5i23.0.pwmgen.00.value 0.2 - lights the LED across pins23-24 brightness according to PWM value given
+
+setp hm2_5i23.0.watchdog.has_bit 
+setp hm2_5i23.0.pwmgen.00.enable TRUEsetp hm2_5i23.0.pwmgen.00.enable TRUE
+
+setp hm2_5i23.0.pwmgen.02.enable TRUE
+
+
+setp hm2_5i23.0.pwmgen.00.value 0.1
