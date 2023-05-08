@@ -169,9 +169,9 @@
   <property name="frontend" type="int" value="1"/>
   <property name="gearselect" type="bool" value="False"/>
   <property name="geometry" type="string" value="xyz"/>
-  <property name="gladeexists" type="bool" value="True"/>
-  <property name="gladesample" type="bool" value="False"/>
-  <property name="gladevcp" type="bool" value="True"/>
+  <property name="gladeexists" type="bool" value="False"/>
+  <property name="gladesample" type="bool" value="True"/>
+  <property name="gladevcp" type="bool" value="False"/>
   <property name="gladevcpforcemax" type="bool" value="False"/>
   <property name="gladevcphaluicmds" type="int" value="0"/>
   <property name="gladevcpheight" type="float" value="0.0"/>
@@ -244,7 +244,9 @@
   <property name="homingtype" type="int" value="0"/>
   <property name="include_spindle" type="bool" value="True"/>
   <property name="increments_imperial" type="string" value=".1in .05in .01in .005in .001in .0005in .0001in"/>
-  <property name="increments_metric" type="string" value="5mm 1mm .5mm .1mm .05mm .01mm .005mm"/>
+  <property name="increments_imperial_qtplasmac" type="string" value="1in .1in .01in .001in .0001in"/>
+  <property name="increments_metric" type="string" value="5mm 1mm .5mm .1mm .05mm .01mm .005mm 0.001mm"/>
+  <property name="increments_metric_qtplasmac" type="string" value="10mm 1mm .1mm .01mm .001mm"/>
   <property name="incrselect" type="bool" value="True"/>
   <property name="individual_homing" type="bool" value="False"/>
   <property name="ioaddr" type="string" value="0x0278"/>
@@ -289,14 +291,14 @@
   <property name="machinename" type="string" value="Bridgeport_5i23_7i48_3axisAJMTEST"/>
   <property name="max_angular_velocity" type="float" value="10.0"/>
   <property name="max_feed_override" type="float" value="2.0"/>
-  <property name="max_linear_velocity" type="float" value="20.0"/>
+  <property name="max_linear_velocity" type="float" value="100.0"/>
   <property name="max_spindle_override" type="float" value="2.0"/>
   <property name="maxspeeddisplay" type="float" value="4000.0"/>
   <property name="md5sums" type="eval" value="[]"/>
   <property name="mesa0_3pwm_frequency" type="float" value="20000.0"/>
   <property name="mesa0_boardtitle" type="string" value="5i23"/>
   <property name="mesa0_card_addrs" type="string" value="192.168.1.121"/>
-  <property name="mesa0_currentfirmwaredata" type="eval" value="['5i23', '5i23', '5i23_7i48_7i52', '5i23', 'hm2_pci', 12, 3, 0, 10, 6, 3, 0, 0, 0, 2, 1, 6, [], 0, 0, 0, 0, 0, 0, 0, 0, 72, 48, 96, [2, 3, 4], [u'PWM Gen-E', 0], [u'Muxed Enc 0', 0], [u'Muxed Enc 1', 0], [u'muxed Enc I', 0], [u'Muxed Enc 0', 1], [u'Muxed Enc 1', 1], [u'muxed Enc I', 1], [u'Muxed Enc 0', 2], [u'Muxed Enc 1', 2], [u'muxed Enc I', 2], [u'mux select', 0], [u'PWM Gen-P', 0], [u'PWM Gen-D', 0], [u'PWM Gen-P', 1], [u'PWM Gen-D', 1], [u'PWM Gen-P', 2], [u'PWM Gen-D', 2], [u'PWM Gen-P', 3], [u'PWM Gen-D', 3], [u'PWM Gen-P', 4], [u'PWM Gen-D', 4], [u'PWM Gen-P', 5], [u'PWM Gen-D', 5], [u'PWM Gen-E', 0], [u'SSERIAL-P5-EN', 0], [u'Muxed Enc 0', 3], [u'Muxed Enc 1', 3], [u'muxed Enc I', 3], [u'Muxed Enc 0', 4], [u'Muxed Enc 1', 4], [u'muxed Enc I', 4], [u'Muxed Enc 0', 5], [u'Muxed Enc 1', 5], [u'muxed Enc I', 5], [u'mux select', 6], [u'SSERIAL-P6-TX', 0], [u'SSERIAL-P6-RX', 0], [u'SSERIAL-P5-TX', 0], [u'SSERIAL-P5-RX', 0], [u'SSERIAL-P4-TX', 0], [u'SSERIAL-P4-RX', 0], [u'SSERIAL-P3-TX', 0], [u'SSERIAL-P3-RX', 0], [u'SSERIAL-P2-TX', 0], [u'SSERIAL-P2-RX', 0], [u'SSERIAL-P1-TX', 0], [u'SSERIAL-P1-RX', 0], [u'SSERIAL-P1-EN', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0]]"/>
+  <property name="mesa0_currentfirmwaredata" type="eval" value="['5i23', '5i23', '5i23_7i48_7i52', '5i23', 'hm2_pci', 12, 3, 0, 10, 6, 3, 0, 0, 0, 2, 1, 6, [], 0, 0, 0, 0, 0, 0, 0, 0, 72, 48.0, 96.0, [2, 3, 4], ['PWM Gen-E', 0], ['Muxed Enc 0', 0], ['Muxed Enc 1', 0], ['muxed Enc I', 0], ['Muxed Enc 0', 1], ['Muxed Enc 1', 1], ['muxed Enc I', 1], ['Muxed Enc 0', 2], ['Muxed Enc 1', 2], ['muxed Enc I', 2], ['mux select', 0], ['PWM Gen-P', 0], ['PWM Gen-D', 0], ['PWM Gen-P', 1], ['PWM Gen-D', 1], ['PWM Gen-P', 2], ['PWM Gen-D', 2], ['PWM Gen-P', 3], ['PWM Gen-D', 3], ['PWM Gen-P', 4], ['PWM Gen-D', 4], ['PWM Gen-P', 5], ['PWM Gen-D', 5], ['PWM Gen-E', 0], ['SSERIAL-P5-EN', 0], ['Muxed Enc 0', 3], ['Muxed Enc 1', 3], ['muxed Enc I', 3], ['Muxed Enc 0', 4], ['Muxed Enc 1', 4], ['muxed Enc I', 4], ['Muxed Enc 0', 5], ['Muxed Enc 1', 5], ['muxed Enc I', 5], ['mux select', 6], ['SSERIAL-P6-TX', 0], ['SSERIAL-P6-RX', 0], ['SSERIAL-P5-TX', 0], ['SSERIAL-P5-RX', 0], ['SSERIAL-P4-TX', 0], ['SSERIAL-P4-RX', 0], ['SSERIAL-P3-TX', 0], ['SSERIAL-P3-RX', 0], ['SSERIAL-P2-TX', 0], ['SSERIAL-P2-RX', 0], ['SSERIAL-P1-TX', 0], ['SSERIAL-P1-RX', 0], ['SSERIAL-P1-EN', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0]]"/>
   <property name="mesa0_firmware" type="string" value="5i23_7i48_7i52"/>
   <property name="mesa0_isawatchdog" type="int" value="1"/>
   <property name="mesa0_numof_encodergens" type="int" value="6"/>
@@ -1193,16 +1195,16 @@
   <property name="mesa0sserial0_1pin23" type="string" value="unused-output"/>
   <property name="mesa0sserial0_1pin23inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin23type" type="string" value="GPIO Output"/>
-  <property name="mesa0sserial0_1pin24" type="string" value="both-home-x"/>
+  <property name="mesa0sserial0_1pin24" type="string" value="home-x"/>
   <property name="mesa0sserial0_1pin24inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin24type" type="string" value="GPIO Input"/>
-  <property name="mesa0sserial0_1pin25" type="string" value="both-home-y"/>
+  <property name="mesa0sserial0_1pin25" type="string" value="home-y"/>
   <property name="mesa0sserial0_1pin25inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin25type" type="string" value="GPIO Input"/>
-  <property name="mesa0sserial0_1pin26" type="string" value="both-home-z"/>
+  <property name="mesa0sserial0_1pin26" type="string" value="home-z"/>
   <property name="mesa0sserial0_1pin26inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin26type" type="string" value="GPIO Input"/>
-  <property name="mesa0sserial0_1pin27" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_1pin27" type="string" value="all-limit"/>
   <property name="mesa0sserial0_1pin27inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin27type" type="string" value="GPIO Input"/>
   <property name="mesa0sserial0_1pin28" type="string" value="unused-input"/>
@@ -2049,10 +2051,372 @@
   <property name="mesa0sserial0_5pin9inv" type="bool" value="False"/>
   <property name="mesa0sserial0_5pin9type" type="string" value="GPIO Input"/>
   <property name="mesa0sserial0_5subboard" type="string" value="none"/>
+  <property name="mesa0sserial0_6pin0" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin0inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin0type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin1" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin10" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin10inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin10type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin11" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin11inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin11type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin12" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin12inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin12type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin13" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin13inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin13type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin14" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin14inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin14type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin15" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin15inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin15type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin16" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin16inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin16type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin17" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin17inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin17type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin18" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin18inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin18type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin19" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin19inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin19type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin1inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin1type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin2" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin20" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin20inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin20type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin21" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin21inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin21type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin22" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin22inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin22type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin23" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin23inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin23type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin24" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin24inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin24type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin25" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin25inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin25type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin26" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin26inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin26type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin27" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin27inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin27type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin28" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin28inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin28type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin29" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin29inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin29type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin2inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin2type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin3" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin30" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin30inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin30type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin31" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin31inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin31type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin32" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin32inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin32type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin33" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin33inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin33type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin34" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin34inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin34type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin35" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin35inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin35type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin36" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin36inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin36type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin37" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin37inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin37type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin38" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin38inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin38type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin39" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin39inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin39type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin3inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin3type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin4" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin40" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin40inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin40type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin41" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin41inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin41type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin42" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin42inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin42type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin43" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin43inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin43type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin44" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin44inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin44type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin45" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin45inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin45type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin46" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin46inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin46type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin47" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin47inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin47type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin48" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin48inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin48type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin49" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin49inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin49type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin4inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin4type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin5" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin50" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin50inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin50type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin51" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin51inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin51type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin52" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin52inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin52type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin53" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin53inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin53type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin54" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin54inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin54type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin55" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin55inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin55type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin56" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin56inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin56type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin57" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin57inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin57type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin58" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin58inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin58type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin59" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_6pin59inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin59type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_6pin5inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin5type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin6" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin6inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin6type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin7" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin7inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin7type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin8" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin8inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin8type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6pin9" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_6pin9inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_6pin9type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_6subboard" type="string" value="none"/>
+  <property name="mesa0sserial0_7pin0" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin0inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin0type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin1" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin10" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin10inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin10type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin11" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin11inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin11type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin12" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin12inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin12type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin13" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin13inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin13type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin14" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin14inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin14type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin15" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin15inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin15type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin16" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin16inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin16type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin17" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin17inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin17type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin18" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin18inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin18type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin19" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin19inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin19type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin1inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin1type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin2" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin20" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin20inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin20type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin21" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin21inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin21type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin22" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin22inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin22type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin23" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin23inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin23type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin24" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin24inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin24type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin25" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin25inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin25type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin26" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin26inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin26type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin27" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin27inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin27type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin28" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin28inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin28type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin29" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin29inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin29type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin2inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin2type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin3" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin30" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin30inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin30type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin31" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin31inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin31type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin32" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin32inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin32type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin33" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin33inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin33type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin34" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin34inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin34type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin35" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin35inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin35type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin36" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin36inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin36type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin37" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin37inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin37type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin38" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin38inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin38type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin39" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin39inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin39type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin3inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin3type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin4" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin40" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin40inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin40type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin41" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin41inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin41type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin42" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin42inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin42type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin43" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin43inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin43type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin44" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin44inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin44type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin45" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin45inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin45type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin46" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin46inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin46type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin47" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin47inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin47type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin48" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin48inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin48type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin49" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin49inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin49type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin4inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin4type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin5" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin50" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin50inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin50type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin51" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin51inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin51type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin52" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin52inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin52type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin53" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin53inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin53type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin54" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin54inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin54type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin55" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin55inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin55type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin56" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin56inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin56type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin57" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin57inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin57type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin58" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin58inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin58type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin59" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_7pin59inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin59type" type="string" value="GPIO Output"/>
+  <property name="mesa0sserial0_7pin5inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin5type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin6" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin6inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin6type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin7" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin7inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin7type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin8" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin8inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin8type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7pin9" type="string" value="unused-input"/>
+  <property name="mesa0sserial0_7pin9inv" type="bool" value="False"/>
+  <property name="mesa0sserial0_7pin9type" type="string" value="GPIO Input"/>
+  <property name="mesa0sserial0_7subboard" type="string" value="none"/>
   <property name="mesa1_3pwm_frequency" type="int" value="20000"/>
   <property name="mesa1_boardtitle" type="string" value="5i25-Internal Data"/>
   <property name="mesa1_card_addrs" type="string" value="192.168.1.121"/>
-  <property name="mesa1_currentfirmwaredata" type="eval" value="['5i25-Internal Data', '5i25', '7i76x2 -With One 7i76', '5i25', 'hm2_pci', 1, 3, 0, 0, 0, 3, 0, 0, 5, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 34, 33, 200, [3, 2], [u'Step Gen-A', 0], [u'Dir Gen-B', 0], [u'Step Gen-A', 1], [u'Dir Gen-B', 1], [u'Step Gen-A', 2], [u'Dir Gen-B', 2], [u'Step Gen-A', 3], [u'Dir Gen-B', 3], [u'Step Gen-A', 4], [u'Dir Gen-B', 4], [u'7i76 I/O (SS0)', 0], [u'SMARTSERIAL-P0-RX', 0], [u'SMARTSERIAL-P1-TX', 0], [u'SMARTSERIAL-P1-RX', 0], [u'Quad Encoder-I', 0], [u'Quad Encoder-B', 0], [u'Quad Encoder-A', 0], [u'Not Used', 0], [u'Not Used', 0], [u'Not Used', 0], [u'Not Used', 0], [u'Not Used', 0], [u'Not Used', 0], [u'Not Used', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'GPIO Input', 0], [u'Not Used', 0], [u'Not Used', 0], [u'Not Used', 0], [u'Not Used', 0], [u'Not Used', 0], [u'Not Used', 0], [u'Not Used', 0]]"/>
+  <property name="mesa1_currentfirmwaredata" type="eval" value="['5i25-Internal Data', '5i25', '7i76x2 -With One 7i76', '5i25', 'hm2_pci', 1, 3, 0, 0, 0, 3, 0, 0, 5, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 34, 33, 200, [3, 2], ['Step Gen-A', 0], ['Dir Gen-B', 0], ['Step Gen-A', 1], ['Dir Gen-B', 1], ['Step Gen-A', 2], ['Dir Gen-B', 2], ['Step Gen-A', 3], ['Dir Gen-B', 3], ['Step Gen-A', 4], ['Dir Gen-B', 4], ['7i76 I/O (SS0)', 0], ['SMARTSERIAL-P0-RX', 0], ['SMARTSERIAL-P1-TX', 0], ['SMARTSERIAL-P1-RX', 0], ['Quad Encoder-I', 0], ['Quad Encoder-B', 0], ['Quad Encoder-A', 0], ['Not Used', 0], ['Not Used', 0], ['Not Used', 0], ['Not Used', 0], ['Not Used', 0], ['Not Used', 0], ['Not Used', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['GPIO Input', 0], ['Not Used', 0], ['Not Used', 0], ['Not Used', 0], ['Not Used', 0], ['Not Used', 0], ['Not Used', 0], ['Not Used', 0]]"/>
   <property name="mesa1_firmware" type="string" value="7i76x2 -With One 7i76"/>
   <property name="mesa1_isawatchdog" type="int" value="1"/>
   <property name="mesa1_numof_encodergens" type="int" value="1"/>
@@ -3805,6 +4169,368 @@
   <property name="mesa1sserial0_5pin9inv" type="bool" value="False"/>
   <property name="mesa1sserial0_5pin9type" type="string" value="GPIO Input"/>
   <property name="mesa1sserial0_5subboard" type="string" value="none"/>
+  <property name="mesa1sserial0_6pin0" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin0inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin0type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin1" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin10" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin10inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin10type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin11" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin11inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin11type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin12" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin12inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin12type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin13" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin13inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin13type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin14" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin14inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin14type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin15" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin15inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin15type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin16" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin16inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin16type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin17" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin17inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin17type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin18" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin18inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin18type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin19" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin19inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin19type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin1inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin1type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin2" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin20" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin20inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin20type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin21" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin21inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin21type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin22" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin22inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin22type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin23" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin23inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin23type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin24" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin24inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin24type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin25" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin25inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin25type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin26" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin26inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin26type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin27" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin27inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin27type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin28" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin28inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin28type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin29" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin29inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin29type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin2inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin2type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin3" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin30" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin30inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin30type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin31" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin31inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin31type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin32" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin32inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin32type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin33" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin33inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin33type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin34" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin34inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin34type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin35" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin35inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin35type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin36" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin36inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin36type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin37" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin37inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin37type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin38" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin38inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin38type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin39" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin39inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin39type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin3inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin3type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin4" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin40" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin40inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin40type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin41" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin41inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin41type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin42" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin42inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin42type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin43" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin43inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin43type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin44" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin44inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin44type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin45" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin45inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin45type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin46" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin46inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin46type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin47" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin47inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin47type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin48" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin48inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin48type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin49" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin49inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin49type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin4inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin4type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin5" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin50" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin50inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin50type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin51" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin51inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin51type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin52" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin52inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin52type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin53" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin53inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin53type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin54" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin54inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin54type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin55" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin55inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin55type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin56" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin56inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin56type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin57" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin57inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin57type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin58" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin58inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin58type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin59" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_6pin59inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin59type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_6pin5inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin5type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin6" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin6inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin6type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin7" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin7inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin7type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin8" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin8inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin8type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6pin9" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_6pin9inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_6pin9type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_6subboard" type="string" value="none"/>
+  <property name="mesa1sserial0_7pin0" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin0inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin0type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin1" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin10" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin10inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin10type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin11" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin11inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin11type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin12" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin12inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin12type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin13" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin13inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin13type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin14" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin14inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin14type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin15" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin15inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin15type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin16" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin16inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin16type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin17" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin17inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin17type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin18" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin18inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin18type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin19" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin19inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin19type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin1inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin1type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin2" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin20" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin20inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin20type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin21" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin21inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin21type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin22" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin22inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin22type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin23" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin23inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin23type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin24" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin24inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin24type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin25" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin25inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin25type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin26" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin26inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin26type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin27" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin27inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin27type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin28" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin28inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin28type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin29" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin29inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin29type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin2inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin2type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin3" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin30" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin30inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin30type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin31" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin31inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin31type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin32" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin32inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin32type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin33" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin33inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin33type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin34" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin34inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin34type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin35" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin35inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin35type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin36" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin36inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin36type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin37" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin37inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin37type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin38" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin38inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin38type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin39" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin39inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin39type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin3inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin3type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin4" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin40" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin40inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin40type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin41" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin41inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin41type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin42" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin42inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin42type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin43" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin43inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin43type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin44" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin44inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin44type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin45" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin45inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin45type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin46" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin46inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin46type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin47" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin47inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin47type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin48" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin48inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin48type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin49" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin49inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin49type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin4inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin4type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin5" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin50" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin50inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin50type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin51" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin51inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin51type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin52" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin52inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin52type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin53" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin53inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin53type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin54" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin54inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin54type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin55" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin55inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin55type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin56" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin56inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin56type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin57" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin57inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin57type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin58" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin58inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin58type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin59" type="string" value="unused-output"/>
+  <property name="mesa1sserial0_7pin59inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin59type" type="string" value="GPIO Output"/>
+  <property name="mesa1sserial0_7pin5inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin5type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin6" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin6inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin6type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin7" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin7inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin7type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin8" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin8inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin8type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7pin9" type="string" value="unused-input"/>
+  <property name="mesa1sserial0_7pin9inv" type="bool" value="False"/>
+  <property name="mesa1sserial0_7pin9type" type="string" value="GPIO Input"/>
+  <property name="mesa1sserial0_7subboard" type="string" value="none"/>
   <property name="microstep" type="string" value="71717"/>
   <property name="min_angular_velocity" type="float" value="0.01"/>
   <property name="min_linear_velocity" type="float" value="0.01"/>
@@ -4188,19 +4914,30 @@
   <property name="pp3_Opin9" type="string" value="unused-output"/>
   <property name="pp3_Opin9_inv" type="bool" value="False"/>
   <property name="pp3_direction" type="int" value="0"/>
-  <property name="pyvcp" type="bool" value="False"/>
+  <property name="pyvcp" type="bool" value="True"/>
   <property name="pyvcp1" type="bool" value="True"/>
   <property name="pyvcpblank" type="bool" value="False"/>
   <property name="pyvcpconnect" type="bool" value="True"/>
   <property name="pyvcpexist" type="bool" value="False"/>
-  <property name="pyvcphaltype" type="int" value="0"/>
+  <property name="pyvcphaltype" type="int" value="1"/>
   <property name="pyvcpheight" type="float" value="0.0"/>
-  <property name="pyvcpname" type="string" value="custom.xml"/>
+  <property name="pyvcpname" type="string" value="spindle.xml"/>
   <property name="pyvcpposition" type="bool" value="False"/>
   <property name="pyvcpsize" type="bool" value="False"/>
   <property name="pyvcpwidth" type="float" value="0.0"/>
   <property name="pyvcpxpos" type="float" value="0.0"/>
   <property name="pyvcpypos" type="float" value="0.0"/>
+  <property name="qtplasmac_bcodes" type="eval" value="['ohmic-test', 'probe-test 10', 'single-cut', 'cut-type', 'torch-pulse 0.5', 'framing', '', '', '', '', '', '', '', '', '', '', '', '', '', '']"/>
+  <property name="qtplasmac_bnames" type="eval" value="['OHMIC\\TEST', 'PROBE\\TEST', 'SINGLE\\CUT', 'NORMAL\\CUT', 'TORCH\\PULSE', 'FRAMING', '', '', '', '', '', '', '', '', '', '', '', '', '', '']"/>
+  <property name="qtplasmacdro" type="int" value="0"/>
+  <property name="qtplasmacerror" type="int" value="0"/>
+  <property name="qtplasmacestop" type="int" value="0"/>
+  <property name="qtplasmacmode" type="int" value="0"/>
+  <property name="qtplasmacpause" type="int" value="0"/>
+  <property name="qtplasmacpmx" type="string" value=""/>
+  <property name="qtplasmacscreen" type="int" value="0"/>
+  <property name="qtplasmacstart" type="int" value="0"/>
+  <property name="qtplasmacstop" type="int" value="0"/>
   <property name="raise_z_on_toolchange" type="bool" value="True"/>
   <property name="random_toolchanger" type="bool" value="False"/>
   <property name="require_homing" type="bool" value="True"/>
@@ -4360,13 +5097,18 @@
   <property name="units" type="int" value="1"/>
   <property name="usbdevicename" type="string" value="none"/>
   <property name="usebldc" type="bool" value="False"/>
-  <property name="useinisubstitution" type="bool" value="False"/>
+  <property name="useinisubstitution" type="bool" value="True"/>
   <property name="userneededabs" type="int" value="0"/>
   <property name="userneededbldc" type="int" value="0"/>
   <property name="userneededlowpass" type="int" value="0"/>
   <property name="userneededmux16" type="int" value="0"/>
   <property name="userneededpid" type="int" value="0"/>
   <property name="userneededscale" type="int" value="4"/>
+  <property name="voltsfjumper" type="string" value="32"/>
+  <property name="voltsfullf" type="float" value="999.0"/>
+  <property name="voltsmodel" type="string" value="10"/>
+  <property name="voltsrdiv" type="int" value="20"/>
+  <property name="voltszerof" type="float" value="100.0"/>
   <property name="wordmem" type="float" value="50.0"/>
   <property name="x3pwmdeadtime" type="float" value="100.0"/>
   <property name="x3pwmscale" type="float" value="1.0"/>
@@ -4427,9 +5169,9 @@
   <property name="xencodercounts" type="int" value="16384"/>
   <property name="xencoderscale" type="float" value="6553.6"/>
   <property name="xhomefinalvel" type="float" value="0.0"/>
-  <property name="xhomelatchvel" type="float" value="0.816666666667"/>
+  <property name="xhomelatchvel" type="float" value="0.8166666666666667"/>
   <property name="xhomepos" type="float" value="-365.0"/>
-  <property name="xhomesearchvel" type="float" value="8.31666666667"/>
+  <property name="xhomesearchvel" type="float" value="8.316666666666666"/>
   <property name="xhomesequence" type="float" value="1.0"/>
   <property name="xhomesw" type="float" value="0.0"/>
   <property name="xhometandemsw" type="float" value="0.0"/>
@@ -4521,9 +5263,9 @@
   <property name="yencodercounts" type="int" value="16384"/>
   <property name="yencoderscale" type="float" value="6553.6"/>
   <property name="yhomefinalvel" type="float" value="0.0"/>
-  <property name="yhomelatchvel" type="float" value="0.816666666667"/>
+  <property name="yhomelatchvel" type="float" value="0.8166666666666667"/>
   <property name="yhomepos" type="float" value="-100.0"/>
-  <property name="yhomesearchvel" type="float" value="8.31666666667"/>
+  <property name="yhomesearchvel" type="float" value="8.316666666666666"/>
   <property name="yhomesequence" type="float" value="2.0"/>
   <property name="yhomesw" type="float" value="0.0"/>
   <property name="yhometandemsw" type="float" value="0.0"/>
@@ -4619,9 +5361,9 @@
   <property name="zeroy" type="bool" value="False"/>
   <property name="zeroz" type="bool" value="False"/>
   <property name="zhomefinalvel" type="float" value="0.0"/>
-  <property name="zhomelatchvel" type="float" value="0.416666666667"/>
+  <property name="zhomelatchvel" type="float" value="0.4166666666666667"/>
   <property name="zhomepos" type="float" value="8.0"/>
-  <property name="zhomesearchvel" type="float" value="4.16666666667"/>
+  <property name="zhomesearchvel" type="float" value="4.166666666666667"/>
   <property name="zhomesequence" type="float" value="0.0"/>
   <property name="zhomesw" type="float" value="0.0"/>
   <property name="zhometandemsw" type="float" value="0.0"/>
