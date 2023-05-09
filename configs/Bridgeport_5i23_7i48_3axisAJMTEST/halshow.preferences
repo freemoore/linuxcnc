@@ -1,0 +1,43 @@
+# Halshow settings
+# This file is generated automatically.
+wm geometry . 919x722+755+31
+placeFrames 0.3
+set ::ratio 0.3
+set ::old_w_leftf 160
+set ::watchlist {
+    pin+hm2_5i23.0.pwmgen.00.enable
+    pin+hm2_5i23.0.pwmgen.00.value
+    pin+hm2_5i23.0.encoder.00.count
+    pin+hm2_5i23.0.encoder.00.velocity
+    pin+hm2_5i23.0.encoder.00.velocity-rpm
+    pin+hm2_5i23.0.encoder.00.position
+    pin+hm2_5i23.0.encoder.00.rawcounts
+    sig+x-pos-cmd
+    sig+x-pos-rawcounts
+    pin+hm2_5i23.0.pwmgen.01.enable
+    pin+hm2_5i23.0.pwmgen.01.value
+    pin+hm2_5i23.0.encoder.01.count
+    pin+hm2_5i23.0.encoder.01.velocity
+    pin+hm2_5i23.0.encoder.01.velocity-rpm
+    pin+hm2_5i23.0.encoder.01.position
+    pin+hm2_5i23.0.encoder.01.rawcounts
+    sig+y-pos-cmd
+    sig+y-pos-rawcounts
+    pin+hm2_5i23.0.pwmgen.02.enable
+    pin+hm2_5i23.0.pwmgen.02.value
+    pin+hm2_5i23.0.encoder.02.count
+    pin+hm2_5i23.0.encoder.02.velocity
+    pin+hm2_5i23.0.encoder.02.velocity-rpm
+    pin+hm2_5i23.0.encoder.02.position
+    pin+hm2_5i23.0.encoder.02.rawcounts
+    sig+z-pos-cmd
+    sig+z-pos-rawcounts
+    param+hm2_5i23.0.encoder.00.filter
+}
+set ::workmode watchhal
+set ::watchInterval 100
+set ::col1_width 100
+set ::ffmts 
+set ::ifmts 
+set ::alwaysOnTop 0
+set ::autoSaveWatchlist 1
