@@ -5,34 +5,15 @@ placeFrames 0.3
 set ::ratio 0.3
 set ::old_w_leftf 160
 set ::watchlist {
-    pin+hm2_5i23.0.pwmgen.00.enable
-    pin+hm2_5i23.0.pwmgen.00.value
-    pin+hm2_5i23.0.encoder.00.count
-    pin+hm2_5i23.0.encoder.00.velocity
-    pin+hm2_5i23.0.encoder.00.velocity-rpm
-    pin+hm2_5i23.0.encoder.00.position
-    pin+hm2_5i23.0.encoder.00.rawcounts
-    sig+x-pos-cmd
-    sig+x-pos-rawcounts
-    pin+hm2_5i23.0.pwmgen.01.enable
-    pin+hm2_5i23.0.pwmgen.01.value
-    pin+hm2_5i23.0.encoder.01.count
-    pin+hm2_5i23.0.encoder.01.velocity
-    pin+hm2_5i23.0.encoder.01.velocity-rpm
-    pin+hm2_5i23.0.encoder.01.position
-    pin+hm2_5i23.0.encoder.01.rawcounts
-    sig+y-pos-cmd
-    sig+y-pos-rawcounts
-    pin+hm2_5i23.0.pwmgen.02.enable
-    pin+hm2_5i23.0.pwmgen.02.value
-    pin+hm2_5i23.0.encoder.02.count
-    pin+hm2_5i23.0.encoder.02.velocity
-    pin+hm2_5i23.0.encoder.02.velocity-rpm
-    pin+hm2_5i23.0.encoder.02.position
-    pin+hm2_5i23.0.encoder.02.rawcounts
-    sig+z-pos-cmd
-    sig+z-pos-rawcounts
-    param+hm2_5i23.0.encoder.00.filter
+    pin+spindle.0.forward
+    pin+spindle.0.on
+    pin+spindle.0.speed-cmd-rps
+    pin+spindle.0.speed-in
+    pin+spindle.0.speed-out
+    pin+spindle.0.speed-out-rps
+    pin+spindle.0.speed-out-rps-abs
+    pin+hm2_5i23.0.pwmgen.03.enable
+    pin+hm2_5i23.0.pwmgen.03.value
 }
 set ::workmode watchhal
 set ::watchInterval 100

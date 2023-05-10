@@ -15,3 +15,12 @@ setp timedelay.0.off-delay 1
 
 net machine-is-enabled  => hm2_5i23.0.7i84.0.0.output-07 timedelay.0.in
 net dc-brake-open-delay timedelay.0.out hm2_5i23.0.7i84.0.0.output-06
+
+
+
+# fan relay on - relay no 18, controlled by wire77, switching wire18
+# fan relay, if we can find this function => hm2_5i23.0.7i84.0.0.output-04
+
+# marked 'brepa solenoid +24v' - spindle brake solenoid? 
+# relay no 19, controlled by wire78, switched by wire19
+# spindle brake, if we can find this function => hm2_5i23.0.7i84.0.0.output-05
