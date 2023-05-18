@@ -1,19 +1,14 @@
 # Halshow settings
 # This file is generated automatically.
-wm geometry . 919x722+755+31
+wm geometry . 919x722+968+66
 placeFrames 0.3
 set ::ratio 0.3
 set ::old_w_leftf 160
 set ::watchlist {
-    pin+spindle.0.forward
-    pin+spindle.0.on
-    pin+spindle.0.speed-cmd-rps
-    pin+spindle.0.speed-in
-    pin+spindle.0.speed-out
-    pin+spindle.0.speed-out-rps
-    pin+spindle.0.speed-out-rps-abs
-    pin+hm2_5i23.0.pwmgen.03.enable
-    pin+hm2_5i23.0.pwmgen.03.value
+    pin+axis.x.jog-enable
+    pin+axis.x.jog-counts
+    pin+axis.x.jog-scale
+    pin+axis.x.jog-vel-mode
 }
 set ::workmode watchhal
 set ::watchInterval 100

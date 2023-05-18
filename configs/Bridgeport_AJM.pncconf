@@ -290,7 +290,7 @@
   <property name="loadcompbase" type="eval" value="['']"/>
   <property name="loadcompservo" type="eval" value="['']"/>
   <property name="lowpassnames" type="string" value="lowpass.spindle"/>
-  <property name="machinename" type="string" value="Bridgeport_5i23_7i48_3axisAJMTEST"/>
+  <property name="machinename" type="string" value="Bridgeport_AJM"/>
   <property name="max_angular_velocity" type="float" value="10.0"/>
   <property name="max_feed_override" type="float" value="2.0"/>
   <property name="max_linear_velocity" type="float" value="100.0"/>
@@ -454,7 +454,7 @@
   <property name="mesa0c2pin6" type="string" value="unused-encoder"/>
   <property name="mesa0c2pin6inv" type="bool" value="False"/>
   <property name="mesa0c2pin6type" type="string" value="muxed Enc I"/>
-  <property name="mesa0c2pin7" type="string" value="select-mpg-a"/>
+  <property name="mesa0c2pin7" type="string" value="unused-encoder"/>
   <property name="mesa0c2pin7inv" type="bool" value="False"/>
   <property name="mesa0c2pin7type" type="string" value="Muxed Enc 0"/>
   <property name="mesa0c2pin8" type="string" value="unused-encoder"/>
@@ -1152,31 +1152,31 @@
   <property name="mesa0sserial0_1pin0inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin0type" type="string" value="GPIO Input"/>
   <property name="mesa0sserial0_1pin1" type="string" value="home-y"/>
-  <property name="mesa0sserial0_1pin10" type="string" value="jog-x-pos"/>
+  <property name="mesa0sserial0_1pin10" type="string" value="unused-input"/>
   <property name="mesa0sserial0_1pin10inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin10type" type="string" value="GPIO Input"/>
-  <property name="mesa0sserial0_1pin11" type="string" value="jog-x-neg"/>
+  <property name="mesa0sserial0_1pin11" type="string" value="unused-input"/>
   <property name="mesa0sserial0_1pin11inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin11type" type="string" value="GPIO Input"/>
-  <property name="mesa0sserial0_1pin12" type="string" value="jog-incr-a"/>
+  <property name="mesa0sserial0_1pin12" type="string" value="unused-input"/>
   <property name="mesa0sserial0_1pin12inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin12type" type="string" value="GPIO Input"/>
-  <property name="mesa0sserial0_1pin13" type="string" value="jog-z-pos"/>
+  <property name="mesa0sserial0_1pin13" type="string" value="unused-input"/>
   <property name="mesa0sserial0_1pin13inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin13type" type="string" value="GPIO Input"/>
-  <property name="mesa0sserial0_1pin14" type="string" value="jog-z-neg"/>
+  <property name="mesa0sserial0_1pin14" type="string" value="unused-input"/>
   <property name="mesa0sserial0_1pin14inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin14type" type="string" value="GPIO Input"/>
-  <property name="mesa0sserial0_1pin15" type="string" value="fo-enable"/>
+  <property name="mesa0sserial0_1pin15" type="string" value="unused-input"/>
   <property name="mesa0sserial0_1pin15inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin15type" type="string" value="GPIO Input"/>
   <property name="mesa0sserial0_1pin16" type="string" value="force-pin-true"/>
   <property name="mesa0sserial0_1pin16inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin16type" type="string" value="GPIO Output"/>
-  <property name="mesa0sserial0_1pin17" type="string" value="unused-output"/>
+  <property name="mesa0sserial0_1pin17" type="string" value="coolant-flood"/>
   <property name="mesa0sserial0_1pin17inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin17type" type="string" value="GPIO Output"/>
-  <property name="mesa0sserial0_1pin18" type="string" value="coolant-flood"/>
+  <property name="mesa0sserial0_1pin18" type="string" value="force-pin-true"/>
   <property name="mesa0sserial0_1pin18inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin18type" type="string" value="GPIO Output"/>
   <property name="mesa0sserial0_1pin19" type="string" value="coolant-mist"/>
@@ -1322,10 +1322,10 @@
   <property name="mesa0sserial0_1pin7" type="string" value="spindle-manual-stop"/>
   <property name="mesa0sserial0_1pin7inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin7type" type="string" value="GPIO Input"/>
-  <property name="mesa0sserial0_1pin8" type="string" value="jog-y-pos"/>
+  <property name="mesa0sserial0_1pin8" type="string" value="unused-input"/>
   <property name="mesa0sserial0_1pin8inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin8type" type="string" value="GPIO Input"/>
-  <property name="mesa0sserial0_1pin9" type="string" value="jog-y-neg"/>
+  <property name="mesa0sserial0_1pin9" type="string" value="unused-input"/>
   <property name="mesa0sserial0_1pin9inv" type="bool" value="False"/>
   <property name="mesa0sserial0_1pin9type" type="string" value="GPIO Input"/>
   <property name="mesa0sserial0_1subboard" type="string" value="7i84-m0"/>

@@ -1,0 +1,43 @@
+# Include your custom HAL commands here
+# This file will not be overwritten when you run PNCconf again
+
+# notes: pncconf puts 7i84.0.1 when it should be 7i84.0.0
+#
+
+loadrt timedelay count=1 
+addf timedelay.0 servo-thread
+
+
+setp timedelay.0.on-delay 1
+setp timedelay.0.off-delay 1
+
+
+
+net machine-is-enabled  => hm2_5i23.0.7i84.0.0.output-07 timedelay.0.in
+net dc-brake-open-delay timedelay.0.out hm2_5i23.0.7i84.0.0.output-06
+
+# fan relay on - relay no 18, controlled by wire77, switching wire18
+# fan relay, if we can find this function => hm2_5i23.0.7i84.0.0.output-04
+
+
+
+# --- LOW LUBE ALARM ---
+net low-lube-alarm-in   <=  [HMOT](CARD0).7i84.0.0.input-06
+
+# --- JOG-Y-POS ---
+net jog-y-pos     <=  [HMOT](CARD0).7i84.0.0.input-08
+
+# --- JOG-Y-NEG ---
+net jog-y-neg     <=  [HMOT](CARD0).7i84.0.0.input-09
+
+# --- JOG-X-POS ---
+net jog-x-pos     <=  [HMOT](CARD0).7i84.0.0.input-10
+
+# --- JOG-X-NEG ---
+net jog-x-neg     <=  [HMOT](CARD0).7i84.0.0.input-11
+
+# --- JOG-Z-POS ---
+net jog-z-pos     <=  [HMOT](CARD0).7i84.0.0.input-13
+
+# --- JOG-Z-NEG ---
+net jog-z-neg     <=  [HMOT](CARD0).7i84.0.0.input-14

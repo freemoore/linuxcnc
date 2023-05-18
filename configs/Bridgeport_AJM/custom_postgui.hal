@@ -1,20 +1,32 @@
 # Include your custom_postgui HAL commands here
 # This file will not be overwritten when you run PNCconf again
+
+
+loadrt toggle2nist names=machineon
+addf machineon servo-thread
+setp machineon.is-on 0
+
+# --- TOGGLE MACHINE ON/OFF ---
+net read-enable-button <= [HMOT](CARD0).7i84.0.0.input-07
+net read-enable-button machineon.in
+net toggled-enable-on machineon.on
+net toggled-enable-off machineon.off
+net toggled-enable-off halui.machine.off
+net toggled-enable-on halui.machine.on
+net dc-brake-open-delay machineon.is-on
+
+
 #select axis using joystick
 #use mpg to drive it
-#maybe joystick + button = continuous
+#maybe joystick + button = continuous (implemented, kinda: button selects jog.vel-mode)
 
-#loadrt 3 OR gates (x-jog-on.OR,y-jog-on.OR,z-jog-on.OR):
+#loadrt 3 OR gates 
 loadrt or2 names=x-jog-on,y-jog-on,z-jog-on
-
-#add 'mpgscaler' to scale names in main .hal
 
 addf x-jog-on	servo-thread
 addf y-jog-on	servo-thread
 addf z-jog-on	servo-thread
-#addf mpgscaler	servo-thread
 
-#setp mpgscaler.gain 0.25
 setp    [HMOT](CARD0).encoder.04.scale 0.25
 
 # stick signal to hardware pin (so sticks are connected to hal)
@@ -24,11 +36,7 @@ setp    [HMOT](CARD0).encoder.04.scale 0.25
 net joyXYBtn     <=  [HMOT](CARD0).7i84.0.0.input-12
 net joyZBtn <=  [HMOT](CARD0).7i84.0.0.input-15
 
-# mpg signal to hardware pins - done by pncconf, encoder.5.counts is what we need here?
-#net mpg-counts-signal <= mesa.card.encoder.5.counts
-#net mpg-counts-signal  		mpgscaler.in
-#net scaled-mpg-pulses  		mpgscaler.out 
-#net scaled-mpg-pulses	<=  [HMOT](CARD0).encoder.04.count
+# mpg signal to hardware pins 
 net mpg-counts-signal   <=  [HMOT](CARD0).encoder.04.count
 
 
