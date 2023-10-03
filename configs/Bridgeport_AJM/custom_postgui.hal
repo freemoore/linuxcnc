@@ -20,25 +20,8 @@ net dc-brake-open-delay machineon.is-on
 #use mpg to drive it
 #maybe joystick + button = continuous (implemented, kinda: button selects jog.vel-mode)
 
-#loadrt 3 OR gates 
-loadrt or2 names=x-jog-on,y-jog-on,z-jog-on
-
-addf x-jog-on	servo-thread
-addf y-jog-on	servo-thread
-addf z-jog-on	servo-thread
-
-setp    [HMOT](CARD0).encoder.04.scale 0.25
-
 # stick signal to hardware pin (so sticks are connected to hal)
-# done in main hal file
-
-# button signal to hardware pin (so buttons are connected to hal)
-net joyXYBtn     <=  [HMOT](CARD0).7i84.0.0.input-12
-net joyZBtn <=  [HMOT](CARD0).7i84.0.0.input-15
-
-# mpg signal to hardware pins 
-net mpg-counts-signal   <=  [HMOT](CARD0).encoder.04.count
-
+# done in custom hal file
 
 #select axis and enable jogging with either stick direction
 net jog-x-pos => x-jog-on.in0

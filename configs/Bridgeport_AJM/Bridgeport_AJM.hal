@@ -54,10 +54,10 @@ net coolant-mist  =>     [HMOT](CARD0).7i84.0.0.output-03
 net spindle-brake  =>     [HMOT](CARD0).7i84.0.0.output-05
 
 # --- SPINDLE-CW ---
-net spindle-cw  =>     [HMOT](CARD0).7i84.0.0.output-08
+net spindle-cw  =>     [HMOT](CARD0).7i84.0.0.output-09
 
 # --- SPINDLE-CCW ---
-net spindle-ccw  =>     [HMOT](CARD0).7i84.0.0.output-09
+net spindle-ccw  =>     [HMOT](CARD0).7i84.0.0.output-08
 
 # external input signals
 
@@ -78,7 +78,8 @@ net all-limit     <=  [HMOT](CARD0).7i84.0.0.input-03-not
 net estop-ext     <=  [HMOT](CARD0).7i84.0.0.input-04
 
 # --- PROBE-IN ---
-net probe-in     <=  [HMOT](CARD0).7i84.0.0.input-05
+net probe-in     <=  [HMOT](CARD0).7i84.0.0.input-05-not
+
 
 
 
