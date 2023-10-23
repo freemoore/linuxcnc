@@ -8,9 +8,9 @@ G21  (metric)
 G21 G40 G90 G94 G97 G64 P0.025
 
 
-#<center_drill_depth>       = -3.0
+#<center_drill_depth>       = -0.5
 
-#<_pocket_expand_mode>      = 0
+#<_pocket_expand_mode>      = 1
 
 (optimization values)
 #<_tool_eng1>               = 0.2
@@ -29,7 +29,7 @@ G21 G40 G90 G94 G97 G64 P0.025
 #<_speedfactor4>            = 1.0
 #<_speedfactor0>            = 1.0
 
-#<_probe_func>              = 38.3
+#<_probe_func>              = 38.2
 #<_probe_feed>              = 200.0
 #<_probe_latch>             = -1.0
 #<_probe_latch_feed>        = 50.0
@@ -40,7 +40,7 @@ G21 G40 G90 G94 G97 G64 P0.025
 #<probe_height>             = 0.0
 #<_tool_probe_z>            = 0.0
 
-#<_off_rot_coord_system>    = 57
+#<_off_rot_coord_system>    = 55
 
 #<_mill_data_start>         = 70
 #<in_polyline>              = 0
@@ -52,7 +52,7 @@ G21 G40 G90 G94 G97 G64 P0.025
 
 #<_spindle_all_time>        = 1
 
-#<_spindle_speed_up_delay>  = 0.0
+#<_spindle_speed_up_delay>  = 4.0
 
 (end defaults)
 
@@ -78,9 +78,9 @@ G21 G40 G90 G94 G97 G64 P0.025
 (begin Workpiece)
 (workpiece definition author : Fernand Veilleux)
 
-#<wp_width>         = [50.800000]
-#<wp_length>        = [101.600000]
-#<wp_depth>         = [25.400000]
+#<wp_width>         = [93.000000]
+#<wp_length>        = [120.000000]
+#<wp_depth>         = [3.000000]
 #<wp_wall>          = [0.000000]
 #<wp_corner_radius> = [0.000000]
 #<wp_inside_width>  = [#<wp_width> - #<wp_wall> * 2]
@@ -89,11 +89,11 @@ G21 G40 G90 G94 G97 G64 P0.025
 #<wp_x> = 0.000000
 #<wp_y> = 0.000000
 
-o<select> CALL [31] [0] [0.000000] [0.000000 - #<wp_length> / 2] [0.000000 - #<wp_length>]
+o<select> CALL [31] [1] [0.000000] [0.000000 - #<wp_length> / 2] [0.000000 - #<wp_length>]
 #<wp_left>  = #31
 #<wp_right> = [#<wp_left> + #<wp_length>]
 
-o<select> CALL [31] [2] [0.000000 - #<wp_width>] [0.000000 - #<wp_width> / 2] [0.000000]
+o<select> CALL [31] [1] [0.000000 - #<wp_width>] [0.000000 - #<wp_width> / 2] [0.000000]
 #<wp_front> = #31
 #<wp_rear>  = [#<wp_front> + #<wp_width>]
 
@@ -101,7 +101,7 @@ o<select> CALL [31] [0] [0.000000] [0.000000 + #<wp_depth> / 2] [0.000000 + #<wp
 #<surface>  = #31
 
 #<_z_clear>       = 2.540000
-#<_rapid_z>       = [#<surface> + #<_z_clear> + 10.160000]
+#<_rapid_z>       = [#<surface> + #<_z_clear> + 15.000000]
 
 #<bottom>         = [#<surface> - #<wp_depth>]
 #<bottom_through> = [#<bottom> + -1.270000]
@@ -114,34 +114,221 @@ o<select> CALL [31] [0] [0.000000] [0.000000 + #<wp_depth> / 2] [0.000000 + #<wp
 (end Workpiece)
 
 
+(begin Drill/Reamer Change)
+(drill change params and changing code author : Fernand Veilleux)
+
+#<_drill_feed>       =  25.400000
+#<_drill_retract>    =  0.508000
+#<_drill_mode>       =  81
+#<_drill_dwell>      =  2.000000
+#<_drill_q>          =  5.080000
+#<_drill_rpm>        =  2000
+#<_spindle_dir>      =  3
+#<_cooling_mode>     =  8
+
+#<_rpm_normal>       =  2000
+#<_feed_vertical>    =  25.400000
+#<_tool_usage>       =  3
+
+o<select> CALL [31] [1] [9.525000] [0.3125] [0.2362] [0.1285] [0.257] [0]
+#<drill_diameter> = #31
+o<drill_chng_001_metric> if [[#<_metric> EQ 1] AND [1 NE 0]]
+	#<drill_diameter> = [#<drill_diameter> * 25.4]
+o<drill_chng_001_metric> endif
+
+#<drill_point_len> = [[#<drill_diameter> / 2] / TAN[180 / 2]]
+(print,Drill info : diameter = #<drill_diameter>, point angle = 180 &#176;, point length = #<drill_point_len>)
+
+o<drill_chng_001_tlc> if [[3 EQ 3] AND [1 GT 0]]
+	M61 Q1
+o<drill_chng_001_tlc> endif
+
+o<drill_chng_001_act> if [1 AND [1 NE #5400]]
+	M9
+	T1 M6
+o<drill_chng_001_act> endif
+
+o<drill_chng_001_lc> if [[3 EQ 1] OR [3 EQ 2]]
+	G43 H1
+o<drill_chng_001_lc> endif
+
+o<drill_chng_001_01> if [[#<_spindle_dir> GT 0] AND #<_spindle_all_time>]
+	o<set_spindle_rpm> CALL [#<_drill_rpm>]
+	F#<_drill_feed>
+o<drill_chng_001_01> endif
+(end Drill/Reamer Change)
+
+
+(begin 50mm fixturing holes)
+(drill 2 by 1 holes author : Fernand Veilleux)
+
+o<drill-array_001_active> if [0 AND [#<_tool_usage> EQ 3]] (if active)
+	o<select> CALL [31] [1] [0.000000] [#<surface>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+	o<select> CALL [32] [0] [-22.000000] [#<bottom_through>] [#31 + #<center_drill_depth>] [#<bottom>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+
+	o<drill-array_001_01> if [2 EQ 1]
+		#33 = 0
+	o<drill-array_001_01> else
+		o<select> CALL [33] [0] [50.000000] [50.000000 / [2 - 1]]
+	o<drill-array_001_01> endif
+	#<dx10> = #33
+	o<select> CALL [33] [1] [0] [- [2 - 1] * #<dx10> / 2] [- [2 - 1] * #<dx10>]
+	#<first_x10> = #33
+
+	o<drill-array_001_02> if [1 EQ 1]
+		#33 = 0
+	o<drill-array_001_02> else
+		o<select> CALL [33] [0] [12.700000] [12.700000 / [1 - 1]]
+	o<drill-array_001_02> endif
+	#<dy10> = #33
+	o<select> CALL [33] [1] [- #<dy10> * [1 - 1]] [- #<dy10> * [1 - 1] / 2] [0]
+	#<first_y10> = #33
+
+	(get and save current coords system offsets)
+	#<old_coord_system10> = [#<_coord_system> / 10]
+	o<get_offsets> CALL
+	#<offset_x10> = #<_offsets_x>
+	#<offset_y10> = #<_offsets_y>
+	#<offset_z10> = #<_offsets_z>
+	#<offset_r10> = #<_offsets_r>
+	(change coords system)
+	G#<_off_rot_coord_system>
+
+	o<set_spindle_rpm> CALL [#<_drill_rpm>] [#<_drill_feed>]
+	#<start_y10> = [#<offset_y10> + #<first_y10>]
+	#<x_step10>  = 1
+	#<x_round10> = 0
+	#<start_x10> = [#<offset_x10> + #<first_x10>]
+
+	o<drill-array_001_loop_Y> repeat [1]
+		o<drill-array_001_loop_X> repeat [2]
+			(get rotated coordinates then apply to new coords)
+			o<rotate_xy> CALL [#<start_x10> + 0.000000] [#<start_y10> + 0.000000] [#<offset_x10> + 0.000000] [#<offset_y10> + 0.000000] [#<offset_r10> + 0.000000]
+			G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] Z#<offset_z10> R[#<offset_r10> + 0.000000]
+
+			o<drill_single> CALL [0] [0] [#31] [#32] [#<drill_diameter>] [#<drill_point_len>] [1]
+
+			#<x_round10> = [#<x_round10> + #<x_step10>]
+			o<drill-array_001_inc> if [[#<x_round10> LT 2] AND [#<x_round10> GT 0]]
+				#<start_x10>  = [#<start_x10>  + #<dx10> * #<x_step10>]
+			o<drill-array_001_inc> endif
+		o<drill-array_001_loop_X> endrepeat
+
+		#<x_step10>  = [#<x_step10>   * -1]
+		#<start_y10> = [#<start_y10> + #<dy10>]
+	o<drill-array_001_loop_Y> endrepeat
+
+	o<drill-array_001_stop> if [#<_spindle_all_time> EQ 0]
+		M9 M5
+	o<drill-array_001_stop> endif
+
+	(restore coordinate system)
+	G#<old_coord_system10>
+	G10 L2 P#5220 X#<offset_x10> Y#<offset_y10> Z#<offset_z10> R#<offset_r10>
+
+o<drill-array_001_active> endif
+(end 50mm fixturing holes)
+
+
+(begin centre drill t slot nut holes)
+(drill 3 by 2 holes author : Fernand Veilleux)
+
+o<drill-array_002_active> if [0 AND [#<_tool_usage> EQ 3]] (if active)
+	o<select> CALL [31] [1] [0.000000] [#<surface>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+	o<select> CALL [32] [0] [-6.000000] [#<bottom_through>] [#31 + #<center_drill_depth>] [#<bottom>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+
+	o<drill-array_002_01> if [3 EQ 1]
+		#33 = 0
+	o<drill-array_002_01> else
+		o<select> CALL [33] [0] [40.000000] [40.000000 / [3 - 1]]
+	o<drill-array_002_01> endif
+	#<dx11> = #33
+	o<select> CALL [33] [0] [0] [- [3 - 1] * #<dx11> / 2] [- [3 - 1] * #<dx11>]
+	#<first_x11> = #33
+
+	o<drill-array_002_02> if [2 EQ 1]
+		#33 = 0
+	o<drill-array_002_02> else
+		o<select> CALL [33] [0] [45.000000] [45.000000 / [2 - 1]]
+	o<drill-array_002_02> endif
+	#<dy11> = #33
+	o<select> CALL [33] [1] [- #<dy11> * [2 - 1]] [- #<dy11> * [2 - 1] / 2] [0]
+	#<first_y11> = #33
+
+	(get and save current coords system offsets)
+	#<old_coord_system11> = [#<_coord_system> / 10]
+	o<get_offsets> CALL
+	#<offset_x11> = #<_offsets_x>
+	#<offset_y11> = #<_offsets_y>
+	#<offset_z11> = #<_offsets_z>
+	#<offset_r11> = #<_offsets_r>
+	(change coords system)
+	G#<_off_rot_coord_system>
+
+	o<set_spindle_rpm> CALL [#<_drill_rpm>] [#<_drill_feed>]
+	#<start_y11> = [#<offset_y11> + #<first_y11>]
+	#<x_step11>  = 1
+	#<x_round11> = 0
+	#<start_x11> = [#<offset_x11> + #<first_x11>]
+
+	o<drill-array_002_loop_Y> repeat [2]
+		o<drill-array_002_loop_X> repeat [3]
+			(get rotated coordinates then apply to new coords)
+			o<rotate_xy> CALL [#<start_x11> + -32.500000] [#<start_y11> + 0.000000] [#<offset_x11> + -32.500000] [#<offset_y11> + 0.000000] [#<offset_r11> + 0.000000]
+			G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] Z#<offset_z11> R[#<offset_r11> + 0.000000]
+
+			o<drill_single> CALL [0] [0] [#31] [#32] [#<drill_diameter>] [#<drill_point_len>] [1]
+
+			#<x_round11> = [#<x_round11> + #<x_step11>]
+			o<drill-array_002_inc> if [[#<x_round11> LT 3] AND [#<x_round11> GT 0]]
+				#<start_x11>  = [#<start_x11>  + #<dx11> * #<x_step11>]
+			o<drill-array_002_inc> endif
+		o<drill-array_002_loop_X> endrepeat
+
+		#<x_step11>  = [#<x_step11>   * -1]
+		#<start_y11> = [#<start_y11> + #<dy11>]
+	o<drill-array_002_loop_Y> endrepeat
+
+	o<drill-array_002_stop> if [#<_spindle_all_time> EQ 0]
+		M9 M5
+	o<drill-array_002_stop> endif
+
+	(restore coordinate system)
+	G#<old_coord_system11>
+	G10 L2 P#5220 X#<offset_x11> Y#<offset_y11> Z#<offset_z11> R#<offset_r11>
+
+o<drill-array_002_active> endif
+(end centre drill t slot nut holes)
+
+
 (begin End Mill Change)
 (end mill change params and changing code author : Fernand Veilleux)
 
 #<_spindle_dir>      =  3
 #<_cooling_mode>     =  8
 
-#<_feed_normal>      =  250.000000
+#<_feed_normal>      =  200.000000
 #<_rpm_normal>       =  1000
 #<_feed_vertical>    =  200.000000
 #<_penetration_mode> =  0
-#<_depth_step>       =  -3.000000
+#<_depth_step>       =  -0.400000
 #<_ramp_down_ratio>  = [25 / 100]
 #<_tool_usage>       =  0
 #<_stepover_min>     =  0.400000
 #<_stepover_normal>  = [60 / 100]
 #<_tool_dynamic_dia> =  0.000000
 
-o<emill_chng_001_tlc> if [[3 EQ 3] AND [0 GT 0]]
-	M61 Q0
+o<emill_chng_001_tlc> if [[3 EQ 3] AND [9 GT 0]]
+	M61 Q9
 o<emill_chng_001_tlc> endif
 
-o<emill_chng_001_act> if [1 AND [0 NE #5400]]
+o<emill_chng_001_act> if [1 AND [9 NE #5400]]
 	M9
-	T0 M6
+	T9 M6
 o<emill_chng_001_act> endif
 
 o<emill_chng_001_lc> if [[3 EQ 1] OR [3 EQ 2]]
-	G43 H0
+	G43 H9
 o<emill_chng_001_lc> endif
 
 o<emill_chng_001_01> if [[#<_spindle_dir> GT 0] AND #<_spindle_all_time>]
@@ -150,20 +337,221 @@ o<emill_chng_001_01> endif
 (end End Mill Change)
 
 
-(begin Circle by Center)
-(circle from center author : Fernand Veilleux)
+(begin mill tslot nut holes)
+(rectangular array author : Fernand Veilleux)
 
-o<circle_001_active> if [1] (if active)
-	o<select> CALL [31] [1] [0.000000] [#<surface>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
-	o<select> CALL [32] [1] [-12.700000] [#<bottom_through>] [#<bottom>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+o<rect-array_001_active> if [1]
+	o<select> CALL [31] [0] [-32.500000] [-32.500000 - [3 - 1] * 40.000000 / 2] [-32.500000 - [3 - 1] * 40.000000]
+	#<first_x12> = #31
 
-	o<select> CALL [33] [1] [10.000000 / 2] [0] [-10.000000 / 2]
-	o<select> CALL [34] [1] [-10.000000 / 2] [0] [10.000000 / 2]
+	o<select> CALL [31] [1] [0.000000 - [2 - 1] * 45.000000] [0.000000 - [2 - 1] * 45.000000 / 2] [0.000000]
+	#<first_y12> = #31
 
-	o<circle> CALL [0.000000 + #33] [0.000000 + #34] [10.000000] [0.000000] [0.000000] [0] [3] [#31] [#32] [1] [0] [1.016000] [1]
+	(get and save current coords system offsets)
+	#<old_coord_system12> = [#<_coord_system> / 10]
+	o<get_offsets> CALL
+	#<offset_x12> = #<_offsets_x>
+	#<offset_y12> = #<_offsets_y>
+	#<offset_z12> = #<_offsets_z>
+	#<offset_r12> = #<_offsets_r>
 
-o<circle_001_active> endif
-(end Circle by Center)
+	(change coords system)
+	G#<_off_rot_coord_system>
+
+	#<start_y12>  = [#<offset_y12> + #<first_y12>]
+	#<items_yr12> = 0
+	#<x_step12>   = 1
+	#<x_round12>  = 0
+	#<start_x12>  = [#<offset_x12> + #<first_x12>]
+	#<items_xr12> = 0
+	o<rect-array_001_loop_Y> repeat [2]
+		o<rect-array_001_loop_X> repeat [3]
+			(get rotated coordinates then apply to new coords)
+			#<rot12> = [#<offset_r12> + 0.000000 + #<items_xr12> + #<items_yr12>]
+			o<rotate_xy> CALL [#<start_x12>] [#<start_y12>] [#<offset_x12> + -32.500000] [#<offset_y12> + 0.000000] [#<offset_r12> + 0.000000]
+			o<rect-array_001_change_coords> if [#<_has_z_axis>]
+				G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] Z#<offset_z12> R[#<rot12>]
+			o<rect-array_001_change_coords> else
+				G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] R[#<rot12>]
+			o<rect-array_001_change_coords> endif
+
+			(begin mill tslot nut holes items)
+
+
+			(begin Circle by Center)
+			(circle from center author : Fernand Veilleux)
+			
+			o<circle_001_active> if [1] (if active)
+				o<select> CALL [31] [1] [0.000000] [#<surface>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+				o<select> CALL [32] [1] [-12.700000] [#<bottom_through>] [#<bottom>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+			
+				o<select> CALL [33] [1] [8.000000 / 2] [0] [-8.000000 / 2]
+				o<select> CALL [34] [1] [-8.000000 / 2] [0] [8.000000 / 2]
+			
+				o<circle> CALL [0.000000 + #33] [0.000000 + #34] [8.000000] [0.000000] [0.000000] [0] [3] [#31] [#32] [1] [0] [1.016000] [1]
+			
+			o<circle_001_active> endif
+			(end Circle by Center)
+
+
+			(end mill tslot nut holes items)
+
+			#<x_round12> = [#<x_round12> + #<x_step12>]
+			o<rect-array_001_inc> if [[#<x_round12> LT 3] AND [#<x_round12> GT 0]]
+				#<start_x12>  = [#<start_x12>  + 40.000000 * #<x_step12>]
+				#<items_xr12> = [#<items_xr12> + 0.000000 * #<x_step12>]
+			o<rect-array_001_inc> endif
+		o<rect-array_001_loop_X> endrepeat
+
+		#<x_step12>   = [#<x_step12>   * -1]
+		#<start_y12>  = [#<start_y12>  + 45.000000]
+		#<items_yr12> = [#<items_yr12> + 0.000000]
+	o<rect-array_001_loop_Y> endrepeat
+
+	(restore coordinate system)
+	G#<old_coord_system12>
+	o<rect-array_001_restore_coords> if [#<_has_z_axis>]
+		G10 L2 P#5220 X#<offset_x12> Y#<offset_y12> Z#<offset_z12> R#<offset_r12>
+	o<rect-array_001_restore_coords> else
+		G10 L2 P#5220 X#<offset_x12> Y#<offset_y12> R#<offset_r12>
+	o<rect-array_001_restore_coords> endif
+
+o<rect-array_001_active> endif
+(end mill tslot nut holes)
+
+
+(begin End Mill Change)
+(end mill change params and changing code author : Fernand Veilleux)
+
+#<_spindle_dir>      =  3
+#<_cooling_mode>     =  8
+
+#<_feed_normal>      =  500.000000
+#<_rpm_normal>       =  1000
+#<_feed_vertical>    =  200.000000
+#<_penetration_mode> =  0
+#<_depth_step>       =  -1.000000
+#<_ramp_down_ratio>  = [25 / 100]
+#<_tool_usage>       =  0
+#<_stepover_min>     =  0.400000
+#<_stepover_normal>  = [60 / 100]
+#<_tool_dynamic_dia> =  0.000000
+
+o<emill_chng_003_tlc> if [[3 EQ 3] AND [9 GT 0]]
+	M61 Q9
+o<emill_chng_003_tlc> endif
+
+o<emill_chng_003_act> if [1 AND [9 NE #5400]]
+	M9
+	T9 M6
+o<emill_chng_003_act> endif
+
+o<emill_chng_003_lc> if [[3 EQ 1] OR [3 EQ 2]]
+	G43 H9
+o<emill_chng_003_lc> endif
+
+o<emill_chng_003_01> if [[#<_spindle_dir> GT 0] AND #<_spindle_all_time>]
+	o<set_feed_rate_and_speed> CALL [1]
+o<emill_chng_003_01> endif
+(end End Mill Change)
+
+
+(begin outer rect)
+(rectangle author : Fernand Veilleux)
+
+o<rectangle_001_active> if [1]
+	o<rectangle_001_00> if [90.000000 GT 115.000000] (if narrower than high)
+		#<h13>   = [115.000000]
+		#<w13>   = [90.000000]
+		#<rot13> = [90.0 + 0.000000]
+		o<select> CALL [31] [1] [-#<h13> / 2] [0] [#<h13> / 2]
+		o<select> CALL [32] [1] [-#<w13> / 2] [0] [#<w13> / 2]
+
+	o<rectangle_001_00> else
+		#<w13>   = [115.000000]
+		#<h13>   = [90.000000]
+		#<rot13> = 0.000000
+		o<select> CALL [32] [1] [#<w13> / 2] [0] [-#<w13> / 2]
+		o<select> CALL [31] [1] [-#<h13> / 2] [0] [#<h13> / 2]
+	o<rectangle_001_00> endif
+
+	#<fcs13> = [1.016000]
+	o<get_min> CALL [37] [2] [2.000000] [#<h13> / 2]
+
+	o<select> CALL [33] [1] [0.000000] [#<surface>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+	o<select> CALL [34] [1] [-3.500000] [#<bottom_through>] [#<bottom>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+
+	o<rectangle> CALL [0.000000] [0.000000] [#<w13>] [#<h13>] [#<rot13>] [#32] [#31] [1] [#37] [3] [3] [#33] [#34] [1] [0] [#<fcs13>] [1]
+
+o<rectangle_001_active> endif
+(end outer rect)
+
+
+(begin End Mill Change)
+(end mill change params and changing code author : Fernand Veilleux)
+
+#<_spindle_dir>      =  3
+#<_cooling_mode>     =  8
+
+#<_feed_normal>      =  500.000000
+#<_rpm_normal>       =  1000
+#<_feed_vertical>    =  200.000000
+#<_penetration_mode> =  0
+#<_depth_step>       =  -2.000000
+#<_ramp_down_ratio>  = [25 / 100]
+#<_tool_usage>       =  0
+#<_stepover_min>     =  0.400000
+#<_stepover_normal>  = [60 / 100]
+#<_tool_dynamic_dia> =  0.000000
+
+o<emill_chng_002_tlc> if [[3 EQ 3] AND [1 GT 0]]
+	M61 Q1
+o<emill_chng_002_tlc> endif
+
+o<emill_chng_002_act> if [1 AND [1 NE #5400]]
+	M9
+	T1 M6
+o<emill_chng_002_act> endif
+
+o<emill_chng_002_lc> if [[3 EQ 1] OR [3 EQ 2]]
+	G43 H1
+o<emill_chng_002_lc> endif
+
+o<emill_chng_002_01> if [[#<_spindle_dir> GT 0] AND #<_spindle_all_time>]
+	o<set_feed_rate_and_speed> CALL [1]
+o<emill_chng_002_01> endif
+(end End Mill Change)
+
+
+(begin chamfer pass)
+(rectangle author : Fernand Veilleux)
+
+o<rectangle_002_active> if [0]
+	o<rectangle_002_00> if [90.000000 GT 115.000000] (if narrower than high)
+		#<h14>   = [115.000000]
+		#<w14>   = [90.000000]
+		#<rot14> = [90.0 + 0.000000]
+		o<select> CALL [31] [1] [-#<h14> / 2] [0] [#<h14> / 2]
+		o<select> CALL [32] [1] [-#<w14> / 2] [0] [#<w14> / 2]
+
+	o<rectangle_002_00> else
+		#<w14>   = [115.000000]
+		#<h14>   = [90.000000]
+		#<rot14> = 0.000000
+		o<select> CALL [32] [1] [#<w14> / 2] [0] [-#<w14> / 2]
+		o<select> CALL [31] [1] [-#<h14> / 2] [0] [#<h14> / 2]
+	o<rectangle_002_00> endif
+
+	#<fcs14> = [1.016000]
+	o<get_min> CALL [37] [2] [2.000000] [#<h14> / 2]
+
+	o<select> CALL [33] [1] [0.000000] [#<surface>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+	o<select> CALL [34] [0] [-2.000000] [#<bottom_through>] [#<bottom>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+
+	o<rectangle> CALL [0.000000] [0.000000] [#<w14>] [#<h14>] [#<rot14>] [#32] [#31] [1] [#37] [3] [3] [#33] [#34] [1] [0] [#<fcs14>] [1]
+
+o<rectangle_002_active> endif
+(end chamfer pass)
 
 
 M2

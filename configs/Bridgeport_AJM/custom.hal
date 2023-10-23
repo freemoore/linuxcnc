@@ -4,16 +4,34 @@
 # notes: pncconf puts 7i84.0.1 when it should be 7i84.0.0
 #
 
-loadrt timedelay count=1 
+#loadrt timedelay count=2 
+loadrt timedelay count=1
 addf timedelay.0 servo-thread
+#addf timedelay.1 servo-thread
+
+#try debounce instead
+loadrt debounce cfg=1
+
 
 setp timedelay.0.on-delay 1
 setp timedelay.0.off-delay 1
 
+#setp timedelay.1.on-delay 1
+#setp timedelay.1.off-delay 1
 
-
+# --- POWER ON DELAY ---
 net machine-is-enabled  => hm2_5i23.0.7i84.0.0.output-07 timedelay.0.in
 net dc-brake-open-delay timedelay.0.out hm2_5i23.0.7i84.0.0.output-06
+
+
+# --- SPINDLE-FAULT-IN ---
+#net vfd-has-faulted =>	[HMOT](CARD0).7i84.0.0.input-16 timedelay.1.in 
+#net spindle-fault-in <=  timedelay.1.out
+
+# --- SPINDLE-FAULT-IN ---
+net vfd-has-faulted =>	[HMOT](CARD0).7i84.0.0.input-16 
+
+
 
 #loadrt 3 OR gates 
 loadrt or2 names=x-jog-on,y-jog-on,z-jog-on
