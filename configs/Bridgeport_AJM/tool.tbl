@@ -8,3 +8,6 @@ T7 P7 Z0 D10 ;10mm 4 flute endmill
 T8 P8 Z0 D80 ;80mm insert shell mill 
 T9 P9 Z0 D6 ;6mm single flute carbide 
 T10 P10 Z0 D4 ;4mm 4 flute carbide endmill 
+T11 P11 Z0 D25 ;25mm 4 flute carbide roughing mill 
+T12 P12 Z0 D2 ;2mm false diameter chamfer mill 
+T13 P13 Z0 D20 ;20mm drill 

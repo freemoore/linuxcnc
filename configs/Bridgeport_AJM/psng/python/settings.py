@@ -43,7 +43,7 @@ class ProbeScreenSettings(ProbeScreenBase):
             # default values for inches
             tup = (20.0, 2.0, 0.5, 1.0, 0.1, 0.125, 1.0, 1.25)
         else:
-            tup = (300.0, 10.0, 3.0, 1.0, 0.5, 2.0, 5.0, 5.0)
+            tup = (300.0, 10.0, 20.0, 0.5, 5.8, 8, 14.0, 12.0)
 
         self.spbtn1_search_vel.set_value(
             self.prefs.getpref("ps_searchvel", tup[0], float)

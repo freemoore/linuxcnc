@@ -14,7 +14,7 @@ loadrt pid names=pid.x,pid.y,pid.z,pid.s
 loadrt abs names=abs.spindle
 loadrt lowpass names=lowpass.spindle
 loadrt scale names=scale.spindle,scale.0,scale.1,scale.2,scale.3
-
+#loadrt mux16 names=jogincr,foincr,soincr
 
 addf [HMOT](CARD0).read          servo-thread
 addf motion-command-handler   servo-thread
@@ -23,6 +23,9 @@ addf pid.x.do-pid-calcs       servo-thread
 addf pid.y.do-pid-calcs       servo-thread
 addf pid.z.do-pid-calcs       servo-thread
 addf pid.s.do-pid-calcs       servo-thread
+#addf jogincr                  servo-thread
+#addf foincr                   servo-thread
+#addf soincr                   servo-thread
 addf scale.spindle            servo-thread
 addf scale.0                  servo-thread
 addf scale.1                  servo-thread
@@ -344,6 +347,95 @@ net probe-in     =>  motion.probe-input
 # ---jog button signals---
 
 sets    jog-speed 1.000000
+
+# connect selectable mpg jog increments 
+
+#net jog-incr-a           =>  jogincr.sel0
+#net jog-incr-b           =>  jogincr.sel1
+#net jog-incr-c           =>  jogincr.sel2
+#net jog-incr-d           =>  jogincr.sel3
+#net selected-jog-incr    <=  jogincr.out-f
+#    setp jogincr.debounce-time      0.200000
+#    setp jogincr.use-graycode      False
+#    setp jogincr.suppress-no-input False
+#    setp jogincr.in00          0.000000
+#    setp jogincr.in01          0.000100
+#    setp jogincr.in02          0.000500
+#    setp jogincr.in03          0.001000
+#    setp jogincr.in04          0.005000
+#    setp jogincr.in05          0.010000
+#    setp jogincr.in06          0.050000
+#    setp jogincr.in07          0.100000
+#    setp jogincr.in08          0.000000
+#    setp jogincr.in09          0.000000
+#    setp jogincr.in10          0.000000
+#    setp jogincr.in11          0.000000
+#    setp jogincr.in12          0.000000
+#    setp jogincr.in13          0.000000
+#    setp jogincr.in14          0.000000
+#    setp jogincr.in15          0.000000
+
+# connect feed override increments - switches
+
+#    setp halui.feed-override.count-enable true
+#    setp halui.feed-override.direct-value true
+#    setp halui.feed-override.scale .01
+#net feedoverride-incr   =>  halui.feed-override.counts
+#net fo-incr-a           =>  foincr.sel0
+#net fo-incr-b           =>  foincr.sel1
+#net fo-incr-c           =>  foincr.sel2
+#net fo-incr-d           =>  foincr.sel3
+#net feedoverride-incr   <=  foincr.out-s
+ #   setp foincr.debounce-time      0.200000
+ #   setp foincr.use-graycode      False
+ #   setp foincr.suppress-no-input False
+ #   setp foincr.in00          0.000000
+ #   setp foincr.in01          5.000000
+ #   setp foincr.in02          10.000000
+ #   setp foincr.in03          25.000000
+ #   setp foincr.in04          50.000000
+ #   setp foincr.in05          75.000000
+ #   setp foincr.in06          90.000000
+ #   setp foincr.in07          100.000000
+ #   setp foincr.in08          110.000000
+ #   setp foincr.in09          125.000000
+ #   setp foincr.in10          140.000000
+ #   setp foincr.in11          150.000000
+ #   setp foincr.in12          165.000000
+ #   setp foincr.in13          180.000000
+ #   setp foincr.in14          190.000000
+ #   setp foincr.in15          200.000000
+
+# connect spindle override increments 
+#
+#    setp halui.spindle.0.override.count-enable true
+#    setp halui.spindle.0.override.direct-value true
+#    setp halui.spindle.0.override.scale .01
+#net spindleoverride-incr  =>  halui.spindle.0.override.counts
+#net so-incr-a             =>  soincr.sel0
+#net so-incr-b             =>  soincr.sel1
+#net so-incr-c             =>  soincr.sel2
+#net so-incr-d             =>  soincr.sel3
+#net spindleoverride-incr  <=  soincr.out-s
+#    setp soincr.debounce-time      0.200000
+#    setp soincr.use-graycode      False
+#    setp soincr.suppress-no-input False
+#    setp soincr.in00          0.000000
+#    setp soincr.in01          5.000000
+#    setp soincr.in02          10.000000
+#    setp soincr.in03          25.000000
+#    setp soincr.in04          50.000000
+#    setp soincr.in05          75.000000
+#    setp soincr.in06          90.000000
+#    setp soincr.in07          100.000000
+#    setp soincr.in08          110.000000
+#    setp soincr.in09          125.000000
+#    setp soincr.in10          140.000000
+#    setp soincr.in11          150.000000
+#    setp soincr.in12          165.000000
+#    setp soincr.in13          180.000000
+#    setp soincr.in14          190.000000
+#    setp soincr.in15          200.000000
 
 #  ---motion control signals---
 
