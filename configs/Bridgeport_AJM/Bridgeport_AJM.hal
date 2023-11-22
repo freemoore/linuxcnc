@@ -6,7 +6,7 @@
 loadrt [KINS]KINEMATICS
 loadrt [EMCMOT]EMCMOT servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[KINS]JOINTS
 loadrt hostmot2
-loadrt hm2_pci config="firmware=hm2/5i23/5i23_7i48_7i52.BIT num_encoders=6 num_pwmgens=4 num_stepgens=0 sserial_port_0=00xxxxxx" 
+loadrt hm2_pci config="firmware=hm2/5i23/5i23_7i48_7i52.BIT num_encoders=6 num_pwmgens=5 num_stepgens=8 sserial_port_0=00xxxxxx" 
 setp    [HMOT](CARD0).pwmgen.pwm_frequency 24000
 setp    [HMOT](CARD0).pwmgen.pdm_frequency 6000
 setp    [HMOT](CARD0).watchdog.timeout_ns 10000000
@@ -48,18 +48,24 @@ setp [HMOT](CARD0).7i84.0.0.output-02 true
 net coolant-mist  =>     [HMOT](CARD0).7i84.0.0.output-03
 
 # --- SPINDLE-BRAKE ---
+#net spindle-brake  =>     [HMOT](CARD0).7i84.0.0.output-05 [HMOT](CARD0).7i84.0.0.output-15
+
+setp [HMOT](CARD0).7i84.0.0.output-05-invert true
 net spindle-brake  =>     [HMOT](CARD0).7i84.0.0.output-05
 
 # --- SPINDLE-CW ---
-net spindle-cw  =>     [HMOT](CARD0).7i84.0.0.output-09
+net spindle-cw  =>     [HMOT](CARD0).7i84.0.0.output-09 [HMOT](CARD0).7i84.0.0.output-11
 
 # --- SPINDLE-CCW ---
-net spindle-ccw  =>     [HMOT](CARD0).7i84.0.0.output-08
+net spindle-ccw  =>     [HMOT](CARD0).7i84.0.0.output-08 [HMOT](CARD0).7i84.0.0.output-12
 
 # --- SPINDLE-RESET ---
-net spindle-rst  =>     [HMOT](CARD0).7i84.0.0.output-10
+net spindle-rst  =>     [HMOT](CARD0).7i84.0.0.output-10 [HMOT](CARD0).7i84.0.0.output-13
 
+# new connections are on 7i84 output pins 11,12,13,14,15
 
+# --- SPINDLE-ENABLE ---
+net spindle-enable 		[HMOT](CARD0).7i84.0.0.output-14
 
 
 # external input signals 
