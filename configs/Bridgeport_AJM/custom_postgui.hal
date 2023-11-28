@@ -70,7 +70,7 @@ setp axis.z.jog-scale 0.1
 # **** Setup of spindle speed display using pyvcp -START ****
 
 net spindle-fb-rpm-abs-filtered       =>   pyvcp.spindle-speed
-net spindle-at-speed        =>    pyvcp.spindle-at-speed-led
+net spindle-ready       =>    pyvcp.spindle-at-speed-led
 
 # **** Setup of spindle speed display using pyvcp -END ****
 

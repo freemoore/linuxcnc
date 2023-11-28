@@ -101,7 +101,7 @@ o<select> CALL [31] [0] [0.000000] [0.000000 + #<wp_depth> / 2] [0.000000 + #<wp
 #<surface>  = #31
 
 #<_z_clear>       = 2.540000
-#<_rapid_z>       = [#<surface> + #<_z_clear> + 65.000000]
+#<_rapid_z>       = [#<surface> + #<_z_clear> + 30.000000]
 
 #<bottom>         = [#<surface> - #<wp_depth>]
 #<bottom_through> = [#<bottom> + -1.270000]
@@ -114,385 +114,16 @@ o<select> CALL [31] [0] [0.000000] [0.000000 + #<wp_depth> / 2] [0.000000 + #<wp
 (end Workpiece)
 
 
-( order of operations so far: )
-( run workpiece mill for holddown screws: 3mm endmill, z-8mm = bottom of stock/top of fixture )
-( next: countersink )
-
-
-(begin 3mm 2 flute carbide endmill )
+(begin End Mill Change)
 (end mill change params and changing code author : Fernand Veilleux)
 
 #<_spindle_dir>      =  3
 #<_cooling_mode>     =  8
 
-#<_feed_normal>      =  400.000000
-#<_rpm_normal>       =  3000
+#<_feed_normal>      =  250.000000
+#<_rpm_normal>       =  5000
 #<_feed_vertical>    =  200.000000
 #<_penetration_mode> =  0
-#<_depth_step>       =  -0.200000
-#<_ramp_down_ratio>  = [25 / 100]
-#<_tool_usage>       =  0
-#<_stepover_min>     =  0.400000
-#<_stepover_normal>  = [60 / 100]
-#<_tool_dynamic_dia> =  0.000000
-
-o<emill_chng_001_tlc> if [[3 EQ 3] AND [14 GT 0]]
-	M61 Q14
-o<emill_chng_001_tlc> endif
-
-o<emill_chng_001_act> if [0 AND [14 NE #5400]]
-	M9
-	T14 M6
-o<emill_chng_001_act> endif
-
-o<emill_chng_001_lc> if [[3 EQ 1] OR [3 EQ 2]]
-	G43 H14
-o<emill_chng_001_lc> endif
-
-o<emill_chng_001_01> if [[#<_spindle_dir> GT 0] AND #<_spindle_all_time>]
-	o<set_feed_rate_and_speed> CALL [1]
-o<emill_chng_001_01> endif
-(end 3mm 2 flute carbide endmill )
-
-
-(begin locating 6mm pin holes)
-(rectangular array author : Fernand Veilleux)
-
-o<rect-array_001_active> if [0]
-	o<select> CALL [31] [1] [0.000000] [0.000000 - [2 - 1] * 114.000000 / 2] [0.000000 - [2 - 1] * 114.000000]
-	#<first_x10> = #31
-
-	o<select> CALL [31] [1] [0.000000 - [1 - 1] * 25.400000] [0.000000 - [1 - 1] * 25.400000 / 2] [0.000000]
-	#<first_y10> = #31
-
-	(get and save current coords system offsets)
-	#<old_coord_system10> = [#<_coord_system> / 10]
-	o<get_offsets> CALL
-	#<offset_x10> = #<_offsets_x>
-	#<offset_y10> = #<_offsets_y>
-	#<offset_z10> = #<_offsets_z>
-	#<offset_r10> = #<_offsets_r>
-
-	(change coords system)
-	G#<_off_rot_coord_system>
-
-	#<start_y10>  = [#<offset_y10> + #<first_y10>]
-	#<items_yr10> = 0
-	#<x_step10>   = 1
-	#<x_round10>  = 0
-	#<start_x10>  = [#<offset_x10> + #<first_x10>]
-	#<items_xr10> = 0
-	o<rect-array_001_loop_Y> repeat [1]
-		o<rect-array_001_loop_X> repeat [2]
-			(get rotated coordinates then apply to new coords)
-			#<rot10> = [#<offset_r10> + 0.000000 + #<items_xr10> + #<items_yr10>]
-			o<rotate_xy> CALL [#<start_x10>] [#<start_y10>] [#<offset_x10> + 0.000000] [#<offset_y10> + 0.000000] [#<offset_r10> + 0.000000]
-			o<rect-array_001_change_coords> if [#<_has_z_axis>]
-				G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] Z#<offset_z10> R[#<rot10>]
-			o<rect-array_001_change_coords> else
-				G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] R[#<rot10>]
-			o<rect-array_001_change_coords> endif
-
-			(begin locating 6mm pin holes items)
-
-
-			(begin Circle by Center)
-			(circle from center author : Fernand Veilleux)
-			
-			o<circle_001_active> if [1] (if active)
-				o<select> CALL [31] [0] [0.500000] [#<surface>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
-				o<select> CALL [32] [1] [-12.700000] [#<bottom_through>] [#<bottom>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
-			
-				o<select> CALL [33] [1] [6.000000 / 2] [0] [-6.000000 / 2]
-				o<select> CALL [34] [1] [-6.000000 / 2] [0] [6.000000 / 2]
-			
-				o<circle> CALL [0.000000 + #33] [0.000000 + #34] [6.000000] [0.000000] [0.000000] [0] [3] [#31] [#32] [1] [0] [1.016000] [1]
-			
-			o<circle_001_active> endif
-			(end Circle by Center)
-
-
-			(end locating 6mm pin holes items)
-
-			#<x_round10> = [#<x_round10> + #<x_step10>]
-			o<rect-array_001_inc> if [[#<x_round10> LT 2] AND [#<x_round10> GT 0]]
-				#<start_x10>  = [#<start_x10>  + 114.000000 * #<x_step10>]
-				#<items_xr10> = [#<items_xr10> + 0.000000 * #<x_step10>]
-			o<rect-array_001_inc> endif
-		o<rect-array_001_loop_X> endrepeat
-
-		#<x_step10>   = [#<x_step10>   * -1]
-		#<start_y10>  = [#<start_y10>  + 25.400000]
-		#<items_yr10> = [#<items_yr10> + 0.000000]
-	o<rect-array_001_loop_Y> endrepeat
-
-	(restore coordinate system)
-	G#<old_coord_system10>
-	o<rect-array_001_restore_coords> if [#<_has_z_axis>]
-		G10 L2 P#5220 X#<offset_x10> Y#<offset_y10> Z#<offset_z10> R#<offset_r10>
-	o<rect-array_001_restore_coords> else
-		G10 L2 P#5220 X#<offset_x10> Y#<offset_y10> R#<offset_r10>
-	o<rect-array_001_restore_coords> endif
-
-o<rect-array_001_active> endif
-(end locating 6mm pin holes)
-
-
-(begin workpiece mill for holddown screws)
-(rectangular array author : Fernand Veilleux)
-
-o<rect-array_002_active> if [0]
-	o<select> CALL [31] [1] [0.000000] [0.000000 - [3 - 1] * 121.000000 / 2] [0.000000 - [3 - 1] * 121.000000]
-	#<first_x11> = #31
-
-	o<select> CALL [31] [1] [0.000000 - [3 - 1] * 96.000000] [0.000000 - [3 - 1] * 96.000000 / 2] [0.000000]
-	#<first_y11> = #31
-
-	(get and save current coords system offsets)
-	#<old_coord_system11> = [#<_coord_system> / 10]
-	o<get_offsets> CALL
-	#<offset_x11> = #<_offsets_x>
-	#<offset_y11> = #<_offsets_y>
-	#<offset_z11> = #<_offsets_z>
-	#<offset_r11> = #<_offsets_r>
-
-	(change coords system)
-	G#<_off_rot_coord_system>
-
-	#<start_y11>  = [#<offset_y11> + #<first_y11>]
-	#<items_yr11> = 0
-	#<x_step11>   = 1
-	#<x_round11>  = 0
-	#<start_x11>  = [#<offset_x11> + #<first_x11>]
-	#<items_xr11> = 0
-	o<rect-array_002_loop_Y> repeat [3]
-		o<rect-array_002_loop_X> repeat [3]
-			(get rotated coordinates then apply to new coords)
-			#<rot11> = [#<offset_r11> + 0.000000 + #<items_xr11> + #<items_yr11>]
-			o<rotate_xy> CALL [#<start_x11>] [#<start_y11>] [#<offset_x11> + 0.000000] [#<offset_y11> + 0.000000] [#<offset_r11> + 0.000000]
-			o<rect-array_002_change_coords> if [#<_has_z_axis>]
-				G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] Z#<offset_z11> R[#<rot11>]
-			o<rect-array_002_change_coords> else
-				G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] R[#<rot11>]
-			o<rect-array_002_change_coords> endif
-
-			(begin workpiece mill for holddown screws items)
-
-
-			(begin 5mm circle)
-			(circle from center author : Fernand Veilleux)
-			
-			o<circle_002_active> if [1] (if active)
-				o<select> CALL [31] [0] [0.500000] [#<surface>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
-				o<select> CALL [32] [0] [-6.500000] [#<bottom_through>] [#<bottom>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
-			
-				o<select> CALL [33] [1] [5.000000 / 2] [0] [-5.000000 / 2]
-				o<select> CALL [34] [1] [-5.000000 / 2] [0] [5.000000 / 2]
-			
-				o<circle> CALL [0.000000 + #33] [0.000000 + #34] [5.000000] [0.000000] [0.000000] [0] [3] [#31] [#32] [1] [0] [1.016000] [1]
-			
-			o<circle_002_active> endif
-			(end 5mm circle)
-
-
-			(end workpiece mill for holddown screws items)
-
-			#<x_round11> = [#<x_round11> + #<x_step11>]
-			o<rect-array_002_inc> if [[#<x_round11> LT 3] AND [#<x_round11> GT 0]]
-				#<start_x11>  = [#<start_x11>  + 121.000000 * #<x_step11>]
-				#<items_xr11> = [#<items_xr11> + 0.000000 * #<x_step11>]
-			o<rect-array_002_inc> endif
-		o<rect-array_002_loop_X> endrepeat
-
-		#<x_step11>   = [#<x_step11>   * -1]
-		#<start_y11>  = [#<start_y11>  + 96.000000]
-		#<items_yr11> = [#<items_yr11> + 0.000000]
-	o<rect-array_002_loop_Y> endrepeat
-
-	(restore coordinate system)
-	G#<old_coord_system11>
-	o<rect-array_002_restore_coords> if [#<_has_z_axis>]
-		G10 L2 P#5220 X#<offset_x11> Y#<offset_y11> Z#<offset_z11> R#<offset_r11>
-	o<rect-array_002_restore_coords> else
-		G10 L2 P#5220 X#<offset_x11> Y#<offset_y11> R#<offset_r11>
-	o<rect-array_002_restore_coords> endif
-
-o<rect-array_002_active> endif
-(end workpiece mill for holddown screws)
-
-
-(begin End Mill Change)
-(end mill change params and changing code author : Fernand Veilleux)
-
-#<_spindle_dir>      =  3
-#<_cooling_mode>     =  9
-
-#<_feed_normal>      =  500.000000
-#<_rpm_normal>       =  1000
-#<_feed_vertical>    =  200.000000
-#<_penetration_mode> =  1
-#<_depth_step>       =  -0.150000
-#<_ramp_down_ratio>  = [25 / 100]
-#<_tool_usage>       =  0
-#<_stepover_min>     =  0.400000
-#<_stepover_normal>  = [60 / 100]
-#<_tool_dynamic_dia> =  0.000000
-
-o<emill_chng_002_tlc> if [[3 EQ 3] AND [8 GT 0]]
-	M61 Q8
-o<emill_chng_002_tlc> endif
-
-o<emill_chng_002_act> if [1 AND [8 NE #5400]]
-	M9
-	T8 M6
-o<emill_chng_002_act> endif
-
-o<emill_chng_002_lc> if [[3 EQ 1] OR [3 EQ 2]]
-	G43 H8
-o<emill_chng_002_lc> endif
-
-o<emill_chng_002_01> if [[#<_spindle_dir> GT 0] AND #<_spindle_all_time>]
-	o<set_feed_rate_and_speed> CALL [1]
-o<emill_chng_002_01> endif
-(end End Mill Change)
-
-
-(begin 80mm shellmill two passes)
-(rectangular array author : Fernand Veilleux)
-
-o<rect-array_003_active> if [1]
-	o<select> CALL [31] [1] [0.000000] [0.000000 - [1 - 1] * 25.400000 / 2] [0.000000 - [1 - 1] * 25.400000]
-	#<first_x12> = #31
-
-	o<select> CALL [31] [1] [0.000000 - [2 - 1] * 98.000000] [0.000000 - [2 - 1] * 98.000000 / 2] [0.000000]
-	#<first_y12> = #31
-
-	(get and save current coords system offsets)
-	#<old_coord_system12> = [#<_coord_system> / 10]
-	o<get_offsets> CALL
-	#<offset_x12> = #<_offsets_x>
-	#<offset_y12> = #<_offsets_y>
-	#<offset_z12> = #<_offsets_z>
-	#<offset_r12> = #<_offsets_r>
-
-	(change coords system)
-	G#<_off_rot_coord_system>
-
-	#<start_y12>  = [#<offset_y12> + #<first_y12>]
-	#<items_yr12> = 0
-	#<x_step12>   = 1
-	#<x_round12>  = 0
-	#<start_x12>  = [#<offset_x12> + #<first_x12>]
-	#<items_xr12> = 0
-	o<rect-array_003_loop_Y> repeat [2]
-		o<rect-array_003_loop_X> repeat [1]
-			(get rotated coordinates then apply to new coords)
-			#<rot12> = [#<offset_r12> + 0.000000 + #<items_xr12> + #<items_yr12>]
-			o<rotate_xy> CALL [#<start_x12>] [#<start_y12>] [#<offset_x12> + 0.000000] [#<offset_y12> + 0.000000] [#<offset_r12> + 0.000000]
-			o<rect-array_003_change_coords> if [#<_has_z_axis>]
-				G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] Z#<offset_z12> R[#<rot12>]
-			o<rect-array_003_change_coords> else
-				G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] R[#<rot12>]
-			o<rect-array_003_change_coords> endif
-
-			(begin 80mm shellmill two passes items)
-
-
-			(begin Polyline)
-			(author : Fernand Veilleux)
-			
-			o<polyline_001_active> if [1 AND [#<in_polyline> EQ 0]]
-				#<poly_global_engagement> = [100 / 100]
-			
-				(init and set origin)
-				o<poly_add_item> CALL [-1] [-180.000000] [0.000000]
-			
-				#<in_polyline> = 1
-				(begin Polyline items)
-
-
-					(begin Line To)
-					(line to absolute or relative position author : Fernand Veilleux)
-					
-					o<poly-line-to_001_active> if [1 AND #<in_polyline>]
-						o<select> CALL [31] [0] [#<poly_global_engagement>] [100]
-					
-						o<poly_add_item> CALL [0] [347.000000] [0.000000] [1] [0] [7.620000] [0] [#31]
-					
-					o<poly-line-to_001_active> endif
-					(end Line To)
-
-
-				(end Polyline items)
-				#<in_polyline> = 0
-			
-				o<polyline_001_end> if [#5000 GT 0]
-			
-					(return to origin w/ either a line 1 or an arc 5)
-					o<select> CALL [31] [0] [#<poly_global_engagement>] [100]
-					o<polyline_001_end0> if [0 GT 1]
-						o<poly_add_item> CALL [5] [-180.000000] [0.000000] [0] [0] [7.620000] [0] [#31] [25.400000] [0] [0]
-					o<polyline_001_end0> else
-						o<poly_add_item> CALL [1] [-180.000000] [0.000000] [0] [0] [7.620000] [0] [#31]
-					o<polyline_001_end0> endif
-			
-					o<poly_create> CALL
-			
-					o<polyline_001_rev> if [0]
-						o<poly_reverse> CALL
-					o<polyline_001_rev> endif
-			
-					o<poly_copy_mill> CALL
-			
-					o<optimize> CALL [#<_mill_data_start>] [40] [0] [#<poly_global_engagement> * #5410 / 100]
-			
-					o<select> CALL [31] [0] [30.000000] [#<surface>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
-					o<select> CALL [32] [0] [29.000000] [#<bottom_through>] [#<bottom>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
-			
-					o<poly_mill> CALL [#<_mill_data_start>] [#31] [#32] [40] [1] [0.000000] [0.000000] [0.000000] [#<poly_global_engagement>] [0.000000] [0.000000]
-			
-				o<polyline_001_end> endif
-			
-			o<polyline_001_active> endif
-			(end Polyline)
-
-
-			(end 80mm shellmill two passes items)
-
-			#<x_round12> = [#<x_round12> + #<x_step12>]
-			o<rect-array_003_inc> if [[#<x_round12> LT 1] AND [#<x_round12> GT 0]]
-				#<start_x12>  = [#<start_x12>  + 25.400000 * #<x_step12>]
-				#<items_xr12> = [#<items_xr12> + 0.000000 * #<x_step12>]
-			o<rect-array_003_inc> endif
-		o<rect-array_003_loop_X> endrepeat
-
-		#<x_step12>   = [#<x_step12>   * -1]
-		#<start_y12>  = [#<start_y12>  + 98.000000]
-		#<items_yr12> = [#<items_yr12> + 0.000000]
-	o<rect-array_003_loop_Y> endrepeat
-
-	(restore coordinate system)
-	G#<old_coord_system12>
-	o<rect-array_003_restore_coords> if [#<_has_z_axis>]
-		G10 L2 P#5220 X#<offset_x12> Y#<offset_y12> Z#<offset_z12> R#<offset_r12>
-	o<rect-array_003_restore_coords> else
-		G10 L2 P#5220 X#<offset_x12> Y#<offset_y12> R#<offset_r12>
-	o<rect-array_003_restore_coords> endif
-
-o<rect-array_003_active> endif
-(end 80mm shellmill two passes)
-
-
-(begin End Mill Change)
-(end mill change params and changing code author : Fernand Veilleux)
-
-#<_spindle_dir>      =  4
-#<_cooling_mode>     =  9
-
-#<_feed_normal>      =  250.000000
-#<_rpm_normal>       =  2000
-#<_feed_vertical>    =  200.000000
-#<_penetration_mode> =  1
 #<_depth_step>       =  -2.000000
 #<_ramp_down_ratio>  = [25 / 100]
 #<_tool_usage>       =  0
@@ -500,216 +131,39 @@ o<rect-array_003_active> endif
 #<_stepover_normal>  = [60 / 100]
 #<_tool_dynamic_dia> =  0.000000
 
-o<emill_chng_003_tlc> if [[3 EQ 3] AND [5 GT 0]]
-	M61 Q5
-o<emill_chng_003_tlc> endif
+o<emill_chng_001_tlc> if [[3 EQ 3] AND [15 GT 0]]
+	M61 Q15
+o<emill_chng_001_tlc> endif
 
-o<emill_chng_003_act> if [1 AND [5 NE #5400]]
+o<emill_chng_001_act> if [1 AND [15 NE #5400]]
 	M9
-	T5 M6
-o<emill_chng_003_act> endif
+	T15 M6
+o<emill_chng_001_act> endif
 
-o<emill_chng_003_lc> if [[3 EQ 1] OR [3 EQ 2]]
-	G43 H5
-o<emill_chng_003_lc> endif
+o<emill_chng_001_lc> if [[3 EQ 1] OR [3 EQ 2]]
+	G43 H15
+o<emill_chng_001_lc> endif
 
-o<emill_chng_003_01> if [[#<_spindle_dir> GT 0] AND #<_spindle_all_time>]
+o<emill_chng_001_01> if [[#<_spindle_dir> GT 0] AND #<_spindle_all_time>]
 	o<set_feed_rate_and_speed> CALL [1]
-o<emill_chng_003_01> endif
+o<emill_chng_001_01> endif
 (end End Mill Change)
 
 
-(begin 40mm flycutter four passes)
-(rectangular array author : Fernand Veilleux)
+(begin Circle by Center)
+(circle from center author : Fernand Veilleux)
 
-o<rect-array_004_active> if [0]
-	o<select> CALL [31] [1] [0.000000] [0.000000 - [1 - 1] * 25.400000 / 2] [0.000000 - [1 - 1] * 25.400000]
-	#<first_x13> = #31
+o<circle_001_active> if [1] (if active)
+	o<select> CALL [31] [0] [10.000000] [#<surface>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+	o<select> CALL [32] [1] [-12.700000] [#<bottom_through>] [#<bottom>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
 
-	o<select> CALL [31] [1] [0.000000 - [2 - 1] * 98.000000] [0.000000 - [2 - 1] * 98.000000 / 2] [0.000000]
-	#<first_y13> = #31
+	o<select> CALL [33] [1] [6.800000 / 2] [0] [-6.800000 / 2]
+	o<select> CALL [34] [1] [-6.800000 / 2] [0] [6.800000 / 2]
 
-	(get and save current coords system offsets)
-	#<old_coord_system13> = [#<_coord_system> / 10]
-	o<get_offsets> CALL
-	#<offset_x13> = #<_offsets_x>
-	#<offset_y13> = #<_offsets_y>
-	#<offset_z13> = #<_offsets_z>
-	#<offset_r13> = #<_offsets_r>
+	o<circle> CALL [0.000000 + #33] [0.000000 + #34] [6.800000] [0.000000] [0.000000] [0] [3] [#31] [#32] [1] [0] [1.016000] [1]
 
-	(change coords system)
-	G#<_off_rot_coord_system>
-
-	#<start_y13>  = [#<offset_y13> + #<first_y13>]
-	#<items_yr13> = 0
-	#<x_step13>   = 1
-	#<x_round13>  = 0
-	#<start_x13>  = [#<offset_x13> + #<first_x13>]
-	#<items_xr13> = 0
-	o<rect-array_004_loop_Y> repeat [2]
-		o<rect-array_004_loop_X> repeat [1]
-			(get rotated coordinates then apply to new coords)
-			#<rot13> = [#<offset_r13> + 0.000000 + #<items_xr13> + #<items_yr13>]
-			o<rotate_xy> CALL [#<start_x13>] [#<start_y13>] [#<offset_x13> + 0.000000] [#<offset_y13> + 0.000000] [#<offset_r13> + 0.000000]
-			o<rect-array_004_change_coords> if [#<_has_z_axis>]
-				G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] Z#<offset_z13> R[#<rot13>]
-			o<rect-array_004_change_coords> else
-				G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] R[#<rot13>]
-			o<rect-array_004_change_coords> endif
-
-			(begin 40mm flycutter four passes items)
-
-
-			(begin Rectangular Array)
-			(rectangular array author : Fernand Veilleux)
-			
-			o<rect-array_005_active> if [1]
-				o<select> CALL [31] [1] [0.000000] [0.000000 - [1 - 1] * 25.400000 / 2] [0.000000 - [1 - 1] * 25.400000]
-				#<first_x14> = #31
-			
-				o<select> CALL [31] [1] [0.000000 - [2 - 1] * 42.000000] [0.000000 - [2 - 1] * 42.000000 / 2] [0.000000]
-				#<first_y14> = #31
-			
-				(get and save current coords system offsets)
-				#<old_coord_system14> = [#<_coord_system> / 10]
-				o<get_offsets> CALL
-				#<offset_x14> = #<_offsets_x>
-				#<offset_y14> = #<_offsets_y>
-				#<offset_z14> = #<_offsets_z>
-				#<offset_r14> = #<_offsets_r>
-			
-				(change coords system)
-				G#<_off_rot_coord_system>
-			
-				#<start_y14>  = [#<offset_y14> + #<first_y14>]
-				#<items_yr14> = 0
-				#<x_step14>   = 1
-				#<x_round14>  = 0
-				#<start_x14>  = [#<offset_x14> + #<first_x14>]
-				#<items_xr14> = 0
-				o<rect-array_005_loop_Y> repeat [2]
-					o<rect-array_005_loop_X> repeat [1]
-						(get rotated coordinates then apply to new coords)
-						#<rot14> = [#<offset_r14> + 0.000000 + #<items_xr14> + #<items_yr14>]
-						o<rotate_xy> CALL [#<start_x14>] [#<start_y14>] [#<offset_x14> + 0.000000] [#<offset_y14> + 0.000000] [#<offset_r14> + 0.000000]
-						o<rect-array_005_change_coords> if [#<_has_z_axis>]
-							G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] Z#<offset_z14> R[#<rot14>]
-						o<rect-array_005_change_coords> else
-							G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] R[#<rot14>]
-						o<rect-array_005_change_coords> endif
-			
-						(begin Rectangular Array items)
-
-
-						(begin Polyline)
-						(author : Fernand Veilleux)
-						
-						o<polyline_002_active> if [1 AND [#<in_polyline> EQ 0]]
-							#<poly_global_engagement> = [100 / 100]
-						
-							(init and set origin)
-							o<poly_add_item> CALL [-1] [-150.000000] [0.000000]
-						
-							#<in_polyline> = 1
-							(begin Polyline items)
-
-
-								(begin Line To)
-								(line to absolute or relative position author : Fernand Veilleux)
-								
-								o<poly-line-to_002_active> if [1 AND #<in_polyline>]
-									o<select> CALL [31] [0] [#<poly_global_engagement>] [100]
-								
-									o<poly_add_item> CALL [0] [300.000000] [0.000000] [1] [0] [7.620000] [0] [#31]
-								
-								o<poly-line-to_002_active> endif
-								(end Line To)
-
-
-							(end Polyline items)
-							#<in_polyline> = 0
-						
-							o<polyline_002_end> if [#5000 GT 0]
-						
-								(return to origin w/ either a line 1 or an arc 5)
-								o<select> CALL [31] [0] [#<poly_global_engagement>] [100]
-								o<polyline_002_end0> if [0 GT 1]
-									o<poly_add_item> CALL [5] [-150.000000] [0.000000] [0] [0] [7.620000] [0] [#31] [25.400000] [0] [0]
-								o<polyline_002_end0> else
-									o<poly_add_item> CALL [1] [-150.000000] [0.000000] [0] [0] [7.620000] [0] [#31]
-								o<polyline_002_end0> endif
-						
-								o<poly_create> CALL
-						
-								o<polyline_002_rev> if [0]
-									o<poly_reverse> CALL
-								o<polyline_002_rev> endif
-						
-								o<poly_copy_mill> CALL
-						
-								o<optimize> CALL [#<_mill_data_start>] [40] [0] [#<poly_global_engagement> * #5410 / 100]
-						
-								o<select> CALL [31] [0] [17.200000] [#<surface>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
-								o<select> CALL [32] [0] [17.000000] [#<bottom_through>] [#<bottom>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
-						
-								o<poly_mill> CALL [#<_mill_data_start>] [#31] [#32] [40] [1] [0.000000] [0.000000] [0.000000] [#<poly_global_engagement>] [0.000000] [0.000000]
-						
-							o<polyline_002_end> endif
-						
-						o<polyline_002_active> endif
-						(end Polyline)
-
-
-						(end Rectangular Array items)
-			
-						#<x_round14> = [#<x_round14> + #<x_step14>]
-						o<rect-array_005_inc> if [[#<x_round14> LT 1] AND [#<x_round14> GT 0]]
-							#<start_x14>  = [#<start_x14>  + 25.400000 * #<x_step14>]
-							#<items_xr14> = [#<items_xr14> + 0.000000 * #<x_step14>]
-						o<rect-array_005_inc> endif
-					o<rect-array_005_loop_X> endrepeat
-			
-					#<x_step14>   = [#<x_step14>   * -1]
-					#<start_y14>  = [#<start_y14>  + 42.000000]
-					#<items_yr14> = [#<items_yr14> + 0.000000]
-				o<rect-array_005_loop_Y> endrepeat
-			
-				(restore coordinate system)
-				G#<old_coord_system14>
-				o<rect-array_005_restore_coords> if [#<_has_z_axis>]
-					G10 L2 P#5220 X#<offset_x14> Y#<offset_y14> Z#<offset_z14> R#<offset_r14>
-				o<rect-array_005_restore_coords> else
-					G10 L2 P#5220 X#<offset_x14> Y#<offset_y14> R#<offset_r14>
-				o<rect-array_005_restore_coords> endif
-			
-			o<rect-array_005_active> endif
-			(end Rectangular Array)
-
-
-			(end 40mm flycutter four passes items)
-
-			#<x_round13> = [#<x_round13> + #<x_step13>]
-			o<rect-array_004_inc> if [[#<x_round13> LT 1] AND [#<x_round13> GT 0]]
-				#<start_x13>  = [#<start_x13>  + 25.400000 * #<x_step13>]
-				#<items_xr13> = [#<items_xr13> + 0.000000 * #<x_step13>]
-			o<rect-array_004_inc> endif
-		o<rect-array_004_loop_X> endrepeat
-
-		#<x_step13>   = [#<x_step13>   * -1]
-		#<start_y13>  = [#<start_y13>  + 98.000000]
-		#<items_yr13> = [#<items_yr13> + 0.000000]
-	o<rect-array_004_loop_Y> endrepeat
-
-	(restore coordinate system)
-	G#<old_coord_system13>
-	o<rect-array_004_restore_coords> if [#<_has_z_axis>]
-		G10 L2 P#5220 X#<offset_x13> Y#<offset_y13> Z#<offset_z13> R#<offset_r13>
-	o<rect-array_004_restore_coords> else
-		G10 L2 P#5220 X#<offset_x13> Y#<offset_y13> R#<offset_r13>
-	o<rect-array_004_restore_coords> endif
-
-o<rect-array_004_active> endif
-(end 40mm flycutter four passes)
+o<circle_001_active> endif
+(end Circle by Center)
 
 
 M2

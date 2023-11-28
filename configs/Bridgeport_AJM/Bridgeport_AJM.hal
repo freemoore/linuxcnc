@@ -6,7 +6,8 @@
 loadrt [KINS]KINEMATICS
 loadrt [EMCMOT]EMCMOT servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[KINS]JOINTS
 loadrt hostmot2
-loadrt hm2_pci config="firmware=hm2/5i23/5i23_7i48_7i52.BIT num_encoders=6 num_pwmgens=5 num_stepgens=8 sserial_port_0=00xxxxxx" 
+loadrt hm2_pci config="firmware=hm2/5i23/5i23_fmd.bit num_encoders=14 num_pwmgens=7 num_stepgens=2 sserial_port_0=00xxxxxx" 
+#loadrt hm2_pci config="firmware=hm2/5i23/5i23_7i48_7i52.BIT num_encoders=6 num_pwmgens=5 num_stepgens=0 sserial_port_0=00xxxxxx" 
 setp    [HMOT](CARD0).pwmgen.pwm_frequency 24000
 setp    [HMOT](CARD0).pwmgen.pdm_frequency 6000
 setp    [HMOT](CARD0).watchdog.timeout_ns 10000000
@@ -14,7 +15,11 @@ loadrt pid names=pid.x,pid.y,pid.z,pid.s
 loadrt abs names=abs.spindle
 loadrt lowpass names=lowpass.spindle
 loadrt scale names=scale.spindle,scale.0,scale.1,scale.2,scale.3
+loadrt near names=spindle-at-speed
 
+addf spindle-at-speed servo-thread
+setp spindle-at-speed.scale 0.5
+setp spindle-at-speed.difference 250
 
 addf [HMOT](CARD0).read          servo-thread
 addf motion-command-handler   servo-thread
@@ -51,18 +56,19 @@ net coolant-mist  =>     [HMOT](CARD0).7i84.0.0.output-03
 #net spindle-brake  =>     [HMOT](CARD0).7i84.0.0.output-05 [HMOT](CARD0).7i84.0.0.output-15
 
 setp [HMOT](CARD0).7i84.0.0.output-05-invert true
-net spindle-brake  =>     [HMOT](CARD0).7i84.0.0.output-05
+net spindle-brake  =>     [HMOT](CARD0).7i84.0.0.output-05 [HMOT](CARD0).7i84.0.0.output-15
 
 # --- SPINDLE-CW ---
-net spindle-cw  =>     [HMOT](CARD0).7i84.0.0.output-09 [HMOT](CARD0).7i84.0.0.output-11
-
+net spindle-cw  =>     [HMOT](CARD0).7i84.0.0.output-08 [HMOT](CARD0).7i84.0.0.output-12
+#net spindle-cw  =>      [HMOT](CARD0).7i84.0.0.output-11
 # --- SPINDLE-CCW ---
-net spindle-ccw  =>     [HMOT](CARD0).7i84.0.0.output-08 [HMOT](CARD0).7i84.0.0.output-12
+
+net spindle-ccw  =>     [HMOT](CARD0).7i84.0.0.output-09 [HMOT](CARD0).7i84.0.0.output-13
+#net spindle-ccw  =>     [HMOT](CARD0).7i84.0.0.output-12
 
 # --- SPINDLE-RESET ---
-net spindle-rst  =>     [HMOT](CARD0).7i84.0.0.output-10 [HMOT](CARD0).7i84.0.0.output-13
-
-# new connections are on 7i84 output pins 11,12,13,14,15
+#net spindle-rst  =>     [HMOT](CARD0).7i84.0.0.output-10 [HMOT](CARD0).7i84.0.0.output-14
+net spindle-rst  =>     [HMOT](CARD0).7i84.0.0.output-10
 
 # --- SPINDLE-ENABLE ---
 net spindle-enable 		[HMOT](CARD0).7i84.0.0.output-14
@@ -270,6 +276,13 @@ net spindle-output        <=  pid.s.output
 setp   [HMOT](CARD0).pwmgen.03.output-type 2
 setp   [HMOT](CARD0).pwmgen.03.scale  [SPINDLE_0]OUTPUT_SCALE
 
+# andy trying out pwmgen spindle control via 7i52
+#setp   [HMOT](CARD0).pwmgen.06.output-type 1
+#setp   [HMOT](CARD0).pwmgen.06.scale  [SPINDLE_0]OUTPUT_SCALE
+# note - this worked giving pwm out on the last com position on the 7i52 card. servo drive doesn't accept pwm in so not used for now. 
+
+#net spindle-output      => [HMOT](CARD0).pwmgen.03.value [HMOT](CARD0).pwmgen.06.value
+#net spindle-enable      => [HMOT](CARD0).pwmgen.03.enable [HMOT](CARD0).pwmgen.06.enable
 
 net spindle-output      => [HMOT](CARD0).pwmgen.03.value
 net spindle-enable      => [HMOT](CARD0).pwmgen.03.enable
@@ -299,13 +312,10 @@ net spindle-cw                 <=  spindle.0.forward
 net spindle-ccw                <=  spindle.0.reverse
 net spindle-brake              <=  spindle.0.brake
 net spindle-revs               =>  spindle.0.revs
-net spindle-at-speed           =>  spindle.0.at-speed
 net spindle-vel-fb-rps         =>  spindle.0.speed-in
 net spindle-index-enable      <=>  spindle.0.index-enable
 net vfd-has-faulted		   =>  spindle.0.amp-fault-in
-# ---Setup spindle at speed signals---
 
-sets spindle-at-speed true
 
 #  Use ACTUAL spindle velocity from spindle encoder
 #  spindle-velocity bounces around so we filter it with lowpass
@@ -318,6 +328,14 @@ setp     lowpass.spindle.gain 1.000000
 net spindle-vel-fb-rpm => abs.spindle.in
 net spindle-vel-fb-rpm-abs abs.spindle.out => lowpass.spindle.in
 net spindle-fb-rpm-abs-filtered  lowpass.spindle.out  
+
+# ---Setup spindle at speed signals---
+
+net spindle-fb-rpm-abs-filtered spindle-at-speed.in1
+net spindle-vel-cmd-rpm spindle-at-speed.in2
+net spindle-ready <= spindle-at-speed.out => spindle.0.at-speed
+
+
 
 #******************************
 # connect miscellaneous signals
