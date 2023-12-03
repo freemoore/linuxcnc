@@ -1,0 +1,16 @@
+# halshow watchlist created Sat Dec 02 17:14:55 GMT 2023
+
+sig+spindle-index-enable
+pin+spindle.0.index-enable
+pin+spindle.0.is-oriented
+pin+spindle.0.inhibit
+pin+spindle.0.at-speed
+pin+spindle.0.on
+pin+spindle.0.orient-angle
+pin+spindle.0.orient-mode
+sig+spindle-enable
+sig+spindle-ready
+sig+spindle-revs
+pin+hm2_5i23.0.encoder.03.input-index
+pin+hm2_5i23.0.encoder.03.input-b
+pin+hm2_5i23.0.encoder.03.input-a

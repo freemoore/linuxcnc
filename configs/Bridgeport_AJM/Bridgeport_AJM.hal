@@ -16,10 +16,24 @@ loadrt abs names=abs.spindle
 loadrt lowpass names=lowpass.spindle
 loadrt scale names=scale.spindle,scale.0,scale.1,scale.2,scale.3
 loadrt near names=spindle-at-speed
+#loadrt gearchange
+#addf gearchange.0	servo-thread
+#setp gearchange.0.min1 0.1
+#setp gearchange.0.max1 500
+#setp gearchange.0.min2 400
+#setp gearchange.0.max2 4500
+#setp gearchange.0.scale2 8.3
+#setp gearchange.0.reverse 1
+
+
 
 addf spindle-at-speed servo-thread
-setp spindle-at-speed.scale 0.5
-setp spindle-at-speed.difference 250
+
+#setp spindle-at-speed.scale 100
+
+setp spindle-at-speed.difference 200
+setp spindle-at-speed.scale 1.5
+
 
 addf [HMOT](CARD0).read          servo-thread
 addf motion-command-handler   servo-thread
@@ -242,8 +256,7 @@ net z-pos-fb               <=  [HMOT](CARD0).encoder.02.position
 net z-vel-fb               <=  [HMOT](CARD0).encoder.02.velocity
 net z-pos-fb               =>  joint.2.motor-pos-fb
 net z-index-enable    joint.2.index-enable  <=>  [HMOT](CARD0).encoder.02.index-enable
-net z-pos-rawcounts        <=  [HMOT](CARD0).encoder.02.rawcounts
-
+net z-pos-rawcounts        <=  [HMOT](CARD0).encoder.02.rawcounts 
 # ---setup home / limit switch signals---
 
 net home-z     =>  joint.2.home-sw-in
@@ -290,11 +303,12 @@ net spindle-enable      => [HMOT](CARD0).pwmgen.03.enable
 # ---Encoder feedback signals/setup---
 
 setp    [HMOT](CARD0).encoder.03.counter-mode 0
-setp    [HMOT](CARD0).encoder.03.filter 1
+setp    [HMOT](CARD0).encoder.03.filter 1 
 setp    [HMOT](CARD0).encoder.03.index-invert 0
 setp    [HMOT](CARD0).encoder.03.index-mask 0
 setp    [HMOT](CARD0).encoder.03.index-mask-invert 0
 setp    [HMOT](CARD0).encoder.03.scale  [SPINDLE_0]ENCODER_SCALE
+#setp 	 [HMOT](CARD0).encoder.03.index-enable 1
 
 net spindle-revs             <=   [HMOT](CARD0).encoder.03.position
 net spindle-vel-fb-rps       <=   [HMOT](CARD0).encoder.03.velocity
@@ -364,7 +378,6 @@ net coolant-flood     <=  iocontrol.0.coolant-flood
 #  ---probe signal---
 
 net probe-in     =>  motion.probe-input
-
 # ---jog button signals---
 
 sets    jog-speed 1.000000

@@ -40,7 +40,7 @@ G21 G40 G90 G94 G97 G64 P0.025
 #<probe_height>             = 0.0
 #<_tool_probe_z>            = 0.0
 
-#<_off_rot_coord_system>    = 59.2
+#<_off_rot_coord_system>    = 55
 
 #<_mill_data_start>         = 70
 #<in_polyline>              = 0
@@ -50,9 +50,9 @@ G21 G40 G90 G94 G97 G64 P0.025
 #<_show_final_cuts>         = 1
 #<_show_bottom_cut>         = 1
 
-#<_spindle_all_time>        = 1
+#<_spindle_all_time>        = 0
 
-#<_spindle_speed_up_delay>  = 5.0
+#<_spindle_speed_up_delay>  = 0.5
 
 (end defaults)
 
@@ -78,9 +78,9 @@ G21 G40 G90 G94 G97 G64 P0.025
 (begin Workpiece)
 (workpiece definition author : Fernand Veilleux)
 
-#<wp_width>         = [200.000000]
-#<wp_length>        = [300.000000]
-#<wp_depth>         = [8.000000]
+#<wp_width>         = [160.000000]
+#<wp_length>        = [30.000000]
+#<wp_depth>         = [7.000000]
 #<wp_wall>          = [0.000000]
 #<wp_corner_radius> = [0.000000]
 #<wp_inside_width>  = [#<wp_width> - #<wp_wall> * 2]
@@ -121,10 +121,10 @@ o<select> CALL [31] [0] [0.000000] [0.000000 + #<wp_depth> / 2] [0.000000 + #<wp
 #<_cooling_mode>     =  8
 
 #<_feed_normal>      =  250.000000
-#<_rpm_normal>       =  5000
+#<_rpm_normal>       =  4500
 #<_feed_vertical>    =  200.000000
 #<_penetration_mode> =  0
-#<_depth_step>       =  -2.000000
+#<_depth_step>       =  -4.000000
 #<_ramp_down_ratio>  = [25 / 100]
 #<_tool_usage>       =  0
 #<_stepover_min>     =  0.400000
@@ -150,20 +150,158 @@ o<emill_chng_001_01> endif
 (end End Mill Change)
 
 
-(begin Circle by Center)
-(circle from center author : Fernand Veilleux)
+(begin Rectangular Array)
+(rectangular array author : Fernand Veilleux)
 
-o<circle_001_active> if [1] (if active)
-	o<select> CALL [31] [0] [10.000000] [#<surface>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
-	o<select> CALL [32] [1] [-12.700000] [#<bottom_through>] [#<bottom>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+o<rect-array_001_active> if [0]
+	o<select> CALL [31] [1] [0.000000] [0.000000 - [1 - 1] * 25.400000 / 2] [0.000000 - [1 - 1] * 25.400000]
+	#<first_x10> = #31
 
-	o<select> CALL [33] [1] [6.800000 / 2] [0] [-6.800000 / 2]
-	o<select> CALL [34] [1] [-6.800000 / 2] [0] [6.800000 / 2]
+	o<select> CALL [31] [1] [0.000000 - [5 - 1] * 25.000000] [0.000000 - [5 - 1] * 25.000000 / 2] [0.000000]
+	#<first_y10> = #31
 
-	o<circle> CALL [0.000000 + #33] [0.000000 + #34] [6.800000] [0.000000] [0.000000] [0] [3] [#31] [#32] [1] [0] [1.016000] [1]
+	(get and save current coords system offsets)
+	#<old_coord_system10> = [#<_coord_system> / 10]
+	o<get_offsets> CALL
+	#<offset_x10> = #<_offsets_x>
+	#<offset_y10> = #<_offsets_y>
+	#<offset_z10> = #<_offsets_z>
+	#<offset_r10> = #<_offsets_r>
 
-o<circle_001_active> endif
-(end Circle by Center)
+	(change coords system)
+	G#<_off_rot_coord_system>
+
+	#<start_y10>  = [#<offset_y10> + #<first_y10>]
+	#<items_yr10> = 0
+	#<x_step10>   = 1
+	#<x_round10>  = 0
+	#<start_x10>  = [#<offset_x10> + #<first_x10>]
+	#<items_xr10> = 0
+	o<rect-array_001_loop_Y> repeat [5]
+		o<rect-array_001_loop_X> repeat [1]
+			(get rotated coordinates then apply to new coords)
+			#<rot10> = [#<offset_r10> + 0.000000 + #<items_xr10> + #<items_yr10>]
+			o<rotate_xy> CALL [#<start_x10>] [#<start_y10>] [#<offset_x10> + 0.000000] [#<offset_y10> + 0.000000] [#<offset_r10> + 0.000000]
+			o<rect-array_001_change_coords> if [#<_has_z_axis>]
+				G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] Z#<offset_z10> R[#<rot10>]
+			o<rect-array_001_change_coords> else
+				G10 L2 P#5220 X[#<_rotated_x>] Y[#<_rotated_y>] R[#<rot10>]
+			o<rect-array_001_change_coords> endif
+
+			(begin Rectangular Array items)
+
+
+			(begin Slot/oval 1 point)
+			(slot from center or end author: Fernand Veilleux)
+			
+			o<slot_001_active> if [1] (if active)
+				#<l11>   = [8.000000]
+				#<w11>   = [11.000000]
+				#<fcs11> = [1.016000]
+			
+				o<select> CALL [31] [1] [0.000000] [#<surface>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+				o<select> CALL [32] [1] [-12.700000] [#<bottom_through>] [#<bottom>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+			
+				o<select> CALL [33] [1] [#<l11> / 2] [0]
+			
+				o<rectangle> CALL [0.000000] [0.000000] [#<l11> + #<w11>] [#<w11>] [0.000000] [#33] [0] [1] [#<w11> / 2] [0] [3] [#31] [#32] [1] [0] [#<fcs11>] [1]
+			
+			o<slot_001_active> endif
+			(end Slot/oval 1 point)
+
+
+			(end Rectangular Array items)
+
+			#<x_round10> = [#<x_round10> + #<x_step10>]
+			o<rect-array_001_inc> if [[#<x_round10> LT 1] AND [#<x_round10> GT 0]]
+				#<start_x10>  = [#<start_x10>  + 25.400000 * #<x_step10>]
+				#<items_xr10> = [#<items_xr10> + 0.000000 * #<x_step10>]
+			o<rect-array_001_inc> endif
+		o<rect-array_001_loop_X> endrepeat
+
+		#<x_step10>   = [#<x_step10>   * -1]
+		#<start_y10>  = [#<start_y10>  + 25.000000]
+		#<items_yr10> = [#<items_yr10> + 0.000000]
+	o<rect-array_001_loop_Y> endrepeat
+
+	(restore coordinate system)
+	G#<old_coord_system10>
+	o<rect-array_001_restore_coords> if [#<_has_z_axis>]
+		G10 L2 P#5220 X#<offset_x10> Y#<offset_y10> Z#<offset_z10> R#<offset_r10>
+	o<rect-array_001_restore_coords> else
+		G10 L2 P#5220 X#<offset_x10> Y#<offset_y10> R#<offset_r10>
+	o<rect-array_001_restore_coords> endif
+
+o<rect-array_001_active> endif
+(end Rectangular Array)
+
+
+(begin Facing)
+(surface finishing author : Fernand Veilleux)
+
+o<surf_finish_001_active> if [1]
+	o<select> CALL [31] [1] [0.000000] [#<surface>]
+	#<dnum12> = #5400
+	#<exists12> = EXISTS[#<_spindle_dir>]
+	o<surf_finish_00101> if [#<exists12>]
+		#<spindle_dir12>      = #<_spindle_dir>
+		#<cooling_mode12>     = #<_cooling_mode>
+		#<feed_normal12>      = #<_feed_normal>
+		#<rpm_normal12>       = #<_rpm_normal>
+		#<feed_vertical12>    = #<_feed_vertical>
+		#<penetration_mode12> = #<_penetration_mode>
+		#<depth_step12>       = #<_depth_step>
+		#<tool_usage12>       = #<_tool_usage>
+		#<stepover_normal12>  = #<_stepover_normal>
+		#<tool_dynamic_dia12> = #<_tool_dynamic_dia>
+	o<surf_finish_00101> else
+		o<select> CALL [32] [#<_metric>] [0.015] [0.4]
+		#<_stepover_min> = #32
+	o<surf_finish_00101> endif
+	#<_spindle_dir>      =  3
+	#<_cooling_mode>     =  8
+	#<_feed_normal>      =  254.000000
+	#<_rpm_normal>       =  5000
+	#<_feed_vertical>    =  [#<_feed_normal> / 2]
+	#<_penetration_mode> =  1
+	#<_depth_step>       =  -0.508000
+	#<_tool_usage>       =  0
+	#<_stepover_normal>  = [60 / 100]
+	#<_tool_dynamic_dia> =  0
+
+	o<surf_finish_001_tlc> if [[3 EQ 3] AND [15 GT 0]]
+		M61 Q15
+	o<surf_finish_001_tlc> endif
+
+	o<surf_finish_001_act> if [1 AND [15 NE #5400]]
+		M9
+		T15 M6
+	o<surf_finish_001_act> endif
+
+	o<surf_finish_001_lc> if [[3 EQ 1] OR [3 EQ 2]]
+		G43 H15
+	o<surf_finish_001_lc> endif
+
+	o<surf_finish_001_01> if [[#<_spindle_dir> GT 0] AND #<_spindle_all_time>]
+		o<set_feed_rate_and_speed> CALL [1]
+	o<surf_finish_001_01> endif
+
+	o<surf_finish> CALL [#<wp_left>] [#<wp_right>] [#<wp_front>] [#<wp_rear>] [1] [0 + 0] [#31] [#31 + -0.300000] [50 / 100] [-0.127000] [1]
+
+	o<surf_finish_00102> if [#<exists12>]
+		#<_spindle_dir>      = #<spindle_dir12>
+		#<_cooling_mode>     = #<cooling_mode12>
+		#<_feed_normal>      = #<feed_normal12>
+		#<_rpm_normal>       = #<rpm_normal12>
+		#<_feed_vertical>    = #<feed_vertical12>
+		#<_penetration_mode> = #<penetration_mode12>
+		#<_depth_step>       = #<depth_step12>
+		#<_tool_usage>       = #<tool_usage12>
+		#<_stepover_normal>  = #<stepover_normal12>
+		#<_tool_dynamic_dia> = #<tool_dynamic_dia12>
+	o<surf_finish_00102> endif
+o<surf_finish_001_active> endif
+(end Facing)
 
 
 M2
