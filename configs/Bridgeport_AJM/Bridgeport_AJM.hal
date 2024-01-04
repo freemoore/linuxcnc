@@ -7,7 +7,6 @@ loadrt [KINS]KINEMATICS
 loadrt [EMCMOT]EMCMOT servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[KINS]JOINTS
 loadrt hostmot2
 loadrt hm2_pci config="firmware=hm2/5i23/5i23_fmd.bit num_encoders=14 num_pwmgens=7 num_stepgens=2 sserial_port_0=00xxxxxx" 
-#loadrt hm2_pci config="firmware=hm2/5i23/5i23_7i48_7i52.BIT num_encoders=6 num_pwmgens=5 num_stepgens=0 sserial_port_0=00xxxxxx" 
 setp    [HMOT](CARD0).pwmgen.pwm_frequency 24000
 setp    [HMOT](CARD0).pwmgen.pdm_frequency 6000
 setp    [HMOT](CARD0).watchdog.timeout_ns 10000000
@@ -25,11 +24,7 @@ loadrt near names=spindle-at-speed
 #setp gearchange.0.scale2 8.3
 #setp gearchange.0.reverse 1
 
-
-
 addf spindle-at-speed servo-thread
-
-#setp spindle-at-speed.scale 100
 
 setp spindle-at-speed.difference 200
 setp spindle-at-speed.scale 1.5
@@ -66,11 +61,6 @@ setp [HMOT](CARD0).7i84.0.0.output-02 true
 # --- COOLANT-MIST ---
 net coolant-mist  =>     [HMOT](CARD0).7i84.0.0.output-03
 
-# --- SPINDLE-BRAKE ---
-#net spindle-brake  =>     [HMOT](CARD0).7i84.0.0.output-05 [HMOT](CARD0).7i84.0.0.output-15
-
-setp [HMOT](CARD0).7i84.0.0.output-05-invert true
-net spindle-brake  =>     [HMOT](CARD0).7i84.0.0.output-05 [HMOT](CARD0).7i84.0.0.output-15
 
 # --- SPINDLE-CW ---
 net spindle-cw  =>     [HMOT](CARD0).7i84.0.0.output-08 [HMOT](CARD0).7i84.0.0.output-12
@@ -324,7 +314,7 @@ net spindle-vel-cmd-rpm-abs    <=  spindle.0.speed-out-abs
 net spindle-enable             <=  spindle.0.on
 net spindle-cw                 <=  spindle.0.forward
 net spindle-ccw                <=  spindle.0.reverse
-net spindle-brake              <=  spindle.0.brake
+net spindle-brake-command      <=  spindle.0.brake
 net spindle-revs               =>  spindle.0.revs
 net spindle-vel-fb-rps         =>  spindle.0.speed-in
 net spindle-index-enable      <=>  spindle.0.index-enable
@@ -346,7 +336,7 @@ net spindle-fb-rpm-abs-filtered  lowpass.spindle.out
 # ---Setup spindle at speed signals---
 
 net spindle-fb-rpm-abs-filtered spindle-at-speed.in1
-net spindle-vel-cmd-rpm spindle-at-speed.in2
+net spindle-vel-cmd-rpm-abs spindle-at-speed.in2
 net spindle-ready <= spindle-at-speed.out => spindle.0.at-speed
 
 
