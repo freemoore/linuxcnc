@@ -1,19 +1,19 @@
 [DEFAULT]
 ps_searchvel = 300.0
 ps_probevel = 10.0
-ps_z_clearance = 3.0
-ps_probe_max = 115.0
+ps_z_clearance = 6.0
+ps_probe_max = 40.0
 ps_probe_latch = 0.5
 ps_probe_diam = 5.985
 ps_xy_clearance = 0.4
-ps_edge_length = 0.1
+ps_edge_length = 0.2
 chk_set_zero = False
-ps_offs_x = 0.0
-ps_offs_y = 0.0
+ps_offs_x = 15.18
+ps_offs_y = 13.22
 ps_offs_z = 1.244
 chk_auto_rott = False
 ps_offs_angle = 0.0
 use_tool_measurement = True
-setterheight = -58.6759196777
-blockheight = 0.0
+setterheight = -72.1472941895
+blockheight = -25.4558574219
 

@@ -40,7 +40,7 @@ G21 G40 G90 G94 G97 G64 P0.025
 #<probe_height>             = 0.0
 #<_tool_probe_z>            = 0.0
 
-#<_off_rot_coord_system>    = 55
+#<_off_rot_coord_system>    = 57
 
 #<_mill_data_start>         = 70
 #<in_polyline>              = 0
@@ -75,18 +75,147 @@ G21 G40 G90 G94 G97 G64 P0.025
 (end sub definitions)
 
 
-(begin Probe Surface)
-(probe z and set author : Fernand Veilleux)
+(begin Workpiece)
+(workpiece definition author : Fernand Veilleux)
 
-o<probe_surf_001_ena> if [1]
-	o<probe> call [0] [0] [-25.400000]
-	G10 L20 P#5220 Z[#<probe_height>]
-	G0 Z[#<probe_height> + 8.700000]
-	o<probe_surf_0010> if [1 EQ 1]
-		M2
-	o<probe_surf_0010> endif
-o<probe_surf_001_ena> endif
-(end Probe Surface)
+#<wp_width>         = [350.000000]
+#<wp_length>        = [650.000000]
+#<wp_depth>         = [4.000000]
+#<wp_wall>          = [0.000000]
+#<wp_corner_radius> = [0.000000]
+#<wp_inside_width>  = [#<wp_width> - #<wp_wall> * 2]
+#<wp_inside_length> = [#<wp_length> - #<wp_wall> * 2]
+
+#<wp_x> = -40.000000
+#<wp_y> = 0.000000
+
+o<select> CALL [31] [2] [-40.000000] [-40.000000 - #<wp_length> / 2] [-40.000000 - #<wp_length>]
+#<wp_left>  = #31
+#<wp_right> = [#<wp_left> + #<wp_length>]
+
+o<select> CALL [31] [0] [0.000000 - #<wp_width>] [0.000000 - #<wp_width> / 2] [0.000000]
+#<wp_front> = #31
+#<wp_rear>  = [#<wp_front> + #<wp_width>]
+
+o<select> CALL [31] [0] [0.000000] [0.000000 + #<wp_depth> / 2] [0.000000 + #<wp_depth>]
+#<surface>  = #31
+
+#<_z_clear>       = 1.000000
+#<_rapid_z>       = [#<surface> + #<_z_clear> + 1.000000]
+
+#<bottom>         = [#<surface> - #<wp_depth>]
+#<bottom_through> = [#<bottom> + -0.020000]
+
+/	o<workpiece_001_active> if [1 AND #<_show_final_cuts>] (show active)
+/		o<stock> CALL [#<wp_left>] [#<wp_right>] [#<wp_front>] [#<wp_rear>] [#<surface>] [#<bottom>] [0] [#<wp_corner_radius>] [#<wp_wall>]
+/		G0 X-40.000000 Y0.000000 Z#<surface>
+/	o<workpiece_001_active> endif
+
+(end Workpiece)
+
+
+(begin End Mill Change)
+(end mill change params and changing code author : Fernand Veilleux)
+
+#<_spindle_dir>      =  3
+#<_cooling_mode>     =  9
+
+#<_feed_normal>      =  3600.000000
+#<_rpm_normal>       =  2000
+#<_feed_vertical>    =  2000.000000
+#<_penetration_mode> =  0
+#<_depth_step>       =  -0.100000
+#<_ramp_down_ratio>  = [25 / 100]
+#<_tool_usage>       =  0
+#<_stepover_min>     =  0.400000
+#<_stepover_normal>  = [60 / 100]
+#<_tool_dynamic_dia> =  0.000000
+
+o<emill_chng_001_tlc> if [[3 EQ 3] AND [8 GT 0]]
+	M61 Q8
+o<emill_chng_001_tlc> endif
+
+o<emill_chng_001_act> if [1 AND [8 NE #5400]]
+	M9
+	T8 M6
+o<emill_chng_001_act> endif
+
+o<emill_chng_001_lc> if [[3 EQ 1] OR [3 EQ 2]]
+	G43 H8
+o<emill_chng_001_lc> endif
+
+o<emill_chng_001_01> if [[#<_spindle_dir> GT 0] AND #<_spindle_all_time>]
+	o<set_feed_rate_and_speed> CALL [1]
+o<emill_chng_001_01> endif
+(end End Mill Change)
+
+
+(begin Facing)
+(surface finishing author : Fernand Veilleux)
+
+o<surf_finish_001_active> if [1]
+	o<select> CALL [31] [1] [0.000000] [#<surface>]
+	#<dnum10> = #5400
+	#<exists10> = EXISTS[#<_spindle_dir>]
+	o<surf_finish_00101> if [#<exists10>]
+		#<spindle_dir10>      = #<_spindle_dir>
+		#<cooling_mode10>     = #<_cooling_mode>
+		#<feed_normal10>      = #<_feed_normal>
+		#<rpm_normal10>       = #<_rpm_normal>
+		#<feed_vertical10>    = #<_feed_vertical>
+		#<penetration_mode10> = #<_penetration_mode>
+		#<depth_step10>       = #<_depth_step>
+		#<tool_usage10>       = #<_tool_usage>
+		#<stepover_normal10>  = #<_stepover_normal>
+		#<tool_dynamic_dia10> = #<_tool_dynamic_dia>
+	o<surf_finish_00101> else
+		o<select> CALL [32] [#<_metric>] [0.015] [0.4]
+		#<_stepover_min> = #32
+	o<surf_finish_00101> endif
+	#<_spindle_dir>      =  3
+	#<_cooling_mode>     =  8
+	#<_feed_normal>      =  254.000000
+	#<_rpm_normal>       =  2000
+	#<_feed_vertical>    =  [#<_feed_normal> / 2]
+	#<_penetration_mode> =  1
+	#<_depth_step>       =  -0.100000
+	#<_tool_usage>       =  0
+	#<_stepover_normal>  = [60 / 100]
+	#<_tool_dynamic_dia> =  0
+
+	o<surf_finish_001_tlc> if [[3 EQ 3] AND [8 GT 0]]
+		M61 Q8
+	o<surf_finish_001_tlc> endif
+
+	o<surf_finish_001_act> if [1 AND [8 NE #5400]]
+		M9
+		T8 M6
+	o<surf_finish_001_act> endif
+
+	o<surf_finish_001_lc> if [[3 EQ 1] OR [3 EQ 2]]
+		G43 H8
+	o<surf_finish_001_lc> endif
+
+	o<surf_finish_001_01> if [[#<_spindle_dir> GT 0] AND #<_spindle_all_time>]
+		o<set_feed_rate_and_speed> CALL [1]
+	o<surf_finish_001_01> endif
+
+	o<surf_finish> CALL [#<wp_left>] [#<wp_right>] [#<wp_front>] [#<wp_rear>] [0] [0 + 1] [#31] [#31 + -0.500000] [50 / 100] [-0.127000] [0]
+
+	o<surf_finish_00102> if [#<exists10>]
+		#<_spindle_dir>      = #<spindle_dir10>
+		#<_cooling_mode>     = #<cooling_mode10>
+		#<_feed_normal>      = #<feed_normal10>
+		#<_rpm_normal>       = #<rpm_normal10>
+		#<_feed_vertical>    = #<feed_vertical10>
+		#<_penetration_mode> = #<penetration_mode10>
+		#<_depth_step>       = #<depth_step10>
+		#<_tool_usage>       = #<tool_usage10>
+		#<_stepover_normal>  = #<stepover_normal10>
+		#<_tool_dynamic_dia> = #<tool_dynamic_dia10>
+	o<surf_finish_00102> endif
+o<surf_finish_001_active> endif
+(end Facing)
 
 
 M2

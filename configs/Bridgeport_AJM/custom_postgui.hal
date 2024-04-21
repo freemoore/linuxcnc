@@ -18,8 +18,6 @@ net dc-brake-open-delay machineon.is-on
 
 #select axis using joystick
 #use mpg to drive it
-#maybe joystick + button = continuous (implemented, kinda: button selects jog.vel-mode)
-
 # stick signal to hardware pin (so sticks are connected to hal)
 # done in custom hal file
 
@@ -46,11 +44,6 @@ net jogXon => axis.x.jog-enable  #halui.x.jog-enable
 net jogYon => axis.y.jog-enable  #halui.y.jog-enable
 net jogZon => axis.z.jog-enable  #halui.z.jog-enable
 
-#signal to pos/vel selector (so btn pressed = vel-mode TRUE, making continuous jog when mpg is turned):
-net joyXYBtn =>	axis.x.jog-vel-mode
-net joyXYBtn =>	axis.y.jog-vel-mode
-net joyZBtn  =>	axis.z.jog-vel-mode
-
 # mpg signal to each axis 
 net mpg-counts-signal => axis.x.jog-counts
 net mpg-counts-signal => axis.y.jog-counts
@@ -71,6 +64,9 @@ setp axis.z.jog-scale 0.1
 
 net spindle-fb-rpm-abs-filtered       =>   pyvcp.spindle-speed
 net spindle-ready       =>    pyvcp.spindle-at-speed-led
+
+net hsspindle-fb-rpm-abs-unfiltered      =>   pyvcp.hsspindle-speed
+net hsspindle-ready       =>    pyvcp.hsspindle-at-speed-led
 
 # **** Setup of spindle speed display using pyvcp -END ****
 

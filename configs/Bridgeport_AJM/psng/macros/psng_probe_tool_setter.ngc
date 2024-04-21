@@ -1,41 +1,50 @@
 o<psng_probe_tool_setter> sub
 
-; andy edited to simplify behaviour, now goes up to machine z0, probes down 
-; sets G54 z to be the toolsetter trip height and then lifts it a short distance. 
-; intended to be used once per manual tool change
+; BEGIN PSNG PREAMBLE
+M73 ; Save and autorestore model states. This will be used only in case of error, otherwise we will invalidate it.
+o<_psng_modal_save> call
+o<_psng_hook> call [4]
+; END PSNG PREAMBLE
 
-; safety move to z max height
+
+; Ensure we're in G90 / absolute mode
 G90
-G53 G0 Z0
-G53 G0 x-735 y-267
-G53 G0 Z-50
+
+; First go up & then move to tool sensor position
+G53 G0 Z[#<_ini[AXIS_Z]MAX_LIMIT>+#<_ini[PROBE_SCREEN]Z_SAFE_TRAVEL_OFFSET>] F[#<_ini[TOOLSENSOR]RAPID_SPEED>]
+; Check arm enable
+O20 if [#<_hal[probe.chk_arm_enable]> GT 0]
+    G53 G0 X[#<_ini[TOOLSENSOR]X>-#<_hal[probe.ps_arm_delta_x]>] Y[#<_ini[TOOLSENSOR]Y>-#<_hal[probe.ps_arm_delta_y]>]
+O20 else
+    G53 G0 X[#<_ini[TOOLSENSOR]X>] Y[#<_ini[TOOLSENSOR]Y>]
+O20 endif
+G53 G0 Z[#<_ini[TOOLSENSOR]Z>]
+
+; Cancel all Z offsets
 G92.1
+G49
+G10 L20 P0 Z[#<_hal[axis.z.pos-cmd]>]
 
-G91
-; probe down 3mm from current position to toolsetter fast
-g38.2 z-50 f300 
-; probe up to release fast
-g38.4 z1 f150 
-; probe down 1mm from current position to toolsetter slow
-g38.2 z-3 f50 
-; probe up slowest
-g38.4 z1 f10 
-G90
+; Probe Tool Sensor
+o<_psng_probe_z> call [#<_ini[TOOLSENSOR]MAXPROBE>]
+O1 if [#<_value> EQ -1]
+    M72 ; Restore modal state
+    (ABORT, Probe already tripped when starting G38.3 move)
+O1 else if [#<_value> EQ -2]
+    M72 ; Restore modal state
+    (ABORT, Probe failed to make contact with Tool Sensor)
+O1 else if [#<_value> EQ -3]
+    M72 ; Restore modal state
+    (ABORT, Probe failed to make contact without ERR signal)
+O1 endif
 
-;next line should be active for when 63.55mm tall toolsetter is placed on top of work at z=0
-;G92 Z63.55
-;alternate for when toolsetter is fixed to bed: set g92 offset to be 63.55-fixture+work height
-;in river lane front panel case fixture is 44+5= 49mm high,  work height is 6mm, 49+6=55mm, 
-;set 0 to 63.55-55=8.55
-;in river lane rear panel case work is 4mm, 63.55-53=10.55
-;so for 6mm thick stock:
-G92 Z8.55
-;for 4mm thick stock:
-;G92 Z10.55
+; Move off the Tool Sensor
+G53 G1 Z[#<_ini[TOOLSENSOR]Z>]  F[#<_ini[TOOLSENSOR]RAPID_SPEED>]
 
-
-G54
-G0 Z65
+; BEGIN PSNG POSTAMBLE
+M71 ; Invalidate Modal Autorestore
+o<_psng_modal_restore> call
+; END PSNG POSTAMBLE
 
 o<psng_probe_tool_setter> endsub
 M2

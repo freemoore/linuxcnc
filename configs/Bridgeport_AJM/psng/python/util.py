@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 #
-# Copyright (c) 2015 Serguei Glavatski ( verser  from cnc-club.ru )
 # Copyright (c) 2020 Probe Screen NG Developers
 #
 # This program is free software; you can redistribute it and/or

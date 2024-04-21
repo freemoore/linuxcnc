@@ -1,8 +1,8 @@
-T1 P1 D3 ;3mm end mill sample tool 
+T1 P1 D3.175 ;1/8in 1 flute carbide endmill 
 T2 P2 D1.5 ;1.5mm  end mill sample tool 
 T3 P3 D5 ;5mm tap drill sample tool 
-T4 P4 D16 ;16 mm sample tool 
-T20 P20 D25 ;25mm er sample tool 
+T4 P4 D16 ;16mm 4 flute carbide endmill 
+T20 P20 D12 ;12mm 4 flute carbide 
 T6 P6 D12.68 ;1/2in 12.7mm 4 flute carbide endmill 
 T7 P7 D10 ;10mm 4 flute endmill 
 T8 P8 D80 ;80mm insert shell mill 
@@ -16,3 +16,6 @@ T5 P5 D38.5 ;40mm flycutter
 T16 P16 D1.5 ;m3 thread mill 
 T17 P17 D2.5 ;2.4mm twist drill 
 T18 P18 D4 ;4mm small dia centre drill 
+T21 P21 D5.9 ;m8 thread mill 
+T9 P9 D6.35 ;1/4in ballnose endmill 
+T19 P19 D8 ;8mm 4 flute hss endmill 

@@ -20,10 +20,13 @@ O1 if [#<_value> EQ -1]
 O1 else if [#<_value> EQ -2]
     M72 ; Restore modal state
     (ABORT, Probe failed to make contact with workpiece)
+O1 else if [#<_value> EQ -3]
+    M72 ; Restore modal state
+    (ABORT, Probe failed to make contact without ERR signal)
 O1 endif
 
 ; Move back to starting X position
-G0 X#<x>
+G1 X#<x> F#<_ini[TOOLSENSOR]RAPID_SPEED>
 
 ; BEGIN PSNG POSTAMBLE
 M71 ; Invalidate Modal Autorestore

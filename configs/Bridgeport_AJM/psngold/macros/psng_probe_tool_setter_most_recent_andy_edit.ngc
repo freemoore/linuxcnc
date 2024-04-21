@@ -1,0 +1,43 @@
+o<psng_probe_tool_setter> sub
+
+; andy edited to simplify behaviour, now goes up to machine z0, probes down 
+; sets G54 z to be the toolsetter trip height and then lifts it a short distance. 
+; intended to be used once per manual tool change
+
+; safety move to z max height
+G90
+G53 G0 Z0
+G53 G0 x-735 y-267
+G53 G0 Z-10
+G92.1
+
+G91
+; probe down 3mm from current position to toolsetter fast
+g38.2 z-50 f300 
+; probe up to release fast
+g38.4 z1 f150 
+; probe down 1mm from current position to toolsetter slow
+g38.2 z-3 f50 
+; probe up slowest
+g38.4 z1 f10 
+G90
+
+;next line should be active for when 63.55mm tall toolsetter is placed on top of work at z=0
+;G92 Z63.55
+;alternate for when toolsetter is fixed to bed: set g92 offset to be 63.55-(fixture+work height)
+;in river lane front panel case fixture is 49mm high,  work height is 6mm, offset is 49+6=55mm, 
+;set 0 to 63.55-55=8.55
+;in river lane rear panel case work is 4mm, 63.55-53=10.55
+;so for 6mm thick stock:
+;G92 Z8.55
+;for 4mm thick stock:
+;G92 Z10.59
+;for fixture = 3.2, work = 2.05, fixture+wqork = 5.25, offset = 63.55-5.25 = 58.3
+;for fixture = 3.2, work = 3.20, fixture+wqork = 6.4, offset = 63.55-6.4 = 58.3
+G92 Z57.15
+
+G54
+G0 Z65
+
+o<psng_probe_tool_setter> endsub
+M2
