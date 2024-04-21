@@ -1,12 +1,12 @@
 T1 P1 D3.175000 ;1/8in 1 flute carbide endmill 
-T2 P2 D1.500000 ;1.5mm  end mill sample tool 
+T2 P2 D1.500000 Z-62.623138 ;1.5mm  end mill sample tool 
 T3 P3 D5.000000 ;5mm tap drill sample tool 
 T4 P4 D16.000000 ;16mm 4 flute carbide endmill 
 T20 P20 D12.000000 ;12mm 4 flute carbide 
 T6 P6 D12.680000 ;1/2in 12.7mm 4 flute carbide endmill 
 T7 P7 D10.000000 ;10mm 4 flute endmill 
-T8 P8 D80.000000 Z-42.186890 ;80mm insert shell mill 
-T15 P15 D6.000000 ;6mm single flute carbide 
+T8 P8 D80.000000 Z-59.396210 ;80mm insert shell mill 
+T15 P15 D6.000000 Z-39.951325 ;6mm single flute carbide 
 T10 P10 D4.000000 ;4mm 4 flute carbide endmill 
 T11 P11 D25.000000 ;25mm 4 flute carbide roughing mill 
 T12 P12 D2.000000 Z+0.012988 ;2mm false diameter chamfer mill 
