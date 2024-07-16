@@ -20,9 +20,9 @@ loadrt lowpass names=lowpass.spindle
 loadrt scale names=scale.spindle,scale.0,scale.1,scale.2,scale.3,scale.4,scale.hsspindle,scale.hsspindlecmd
 loadrt near names=spindle-at-speed,hsspindle-at-speed
 loadrt comp names=comp.waxispos,comp.waxisneg
-loadrt and2 names=waxisupfudgeand,waxisdownfudgeand
+loadrt and2 names=waxisupfudgeand,waxisdownfudgeand,estop-and-toolsetter-limit-and
 loadrt not names=wgoingup-not,wgoingdown-not
-loadrt or2 names=probe-or
+loadrt or2 names=probe-or,spindle-at-speed-or
 
 addf spindle-at-speed servo-thread
 addf hsspindle-at-speed servo-thread
@@ -31,13 +31,15 @@ addf wgoingdown-not servo-thread
 addf waxisupfudgeand servo-thread
 addf waxisdownfudgeand servo-thread
 addf probe-or servo-thread
+addf spindle-at-speed-or servo-thread
+addf estop-and-toolsetter-limit-and servo-thread
 
 #setp spindle-at-speed.difference 200
 setp spindle-at-speed.difference 6000
 setp spindle-at-speed.scale 1.5
 
-setp hsspindle-at-speed.difference 500
-setp hsspindle-at-speed.scale 1.2
+setp hsspindle-at-speed.difference 1000
+setp hsspindle-at-speed.scale 1.5
 
 
 addf [HMOT](CARD0).read          servo-thread
@@ -110,10 +112,13 @@ net estop-ext     <=  [HMOT](CARD0).7i84.0.0.input-04
 # we are now using the latest probe screen from verser found at: https://github.com/verser-git/probe_screen_v2.8
 net digitising-probe-in		[HMOT](CARD0).7i84.0.0.input-05-not
 net toolsetter-probe-in 	[HMOT](CARD0).7i84.0.0.input-12-not
+net toolsetter-limit-in     [HMOT](CARD0).7i84.0.0.input-10
 net digitising-probe-in		probe-or.in0
 net toolsetter-probe-in		probe-or.in1
 net probe-in				probe-or.out
 #net probe-in     =>  motion.probe-input
+
+
 
 # ---FURTHER PROBE SECTION: NO STOP IN AUTO MODE
 # About Stop move when probe tripped
@@ -500,7 +505,13 @@ net spindle-vel-cmd-rpm-abs hsspindle-at-speed.in2
 ############################################################
 
 #net spindle-ready <= spindle-at-speed.out => spindle.0.at-speed
-net hsspindle-ready <= hsspindle-at-speed.out => spindle.0.at-speed 
+#net hsspindle-ready <= hsspindle-at-speed.out => spindle.0.at-speed 
+
+net spindle-ready <= spindle-at-speed.out => spindle-at-speed-or.in0
+net hsspindle-ready <= hsspindle-at-speed.out => spindle-at-speed-or.in1
+net either-spindle-at-speed => spindle-at-speed-or.out
+net either-spindle-at-speed <= spindle.0.at-speed
+
 
 
 #******************************
@@ -537,6 +548,8 @@ net machine-is-enabled        <=  motion.motion-enabled
 #  ---estop signals---
 
 net estop-out     <=  iocontrol.0.user-enable-out
-net estop-ext     =>  iocontrol.0.emc-enable-in
-
+#net estop-ext     =>  iocontrol.0.emc-enable-in
+net estop-ext => estop-and-toolsetter-limit-and.in0 
+net toolsetter-limit-in => estop-and-toolsetter-limit-and.in1
+net machine-and-toolsetter-estop <= estop-and-toolsetter-limit-and.out =>  iocontrol.0.emc-enable-in
 

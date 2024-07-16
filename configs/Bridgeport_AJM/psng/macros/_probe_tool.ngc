@@ -1,6 +1,6 @@
 o<_probe_tool> sub
 
-; Save and autorestore model states
+; Save and autorestore modal states
 M73
 
 ; Paramaters for this macro
