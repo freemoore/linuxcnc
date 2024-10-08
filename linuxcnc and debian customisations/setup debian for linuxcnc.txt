@@ -4,6 +4,7 @@ update everything
 upgrade everything
 installed 
 git
+gh then run gh auth token
 lastpass
 meld
 
@@ -28,7 +29,5 @@ There are 2 ways to install this mod:
 1. Replace files(axis.py, axis.tcl and glcanon.py) in existing installation LinuxCNC v2.8.2, begins to work immediately. search these filenames and check each time that the branch is 2.9. 
 
 in these lines i think False should be "False" as I'm getting an error saying option values must be strings
-vars.show_spindle_rpm.set(ap.getpref("show_spindle_rpm", False))
-vars.show_spindle_ang.set(ap.getpref("show_spindle_ang", False))
-vars.show_spindle_vct.set(ap.getpref("show_spindle_vct", False))
-vars.show_spindle_fpr.set(ap.getpref("show_spindle_fpr", False))
+3100 vars.show_spindle_rpm.set(ap.getpref("show_spindle_rpm", False))
+confirmed changing False to "False" makes it work
