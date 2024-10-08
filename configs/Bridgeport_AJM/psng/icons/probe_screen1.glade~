@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.40.0 -->
 <interface>
-  <requires lib="gtk+" version="3.4"/>
+  <requires lib="gtk+" version="3.0"/>
   <requires lib="image/png" version="0.0"/>
   <requires lib="image/png" version="0.0"/>
   <requires lib="image/png" version="0.0"/>
   <requires lib="image/png" version="0.0"/>
   <requires lib="gladevcp" version="0.0"/>
+  <!-- interface-local-resource-path /home/verser/linuxcnc/configs/gmoccapy_mm/psng/icons -->
   <object class="GtkAction" id="action1"/>
   <object class="GtkAdjustment" id="ad_probe_vel">
     <property name="upper">1000</property>
@@ -135,34 +136,30 @@
         <property name="label-yalign">0</property>
         <property name="shadow-type">none</property>
         <child>
-          <object class="GtkBox" id="vbox1">
+          <object class="GtkVBox" id="vbox1">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="orientation">vertical</property>
             <child>
-              <object class="GtkBox" id="hbox2">
+              <object class="GtkHBox" id="hbox2">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <child>
-                  <object class="GtkBox" id="vbox5">
+                  <object class="GtkVBox" id="vbox5">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="orientation">vertical</property>
                     <property name="spacing">20</property>
                     <child>
                       <object class="GtkFrame" id="frame2">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label-xalign">0</property>
-                        <property name="shadow-type">etched-out</property>
                         <child>
-                          <!-- n-columns=3 n-rows=3 -->
-                          <object class="GtkGrid" id="grid">
+                          <object class="GtkTable" id="table1">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
                             <property name="border-width">3</property>
-                            <property name="row-homogeneous">True</property>
-                            <property name="column-homogeneous">True</property>
+                            <property name="n-rows">3</property>
+                            <property name="n-columns">3</property>
                             <child>
                               <object class="GtkButton" id="yp">
                                 <property name="width-request">92</property>
@@ -185,6 +182,8 @@
                               <packing>
                                 <property name="left-attach">1</property>
                                 <property name="top-attach">2</property>
+                                <property name="x-options">GTK_SHRINK</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -211,6 +210,8 @@
                               <packing>
                                 <property name="left-attach">2</property>
                                 <property name="top-attach">2</property>
+                                <property name="x-options">GTK_SHRINK</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -235,8 +236,9 @@
                                 </child>
                               </object>
                               <packing>
-                                <property name="left-attach">0</property>
                                 <property name="top-attach">2</property>
+                                <property name="x-options">GTK_SHRINK</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -259,8 +261,9 @@
                                 </child>
                               </object>
                               <packing>
-                                <property name="left-attach">0</property>
                                 <property name="top-attach">1</property>
+                                <property name="x-options">GTK_SHRINK</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -285,8 +288,8 @@
                                 </child>
                               </object>
                               <packing>
-                                <property name="left-attach">0</property>
-                                <property name="top-attach">0</property>
+                                <property name="x-options">GTK_SHRINK</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -310,7 +313,8 @@
                               </object>
                               <packing>
                                 <property name="left-attach">1</property>
-                                <property name="top-attach">0</property>
+                                <property name="x-options">GTK_SHRINK</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -336,7 +340,8 @@
                               </object>
                               <packing>
                                 <property name="left-attach">2</property>
-                                <property name="top-attach">0</property>
+                                <property name="x-options">GTK_SHRINK</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -346,7 +351,6 @@
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="receives-default">True</property>
-                                <property name="tooltip-text" translatable="yes">X-</property>
                                 <property name="xalign">0</property>
                                 <signal name="released" handler="on_xm_released" swapped="no"/>
                                 <child>
@@ -362,6 +366,8 @@
                               <packing>
                                 <property name="left-attach">2</property>
                                 <property name="top-attach">1</property>
+                                <property name="x-options">GTK_SHRINK</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -383,7 +389,11 @@
                               </object>
                               <packing>
                                 <property name="left-attach">1</property>
+                                <property name="right-attach">2</property>
                                 <property name="top-attach">1</property>
+                                <property name="bottom-attach">2</property>
+                                <property name="x-options">GTK_SHRINK</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                           </object>
@@ -404,7 +414,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkBox" id="hbox1">
+                      <object class="GtkHBox" id="hbox1">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <child>
@@ -420,16 +430,16 @@
                                 <property name="left-padding">3</property>
                                 <property name="right-padding">3</property>
                                 <child>
-                                  <object class="GtkBox" id="vbox11">
+                                  <object class="GtkVBox" id="vbox11">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="orientation">vertical</property>
                                     <property name="spacing">3</property>
                                     <child>
-                                      <!-- n-columns=2 n-rows=2 -->
-                                      <object class="GtkGrid">
+                                      <object class="GtkTable" id="table7">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
+                                        <property name="n-rows">2</property>
+                                        <property name="n-columns">2</property>
                                         <child>
                                           <object class="GtkButton" id="angle_xp">
                                             <property name="width-request">80</property>
@@ -448,8 +458,8 @@
                                             </child>
                                           </object>
                                           <packing>
-                                            <property name="left-attach">0</property>
-                                            <property name="top-attach">0</property>
+                                            <property name="x-options">GTK_SHRINK</property>
+                                            <property name="y-options">GTK_SHRINK</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -470,8 +480,10 @@
                                             </child>
                                           </object>
                                           <packing>
-                                            <property name="left-attach">0</property>
                                             <property name="top-attach">1</property>
+                                            <property name="bottom-attach">2</property>
+                                            <property name="x-options">GTK_SHRINK</property>
+                                            <property name="y-options">GTK_SHRINK</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -493,7 +505,11 @@
                                           </object>
                                           <packing>
                                             <property name="left-attach">1</property>
+                                            <property name="right-attach">2</property>
                                             <property name="top-attach">1</property>
+                                            <property name="bottom-attach">2</property>
+                                            <property name="x-options">GTK_SHRINK</property>
+                                            <property name="y-options">GTK_SHRINK</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -515,7 +531,9 @@
                                           </object>
                                           <packing>
                                             <property name="left-attach">1</property>
-                                            <property name="top-attach">0</property>
+                                            <property name="right-attach">2</property>
+                                            <property name="x-options">GTK_SHRINK</property>
+                                            <property name="y-options">GTK_SHRINK</property>
                                           </packing>
                                         </child>
                                       </object>
@@ -527,10 +545,11 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <!-- n-columns=2 n-rows=2 -->
-                                      <object class="GtkGrid" id="grid2">
+                                      <object class="GtkTable" id="table2">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
+                                        <property name="n-rows">2</property>
+                                        <property name="n-columns">2</property>
                                         <child>
                                           <object class="GtkCheckButton" id="chk_auto_rott">
                                             <property name="label" translatable="yes">Auto Rotate</property>
@@ -539,15 +558,11 @@
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
                                             <property name="receives-default">False</property>
-                                            <property name="yalign">0.5</property>
+                                            <property name="yalign">0.44999998807907104</property>
                                             <property name="image-position">bottom</property>
                                             <property name="draw-indicator">True</property>
                                             <signal name="toggled" handler="on_chk_auto_rott_toggled" swapped="no"/>
                                           </object>
-                                          <packing>
-                                            <property name="left-attach">0</property>
-                                            <property name="top-attach">0</property>
-                                          </packing>
                                         </child>
                                         <child>
                                           <object class="HAL_LED" id="hal_led_auto_rott">
@@ -564,7 +579,9 @@
                                           </object>
                                           <packing>
                                             <property name="left-attach">1</property>
-                                            <property name="top-attach">0</property>
+                                            <property name="right-attach">2</property>
+                                            <property name="x-options">GTK_SHRINK</property>
+                                            <property name="y-options">GTK_SHRINK</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -575,7 +592,6 @@
                                             <property name="tooltip-text" translatable="yes">Rotate angle</property>
                                             <property name="invisible-char">●</property>
                                             <property name="width-chars">8</property>
-                                            <property name="text" translatable="yes">0.000</property>
                                             <property name="primary-icon-activatable">False</property>
                                             <property name="secondary-icon-activatable">False</property>
                                             <property name="adjustment">adj_offs_angle</property>
@@ -585,8 +601,10 @@
                                             <signal name="value-changed" handler="on_spbtn_offs_angle_value_changed" swapped="no"/>
                                           </object>
                                           <packing>
-                                            <property name="left-attach">0</property>
                                             <property name="top-attach">1</property>
+                                            <property name="bottom-attach">2</property>
+                                            <property name="x-options">GTK_SHRINK | GTK_FILL</property>
+                                            <property name="y-options">GTK_SHRINK</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -608,28 +626,34 @@
                                           </object>
                                           <packing>
                                             <property name="left-attach">1</property>
+                                            <property name="right-attach">2</property>
                                             <property name="top-attach">1</property>
+                                            <property name="bottom-attach">2</property>
+                                            <property name="x-options">GTK_SHRINK</property>
+                                            <property name="y-options">GTK_SHRINK</property>
                                           </packing>
                                         </child>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
-                                        <property name="fill">True</property>
+                                        <property name="fill">False</property>
                                         <property name="position">1</property>
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkBox" id="hbox10">
+                                      <object class="GtkHBox" id="hbox10">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
                                         <child>
-                                          <object class="GtkLabel" id="System_angle_lbl">
+                                          <object class="HAL_Label" id="System_angle_lbl">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">System angle =</property>
+                                            <property name="ypad">0</property>
+                                            <property name="label" translatable="yes">System angle=</property>
+                                            <property name="xalign">0</property>
                                           </object>
                                           <packing>
-                                            <property name="expand">False</property>
+                                            <property name="expand">True</property>
                                             <property name="fill">True</property>
                                             <property name="position">0</property>
                                           </packing>
@@ -655,21 +679,30 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkBox" id="hbox7">
+                                      <object class="GtkHBox" id="hbox7">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
                                         <child>
-                                          <object class="GtkImage" id="image12">
-                                            <property name="width-request">90</property>
+                                          <object class="GtkButton" id="btn_rot_hole1">
                                             <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                            <property name="valign">end</property>
-                                            <property name="xalign">1</property>
-                                            <property name="pixbuf">icons/ang_zero.png</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">True</property>
+                                            <property name="tooltip-text" translatable="yes">Find primary hole center and set zero</property>
+                                            <signal name="released" handler="on_btn_rot_hole1_released" swapped="no"/>
+                                            <child>
+                                              <object class="GtkImage" id="image12">
+                                                <property name="width-request">72</property>
+                                                <property name="height-request">72</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="xalign">1</property>
+                                                <property name="pixbuf">icons/hole_rot_left.png</property>
+                                              </object>
+                                            </child>
                                           </object>
                                           <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">False</property>
+                                            <property name="expand">True</property>
+                                            <property name="fill">True</property>
                                             <property name="position">0</property>
                                           </packing>
                                         </child>
@@ -678,7 +711,7 @@
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
                                             <property name="receives-default">True</property>
-                                            <property name="tooltip-text" translatable="yes"> Find center of hole and set angle relative to (0;0)</property>
+                                            <property name="tooltip-text" translatable="yes">Find secondary hole center and set angle</property>
                                             <signal name="released" handler="on_btn_rot_hole2_released" swapped="no"/>
                                             <child>
                                               <object class="GtkImage" id="image18">
@@ -686,15 +719,14 @@
                                                 <property name="height-request">75</property>
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">False</property>
-                                                <property name="halign">start</property>
                                                 <property name="xalign">0</property>
                                                 <property name="pixbuf">icons/hole_rot_right.png</property>
                                               </object>
                                             </child>
                                           </object>
                                           <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">False</property>
+                                            <property name="expand">True</property>
+                                            <property name="fill">True</property>
                                             <property name="position">1</property>
                                           </packing>
                                         </child>
@@ -737,10 +769,9 @@
                                 <property name="left-padding">3</property>
                                 <property name="right-padding">3</property>
                                 <child>
-                                  <object class="GtkBox" id="vbox6">
+                                  <object class="GtkVBox" id="vbox6">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="orientation">vertical</property>
                                     <property name="spacing">2</property>
                                     <child>
                                       <object class="GtkButton" id="lx_in">
@@ -858,7 +889,7 @@
                       <packing>
                         <property name="expand">True</property>
                         <property name="fill">True</property>
-                        <property name="position">2</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                   </object>
@@ -869,24 +900,23 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox" id="vbox7">
+                  <object class="GtkVBox" id="vbox7">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="orientation">vertical</property>
+                    <property name="spacing">21</property>
                     <child>
                       <object class="GtkFrame" id="frame5">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label-xalign">0</property>
                         <child>
-                          <!-- n-columns=2 n-rows=8 -->
-                          <object class="GtkGrid" id="grid3">
+                          <object class="GtkTable" id="table3">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="margin-top">6</property>
                             <property name="border-width">2</property>
-                            <property name="column-spacing">3</property>
-                            <property name="row-homogeneous">True</property>
+                            <property name="n-rows">8</property>
+                            <property name="n-columns">2</property>
+                            <property name="row-spacing">3</property>
                             <child>
                               <object class="GtkImage" id="image13">
                                 <property name="height-request">32</property>
@@ -897,8 +927,7 @@
                                 <property name="pixbuf">icons/search_vel.png</property>
                               </object>
                               <packing>
-                                <property name="left-attach">0</property>
-                                <property name="top-attach">0</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -909,7 +938,6 @@
                                 <property name="can-focus">True</property>
                                 <property name="invisible-char">●</property>
                                 <property name="width-chars">8</property>
-                                <property name="text" translatable="yes">0.0</property>
                                 <property name="primary-icon-activatable">False</property>
                                 <property name="secondary-icon-activatable">False</property>
                                 <property name="adjustment">adj_search_vel</property>
@@ -920,7 +948,8 @@
                               </object>
                               <packing>
                                 <property name="left-attach">1</property>
-                                <property name="top-attach">0</property>
+                                <property name="right-attach">2</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -933,8 +962,9 @@
                                 <property name="pixbuf">icons/probe_vel.png</property>
                               </object>
                               <packing>
-                                <property name="left-attach">0</property>
                                 <property name="top-attach">1</property>
+                                <property name="bottom-attach">2</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -947,8 +977,9 @@
                                 <property name="pixbuf">icons/max_probe.png</property>
                               </object>
                               <packing>
-                                <property name="left-attach">0</property>
                                 <property name="top-attach">2</property>
+                                <property name="bottom-attach">3</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -961,8 +992,9 @@
                                 <property name="pixbuf">icons/probe_diam.png</property>
                               </object>
                               <packing>
-                                <property name="left-attach">0</property>
                                 <property name="top-attach">4</property>
+                                <property name="bottom-attach">5</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -975,8 +1007,9 @@
                                 <property name="pixbuf">icons/XYclearance.png</property>
                               </object>
                               <packing>
-                                <property name="left-attach">0</property>
                                 <property name="top-attach">5</property>
+                                <property name="bottom-attach">6</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -989,8 +1022,9 @@
                                 <property name="pixbuf">icons/edge_length.png</property>
                               </object>
                               <packing>
-                                <property name="left-attach">0</property>
                                 <property name="top-attach">6</property>
+                                <property name="bottom-attach">7</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -1001,7 +1035,6 @@
                                 <property name="can-focus">True</property>
                                 <property name="invisible-char">●</property>
                                 <property name="width-chars">8</property>
-                                <property name="text" translatable="yes">0.00</property>
                                 <property name="primary-icon-activatable">False</property>
                                 <property name="secondary-icon-activatable">False</property>
                                 <property name="adjustment">ad_probe_vel</property>
@@ -1012,7 +1045,10 @@
                               </object>
                               <packing>
                                 <property name="left-attach">1</property>
+                                <property name="right-attach">2</property>
                                 <property name="top-attach">1</property>
+                                <property name="bottom-attach">2</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -1023,7 +1059,6 @@
                                 <property name="can-focus">True</property>
                                 <property name="invisible-char">●</property>
                                 <property name="width-chars">8</property>
-                                <property name="text" translatable="yes">0.000</property>
                                 <property name="primary-icon-activatable">False</property>
                                 <property name="secondary-icon-activatable">False</property>
                                 <property name="adjustment">adj_probe_max</property>
@@ -1034,7 +1069,10 @@
                               </object>
                               <packing>
                                 <property name="left-attach">1</property>
+                                <property name="right-attach">2</property>
                                 <property name="top-attach">2</property>
+                                <property name="bottom-attach">3</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -1045,19 +1083,20 @@
                                 <property name="can-focus">True</property>
                                 <property name="invisible-char">●</property>
                                 <property name="width-chars">8</property>
-                                <property name="text" translatable="yes">0.600</property>
                                 <property name="primary-icon-activatable">False</property>
                                 <property name="secondary-icon-activatable">False</property>
                                 <property name="adjustment">adj_probe_diam</property>
                                 <property name="digits">3</property>
                                 <property name="numeric">True</property>
-                                <property name="value">0.59999999999999998</property>
                                 <signal name="key-press-event" handler="on_spbtn1_probe_diam_key_press_event" swapped="no"/>
                                 <signal name="value-changed" handler="on_spbtn1_probe_diam_value_changed" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left-attach">1</property>
+                                <property name="right-attach">2</property>
                                 <property name="top-attach">4</property>
+                                <property name="bottom-attach">5</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -1068,7 +1107,6 @@
                                 <property name="can-focus">True</property>
                                 <property name="invisible-char">●</property>
                                 <property name="width-chars">8</property>
-                                <property name="text" translatable="yes">0.000</property>
                                 <property name="primary-icon-activatable">False</property>
                                 <property name="secondary-icon-activatable">False</property>
                                 <property name="adjustment">adj_xy_clearance</property>
@@ -1079,7 +1117,10 @@
                               </object>
                               <packing>
                                 <property name="left-attach">1</property>
+                                <property name="right-attach">2</property>
                                 <property name="top-attach">5</property>
+                                <property name="bottom-attach">6</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -1090,7 +1131,6 @@
                                 <property name="can-focus">True</property>
                                 <property name="invisible-char">●</property>
                                 <property name="width-chars">8</property>
-                                <property name="text" translatable="yes">0.000</property>
                                 <property name="primary-icon-activatable">False</property>
                                 <property name="secondary-icon-activatable">False</property>
                                 <property name="adjustment">adj_edge_length</property>
@@ -1101,7 +1141,10 @@
                               </object>
                               <packing>
                                 <property name="left-attach">1</property>
+                                <property name="right-attach">2</property>
                                 <property name="top-attach">6</property>
+                                <property name="bottom-attach">7</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -1114,8 +1157,9 @@
                                 <property name="pixbuf">icons/latch_dist.png</property>
                               </object>
                               <packing>
-                                <property name="left-attach">0</property>
                                 <property name="top-attach">3</property>
+                                <property name="bottom-attach">4</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -1126,7 +1170,6 @@
                                 <property name="can-focus">True</property>
                                 <property name="invisible-char">●</property>
                                 <property name="width-chars">8</property>
-                                <property name="text" translatable="yes">0.000</property>
                                 <property name="primary-icon-activatable">False</property>
                                 <property name="secondary-icon-activatable">False</property>
                                 <property name="adjustment">adj_probe_latch</property>
@@ -1137,7 +1180,10 @@
                               </object>
                               <packing>
                                 <property name="left-attach">1</property>
+                                <property name="right-attach">2</property>
                                 <property name="top-attach">3</property>
+                                <property name="bottom-attach">4</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -1150,8 +1196,9 @@
                                 <property name="pixbuf">icons/Zclearance.png</property>
                               </object>
                               <packing>
-                                <property name="left-attach">0</property>
                                 <property name="top-attach">7</property>
+                                <property name="bottom-attach">8</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                             <child>
@@ -1162,7 +1209,6 @@
                                 <property name="can-focus">True</property>
                                 <property name="invisible-char">●</property>
                                 <property name="width-chars">8</property>
-                                <property name="text" translatable="yes">0.000</property>
                                 <property name="primary-icon-activatable">False</property>
                                 <property name="secondary-icon-activatable">False</property>
                                 <property name="adjustment">adj_z_clearance</property>
@@ -1173,7 +1219,10 @@
                               </object>
                               <packing>
                                 <property name="left-attach">1</property>
+                                <property name="right-attach">2</property>
                                 <property name="top-attach">7</property>
+                                <property name="bottom-attach">8</property>
+                                <property name="y-options">GTK_SHRINK</property>
                               </packing>
                             </child>
                           </object>
@@ -1197,7 +1246,6 @@
                       <object class="GtkFrame" id="frame4">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="margin-top">20</property>
                         <property name="label-xalign">0</property>
                         <child>
                           <object class="GtkAlignment" id="alignment1">
@@ -1208,12 +1256,13 @@
                             <property name="left-padding">2</property>
                             <property name="right-padding">2</property>
                             <child>
-                              <!-- n-columns=2 n-rows=4 -->
-                              <object class="GtkGrid" id="grid4">
+                              <object class="GtkTable" id="table4">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="row-spacing">3</property>
-                                <property name="column-spacing">2</property>
+                                <property name="n-rows">4</property>
+                                <property name="n-columns">2</property>
+                                <property name="column-spacing">3</property>
+                                <property name="row-spacing">2</property>
                                 <child>
                                   <object class="GtkSpinButton" id="spbtn_offs_x">
                                     <property name="height-request">32</property>
@@ -1222,7 +1271,6 @@
                                     <property name="max-length">10</property>
                                     <property name="invisible-char">●</property>
                                     <property name="width-chars">9</property>
-                                    <property name="text" translatable="yes">0.000</property>
                                     <property name="primary-icon-activatable">False</property>
                                     <property name="secondary-icon-activatable">False</property>
                                     <property name="adjustment">adj_offs_x</property>
@@ -1232,8 +1280,10 @@
                                     <signal name="value-changed" handler="on_spbtn_offs_x_value_changed" swapped="no"/>
                                   </object>
                                   <packing>
-                                    <property name="left-attach">0</property>
                                     <property name="top-attach">1</property>
+                                    <property name="bottom-attach">2</property>
+                                    <property name="x-options">GTK_SHRINK | GTK_FILL</property>
+                                    <property name="y-options">GTK_SHRINK</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1243,7 +1293,6 @@
                                     <property name="can-focus">True</property>
                                     <property name="invisible-char">●</property>
                                     <property name="width-chars">8</property>
-                                    <property name="text" translatable="yes">0.000</property>
                                     <property name="primary-icon-activatable">False</property>
                                     <property name="secondary-icon-activatable">False</property>
                                     <property name="adjustment">adj_offs_y</property>
@@ -1253,8 +1302,10 @@
                                     <signal name="value-changed" handler="on_spbtn_offs_y_value_changed" swapped="no"/>
                                   </object>
                                   <packing>
-                                    <property name="left-attach">0</property>
                                     <property name="top-attach">2</property>
+                                    <property name="bottom-attach">3</property>
+                                    <property name="x-options">GTK_SHRINK | GTK_FILL</property>
+                                    <property name="y-options">GTK_SHRINK</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1264,7 +1315,6 @@
                                     <property name="can-focus">True</property>
                                     <property name="invisible-char">●</property>
                                     <property name="width-chars">8</property>
-                                    <property name="text" translatable="yes">0.000</property>
                                     <property name="primary-icon-activatable">False</property>
                                     <property name="secondary-icon-activatable">False</property>
                                     <property name="adjustment">adj_offs_z</property>
@@ -1274,8 +1324,10 @@
                                     <signal name="value-changed" handler="on_spbtn_offs_z_value_changed" swapped="no"/>
                                   </object>
                                   <packing>
-                                    <property name="left-attach">0</property>
                                     <property name="top-attach">3</property>
+                                    <property name="bottom-attach">4</property>
+                                    <property name="x-options">GTK_SHRINK | GTK_FILL</property>
+                                    <property name="y-options">GTK_SHRINK</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1297,7 +1349,11 @@
                                   </object>
                                   <packing>
                                     <property name="left-attach">1</property>
+                                    <property name="right-attach">2</property>
                                     <property name="top-attach">1</property>
+                                    <property name="bottom-attach">2</property>
+                                    <property name="x-options">GTK_SHRINK</property>
+                                    <property name="y-options">GTK_SHRINK</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1319,7 +1375,11 @@
                                   </object>
                                   <packing>
                                     <property name="left-attach">1</property>
+                                    <property name="right-attach">2</property>
                                     <property name="top-attach">2</property>
+                                    <property name="bottom-attach">3</property>
+                                    <property name="x-options">GTK_SHRINK</property>
+                                    <property name="y-options">GTK_SHRINK</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1341,7 +1401,11 @@
                                   </object>
                                   <packing>
                                     <property name="left-attach">1</property>
+                                    <property name="right-attach">2</property>
                                     <property name="top-attach">3</property>
+                                    <property name="bottom-attach">4</property>
+                                    <property name="x-options">GTK_SHRINK</property>
+                                    <property name="y-options">GTK_SHRINK</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1356,10 +1420,6 @@
                                     <property name="draw-indicator">True</property>
                                     <signal name="toggled" handler="on_chk_set_zero_toggled" swapped="no"/>
                                   </object>
-                                  <packing>
-                                    <property name="left-attach">0</property>
-                                    <property name="top-attach">0</property>
-                                  </packing>
                                 </child>
                                 <child>
                                   <object class="HAL_LED" id="hal_led_set_zero">
@@ -1377,7 +1437,9 @@
                                   </object>
                                   <packing>
                                     <property name="left-attach">1</property>
-                                    <property name="top-attach">0</property>
+                                    <property name="right-attach">2</property>
+                                    <property name="x-options">GTK_SHRINK</property>
+                                    <property name="y-options">GTK_SHRINK</property>
                                   </packing>
                                 </child>
                               </object>
@@ -1403,7 +1465,6 @@
                       <object class="GtkFrame" id="frame6">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="margin-top">10</property>
                         <property name="label-xalign">0</property>
                         <child>
                           <object class="GtkAlignment" id="alignment2">
@@ -1413,99 +1474,18 @@
                             <property name="left-padding">2</property>
                             <property name="right-padding">2</property>
                             <child>
-                              <object class="GtkBox" id="vbox3">
+                              <object class="GtkVBox" id="vbox3">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="orientation">vertical</property>
                                 <child>
-                                  <!-- n-columns=1 n-rows=3 -->
-                                  <object class="GtkGrid" id="grid6">
+                                  <object class="GtkTable" id="table6">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="row-spacing">3</property>
-                                    <property name="column-spacing">2</property>
+                                    <property name="n-rows">2</property>
+                                    <property name="column-spacing">3</property>
+                                    <property name="row-spacing">2</property>
                                     <child>
-                                      <!-- n-columns=2 n-rows=2 -->
-                                      <object class="GtkGrid" id="grid8">
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">False</property>
-                                        <child>
-                                          <object class="GtkSpinButton" id="spbtn_arm_delta_x">
-                                            <property name="height-request">32</property>
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">True</property>
-                                            <property name="tooltip-text" translatable="yes">X offset relative to the spindle axis</property>
-                                            <property name="invisible-char">●</property>
-                                            <property name="width-chars">0</property>
-                                            <property name="text" translatable="yes">0.000</property>
-                                            <property name="primary-icon-activatable">False</property>
-                                            <property name="secondary-icon-activatable">False</property>
-                                            <property name="adjustment">adj_arm_delta_x</property>
-                                            <property name="digits">3</property>
-                                            <property name="numeric">True</property>
-                                            <signal name="key-press-event" handler="on_spbtn_arm_delta_x_key_press_event" swapped="no"/>
-                                            <signal name="value-changed" handler="on_spbtn_arm_delta_x_value_changed" swapped="no"/>
-                                          </object>
-                                          <packing>
-                                            <property name="left-attach">1</property>
-                                            <property name="top-attach">0</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkSpinButton" id="spbtn_arm_delta_y">
-                                            <property name="height-request">32</property>
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">True</property>
-                                            <property name="tooltip-text" translatable="yes">Y offset relative to the spindle axis</property>
-                                            <property name="invisible-char">●</property>
-                                            <property name="width-chars">8</property>
-                                            <property name="text" translatable="yes">0.000</property>
-                                            <property name="primary-icon-activatable">False</property>
-                                            <property name="secondary-icon-activatable">False</property>
-                                            <property name="adjustment">adj_arm_delta_y</property>
-                                            <property name="digits">3</property>
-                                            <property name="numeric">True</property>
-                                            <signal name="key-press-event" handler="on_spbtn_arm_delta_y_key_press_event" swapped="no"/>
-                                            <signal name="value-changed" handler="on_spbtn_arm_delta_y_value_changed" swapped="no"/>
-                                          </object>
-                                          <packing>
-                                            <property name="left-attach">1</property>
-                                            <property name="top-attach">1</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkImage" id="image49">
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                            <property name="tooltip-text" translatable="yes">X offset relative to the spindle axis</property>
-                                            <property name="pixbuf">icons/arm_offset_X.png</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left-attach">0</property>
-                                            <property name="top-attach">0</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkImage" id="image50">
-                                            <property name="height-request">40</property>
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                            <property name="tooltip-text" translatable="yes">Y offset relative to the spindle axis</property>
-                                            <property name="pixbuf">icons/arm_offset_Y.png</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left-attach">0</property>
-                                            <property name="top-attach">1</property>
-                                          </packing>
-                                        </child>
-                                      </object>
-                                      <packing>
-                                        <property name="left-attach">0</property>
-                                        <property name="top-attach">1</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkBox" id="hbox8">
+                                      <object class="GtkHBox" id="hbox8">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
                                         <child>
@@ -1546,13 +1526,91 @@
                                           </packing>
                                         </child>
                                       </object>
-                                      <packing>
-                                        <property name="left-attach">0</property>
-                                        <property name="top-attach">0</property>
-                                      </packing>
                                     </child>
                                     <child>
-                                      <placeholder/>
+                                      <object class="GtkTable" id="table8">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="n-rows">2</property>
+                                        <property name="n-columns">2</property>
+                                        <child>
+                                          <object class="GtkSpinButton" id="spbtn_arm_delta_x">
+                                            <property name="height-request">32</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="tooltip-text" translatable="yes">X offset relative to the spindle axis</property>
+                                            <property name="invisible-char">●</property>
+                                            <property name="width-chars">0</property>
+                                            <property name="primary-icon-activatable">False</property>
+                                            <property name="secondary-icon-activatable">False</property>
+                                            <property name="primary-icon-tooltip-text" translatable="yes">X offset from spindle</property>
+                                            <property name="adjustment">adj_arm_delta_x</property>
+                                            <property name="digits">3</property>
+                                            <property name="numeric">True</property>
+                                            <signal name="key-press-event" handler="on_spbtn_arm_delta_x_key_press_event" swapped="no"/>
+                                            <signal name="value-changed" handler="on_spbtn_arm_delta_x_value_changed" swapped="no"/>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">1</property>
+                                            <property name="right-attach">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSpinButton" id="spbtn_arm_delta_y">
+                                            <property name="height-request">32</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="tooltip-text" translatable="yes">Y offset relative to the spindle axis</property>
+                                            <property name="invisible-char">●</property>
+                                            <property name="width-chars">8</property>
+                                            <property name="primary-icon-activatable">False</property>
+                                            <property name="secondary-icon-activatable">False</property>
+                                            <property name="primary-icon-tooltip-text" translatable="yes">Y offset from spindle</property>
+                                            <property name="adjustment">adj_arm_delta_y</property>
+                                            <property name="digits">3</property>
+                                            <property name="numeric">True</property>
+                                            <signal name="key-press-event" handler="on_spbtn_arm_delta_y_key_press_event" swapped="no"/>
+                                            <signal name="value-changed" handler="on_spbtn_arm_delta_y_value_changed" swapped="no"/>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">1</property>
+                                            <property name="right-attach">2</property>
+                                            <property name="top-attach">1</property>
+                                            <property name="bottom-attach">2</property>
+                                            <property name="x-options">GTK_SHRINK | GTK_FILL</property>
+                                            <property name="y-options">GTK_SHRINK</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkImage" id="image49">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="tooltip-text" translatable="yes">X offset relative to the spindle axis</property>
+                                            <property name="pixbuf">icons/arm_offset_X.png</property>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkImage" id="image50">
+                                            <property name="height-request">40</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="tooltip-text" translatable="yes">Y offset relative to the spindle axis</property>
+                                            <property name="pixbuf">icons/arm_offset_Y.png</property>
+                                          </object>
+                                          <packing>
+                                            <property name="top-attach">1</property>
+                                            <property name="bottom-attach">2</property>
+                                            <property name="x-options">GTK_SHRINK</property>
+                                            <property name="y-options">GTK_SHRINK</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="top-attach">1</property>
+                                        <property name="bottom-attach">2</property>
+                                        <property name="x-options">GTK_SHRINK | GTK_FILL</property>
+                                        <property name="y-options">GTK_SHRINK</property>
+                                      </packing>
                                     </child>
                                   </object>
                                   <packing>
@@ -1562,7 +1620,7 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkBox" id="armbox">
+                                  <object class="GtkHBox" id="armbox">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
                                     <property name="border-width">10</property>
@@ -1620,9 +1678,6 @@
                                     <property name="position">1</property>
                                   </packing>
                                 </child>
-                                <child>
-                                  <placeholder/>
-                                </child>
                               </object>
                             </child>
                           </object>
@@ -1646,38 +1701,33 @@
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">False</property>
-                    <property name="position">2</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox" id="vbox2">
+                  <object class="GtkVBox" id="vbox2">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkBox" id="hbox5">
+                      <object class="GtkHBox" id="hbox5">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <child>
-                          <object class="GtkBox" id="vbox8">
+                          <object class="GtkVBox" id="vbox8">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkFrame" id="frame7">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                                 <property name="label-xalign">0</property>
-                                <property name="shadow-type">etched-out</property>
                                 <child>
-                                  <!-- n-columns=3 n-rows=3 -->
-                                  <object class="GtkGrid" id="grid5">
+                                  <object class="GtkTable" id="table5">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
                                     <property name="border-width">3</property>
-                                    <property name="row-homogeneous">True</property>
-                                    <property name="column-homogeneous">True</property>
+                                    <property name="n-rows">3</property>
+                                    <property name="n-columns">3</property>
                                     <child>
                                       <object class="GtkButton" id="xpym1">
                                         <property name="width-request">92</property>
@@ -1701,7 +1751,11 @@
                                       </object>
                                       <packing>
                                         <property name="left-attach">2</property>
+                                        <property name="right-attach">3</property>
                                         <property name="top-attach">2</property>
+                                        <property name="bottom-attach">3</property>
+                                        <property name="x-options">GTK_SHRINK</property>
+                                        <property name="y-options">GTK_SHRINK</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -1725,7 +1779,11 @@
                                       </object>
                                       <packing>
                                         <property name="left-attach">1</property>
+                                        <property name="right-attach">2</property>
                                         <property name="top-attach">2</property>
+                                        <property name="bottom-attach">3</property>
+                                        <property name="x-options">GTK_SHRINK</property>
+                                        <property name="y-options">GTK_SHRINK</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -1750,8 +1808,10 @@
                                         </child>
                                       </object>
                                       <packing>
-                                        <property name="left-attach">0</property>
                                         <property name="top-attach">2</property>
+                                        <property name="bottom-attach">3</property>
+                                        <property name="x-options">GTK_SHRINK</property>
+                                        <property name="y-options">GTK_SHRINK</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -1774,8 +1834,10 @@
                                         </child>
                                       </object>
                                       <packing>
-                                        <property name="left-attach">0</property>
                                         <property name="top-attach">1</property>
+                                        <property name="bottom-attach">2</property>
+                                        <property name="x-options">GTK_SHRINK</property>
+                                        <property name="y-options">GTK_SHRINK</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -1797,7 +1859,11 @@
                                       </object>
                                       <packing>
                                         <property name="left-attach">1</property>
+                                        <property name="right-attach">2</property>
                                         <property name="top-attach">1</property>
+                                        <property name="bottom-attach">2</property>
+                                        <property name="x-options">GTK_SHRINK</property>
+                                        <property name="y-options">GTK_SHRINK</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -1821,7 +1887,11 @@
                                       </object>
                                       <packing>
                                         <property name="left-attach">2</property>
+                                        <property name="right-attach">3</property>
                                         <property name="top-attach">1</property>
+                                        <property name="bottom-attach">2</property>
+                                        <property name="x-options">GTK_SHRINK</property>
+                                        <property name="y-options">GTK_SHRINK</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -1847,7 +1917,9 @@
                                       </object>
                                       <packing>
                                         <property name="left-attach">2</property>
-                                        <property name="top-attach">0</property>
+                                        <property name="right-attach">3</property>
+                                        <property name="x-options">GTK_SHRINK</property>
+                                        <property name="y-options">GTK_SHRINK</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -1871,7 +1943,9 @@
                                       </object>
                                       <packing>
                                         <property name="left-attach">1</property>
-                                        <property name="top-attach">0</property>
+                                        <property name="right-attach">2</property>
+                                        <property name="x-options">GTK_SHRINK</property>
+                                        <property name="y-options">GTK_SHRINK</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -1896,8 +1970,8 @@
                                         </child>
                                       </object>
                                       <packing>
-                                        <property name="left-attach">0</property>
-                                        <property name="top-attach">0</property>
+                                        <property name="x-options">GTK_SHRINK</property>
+                                        <property name="y-options">GTK_SHRINK</property>
                                       </packing>
                                     </child>
                                   </object>
@@ -1906,48 +1980,23 @@
                                   <object class="GtkLabel" id="label7">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="label" translatable="yes">Measurement inside</property>
-                                    <attributes>
-                                      <attribute name="weight" value="bold"/>
-                                    </attributes>
+                                    <property name="label" translatable="yes">&lt;b&gt;Measurement inside&lt;/b&gt;</property>
+                                    <property name="use-markup">True</property>
                                   </object>
                                 </child>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
-                                <property name="fill">False</property>
+                                <property name="fill">True</property>
                                 <property name="position">0</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkBox" id="hbox9">
+                              <object class="GtkHBox" id="hbox9">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="margin-top">14</property>
+                                <property name="border-width">10</property>
                                 <property name="homogeneous">True</property>
-                                <child>
-                                  <object class="GtkButton" id="btn_tool_dia">
-                                    <property name="width-request">80</property>
-                                    <property name="height-request">80</property>
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">True</property>
-                                    <property name="receives-default">True</property>
-                                    <property name="tooltip-text" translatable="yes">Tool diam</property>
-                                    <signal name="released" handler="on_btn_tool_dia_released" swapped="no"/>
-                                    <child>
-                                      <object class="GtkImage" id="image16">
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">False</property>
-                                        <property name="pixbuf">icons/tool_dia.png</property>
-                                      </object>
-                                    </child>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                    <property name="position">0</property>
-                                  </packing>
-                                </child>
                                 <child>
                                   <object class="GtkButton" id="btn_probe_table">
                                     <property name="width-request">80</property>
@@ -1968,7 +2017,29 @@
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">False</property>
-                                    <property name="pack-type">end</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="btn_tool_dia">
+                                    <property name="width-request">80</property>
+                                    <property name="height-request">80</property>
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="receives-default">True</property>
+                                    <property name="tooltip-text" translatable="yes">Tool diam</property>
+                                    <signal name="released" handler="on_btn_tool_dia_released" swapped="no"/>
+                                    <child>
+                                      <object class="GtkImage" id="image16">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="pixbuf">icons/tool_dia.png</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
                                     <property name="position">1</property>
                                   </packing>
                                 </child>
@@ -1981,91 +2052,89 @@
                             </child>
                             <child>
                               <object class="ToolEdit" id="tooledit1">
+                                <property name="width-request">100</property>
+                                <property name="height-request">30</property>
                                 <property name="sensitive">False</property>
                                 <property name="can-focus">False</property>
-                                <property name="no-show-all">True</property>
                               </object>
                               <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
                                 <property name="position">2</property>
                               </packing>
                             </child>
                           </object>
                           <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
                             <property name="position">0</property>
                           </packing>
                         </child>
                         <child>
                           <object class="GtkAlignment" id="alignment7">
+                            <property name="width-request">242</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="halign">start</property>
-                            <property name="left-padding">3</property>
+                            <property name="top-padding">5</property>
+                            <property name="left-padding">2</property>
+                            <property name="right-padding">5</property>
                             <child>
-                              <object class="GtkBox" id="vbox9">
+                              <object class="GtkVBox" id="vbox9">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="halign">start</property>
-                                <property name="orientation">vertical</property>
                                 <child>
                                   <object class="Combi_DRO" id="combi_dro_X1">
-                                    <property name="width-request">240</property>
                                     <property name="height-request">68</property>
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="halign">start</property>
-                                    <property name="homogeneous">True</property>
-                                    <property name="font-size">28</property>
+                                    <property name="abs-color">rgb(0,0,255)</property>
+                                    <property name="dtg-color">rgb(255,255,0)</property>
+                                    <property name="font-size">24</property>
                                     <property name="homed-color">rgb(0,255,0)</property>
-                                    <property name="imperial-text-template">%5.4f</property>
-                                    <property name="mm-text-template">%6.3f</property>
+                                    <property name="rel-color">rgb(0,0,0)</property>
+                                    <property name="unhomed-color">rgb(255,0,0)</property>
                                   </object>
                                   <packing>
-                                    <property name="expand">True</property>
-                                    <property name="fill">True</property>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
                                     <property name="position">0</property>
                                   </packing>
                                 </child>
                                 <child>
                                   <object class="Combi_DRO" id="combi_dro_Y1">
-                                    <property name="width-request">240</property>
                                     <property name="height-request">68</property>
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="halign">start</property>
-                                    <property name="homogeneous">True</property>
-                                    <property name="font-size">28</property>
+                                    <property name="abs-color">rgb(0,0,255)</property>
+                                    <property name="dtg-color">rgb(255,255,0)</property>
+                                    <property name="font-size">24</property>
                                     <property name="homed-color">rgb(0,255,0)</property>
-                                    <property name="imperial-text-template">%5.4f</property>
                                     <property name="joint-number">1</property>
-                                    <property name="mm-text-template">%6.3f</property>
+                                    <property name="rel-color">rgb(0,0,0)</property>
+                                    <property name="unhomed-color">rgb(255,0,0)</property>
                                   </object>
                                   <packing>
-                                    <property name="expand">True</property>
-                                    <property name="fill">True</property>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
                                     <property name="position">1</property>
                                   </packing>
                                 </child>
                                 <child>
                                   <object class="Combi_DRO" id="combi_dro_Z1">
-                                    <property name="width-request">240</property>
                                     <property name="height-request">68</property>
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="halign">start</property>
-                                    <property name="homogeneous">True</property>
-                                    <property name="font-size">28</property>
+                                    <property name="abs-color">rgb(0,0,255)</property>
+                                    <property name="dtg-color">rgb(255,255,0)</property>
+                                    <property name="font-size">24</property>
                                     <property name="homed-color">rgb(0,255,0)</property>
-                                    <property name="imperial-text-template">%5.4f</property>
                                     <property name="joint-number">2</property>
-                                    <property name="mm-text-template">%6.3f</property>
+                                    <property name="rel-color">rgb(0,0,0)</property>
+                                    <property name="unhomed-color">rgb(255,0,0)</property>
                                   </object>
                                   <packing>
-                                    <property name="expand">True</property>
-                                    <property name="fill">True</property>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
                                     <property name="position">2</property>
                                   </packing>
                                 </child>
@@ -2073,7 +2142,6 @@
                                   <object class="GtkFixed" id="fixed2">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="halign">start</property>
                                     <child>
                                       <object class="GtkButton" id="jog_Xplus_btn">
                                         <property name="label" translatable="yes">X+</property>
@@ -2173,6 +2241,31 @@
                                       </packing>
                                     </child>
                                     <child>
+                                      <object class="GtkHButtonBox" id="steps">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="layout-style">end</property>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="y">192</property>
+                                      </packing>
+                                    </child>
+                                    <child>
                                       <object class="GtkButton" id="jog_XplusYplus_btn">
                                         <property name="width-request">60</property>
                                         <property name="height-request">60</property>
@@ -2260,8 +2353,8 @@
                                     </child>
                                   </object>
                                   <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
                                     <property name="position">3</property>
                                   </packing>
                                 </child>
@@ -2282,45 +2375,16 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButtonBox" id="steps">
+                      <object class="GtkHBox" id="hbox3">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="halign">end</property>
-                        <property name="margin-right">48</property>
-                        <property name="margin-top">15</property>
-                        <property name="layout-style">end</property>
                         <child>
                           <placeholder/>
                         </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkBox" id="hbox3">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
                         <child>
                           <object class="GtkFrame" id="frm_probe_pos">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="margin-left">28</property>
-                            <property name="margin-top">10</property>
                             <property name="label-xalign">0</property>
                             <child>
                               <object class="GtkAlignment" id="alignment3">
@@ -2380,7 +2444,7 @@
                                         </child>
                                       </object>
                                       <packing>
-                                        <property name="x">270</property>
+                                        <property name="x">256</property>
                                         <property name="y">14</property>
                                       </packing>
                                     </child>
@@ -2392,7 +2456,6 @@
                                         <property name="can-focus">True</property>
                                         <property name="invisible-char">●</property>
                                         <property name="width-chars">8</property>
-                                        <property name="text" translatable="yes">0.000</property>
                                         <property name="primary-icon-activatable">False</property>
                                         <property name="secondary-icon-activatable">False</property>
                                         <property name="adjustment">adj_setter_height</property>
@@ -2414,7 +2477,6 @@
                                         <property name="can-focus">True</property>
                                         <property name="invisible-char">●</property>
                                         <property name="width-chars">8</property>
-                                        <property name="text" translatable="yes">0.000</property>
                                         <property name="primary-icon-activatable">False</property>
                                         <property name="secondary-icon-activatable">False</property>
                                         <property name="adjustment">adj_block_height</property>
@@ -2424,24 +2486,24 @@
                                         <signal name="value-changed" handler="on_spbtn_block_height_value_changed" swapped="no"/>
                                       </object>
                                       <packing>
-                                        <property name="x">350</property>
+                                        <property name="x">335</property>
                                         <property name="y">53</property>
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkLabel" id="label_probe_workpiece">
+                                      <object class="GtkLabel" id="label4">
                                         <property name="height-request">32</property>
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
                                         <property name="label" translatable="yes">Workpiece Height</property>
                                       </object>
                                       <packing>
-                                        <property name="x">350</property>
+                                        <property name="x">335</property>
                                         <property name="y">24</property>
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkLabel" id="label_probe_tool_setter">
+                                      <object class="GtkLabel" id="label13">
                                         <property name="height-request">32</property>
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
@@ -2450,34 +2512,6 @@
                                       <packing>
                                         <property name="x">96</property>
                                         <property name="y">24</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkCheckButton" id="chk_enbl_remap_m6">
-                                        <property name="label" translatable="yes">Enable</property>
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">True</property>
-                                        <property name="receives-default">False</property>
-                                        <property name="yalign">0.5</property>
-                                        <property name="image-position">bottom</property>
-                                        <property name="draw-indicator">True</property>
-                                        <signal name="toggled" handler="on_chk_enbl_remap_m6_toggled" swapped="no"/>
-                                      </object>
-                                      <packing>
-                                        <property name="x">404</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="HAL_LED" id="hal_led_enbl_remap_m6">
-                                        <property name="width-request">7</property>
-                                        <property name="height-request">7</property>
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">False</property>
-                                        <property name="led-blink-rate">0</property>
-                                        <property name="led-size">7</property>
-                                      </object>
-                                      <packing>
-                                        <property name="x">480</property>
                                       </packing>
                                     </child>
                                   </object>
@@ -2494,67 +2528,43 @@
                             </child>
                           </object>
                           <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">0</property>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="padding">10</property>
+                            <property name="pack-type">end</property>
+                            <property name="position">1</property>
                           </packing>
                         </child>
                       </object>
                       <packing>
                         <property name="expand">True</property>
                         <property name="fill">True</property>
-                        <property name="position">2</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkBox" id="hbox6">
+                      <object class="GtkHBox" id="hbox6">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="margin-left">20</property>
-                        <property name="margin-top">5</property>
                         <child>
-                          <object class="GtkBox" id="vbox13">
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <object class="GtkVBox" id="vbox13">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkBox">
+                              <object class="GtkCheckButton" id="chk_use_fine">
+                                <property name="label" translatable="yes">Use refinement measurement</property>
+                                <property name="width-request">210</property>
+                                <property name="height-request">40</property>
                                 <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <child>
-                                  <object class="GtkCheckButton" id="chk_use_fine">
-                                    <property name="label" translatable="yes">Use refinement measurement</property>
-                                    <property name="width-request">210</property>
-                                    <property name="height-request">40</property>
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">True</property>
-                                    <property name="receives-default">True</property>
-                                    <property name="image-position">bottom</property>
-                                    <property name="draw-indicator">True</property>
-                                    <signal name="toggled" handler="on_chk_use_fine_toggled" swapped="no"/>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkImage" id="image45">
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">False</property>
-                                    <property name="valign">start</property>
-                                    <property name="margin-left">230</property>
-                                    <property name="xalign">1</property>
-                                    <property name="yalign">1</property>
-                                    <property name="pixbuf">icons/logo_micro_versge.png</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <property name="relief">half</property>
+                                <property name="image-position">bottom</property>
+                                <property name="draw-indicator">True</property>
+                                <signal name="toggled" handler="on_chk_use_fine_toggled" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -2570,6 +2580,7 @@
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="receives-default">True</property>
+                                <property name="relief">half</property>
                                 <property name="image-position">bottom</property>
                                 <property name="draw-indicator">True</property>
                                 <signal name="toggled" handler="on_chk_error_signal_toggled" swapped="no"/>
@@ -2581,10 +2592,13 @@
                               </packing>
                             </child>
                             <child>
-                              <!-- n-columns=4 n-rows=1 -->
-                              <object class="GtkGrid" id="grid1">
+                              <object class="GtkTable" id="table9">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="n-columns">6</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
                                 <child>
                                   <object class="GtkCheckButton" id="chk_signal_delay">
                                     <property name="label" translatable="yes">Signal delay accounting (ms) </property>
@@ -2599,8 +2613,7 @@
                                     <signal name="toggled" handler="on_chk_signal_delay_toggled" swapped="no"/>
                                   </object>
                                   <packing>
-                                    <property name="left-attach">0</property>
-                                    <property name="top-attach">0</property>
+                                    <property name="x-options"/>
                                   </packing>
                                 </child>
                                 <child>
@@ -2611,7 +2624,6 @@
                                     <property name="can-focus">True</property>
                                     <property name="invisible-char">●</property>
                                     <property name="width-chars">8</property>
-                                    <property name="text" translatable="yes">0.00</property>
                                     <property name="primary-icon-activatable">False</property>
                                     <property name="secondary-icon-activatable">False</property>
                                     <property name="adjustment">adj_signal_delay</property>
@@ -2622,32 +2634,45 @@
                                   </object>
                                   <packing>
                                     <property name="left-attach">1</property>
-                                    <property name="top-attach">0</property>
+                                    <property name="right-attach">2</property>
+                                    <property name="x-options">GTK_SHRINK</property>
+                                    <property name="y-options">GTK_SHRINK</property>
                                   </packing>
                                 </child>
                                 <child>
                                   <object class="HAL_Label" id="label_val_overmove">
-                                    <property name="width-request">100</property>
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">0</property>
                                   </object>
                                   <packing>
                                     <property name="left-attach">3</property>
-                                    <property name="top-attach">0</property>
+                                    <property name="right-attach">4</property>
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkLabel" id="label_overmove">
-                                    <property name="width-request">80</property>
+                                  <object class="GtkImage" id="image45">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="margin-left">10</property>
+                                    <property name="xalign">1</property>
+                                    <property name="yalign">1</property>
+                                    <property name="pixbuf">icons/logo_micro_versge.png</property>
+                                  </object>
+                                  <packing>
+                                    <property name="left-attach">5</property>
+                                    <property name="right-attach">6</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="HAL_Label" id="Overmove">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">Overmove</property>
+                                    <property name="xalign">0.8000000119209289</property>
                                   </object>
                                   <packing>
                                     <property name="left-attach">2</property>
-                                    <property name="top-attach">0</property>
+                                    <property name="right-attach">3</property>
                                   </packing>
                                 </child>
                               </object>
@@ -2661,22 +2686,29 @@
                           <packing>
                             <property name="expand">True</property>
                             <property name="fill">True</property>
-                            <property name="position">0</property>
+                            <property name="padding">10</property>
+                            <property name="position">1</property>
                           </packing>
                         </child>
                       </object>
                       <packing>
                         <property name="expand">True</property>
                         <property name="fill">True</property>
-                        <property name="position">3</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                   </object>
                   <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
-                    <property name="position">3</property>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">2</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
               </object>
               <packing>
@@ -2686,17 +2718,15 @@
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="hbox4">
+              <object class="GtkHBox" id="hbox4">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="margin-right">40</property>
                 <child>
                   <object class="GtkFrame" id="frame3">
+                    <property name="width-request">998</property>
                     <property name="height-request">200</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="margin-left">5</property>
-                    <property name="margin-right">5</property>
                     <property name="label-xalign">0</property>
                     <property name="label-yalign">0</property>
                     <property name="shadow-type">none</property>
@@ -2719,7 +2749,7 @@
                     </child>
                   </object>
                   <packing>
-                    <property name="expand">True</property>
+                    <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">0</property>
                   </packing>

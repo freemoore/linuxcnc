@@ -21,6 +21,7 @@ ps_offs_y = 0.0
 ps_offs_z = 0.0
 ps_arm_delta_x = 0.0
 ps_arm_delta_y = 0.0
-setterheight = -13.4105693359
-blockheight = -56.0
+setterheight = -10.992509033203124
+blockheight = -30.045853759765624
+enbl_remap_m6 = True
 

@@ -1,19 +1,19 @@
 # Halshow settings
 # This file is generated automatically.
-wm geometry . 807x876+825+31
+wm geometry . 1159x876+751+138
 placeFrames 0.5087209302325582
 set ::ratio 0.5087209302325582
 set ::old_w_leftf 160
 set ::watchlist {
-    sig+all-limit
-    sig+home-x
-    sig+home-y
-    sig+home-z
-    sig+jog-z-pos
-    sig+jog-z-neg
-    pin+hm2_5i23.0.encoder.02.input-a
-    pin+hm2_5i23.0.encoder.02.input-b
-    pin+hm2_5i23.0.encoder.02.input-index
+    pin+iocontrol.0.tool-change
+    pin+iocontrol.0.tool-changed
+    pin+iocontrol.0.tool-from-pocket
+    pin+iocontrol.0.tool-number
+    pin+iocontrol.0.tool-prep-index
+    pin+iocontrol.0.tool-prep-number
+    pin+iocontrol.0.tool-prep-pocket
+    pin+iocontrol.0.tool-prepare
+    pin+iocontrol.0.tool-prepared
 }
 set ::workmode watchhal
 set ::watchInterval 100

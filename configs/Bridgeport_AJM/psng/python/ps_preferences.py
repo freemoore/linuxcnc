@@ -17,9 +17,9 @@
 # along with this program; If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import ConfigParser
+import configparser
 
-ps_cp = ConfigParser.RawConfigParser
+ps_cp = configparser.RawConfigParser
 class ProbeScreenPreferences(ps_cp):
     types = {
         bool: ps_cp.getboolean,

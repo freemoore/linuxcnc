@@ -1,0 +1,34 @@
+updated debian repositories
+the ethercat and the cd based repos have to be deleted
+update everything
+upgrade everything
+installed 
+git
+lastpass
+meld
+
+cloned git repo of my configs from my own github into home folder
+same again with https://github.com/verser-git/probe_screen_v2.9.git
+getting the line about probe toolchange thing doesn't exist. 
+
+tried sudo apt-get install python3-scipy
+that changed the error message somewhat (maybe better error handling?) but the same error occurs:
+Pin 'probe.toolchange-change' does not exist
+in the end i made this go away by not commenting out the relevant manual toolchange lines from psng.hal; given that, it seems to work ok now. 
+
+added a new file .axisrc
+usually this is in home directory, but as I want it to be backed up by both my local NAS and github to make future reinstalls smoother, home dir has a shortcut to it and the file itself is in linuxcnc/config/myconfigfolder.
+
+.axisrc contains code from here: 
+https://github.com/HacklabJKL/sergei_cnc2/commit/6c9a834dd09094c0228d7983c7956d92219af00f#diff-1a23bc27e4ec9cc7c8397a95cdf1213bcbe124ae10df85d2bbfa5c8e41b8107bR16
+to give a 'time remaining' status at the bottom of the screen
+and 'bigfileopen' and 'maximise lcnc window at start' code from here: https://forum.linuxcnc.org/21-axis/29735-axis-modifications?start=50
+
+There are 2 ways to install this mod:
+1. Replace files(axis.py, axis.tcl and glcanon.py) in existing installation LinuxCNC v2.8.2, begins to work immediately. search these filenames and check each time that the branch is 2.9. 
+
+in these lines i think False should be "False" as I'm getting an error saying option values must be strings
+vars.show_spindle_rpm.set(ap.getpref("show_spindle_rpm", False))
+vars.show_spindle_ang.set(ap.getpref("show_spindle_ang", False))
+vars.show_spindle_vct.set(ap.getpref("show_spindle_vct", False))
+vars.show_spindle_fpr.set(ap.getpref("show_spindle_fpr", False))
