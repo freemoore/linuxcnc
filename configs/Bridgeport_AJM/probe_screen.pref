@@ -8,7 +8,7 @@ ps_offs_angle = 0.0
 chk_set_zero = False
 chk_arm_enable = False
 ps_metric_mode = True
-ps_searchvel = 500.0
+ps_searchvel = 400.0
 ps_probevel = 25.0
 ps_z_clearance = 11.0
 ps_probe_max = 20.0
@@ -21,7 +21,7 @@ ps_offs_y = 0.0
 ps_offs_z = 0.0
 ps_arm_delta_x = 0.0
 ps_arm_delta_y = 0.0
-setterheight = -10.992509033203124
+setterheight = -41.2267314453125
 blockheight = 0.0
 enbl_remap_m6 = True
 

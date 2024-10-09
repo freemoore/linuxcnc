@@ -31,3 +31,6 @@ There are 2 ways to install this mod:
 in these lines i think False should be "False" as I'm getting an error saying option values must be strings
 3100 vars.show_spindle_rpm.set(ap.getpref("show_spindle_rpm", False))
 confirmed changing False to "False" makes it work
+
+probe screen:
+copy contents of probe's .axisrc into my existing .axisrc

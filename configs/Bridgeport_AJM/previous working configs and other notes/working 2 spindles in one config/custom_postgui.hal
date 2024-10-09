@@ -65,12 +65,11 @@ setp axis.z.jog-scale 0.1
 net spindle-fb-rpm-abs-filtered     	 =>   pyvcp.spindle-speed
 net spindle-ready     					 =>    pyvcp.spindle-at-speed-led
 
-#net hsspindle-fb-rpm-abs-unfiltered     =>   pyvcp.hsspindle-speed
-net spindle-vel-cmd-rpm-abs				 =>   pyvcp.hsspindle-speed
+net hsspindle-fb-rpm-abs-unfiltered      =>   pyvcp.hsspindle-speed
 net hsspindle-ready      			 	 =>    pyvcp.hsspindle-at-speed-led
 
 # **** Setup of spindle speed display using pyvcp -END ****
 
-net spindle-vel-cmd-rpm 				=> axisui.display-spindle-speed
-net spindle-revs 						=> axisui.display-spindle-angle
+net spindle1-vel-cmd-rpm 				=> axisui.display-spindle-speed
+net spindle0-revs 						=> axisui.display-spindle-angle
 

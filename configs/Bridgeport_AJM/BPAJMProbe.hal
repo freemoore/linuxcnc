@@ -1,0 +1,39 @@
+# made by ajm, 08/10/2024 for updating to Linuxcnc 2.9
+# keep all probe related hal entries in one place
+# for a tidier hal file
+# we are now using the latest probe screen from verser found at: https://github.com/verser-git/probe_screen_v2.9
+
+# No stop in auto mode (NSIA)
+# About Stop move when probe tripped
+# Linuxcnc v2.9 stops move when probe tripped for safety in all modes. This is a good approach.
+# It is possible to exclude stops in AUTO mode, i.e. when the g-code program is being executed.
+# We can use 'demux' to convert the motion-mode into a bit output, though inconveniently motion-type is signed and demux wants unsigned, so we need to also use 'conv_s32_u32' and also an 'and2' 'or2' 'not' to disable the probe input in AUTO mode.
+# To do this, you need to add the .hal file of your machine with the functions and connections below.
+
+loadrt or2 names=probe-or,toolsetter-or-axis-limit-or,NSIAor2
+loadrt demux personality=7
+loadrt conv_s32_u32
+loadrt and2 names=NSIAand2
+loadrt not names=NSIAnot
+
+addf probe-or 						servo-thread
+addf toolsetter-or-axis-limit-or 	servo-thread
+addf demux.0  						servo-thread
+addf conv-s32-u32.0 				servo-thread
+addf NSIAand2 						servo-thread
+addf NSIAor2 						servo-thread
+addf NSIAnot 						servo-thread
+
+net digitising-probe-in				[HMOT](CARD0).7i84.0.0.input-05-not
+net toolsetter-probe-in 			[HMOT](CARD0).7i84.0.0.input-12-not
+net digitising-probe-in				probe-or.in0
+net toolsetter-probe-in				probe-or.in1
+net probe-in						probe-or.out
+net m-type motion.motion-type 		=> conv-s32-u32.0.in
+net m-type-u conv-s32-u32.0.out 	=> demux.0.sel-u32
+net mode-auto halui.mode.is-auto 	=> NSIAnot.in
+net mode-auto-not NSIAnot.out 		=> NSIAor2.in0
+net probing_in_auto demux.0.out-05 	=> NSIAor2.in1
+net probing NSIAor2.out 			=> NSIAand2.in0
+net probe-in 						=> NSIAand2.in1
+net checked-probe NSIAand2.out 		=> motion.probe-input

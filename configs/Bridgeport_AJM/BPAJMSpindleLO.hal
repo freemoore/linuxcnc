@@ -1,0 +1,125 @@
+# made by ajm, 08/10/2024 for updating to true dual spindle control 
+# keep all spindle related hal entries in one place, it's going to get confusing otherwise. 
+
+loadrt scale names=scale.spindle
+loadrt near names=spindle-near-speed
+loadrt pid names=pid.s0
+loadrt abs names=abs.spindle
+loadrt lowpass names=lowpass.spindle
+
+addf spindle-near-speed 		servo-thread
+addf lowpass.spindle          	servo-thread
+addf scale.spindle           	servo-thread
+addf pid.s0.do-pid-calcs       	servo-thread
+addf abs.spindle              	servo-thread
+
+setp spindle-near-speed.difference 500
+setp spindle-near-speed.scale 2
+
+### spindle 0: Low speed spindle connections
+net spindle-cw  			=>		[HMOT](CARD0).7i84.0.0.output-12
+net spindle-ccw  			=>		[HMOT](CARD0).7i84.0.0.output-13
+net spindle-rst  			=>		[HMOT](CARD0).7i84.0.0.output-10
+net spindle-enable 		=>		[HMOT](CARD0).7i84.0.0.output-14
+
+
+setp   pid.s0.Pgain     [SPINDLE_0]P
+setp   pid.s0.Igain     [SPINDLE_0]I
+setp   pid.s0.Dgain     [SPINDLE_0]D
+setp   pid.s0.bias      [SPINDLE_0]BIAS
+setp   pid.s0.FF0       [SPINDLE_0]FF0
+setp   pid.s0.FF1       [SPINDLE_0]FF1
+setp   pid.s0.FF2       [SPINDLE_0]FF2
+setp   pid.s0.deadband  [SPINDLE_0]DEADBAND
+setp   pid.s0.maxoutput [SPINDLE_0]MAX_OUTPUT
+setp   pid.s0.error-previous-target true
+
+net spindle-index-enable  		=>  pid.s0.index-enable
+net spindle-enable        		=>  pid.s0.enable
+net spindle-vel-cmd-rpm-abs    => pid.s0.command
+net spindle-vel-fb-rpm-abs     => pid.s0.feedback
+net spindle-output        		<=  pid.s0.output
+
+# ---PWM Generator signals/setup---
+
+###spindle
+setp   [HMOT](CARD0).pwmgen.04.output-type 2
+setp   [HMOT](CARD0).pwmgen.04.scale  [SPINDLE_0]OUTPUT_SCALE
+net spindle-output      		=> [HMOT](CARD0).pwmgen.04.value
+net spindle-enable      		=> [HMOT](CARD0).pwmgen.04.enable
+
+
+# ---setup spindle control signals---
+
+net spindle-vel-cmd-rps        <=  spindle.0.speed-out-rps
+net spindle-vel-cmd-rps-abs    <=  spindle.0.speed-out-rps-abs
+net spindle-vel-cmd-rpm        <=  spindle.0.speed-out
+net spindle-vel-cmd-rpm-abs    <=  spindle.0.speed-out-abs
+net spindle-enable             <=  spindle.0.on
+net spindle-cw                 <=  spindle.0.forward
+net spindle-ccw                <=  spindle.0.reverse
+net spindle-brake-command      <=  spindle.0.brake
+net spindle-revs               =>  spindle.0.revs
+net spindle-vel-fb-rps         =>  spindle.0.speed-in
+net spindle-index-enable      <=>  spindle.0.index-enable
+net vfd-has-faulted		      =>  spindle.0.amp-fault-in
+
+# ---Setup spindle at speed signals---
+
+net spindle-vel-cmd-rpm-abs spindle-near-speed.in1
+net spindle-fb-rpm-abs-filtered spindle-near-speed.in2
+net spindle-ready <= spindle-near-speed.out => spindle.0.at-speed
+
+#### set halui connections
+
+net spindle-manual-cw     halui.spindle.0.forward
+net spindle-manual-ccw    halui.spindle.0.reverse
+net spindle-manual-stop   halui.spindle.0.stop
+
+# speed sensing prep
+#  Use actual spindle velocity from spindle encoder
+#  spindle-velocity bounces around so we filter it with lowpass
+#  spindle-velocity is signed so we use absolute component to remove sign
+#  spindle-velocity is in RPS not RPM so we scale it.
+
+setp     lowpass.spindle.gain 1.000000
+net spindle-vel-fb-rpm => abs.spindle.in
+net spindle-vel-fb-rpm-abs abs.spindle.out => lowpass.spindle.in
+net spindle-fb-rpm-abs-filtered  lowpass.spindle.out  
+
+# no filtering of bouncy spindle velocity as I want to use motion-adaptive-feed at some point
+
+
+###speed sensing
+
+# ---Encoder feedback signals/setup---
+
+setp    [HMOT](CARD0).encoder.04.counter-mode 0
+setp    [HMOT](CARD0).encoder.04.filter 1 
+setp    [HMOT](CARD0).encoder.04.index-invert 0
+setp    [HMOT](CARD0).encoder.04.index-mask 0
+setp    [HMOT](CARD0).encoder.04.index-mask-invert 0
+setp    [HMOT](CARD0).encoder.04.scale  [SPINDLE_0]ENCODER_SCALE
+#setp 	 [HMOT](CARD0).encoder.04.index-enable 1
+
+net spindle-revs             <=   [HMOT](CARD0).encoder.04.position
+net spindle-vel-fb-rps       <=   [HMOT](CARD0).encoder.04.velocity
+net spindle-vel-fb-rpm       <=   [HMOT](CARD0).encoder.04.velocity-rpm
+net spindle-index-enable     <=>  [HMOT](CARD0).encoder.04.index-enable
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
