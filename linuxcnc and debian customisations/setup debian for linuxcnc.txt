@@ -34,3 +34,18 @@ confirmed changing False to "False" makes it work
 
 probe screen:
 copy contents of probe's .axisrc into my existing .axisrc
+
+trying ncam again:
+I've made my own repository with a copy of bogdanthegeeks' one but replaced ncam.py with Giovanni's.
+so cd to home directory (the one containing my 'linuxcnc' folder/git clone
+git clone https://github.com/freemoore/NativeCAM.git
+sudo bash ncam_debsetup.txt 
+python3 ncam.py
+error: no lxml
+sudo apt-get install python3-lxml
+no errors
+python3 ncam.py
+standalone nativecam window now pops up
+python3 --ini=/home/freemoore/linuxcnc/configs/Bridgeport_AJM/Bridgeport_AJM.ini --catalog=mill -
+working as standalone. occasionally disappearing with a segmentation fault. 
+

@@ -9,15 +9,7 @@ DEBUG = 0
 VERSION = 1.1
 
 [DISPLAY]
-
 DISPLAY = axis
-# required NativeCAM item :
-EMBED_TAB_NAME = NativeCAM
-EMBED_TAB_COMMAND = gladevcp -x {XID} -U --catalog=mill /home/freemoore/NativeCAM/ncam.ui
-# required NativeCAM item :
-NCAM_DIR = ncam
-# required NativeCAM item :
-PROGRAM_PREFIX = ncam/scripts/
 
 EMBED_TAB_NAME=PSNG
 EMBED_TAB_COMMAND=gladevcp -c probe -x {XID} -u psng/python/probe_screen.py -H psng/psng.hal psng/probe_screen.glade
@@ -91,8 +83,7 @@ TASK = milltask
 CYCLE_TIME = 0.010
 
 [RS274NGC]
-SUBROUTINE_PATH = ncam/my-stuff:ncam/lib/mill:ncam/lib/utilities:macros:psng/macros
-
+SUBROUTINE_PATH = macros:psng/macros
 
 PARAMETER_FILE = linuxcnc.var
 RS274NGC_STARTUP_CODE = G21 G40 G90 G94 G97 G64 P0.001 M52
