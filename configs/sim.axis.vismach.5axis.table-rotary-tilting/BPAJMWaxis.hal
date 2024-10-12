@@ -1,0 +1,90 @@
+# made by ajm, 08/10/2024 for updating to Linuxcnc 2.9
+# keep all W-axis related hal entries in one place for a tidier hal file
+# AXIS W / JOINT 3
+loadrt 			pid names=pid.w
+loadrt 			abs names=abs.waxis
+loadrt 			comp names=comp.waxispos,comp.waxisneg
+loadrt 			and2 names=waxisupfudgeand,waxisdownfudgeand
+loadrt 			not names=wgoingup-not,wgoingdown-not
+addf			abs.waxis					servo-thread
+addf			comp.waxispos				servo-thread
+addf			comp.waxisneg				servo-thread
+addf			wgoingup-not				servo-thread
+addf			wgoingdown-not				servo-thread
+addf			waxisupfudgeand				servo-thread
+addf			waxisdownfudgeand			servo-thread
+addf pid.w.do-pid-calcs						servo-thread
+setp   pid.w.Pgain     [JOINT_3]P
+setp   pid.w.Igain     [JOINT_3]I
+setp   pid.w.Dgain     [JOINT_3]D
+setp   pid.w.bias      [JOINT_3]BIAS
+setp   pid.w.FF0       [JOINT_3]FF0
+setp   pid.w.FF1       [JOINT_3]FF1
+setp   pid.w.FF2       [JOINT_3]FF2
+setp   pid.w.deadband  [JOINT_3]DEADBAND
+setp   pid.w.maxoutput [JOINT_3]MAX_OUTPUT
+setp   pid.w.error-previous-target true
+
+net w-index-enable  =>  pid.w.index-enable
+net w-enable        =>  pid.w.enable
+net w-pos-cmd       =>  pid.w.command
+net w-pos-fb        =>  pid.w.feedback
+net w-output        <=  pid.w.output
+
+# ---PWM Generator signals/setup---
+setp   [HMOT](CARD0).pwmgen.03.output-type 1
+setp   [HMOT](CARD0).pwmgen.03.scale  [JOINT_3]OUTPUT_SCALE
+
+net w-pos-cmd    joint.3.motor-pos-cmd
+net w-enable     joint.3.amp-enable-out  => [HMOT](CARD0).pwmgen.03.enable
+
+# ---Encoder feedback signals/setup---
+setp    [HMOT](CARD0).encoder.03.counter-mode 0
+setp    [HMOT](CARD0).encoder.03.filter 1
+setp    [HMOT](CARD0).encoder.03.index-invert 0
+setp    [HMOT](CARD0).encoder.03.index-mask 0
+setp    [HMOT](CARD0).encoder.03.index-mask-invert 0
+setp    [HMOT](CARD0).encoder.03.scale  [JOINT_3]ENCODER_SCALE
+net w-pos-fb               <=  [HMOT](CARD0).encoder.03.position
+net w-vel-fb               <=  [HMOT](CARD0).encoder.03.velocity
+net w-pos-fb               =>  joint.3.motor-pos-fb
+net w-index-enable    joint.3.index-enable  <=>  [HMOT](CARD0).encoder.03.index-enable
+net w-pos-rawcounts        <=  [HMOT](CARD0).encoder.03.rawcounts 
+
+
+### copes with w axis vfd only accepting 0-10v in along with separate fw/rev relay inputs
+
+#give only positive pwm signal:
+net w-output abs.waxis.in
+net w-posoutput abs.waxis.out                 [HMOT](CARD0).pwmgen.03.value
+
+# comparators: if pid output is positive, switch vfd FWD pin on, if negative, REV pin on
+setp comp.waxispos.in0 0
+net w-output comp.waxispos.in1 
+net w-movepos comp.waxispos.out 
+
+# if w-movepos is TRUE, set in0 of AND gate to TRUE: waxisupfudgeand.in0 = true
+net w-movepos waxisupfudgeand.in0
+
+# if w-axis-brake-condition = FALSE (if w should be moving), wgoingup-not.out = TRUE
+net w-axis-brake-condition wgoingup-not.in
+
+# invert axis brake condition, if FALSE then set the AND gate input TRUE
+net w-axis-up-brake-condition-inverted wgoingup-not.out 
+
+# if axis should be moving up AND if it's not too close to target, AND gate out = TRUE
+net w-axis-up-brake-condition-inverted  waxisupfudgeand.in1
+
+# and if so, switch on the vfd FWD pin
+net fudged-waxisup waxisupfudgeand.out [HMOT](CARD0).7i84.0.0.output-08
+
+#same for down
+setp comp.waxisneg.in1 0
+net w-output comp.waxisneg.in0 
+net w-moveneg comp.waxisneg.out 
+net w-moveneg waxisdownfudgeand.in0
+net w-axis-brake-condition wgoingdown-not.in
+net w-axis-down-brake-condition-inverted wgoingdown-not.out 
+net w-axis-down-brake-condition-inverted waxisdownfudgeand.in1
+net fudged-waxisdown waxisdownfudgeand.out [HMOT](CARD0).7i84.0.0.output-09 
+

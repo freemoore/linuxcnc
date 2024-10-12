@@ -1,0 +1,80 @@
+# made by ajm, 08/10/2024 for updating to Linuxcnc 2.9
+# keep all Z-axis related hal entries in one place for a tidier hal file
+# AXIS Z / JOINT 2
+loadrt 			pid names=pid.z
+addf 			pid.z.do-pid-calcs			servo-thread
+net home-z						<=	[HMOT](CARD0).7i84.0.0.input-02
+setp			pid.z.Pgain     [JOINT_2]P
+setp			pid.z.Igain     [JOINT_2]I
+setp			pid.z.Dgain     [JOINT_2]D
+setp			pid.z.bias      [JOINT_2]BIAS
+setp			pid.z.FF0       [JOINT_2]FF0
+setp			pid.z.FF1       [JOINT_2]FF1
+setp			pid.z.FF2       [JOINT_2]FF2
+setp			pid.z.deadband  [JOINT_2]DEADBAND
+setp			pid.z.maxoutput [JOINT_2]MAX_OUTPUT
+setp			pid.z.error-previous-target true
+net				z-index-enable  =>  pid.z.index-enable
+net				z-enable        =>  pid.z.enable
+net				z-pos-cmd       =>  pid.z.command
+net				z-pos-fb        =>  pid.z.feedback
+net				z-output        <=  pid.z.output
+# ---PWM Generator signals/setup---
+setp			[HMOT](CARD0).pwmgen.02.output-type 2
+setp			[HMOT](CARD0).pwmgen.02.scale  [JOINT_2]OUTPUT_SCALE
+net z-output	[HMOT](CARD0).pwmgen.02.value
+net z-pos-cmd	joint.2.motor-pos-cmd
+net z-enable	joint.2.amp-enable-out
+net z-enable	[HMOT](CARD0).pwmgen.02.enable
+# ---Encoder feedback signals/setup---
+setp			[HMOT](CARD0).encoder.02.counter-mode 0
+setp			[HMOT](CARD0).encoder.02.filter 1
+setp			[HMOT](CARD0).encoder.02.index-invert 0
+setp			[HMOT](CARD0).encoder.02.index-mask 0
+setp			[HMOT](CARD0).encoder.02.index-mask-invert 0
+setp			[HMOT](CARD0).encoder.02.scale  [JOINT_2]ENCODER_SCALE
+net z-pos-fb               <=	[HMOT](CARD0).encoder.02.position
+net z-vel-fb               <=	[HMOT](CARD0).encoder.02.velocity
+net z-pos-fb               =>	joint.2.motor-pos-fb
+net z-index-enable    			joint.2.index-enable  <=>  [HMOT](CARD0).encoder.02.index-enable
+net z-pos-rawcounts        <=	[HMOT](CARD0).encoder.02.rawcounts 
+# ---setup home / limit switch signals---
+net home-z					=>	joint.2.home-sw-in
+net all-limits				=>	joint.2.neg-lim-sw-in
+net all-limits				=>	joint.2.pos-lim-sw-in
+#  ---HALUI signals---
+net z-is-homed     			halui.joint.2.is-homed
+
+####### stuff from xyzbc-trt_cmds.hal
+loadrt pid names=J2_pid
+loadrt mux2 names=J2_mux
+loadrt ddt names=J2_vel,J2_accel
+
+net J2:acc J2_accel.out
+net J2:enable joint.2.amp-enable-out => J2_pid.enable
+net J2:homesw J2_switch.home-sw => joint.2.home-sw-in
+net J2:on-pos J2_pid.output => J2_mux.in1
+net J2:pos-cmd joint.2.motor-pos-cmd => J2_pid.command
+net J2:pos-fb J2_mux.out => J2_mux.in0 J2_switch.cur-pos J2_vel.in joint.2.motor-pos-fb
+net J2:vel J2_vel.out => J2_accel.in
+
+# parameter values
+setp J2_accel.tmax                  0
+setp J2_mux.tmax                    0
+setp J2_pid.do-pid-calcs.tmax       0
+setp J2_switch.tmax                 0
+setp J2_vel.tmax                    0
+
+addf J2_pid.do-pid-calcs servo-thread
+addf J2_mux servo-thread
+addf J2_vel servo-thread
+addf J2_accel servo-thread
+addf J2_switch servo-thread
+
+# setp commands for unconnected input pins
+setp J2_pid.FF0                     1.0
+setp J2_pid.Pgain                   0
+setp J2_pid.Dgain                   0
+setp J2_pid.Igain                   0
+setp J2_pid.FF1                     0
+setp J2_pid.FF2                     0

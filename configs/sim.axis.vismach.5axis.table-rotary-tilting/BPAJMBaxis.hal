@@ -1,0 +1,93 @@
+# made by ajm, 08/10/2024 for updating to Linuxcnc 2.9
+# keep all B-axis related hal entries in one place for a tidier hal file
+# AXIS B / JOINT 4
+loadrt 			pid names=pid.b
+addf 			pid.b.do-pid-calcs			servo-thread
+#net home-b     					<=  [HMOT](CARD0).7i84.0.0.input-0?
+setp   			pid.b.Pgain     [JOINT_4]P
+setp   			pid.b.Igain     [JOINT_4]I
+setp   			pid.b.Dgain     [JOINT_4]D
+setp   			pid.b.bias      [JOINT_4]BIAS
+setp   			pid.b.FF0       [JOINT_4]FF0
+setp   			pid.b.FF1       [JOINT_4]FF1
+setp   			pid.b.FF2       [JOINT_4]FF2
+setp   			pid.b.deadband  [JOINT_4]DEADBAND
+setp   			pid.b.maxoutput [JOINT_4]MAX_OUTPUT
+setp   			pid.b.error-previous-target true
+# This setting is to limit bogus stepgen velocity corrections caused by position feedback sample time jitter.
+setp   			pid.b.maxerror 0.012700
+net 			b-index-enable  =>  pid.b.index-enable
+net 			b-enable        =>  pid.b.enable
+net 			b-pos-cmd       =>  pid.b.command
+net 			b-pos-fb        =>  pid.b.feedback
+net 			b-output        <=  pid.b.output
+# Step Gen signals/setup
+setp   				[HMOT](CARD0).stepgen.00.dirsetup        [JOINT_3]DIRSETUP
+setp   				[HMOT](CARD0).stepgen.00.dirhold         [JOINT_3]DIRHOLD
+setp   				[HMOT](CARD0).stepgen.00.steplen         [JOINT_3]STEPLEN
+setp   				[HMOT](CARD0).stepgen.00.stepspace       [JOINT_3]STEPSPACE
+setp   				[HMOT](CARD0).stepgen.00.position-scale  [JOINT_3]STEP_SCALE
+setp   				[HMOT](CARD0).stepgen.00.step_type        0
+# control type is supposed to be p or v 
+setp   				[HMOT](CARD0).stepgen.00.control-type     1
+setp   				[HMOT](CARD0).stepgen.00.maxaccel         [JOINT_3]STEPGEN_MAXACCEL
+setp   				[HMOT](CARD0).stepgen.00.maxvel           [JOINT_3]STEPGEN_MAXVEL
+
+net b-output	[HMOT](CARD0).stepgen.00.velocity-cmd
+net b-pos-cmd	joint.4.motor-pos-cmd
+net b-enable    joint.4.amp-enable-out
+net b-enable	[HMOT](CARD0).stepgen.00.enable
+#net b-vel-cmd   joint.4.vel-cmd
+
+# ---Encoder feedback signals/setup---
+setp    			[HMOT](CARD0).encoder.06.counter-mode 0
+setp    			[HMOT](CARD0).encoder.06.filter 1
+setp    			[HMOT](CARD0).encoder.06.index-invert 0
+setp    			[HMOT](CARD0).encoder.06.index-mask 0
+setp    			[HMOT](CARD0).encoder.06.index-mask-invert 0
+setp    			[HMOT](CARD0).encoder.06.scale  [JOINT_4]ENCODER_SCALE
+net b-pos-fb               <=  	[HMOT](CARD0).encoder.06.position
+net b-vel-fb               <=  	[HMOT](CARD0).encoder.06.velocity
+net b-pos-fb               =>  	joint.4.motor-pos-fb
+net b-index-enable				joint.4.index-enable  <=>  [HMOT](CARD0).encoder.06.index-enable
+net b-pos-rawcounts        <=  	[HMOT](CARD0).encoder.06.rawcounts
+# ---setup home / limit switch signals---
+#net home-b					=>  joint.4.home-sw-in
+#net all-limits     		=>  joint.4.neg-lim-sw-in
+#net all-limits	   			=>  joint.4.pos-lim-sw-in
+#  ---HALUI signals---
+net b-is-homed    			halui.joint.4.is-homed
+
+####### stuff from xyzbc-trt_cmds.hal
+loadrt pid names=J3_pid
+loadrt mux2 names=J3_mux
+loadrt ddt names=J3_vel,J3_accel
+
+net J3:acc J3_accel.out
+net J3:enable joint.3.amp-enable-out => J3_pid.enable
+net J3:homesw J3_switch.home-sw => joint.3.home-sw-in
+net J3:on-pos J3_pid.output => J3_mux.in1
+net J3:pos-cmd joint.3.motor-pos-cmd => J3_pid.command
+net J3:pos-fb J3_mux.out => J3_mux.in0 J3_switch.cur-pos J3_vel.in joint.3.motor-pos-fb
+net J3:vel J3_vel.out => J3_accel.in
+
+# parameter values
+setp J3_accel.tmax                  0
+setp J3_mux.tmax                    0
+setp J3_pid.do-pid-calcs.tmax       0
+setp J3_switch.tmax                 0
+setp J3_vel.tmax                    0
+
+addf J3_pid.do-pid-calcs servo-thread
+addf J3_mux servo-thread
+addf J3_vel servo-thread
+addf J3_accel servo-thread
+addf J3_switch servo-thread
+
+# setp commands for unconnected input pins
+setp J3_pid.FF0                     1.0
+setp J3_pid.Pgain                   0
+setp J3_pid.Dgain                   0
+setp J3_pid.Igain                   0
+setp J3_pid.FF1                     0
+setp J3_pid.FF2                     0
