@@ -17,6 +17,8 @@ addf motion-controller			servo-thread
 
 # set system-enable pin true 
 setp [HMOT](CARD0).7i84.0.0.output-00 true
+setp [HMOT](CARD0).gpio.024.is_output true
+setp [HMOT](CARD0).gpio.024.out false
 
 # All limit switch signals 
 net axes-limit-in   					<=  [HMOT](CARD0).7i84.0.0.input-06-not

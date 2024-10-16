@@ -37,7 +37,7 @@ net b-output	[HMOT](CARD0).stepgen.00.velocity-cmd
 net b-pos-cmd	joint.3.motor-pos-cmd
 net b-enable    joint.3.amp-enable-out
 net b-enable	[HMOT](CARD0).stepgen.00.enable
-#net b-vel-cmd   joint.3.vel-cmd
+net b-vel-cmd   joint.3.vel-cmd
 
 # ---Encoder feedback signals/setup---
 setp    			[HMOT](CARD0).encoder.06.counter-mode 0

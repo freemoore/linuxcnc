@@ -1,53 +1,16 @@
 # Halshow settings
 # This file is generated automatically.
-wm geometry . 752x962+1165+27
-placeFrames 0.5087209302325582
-set ::ratio 0.5087209302325582
+wm geometry . 1190x962+949+27
+placeFrames 0.41935483870967744
+set ::ratio 0.41935483870967744
 set ::old_w_leftf 160
 set ::watchlist {
-    sig+:table-x
-    sig+:saddle-y
-    sig+:spindle-z
-    sig+:tilt-b
-    sig+:rotate-c
-    sig+x-pos-cmd
-    sig+x-pos-fb
-    sig+y-pos-cmd
-    sig+y-pos-fb
-    sig+z-pos-cmd
-    sig+z-pos-fb
-    sig+w-pos-cmd
-    sig+w-pos-fb
-    sig+b-pos-cmd
-    sig+b-pos-fb
-    sig+c-pos-cmd
-    sig+c-pos-fb
-    pin+joint.0.pos-cmd
-    pin+joint.0.pos-fb
-    pin+joint.1.pos-cmd
-    pin+joint.1.pos-fb
-    pin+joint.2.pos-cmd
-    pin+joint.2.pos-fb
-    pin+joint.3.pos-cmd
-    pin+joint.3.pos-fb
-    pin+joint.4.pos-cmd
-    pin+joint.4.pos-fb
-    pin+joint.5.pos-cmd
-    pin+joint.5.pos-fb
-    pin+axis.x.pos-cmd
-    pin+axis.x.teleop-pos-cmd
-    pin+axis.y.pos-cmd
-    pin+axis.y.teleop-pos-cmd
-    pin+axis.z.teleop-pos-cmd
-    pin+axis.z.pos-cmd
-    pin+axis.b.pos-cmd
-    pin+axis.b.teleop-pos-cmd
-    pin+axis.c.pos-cmd
-    pin+axis.c.teleop-pos-cmd
-    pin+axis.w.pos-cmd
-    pin+axis.w.teleop-pos-cmd
-    pin+hm2_5i23.0.pwmgen.06.enable
-    pin+hm2_5i23.0.pwmgen.06.value
+    pin+hm2_5i23.0.stepgen.00.position-cmd
+    pin+hm2_5i23.0.stepgen.00.position-fb
+    pin+hm2_5i23.0.stepgen.00.velocity-cmd
+    pin+hm2_5i23.0.stepgen.00.velocity-fb
+    pin+pid.b.command
+    pin+pid.b.output
 }
 set ::workmode watchhal
 set ::watchInterval 100
