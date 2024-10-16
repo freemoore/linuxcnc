@@ -1,6 +1,6 @@
 # made by ajm, 08/10/2024 for updating to Linuxcnc 2.9
 # keep all W-axis related hal entries in one place for a tidier hal file
-# AXIS W / JOINT 3
+# AXIS W / JOINT 5
 loadrt 			pid names=pid.w
 loadrt 			abs names=abs.waxis
 loadrt 			comp names=comp.waxispos,comp.waxisneg
@@ -14,15 +14,15 @@ addf			wgoingdown-not				servo-thread
 addf			waxisupfudgeand				servo-thread
 addf			waxisdownfudgeand			servo-thread
 addf pid.w.do-pid-calcs						servo-thread
-setp   pid.w.Pgain     [JOINT_3]P
-setp   pid.w.Igain     [JOINT_3]I
-setp   pid.w.Dgain     [JOINT_3]D
-setp   pid.w.bias      [JOINT_3]BIAS
-setp   pid.w.FF0       [JOINT_3]FF0
-setp   pid.w.FF1       [JOINT_3]FF1
-setp   pid.w.FF2       [JOINT_3]FF2
-setp   pid.w.deadband  [JOINT_3]DEADBAND
-setp   pid.w.maxoutput [JOINT_3]MAX_OUTPUT
+setp   pid.w.Pgain     [JOINT_5]P
+setp   pid.w.Igain     [JOINT_5]I
+setp   pid.w.Dgain     [JOINT_5]D
+setp   pid.w.bias      [JOINT_5]BIAS
+setp   pid.w.FF0       [JOINT_5]FF0
+setp   pid.w.FF1       [JOINT_5]FF1
+setp   pid.w.FF2       [JOINT_5]FF2
+setp   pid.w.deadband  [JOINT_5]DEADBAND
+setp   pid.w.maxoutput [JOINT_5]MAX_OUTPUT
 setp   pid.w.error-previous-target true
 
 net w-index-enable  =>  pid.w.index-enable
@@ -33,10 +33,10 @@ net w-output        <=  pid.w.output
 
 # ---PWM Generator signals/setup---
 setp   [HMOT](CARD0).pwmgen.03.output-type 1
-setp   [HMOT](CARD0).pwmgen.03.scale  [JOINT_3]OUTPUT_SCALE
+setp   [HMOT](CARD0).pwmgen.03.scale  [JOINT_5]OUTPUT_SCALE
 
-net w-pos-cmd    joint.3.motor-pos-cmd
-net w-enable     joint.3.amp-enable-out  => [HMOT](CARD0).pwmgen.03.enable
+net w-pos-cmd    joint.5.motor-pos-cmd
+net w-enable     joint.5.amp-enable-out  => [HMOT](CARD0).pwmgen.03.enable
 
 # ---Encoder feedback signals/setup---
 setp    [HMOT](CARD0).encoder.03.counter-mode 0
@@ -44,11 +44,11 @@ setp    [HMOT](CARD0).encoder.03.filter 1
 setp    [HMOT](CARD0).encoder.03.index-invert 0
 setp    [HMOT](CARD0).encoder.03.index-mask 0
 setp    [HMOT](CARD0).encoder.03.index-mask-invert 0
-setp    [HMOT](CARD0).encoder.03.scale  [JOINT_3]ENCODER_SCALE
+setp    [HMOT](CARD0).encoder.03.scale  [JOINT_5]ENCODER_SCALE
 net w-pos-fb               <=  [HMOT](CARD0).encoder.03.position
 net w-vel-fb               <=  [HMOT](CARD0).encoder.03.velocity
-net w-pos-fb               =>  joint.3.motor-pos-fb
-net w-index-enable    joint.3.index-enable  <=>  [HMOT](CARD0).encoder.03.index-enable
+net w-pos-fb               =>  joint.5.motor-pos-fb
+net w-index-enable    joint.5.index-enable  <=>  [HMOT](CARD0).encoder.03.index-enable
 net w-pos-rawcounts        <=  [HMOT](CARD0).encoder.03.rawcounts 
 
 

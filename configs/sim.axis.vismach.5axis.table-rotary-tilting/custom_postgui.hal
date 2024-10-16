@@ -1,0 +1,76 @@
+# Include your custom_postgui HAL commands here
+# This file will not be overwritten when you run PNCconf again
+
+
+loadrt toggle2nist names=machineon
+addf machineon servo-thread
+setp machineon.is-on 0
+
+# --- TOGGLE MACHINE ON/OFF ---
+net read-enable-button <= [HMOT](CARD0).7i84.0.0.input-07
+net read-enable-button machineon.in
+net toggled-enable-on machineon.on
+net toggled-enable-off machineon.off
+net toggled-enable-off halui.machine.off
+net toggled-enable-on halui.machine.on
+net dc-brake-open-delay machineon.is-on
+
+
+#select axis using joystick
+#use mpg to drive it
+# stick signal to hardware pin (so sticks are connected to hal)
+# done in custom hal file
+
+#select axis and enable jogging with either stick direction
+net jog-x-pos => x-jog-on.in0
+net jog-x-neg => x-jog-on.in1
+net jogXon <= x-jog-on.out
+
+net jog-y-pos => y-jog-on.in0
+net jog-y-neg => y-jog-on.in1
+net jogYon <= y-jog-on.out
+
+net jog-z-pos => z-jog-on.in0
+net jog-z-neg => z-jog-on.in1
+net jogZon <= z-jog-on.out
+
+# signal to joint select pin (so joint is selected when stick is moved, in either direction)
+net jogXon => halui.joint.0.select  halui.axis.x.select
+net jogYon => halui.joint.1.select  halui.axis.y.select
+net jogZon => halui.joint.2.select  halui.axis.z.select
+
+#net jog-on signal to jog-enabler.OR.gate OUT0 (so jog will only happen on selected axes)
+net jogXon => axis.x.jog-enable  #halui.x.jog-enable
+net jogYon => axis.y.jog-enable  #halui.y.jog-enable
+net jogZon => axis.z.jog-enable  #halui.z.jog-enable
+
+# mpg signal to each axis 
+net mpg-counts-signal => axis.x.jog-counts
+net mpg-counts-signal => axis.y.jog-counts
+net mpg-counts-signal => axis.z.jog-counts
+
+setp axis.x.jog-scale 0.1
+setp axis.y.jog-scale 0.1
+setp axis.z.jog-scale 0.1
+
+#-------------
+
+#The lines below were the contents of the file pyvcp_options.hal whose inclusion as the custom_postgui.hal file had broken all functions defined in that file e.g. jogging
+# _DO NOT_ include your HAL commands here.
+# Put custom HAL commands in custom_postgui.hal
+# The commands in this file are run after the GUI loads
+
+# **** Setup of spindle speed display using pyvcp -START ****
+
+#net spindle-fb-rpm-abs-filtered     	 =>   pyvcp.spindle-speed
+#net spindle-ready     					 =>    pyvcp.spindle-at-speed-led
+
+#net hsspindle-fb-rpm-abs-unfiltered     =>   pyvcp.hsspindle-speed
+#net spindle-vel-cmd-rpm-abs				 =>   pyvcp.hsspindle-speed
+#net hsspindle-ready      			 	 =>    pyvcp.hsspindle-at-speed-led
+
+# **** Setup of spindle speed display using pyvcp -END ****
+
+net spindle-vel-cmd-rpm 				=> axisui.display-spindle-speed
+net spindle-revs 						=> axisui.display-spindle-angle
+

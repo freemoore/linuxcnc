@@ -45,36 +45,33 @@ net all-limits	   			=>  joint.0.pos-lim-sw-in
 #  ---HALUI signals---
 net x-is-homed    			halui.joint.0.is-homed
 
-####### stuff from xyzbc-trt_cmds.hal
-loadrt pid names=J0_pid
-loadrt mux2 names=J0_mux
-loadrt ddt names=J0_vel,J0_accel
 
-net J0:acc J0_accel.out
-net J0:enable joint.0.amp-enable-out => J0_pid.enable
-net J0:homesw J0_switch.home-sw => joint.0.home-sw-in
-net J0:on-pos J0_pid.output => J0_mux.in1
-net J0:pos-cmd joint.0.motor-pos-cmd => J0_pid.command
-net J0:pos-fb J0_mux.out => J0_mux.in0 J0_switch.cur-pos J0_vel.in joint.0.motor-pos-fb
-net J0:vel J0_vel.out => J0_accel.in
 
-# parameter values
-setp J0_accel.tmax                  0
-setp J0_mux.tmax                    0
-setp J0_pid.do-pid-calcs.tmax       0
-setp J0_switch.tmax                 0
-setp J0_vel.tmax                    0
 
-addf J0_pid.do-pid-calcs servo-thread
-addf J0_mux servo-thread
-addf J0_vel servo-thread
-addf J0_accel servo-thread
+#i think this line has to be adapted-
+#net J0-pos-fb J0_mux.out => J0_mux.in0 J0_switch.cur-pos J0_vel.in joint.0.motor-pos-fb
+# pos fb is getting its value from mux out and also sending it to mux in0, cur-pos, vel in, pos-fb?
+# soooo
+#net x-pos-fb J0_mux.out => J0_mux.in0 J0_switch.cur-pos J0_vel.in joint.0.motor-pos-fb
+#when motion.motion-enabled pin is TRUE, all the muxes send in1 to out, otherwise in0 goes to out.
+#translation: if that pin is false, mux seems to send its own output to its input and cur-pos, pos-fb etc.
+#net J0-acc J0_accel.out
+#net J0-on-pos J0_pid.output => J0_mux.in1
+#net J0-pos-cmd joint.0.motor-pos-cmd => J0_pid.command
+#net J0-pos-fb J0_mux.out => J0_mux.in0 J0_switch.cur-pos J0_vel.in joint.0.motor-pos-fb
+#net J0-vel J0_vel.out => J0_accel.in
 #addf J0_switch servo-thread
-
-# setp commands for unconnected input pins
-setp J0_pid.FF0                     1.0
-setp J0_pid.Pgain                   0
-setp J0_pid.Dgain                   0
-setp J0_pid.Igain                   0
-setp J0_pid.FF1                     0
-setp J0_pid.FF2                     0
+####### stuff from xyzbc-trt_cmds.hal
+#loadrt pid names=J0_pid
+#loadrt mux2 names=J0_mux
+#loadrt ddt names=J0_vel,J0_accel
+# parameter values
+#setp J0_accel.tmax                  0
+#setp J0_mux.tmax                    0
+#setp J0_pid.do-pid-calcs.tmax       0
+#setp J0_vel.tmax                    0
+#addf J0_pid.do-pid-calcs servo-thread
+#addf J0_mux servo-thread
+#addf J0_vel servo-thread
+#addf J0_accel servo-thread
+#setp J0_switch.tmax                 0

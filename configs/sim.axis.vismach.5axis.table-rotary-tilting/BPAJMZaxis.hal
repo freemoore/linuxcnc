@@ -46,35 +46,35 @@ net all-limits				=>	joint.2.pos-lim-sw-in
 net z-is-homed     			halui.joint.2.is-homed
 
 ####### stuff from xyzbc-trt_cmds.hal
-loadrt pid names=J2_pid
-loadrt mux2 names=J2_mux
-loadrt ddt names=J2_vel,J2_accel
+#loadrt pid names=J2_pid
+#loadrt mux2 names=J2_mux
+#loadrt ddt names=J2_vel,J2_accel
 
-net J2:acc J2_accel.out
-net J2:enable joint.2.amp-enable-out => J2_pid.enable
-net J2:homesw J2_switch.home-sw => joint.2.home-sw-in
-net J2:on-pos J2_pid.output => J2_mux.in1
-net J2:pos-cmd joint.2.motor-pos-cmd => J2_pid.command
-net J2:pos-fb J2_mux.out => J2_mux.in0 J2_switch.cur-pos J2_vel.in joint.2.motor-pos-fb
-net J2:vel J2_vel.out => J2_accel.in
+#net J2:acc J2_accel.out
+#net J2:enable joint.2.amp-enable-out => J2_pid.enable
+#net J2:homesw J2_switch.home-sw => joint.2.home-sw-in
+#net J2:on-pos J2_pid.output => J2_mux.in1
+#net J2:pos-cmd joint.2.motor-pos-cmd => J2_pid.command
+#net J2:pos-fb J2_mux.out => J2_mux.in0 J2_switch.cur-pos J2_vel.in joint.2.motor-pos-fb
+#net J2:vel J2_vel.out => J2_accel.in
 
 # parameter values
-setp J2_accel.tmax                  0
-setp J2_mux.tmax                    0
-setp J2_pid.do-pid-calcs.tmax       0
-setp J2_switch.tmax                 0
-setp J2_vel.tmax                    0
+#setp J2_accel.tmax                  0
+#setp J2_mux.tmax                    0
+#setp J2_pid.do-pid-calcs.tmax       0
+#setp J2_switch.tmax                 0
+#setp J2_vel.tmax                    0
 
-addf J2_pid.do-pid-calcs servo-thread
-addf J2_mux servo-thread
-addf J2_vel servo-thread
-addf J2_accel servo-thread
-addf J2_switch servo-thread
+#addf J2_pid.do-pid-calcs servo-thread
+#addf J2_mux servo-thread
+#addf J2_vel servo-thread
+#addf J2_accel servo-thread
+#addf J2_switch servo-thread
 
 # setp commands for unconnected input pins
-setp J2_pid.FF0                     1.0
-setp J2_pid.Pgain                   0
-setp J2_pid.Dgain                   0
-setp J2_pid.Igain                   0
-setp J2_pid.FF1                     0
-setp J2_pid.FF2                     0
+#setp J2_pid.FF0                     1.0
+#setp J2_pid.Pgain                   0
+#setp J2_pid.Dgain                   0
+#setp J2_pid.Igain                   0
+#setp J2_pid.FF1                     0
+#setp J2_pid.FF2                     0

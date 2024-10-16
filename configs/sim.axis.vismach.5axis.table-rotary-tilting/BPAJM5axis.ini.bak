@@ -4,17 +4,18 @@
 
 [EMC]
 VERSION = 1.1
-MACHINE = sim-xyzbc-trt-kins (switchkins)
+MACHINE = BPAJM5axis (switchkins)
 
 [DISPLAY]
 #was XYZB
-GEOMETRY = XYZWBC
+GEOMETRY = XYZBCW
 
 OPEN_FILE = ./demos/xyzbc_switchkins.ngc
 PYVCP = ./xyzbc-trt.xml
-PYVCP = pyvcp-panel.xml
+#commenting next line out, look at lcnc docs: pyvcp-examples.html to reinstate
+#PYVCP = pyvcp-panel.xml
 # was JOG_AXES = XYZC
-JOG_AXES = XYZBC
+JOG_AXES = XYZBCW
 DISPLAY = axis
 TOOL_EDITOR = tooledit z diam
 TKPKG = Ngcgui 1.0
@@ -129,7 +130,7 @@ CARD0=hm2_5i23.0
 
 [HAL]
 HALUI = halui
-HALFILE = Bridgeport_AJM.hal
+HALFILE = BPAJM5axis.hal
 HALFILE = BPAJMXaxis.hal
 HALFILE = BPAJMYaxis.hal
 HALFILE = BPAJMZaxis.hal
@@ -148,7 +149,7 @@ POSTGUI_HALFILE = psng/psng.hal
 TWOPASS = ON
 
 ### the next two are the 5axistrt files
-HALFILE = LIB:basic_sim.tcl
+#HALFILE = LIB:basic_sim.tcl
 POSTGUI_HALFILE = switchkins_postgui.hal
 
 # net for control of motion.switchkins-type
@@ -183,6 +184,7 @@ MDI_COMMAND = M428
 MDI_COMMAND = M430
 
 [TRAJ]
+#COORDINATES = XYZBC
                 COORDINATES = XYZBCW
                LINEAR_UNITS = mm
               ANGULAR_UNITS = deg
@@ -190,6 +192,7 @@ MDI_COMMAND = M430
         MAX_LINEAR_VELOCITY = 65
     MAX_LINEAR_ACCELERATION = 400
 DEFAULT_LINEAR_ACCELERATION = 300
+SPINDLES = 1
 
 [EMCMOT]
       EMCMOT = motmod
@@ -205,7 +208,7 @@ CYCLE_TIME = 0.010
 CYCLE_TIME = 0.100
 TOOL_TABLE = xyzbc-trt.tbl
 
-[AXIS_X]
+[AXIS_X]configs/sim.axis.vismach.5axis.table-rotary-tilting/xyzbc-trt_cmds.hal
 MAX_VELOCITY = 100.0
 MAX_ACCELERATION = 200.0
 MIN_LIMIT = -736
@@ -243,6 +246,7 @@ MAX_ACCELERATION =    300
 
 
 [JOINT_0]
+#	JOINT 0 IS AXIS X
 TYPE = LINEAR
 HOME = 0
 FERROR = 1.0
@@ -272,6 +276,7 @@ HOME_SEQUENCE = 1
 VOLATILE_HOME = 1
 
 [JOINT_1]
+#	JOINT 1 IS AXIS Y
 TYPE = LINEAR
 HOME = 0
 FERROR = 1.005
@@ -301,6 +306,7 @@ HOME_SEQUENCE = 2
 VOLATILE_HOME = 1
 
 [JOINT_2]
+#	JOINT 2 IS AXIS Z
 TYPE = LINEAR
 HOME = 0
 FERROR = 1.005
@@ -329,6 +335,81 @@ HOME_SEQUENCE = 0
 VOLATILE_HOME = 1
 
 [JOINT_3]
+#	JOINT 3 IS AXIS B
+TYPE = ANGULAR
+HOME = 0.0
+#ferror was 0.5, increasing to huge to look for step signals etc
+FERROR = 10000000000.5
+#minferror was 0.05
+MIN_FERROR = 10000000000.05
+MAX_VELOCITY = 360.0
+MAX_ACCELERATION = 1200.0
+# The values below should be 25% larger than MAX_VELOCITY and MAX_ACCELERATION
+# If using BACKLASH compensation STEPGEN_MAXACCEL should be 100% larger.
+STEPGEN_MAXVEL = 450.00
+STEPGEN_MAXACCEL = 1500.00
+P = 1000.0
+I = 0.0
+D = 0.0
+FF0 = 0.0
+FF1 = 1.0
+FF2 = 0.0
+BIAS = 0.0
+DEADBAND = 0.0
+MAX_OUTPUT = 0.0
+# handle worm ration is 6 degrees per turn; encoder is 600 counts per turn, so we get 100 encoder counts per degree which are 4x that, dumbass. 400/deg because of quadrature.
+ENCODER_SCALE = 400.0
+# these are in nanoseconds
+DIRSETUP   = 5000
+DIRHOLD    = 5000
+STEPLEN    = 5000
+STEPSPACE  = 5000
+STEP_SCALE = 33.3333333
+MIN_LIMIT = -9999.0
+MAX_LIMIT = 9999.0
+#HOME_OFFSET = 0.0
+#HOME_SEQUENCE = 4
+HOME_SEQUENCE = 0
+
+[JOINT_4]
+#	JOINT 4 IS AXIS C
+TYPE = ANGULAR
+HOME = 0.0
+#ferror was 0.5, increasing to huge to look for step signals etc
+FERROR = 10000000000.5
+#minferror was 0.05
+MIN_FERROR = 10000000000.05
+MAX_VELOCITY = 360.0
+MAX_ACCELERATION = 1200.0
+# The values below should be 25% larger than MAX_VELOCITY and MAX_ACCELERATION
+# If using BACKLASH compensation STEPGEN_MAXACCEL should be 100% larger.
+STEPGEN_MAXVEL = 450.00
+STEPGEN_MAXACCEL = 1500.00
+P = 1000.0
+I = 0.0
+D = 0.0
+FF0 = 0.0
+FF1 = 1.0
+FF2 = 0.0
+BIAS = 0.0
+DEADBAND = 0.0
+MAX_OUTPUT = 0.0
+# rotary scale is:
+ENCODER_SCALE = 600.0
+# these are in nanoseconds
+DIRSETUP   = 5000
+DIRHOLD    = 5000
+STEPLEN    = 5000
+STEPSPACE  = 5000
+STEP_SCALE = 33.3333333
+MIN_LIMIT = -9999.0
+MAX_LIMIT = 9999.0
+#HOME_OFFSET = 0.0
+#HOME_SEQUENCE = 4
+HOME_SEQUENCE = 0
+
+[JOINT_5]
+#	JOINT 5 IS AXIS W
 TYPE = LINEAR
 HOME = 0
 FERROR = 50
@@ -348,50 +429,7 @@ ENCODER_SCALE = -944.8819
 OUTPUT_SCALE = 2.15
 MIN_LIMIT = -400
 MAX_LIMIT = 400
-HOME_SEQUENCE = 0     
-
-[JOINT_4]
-TYPE = ANGULAR
-HOME =    0
-MAX_VELOCITY =   30
-MAX_ACCELERATION =  300
-P = 1.15
-I = 0
-D = 1.2
-FF0 = 0
-FF1 = 4.5
-FF2 = 0.001
-BIAS = 0
-DEADBAND = 0
-MAX_OUTPUT = 110
-ENCODER_SCALE = -944.8819
-OUTPUT_SCALE = 2.15
-MIN_LIMIT = -100
-MAX_LIMIT =   50
-HOME_SEARCH_VEL =    0
-HOME_SEQUENCE =    0
-
-[JOINT_5]
-TYPE = ANGULAR
-HOME =    0
-MAX_VELOCITY =   30
-MAX_ACCELERATION =  300
-P = 1.15
-I = 0
-D = 1.2
-FF0 = 0
-FF1 = 4.5
-FF2 = 0.001
-BIAS = 0
-DEADBAND = 0
-MAX_OUTPUT = 110
-ENCODER_SCALE = -944.8819
-OUTPUT_SCALE = 2.15
-MIN_LIMIT = -100
-MAX_LIMIT =   50
-HOME_SEARCH_VEL =    0
-HOME_SEQUENCE =    0
-
+HOME_SEQUENCE = 0
 
 [SPINDLE_0]
 P = 0

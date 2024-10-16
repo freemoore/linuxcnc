@@ -1,0 +1,7 @@
+# halshow watchlist created Wed Nov 22 12:46:19 GMT 2023
+
+pin+spindle-at-speed.in1
+pin+spindle-at-speed.in2
+pin+spindle-at-speed.out
+param+spindle-at-speed.difference
+param+spindle-at-speed.scale

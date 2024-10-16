@@ -1,0 +1,11 @@
+# halshow watchlist created Thu May 11 18:02:48 BST 2023
+
+pin+spindle.0.forward
+pin+spindle.0.on
+pin+spindle.0.speed-cmd-rps
+pin+spindle.0.speed-in
+pin+spindle.0.speed-out
+pin+spindle.0.speed-out-rps
+pin+spindle.0.speed-out-rps-abs
+pin+hm2_5i23.0.pwmgen.03.enable
+pin+hm2_5i23.0.pwmgen.03.value

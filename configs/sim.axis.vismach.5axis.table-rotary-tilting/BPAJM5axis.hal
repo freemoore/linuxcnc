@@ -41,7 +41,8 @@ net machine-is-enabled        <=  motion.motion-enabled
 net estop-out     <=  iocontrol.0.user-enable-out
 net estop-ext     =>  iocontrol.0.emc-enable-in
 
-net sample:enable motion.motion-enabled => J0_mux.sel J1_mux.sel J2_mux.sel J3_mux.sel J4_mux.sel
+# next line means that when motion.motion-enabled pin is TRUE, all the muxes send in1 to out, otherwise in2 goes to out.
+#net sample:enable motion.motion-enabled => J0_mux.sel J1_mux.sel J2_mux.sel J3_mux.sel J4_mux.sel
 setp motion-command-handler.tmax    0
 setp motion-controller.tmax         0
 setp servo-thread.tmax              0
