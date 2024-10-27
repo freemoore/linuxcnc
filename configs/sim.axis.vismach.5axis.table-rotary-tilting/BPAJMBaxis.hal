@@ -14,7 +14,7 @@ setp   			pid.b.FF2       [JOINT_3]FF2
 setp   			pid.b.deadband  [JOINT_3]DEADBAND
 setp   			pid.b.maxoutput [JOINT_3]MAX_OUTPUT
 setp   			pid.b.error-previous-target true
-# This setting is to limit bogus stepgen velocity corrections caused by position feedback sample time jitter.
+#This setting is to limit bogus stepgen velocity corrections caused by position feedback sample time jitter.
 setp   			pid.b.maxerror 0.012700
 net 			b-index-enable  =>  pid.b.index-enable
 net 			b-enable        =>  pid.b.enable
@@ -37,8 +37,7 @@ net b-output	[HMOT](CARD0).stepgen.00.velocity-cmd
 net b-pos-cmd	joint.3.motor-pos-cmd
 net b-enable    joint.3.amp-enable-out
 net b-enable	[HMOT](CARD0).stepgen.00.enable
-net b-vel-cmd   joint.3.vel-cmd
-
+#net b-vel-cmd   joint.3.vel-cmd
 # ---Encoder feedback signals/setup---
 setp    			[HMOT](CARD0).encoder.06.counter-mode 0
 setp    			[HMOT](CARD0).encoder.06.filter 1
@@ -83,11 +82,3 @@ net b-is-homed    			halui.joint.3.is-homed
 #addf J3_vel servo-thread
 #addf J3_accel servo-thread
 #addf J3_switch servo-thread
-
-# setp commands for unconnected input pins
-#setp J3_pid.FF0                     1.0
-#setp J3_pid.Pgain                   0
-#setp J3_pid.Dgain                   0
-#setp J3_pid.Igain                   0
-#setp J3_pid.FF1                     0
-#setp J3_pid.FF2                     0

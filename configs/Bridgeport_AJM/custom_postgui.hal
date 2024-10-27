@@ -55,22 +55,21 @@ setp axis.z.jog-scale 0.1
 
 #-------------
 
+
 #The lines below were the contents of the file pyvcp_options.hal whose inclusion as the custom_postgui.hal file had broken all functions defined in that file e.g. jogging
-# _DO NOT_ include your HAL commands here.
-# Put custom HAL commands in custom_postgui.hal
-# The commands in this file are run after the GUI loads
+
 
 # **** Setup of spindle speed display using pyvcp -START ****
-
 net spindle-fb-rpm-abs-filtered     	 =>   pyvcp.spindle-speed
 net spindle-ready     					 =>    pyvcp.spindle-at-speed-led
-
 #net hsspindle-fb-rpm-abs-unfiltered     =>   pyvcp.hsspindle-speed
 net spindle-vel-cmd-rpm-abs				 =>   pyvcp.hsspindle-speed
 net hsspindle-ready      			 	 =>    pyvcp.hsspindle-at-speed-led
-
 # **** Setup of spindle speed display using pyvcp -END ****
-
 net spindle-vel-cmd-rpm 				=> axisui.display-spindle-speed
 net spindle-revs 						=> axisui.display-spindle-angle
+# compensation pyvcp pins
+net compensation-enable compensation.enable-in <= pyvcp.compensation-enable
+net compensation-offset axis.z.eoffset => pyvcp.compensation-offset
+
 

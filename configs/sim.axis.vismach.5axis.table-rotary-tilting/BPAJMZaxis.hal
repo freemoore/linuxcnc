@@ -70,11 +70,3 @@ net z-is-homed     			halui.joint.2.is-homed
 #addf J2_vel servo-thread
 #addf J2_accel servo-thread
 #addf J2_switch servo-thread
-
-# setp commands for unconnected input pins
-#setp J2_pid.FF0                     1.0
-#setp J2_pid.Pgain                   0
-#setp J2_pid.Dgain                   0
-#setp J2_pid.Igain                   0
-#setp J2_pid.FF1                     0
-#setp J2_pid.FF2                     0

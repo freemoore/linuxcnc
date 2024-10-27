@@ -49,17 +49,13 @@ net x-is-homed    			halui.joint.0.is-homed
 loadrt pid names=pid.x
 loadrt mux2 names=J0_mux
 
-
-
 net J0:enable joint.0.amp-enable-out => pid.x.enable
-
 net J0:on-pos pid.x.output => J0_mux.in1
 net J0:pos-cmd joint.0.motor-pos-cmd => pid.x.command
 
-
 # parameter values
 
-setp pid.x.do-pid-calcs.tmax       0
+setp pid.x.do-pid-calcs.tmax      	0
 setp J0_switch.tmax                 0
 
 ########removing what i think are simulated components that are unneccesary due to having the real ones
@@ -72,18 +68,8 @@ setp J0_switch.tmax                 0
 #loadrt ddt names=J0_vel,J0_accel
 #net J0:acc J0_accel.out
 
-
-addf pid.x.do-pid-calcs servo-thread
 addf J0_mux servo-thread
 
 #addf J0_vel servo-thread
 #addf J0_accel servo-thread
 #addf J0_switch servo-thread
-
-# setp commands for unconnected input pins - these were pid.J0
-#setp pid.x.FF0                     1.0
-#setp pid.x.Pgain                   0
-#setp pid.x.Dgain                   0
-#setp pid.x.Igain                   0
-#setp pid.x.FF1                     0
-#setp pid.x.FF2                     0

@@ -56,4 +56,26 @@
                     </led>
                 </hbox>
         </vbox>
+        <labelframe text="Z-compensation">
+<hbox>    
+<checkbutton>
+<halpin>"compensation-enable"</halpin>
+<text>"Enable Z Correction"</text>
+<font> ("Helvetica",12)</font>
+</checkbutton>
+</hbox>
+<hbox>
+<label>
+<text>"Delta Z"</text>
+<font> ("Helvetica",12)</font>
+</label>
+<bar>
+<halpin>"compensation-offset"</halpin>
+<font> ("Helvetica",12)</font>
+<format>".6f"</format>
+<min_>-0.01</min_>
+<max_>0.01</max_>
+</bar>
+</hbox>
+</labelframe>
 </pyvcp>

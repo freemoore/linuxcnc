@@ -70,11 +70,3 @@ net y-is-homed     			halui.joint.1.is-homed
 #addf J1_vel servo-thread
 #addf J1_accel servo-thread
 #addf J1_switch servo-thread
-
-# setp commands for unconnected input pins
-#setp J1_pid.FF0                     1.0
-#setp J1_pid.Pgain                   0
-#setp J1_pid.Dgain                   0
-#setp J1_pid.Igain                   0
-#setp J1_pid.FF1                     0
-#setp J1_pid.FF2                     0

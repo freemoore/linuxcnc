@@ -19,8 +19,7 @@ setp spindle-near-speed.scale 2
 ### spindle 1: High-speed spindle connections
 net spindle-cw  			=>		[HMOT](CARD0).7i84.0.0.output-11
 #net spindle-ccw  			=>		[HMOT](CARD0).7i84.0.0.output-09 
-# --- HIGH SPEED spindle0 0-10V OUTPUT ---
-net hss-10v-in 				<=		[HMOT](CARD0).7i84.0.0.analogin3
+
 
 
 setp   pid.s1.Pgain     [SPINDLE_1]P
@@ -93,7 +92,9 @@ net spindle-fb-rpm-abs-filtered  lowpass.spindle.out
 ###speed sensing
 
 # HSS speed sensing and scaling to RPM
-
+# disabled all following lines to try and get 7i84 to start and stay on
+# --- HIGH SPEED spindle0 0-10V OUTPUT ---
+net hss-10v-in 				<=		[HMOT](CARD0).7i84.0.0.analogin3
 net hss-10v-in =>	scale.spindle.in 
 setp scale.spindle.gain 1806.3754
 net spindle-fb-rpm-abs-unfiltered => scale.spindle.out

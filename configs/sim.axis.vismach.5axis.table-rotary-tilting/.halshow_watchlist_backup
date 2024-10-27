@@ -1,4 +1,8 @@
-# halshow watchlist created Wed Oct 16 13:15:31 BST 2024
+# halshow watchlist created Wed Oct 16 19:54:19 BST 2024
 
-pin+hm2_5i23.0.stepgen.00.counts
-pin+hm2_5i23.0.stepgen.01.counts
+pin+hm2_5i23.0.stepgen.00.position-cmd
+pin+hm2_5i23.0.stepgen.00.position-fb
+pin+hm2_5i23.0.stepgen.00.velocity-cmd
+pin+hm2_5i23.0.stepgen.00.velocity-fb
+pin+pid.b.command
+pin+pid.b.output

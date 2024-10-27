@@ -7,6 +7,13 @@ set ::old_w_leftf 160
 set ::watchlist {
     sig+w-pos-cmd
     sig+w-pos-fb
+    pin+motion.probe-input
+    pin+axis.z.eoffset
+    pin+axis.z.eoffset-clear
+    pin+axis.z.eoffset-counts
+    pin+axis.z.eoffset-enable
+    pin+axis.z.eoffset-request
+    pin+axis.z.eoffset-scale
 }
 set ::workmode watchhal
 set ::watchInterval 100

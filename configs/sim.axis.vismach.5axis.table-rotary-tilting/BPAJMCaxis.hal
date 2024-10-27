@@ -14,7 +14,7 @@ setp   			pid.c.FF2       [JOINT_4]FF2
 setp   			pid.c.deadband  [JOINT_4]DEADBAND
 setp   			pid.c.maxoutput [JOINT_4]MAX_OUTPUT
 setp   			pid.c.error-previous-target true
-# This setting is to limit bogus stepgen velocity corrections caused by position feedback sample time jitter.
+#This setting is to limit bogus stepgen velocity corrections caused by position feedback sample time jitter.
 setp   			pid.c.maxerror 0.012700
 net 			c-index-enable  =>  pid.c.index-enable
 net 			c-enable        =>  pid.c.enable
@@ -37,8 +37,7 @@ net c-output	[HMOT](CARD0).stepgen.01.velocity-cmd
 net c-pos-cmd	joint.4.motor-pos-cmd
 net c-enable    joint.4.amp-enable-out
 net c-enable	[HMOT](CARD0).stepgen.01.enable
-net c-vel-cmd   joint.4.vel-cmd
-
+#net c-vel-cmd   joint.4.vel-cmd
 # ---Encoder feedback signals/setup---
 setp    			[HMOT](CARD0).encoder.07.counter-mode 0
 setp    			[HMOT](CARD0).encoder.07.filter 1
@@ -83,24 +82,6 @@ net c-is-homed    			halui.joint.4.is-homed
 #addf J4_vel servo-thread
 #addf J4_accel servo-thread
 #addf J4_switch servo-thread
-
-# setp commands for unconnected input pins
-#setp J4_pid.FF0                     1.0
-#setp J4_pid.Pgain                   0
-#setp J4_pid.Dgain                   0
-#setp J4_pid.Igain                   0
-#setp J4_pid.FF1                     0
-#setp J4_pid.FF2                     0
-
-# ---PWM Generator signals/setup---
-setp   			[HMOT](CARD0).pwmgen.06.output-type 2
-setp   			[HMOT](CARD0).pwmgen.06.scale  [JOINT_1]OUTPUT_SCALE
-net c-output	[HMOT](CARD0).pwmgen.06.value
-#net y-pos-cmd	joint.1.motor-pos-cmd
-#net y-enable	joint.1.amp-enable-out
-net y-enable	[HMOT](CARD0).pwmgen.06.enable
-
-
 
 
 

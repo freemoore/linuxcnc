@@ -1,0 +1,12 @@
+# halshow watchlist created Sun Oct 20 13:38:50 BST 2024
+
+pin+hm2_5i23.0.encoder.06.count
+pin+hm2_5i23.0.encoder.06.position
+pin+hm2_5i23.0.encoder.06.rawcounts
+pin+hm2_5i23.0.encoder.07.count
+pin+hm2_5i23.0.encoder.07.position
+pin+hm2_5i23.0.encoder.07.rawcounts
+pin+joint.3.pos-cmd
+pin+joint.3.pos-fb
+pin+joint.4.pos-cmd
+pin+joint.4.pos-fb
