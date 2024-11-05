@@ -1,8 +1,8 @@
 # Halshow settings
 # This file is generated automatically.
 wm geometry . 805x987+1105+27
-placeFrames 0.5087209302325582
-set ::ratio 0.5087209302325582
+placeFrames 0.5081967213114754
+set ::ratio 0.5081967213114754
 set ::old_w_leftf 160
 set ::watchlist {
     sig+w-pos-cmd
@@ -14,6 +14,10 @@ set ::watchlist {
     pin+axis.z.eoffset-enable
     pin+axis.z.eoffset-request
     pin+axis.z.eoffset-scale
+    pin+spindle.0.at-speed
+    pin+pyvcp.hsspindle-at-speed-led
+    pin+probe.ps_probe_latch
+    pin+probe.setterheight
 }
 set ::workmode watchhal
 set ::watchInterval 100

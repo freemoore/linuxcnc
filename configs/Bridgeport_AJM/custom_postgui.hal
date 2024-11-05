@@ -68,8 +68,3 @@ net hsspindle-ready      			 	 =>    pyvcp.hsspindle-at-speed-led
 # **** Setup of spindle speed display using pyvcp -END ****
 net spindle-vel-cmd-rpm 				=> axisui.display-spindle-speed
 net spindle-revs 						=> axisui.display-spindle-angle
-# compensation pyvcp pins
-net compensation-enable compensation.enable-in <= pyvcp.compensation-enable
-net compensation-offset axis.z.eoffset => pyvcp.compensation-offset
-
-

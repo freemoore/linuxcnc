@@ -1,6 +1,6 @@
 
 root_window.tk.call("wm","resizable",".",1,1)
-root_window.tk.call("wm","geometry",".","1920x1080")
+root_window.tk.call("wm","geometry",".","1520x990")
 #root_window.attributes("-fullscreen",1)
 
 root_window.tk.call('.pane.top.tabs','configure','-width',20)

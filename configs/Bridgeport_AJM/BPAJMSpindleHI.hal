@@ -64,11 +64,12 @@ net spindle-index-enable      <=>  spindle.0.index-enable
 #net vfd-has-faulted		      =>  spindle.0.amp-fault-in
 
 # ---Setup spindle at speed signals---
-
+#same signal to both to force it to work temporarily
 net spindle-vel-cmd-rpm-abs spindle-near-speed.in1
-net spindle-fb-rpm-abs-filtered spindle-near-speed.in2
+net spindle-vel-cmd-rpm-abs spindle-near-speed.in2
+#net spindle-fb-rpm-abs-filtered spindle-near-speed.in2
 net spindle-ready <= spindle-near-speed.out => spindle.0.at-speed 
-
+#setp spindle.0.at-speed 1
 #### set halui connections
 
 net spindle-manual-cw     halui.spindle.0.forward
@@ -92,7 +93,6 @@ net spindle-fb-rpm-abs-filtered  lowpass.spindle.out
 ###speed sensing
 
 # HSS speed sensing and scaling to RPM
-# disabled all following lines to try and get 7i84 to start and stay on
 # --- HIGH SPEED spindle0 0-10V OUTPUT ---
 net hss-10v-in 				<=		[HMOT](CARD0).7i84.0.0.analogin3
 net hss-10v-in =>	scale.spindle.in 

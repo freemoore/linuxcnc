@@ -1,7 +1,7 @@
 o<psng_probe_tool_setter> sub
 
 ; BEGIN PSNG PREAMBLE
-M73 ; Save and autorestore model states. This will be used only in case of error, otherwise we will invalidate it.
+M73 ; Save and autorestore modal states. This will be used only in case of error, otherwise we will invalidate it.
 o<_psng_modal_save> call
 o<_psng_hook> call [4]
 ; END PSNG PREAMBLE
@@ -44,7 +44,7 @@ G53 G1 Z[#<_ini[TOOLSENSOR]Z>]  F[#<_ini[TOOLSENSOR]RAPID_SPEED>]
 ; andy added next 3 lines so we move off tool sensor and back to Tool Change Position before any other moves, as sometimes the Safe Z Height is below the toolsetter surface after measuring, causing a crash. 
 G53 G0 Z[#<_ini[CHANGE_POSITION]Z>]
 G53 G0 X[#<_ini[CHANGE_POSITION]X>] Y[#<_ini[CHANGE_POSITION]Y>]
-G53 G0 Z[#<_ini[CHANGE_POSITION]Z>]
+G53 G0 Z[#<_ini[CHANGE_POSITION]Z>-2]
 
 ; BEGIN PSNG POSTAMBLE
 M71 ; Invalidate Modal Autorestore
