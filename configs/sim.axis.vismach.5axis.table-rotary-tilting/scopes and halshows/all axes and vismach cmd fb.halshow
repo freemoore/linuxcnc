@@ -1,0 +1,19 @@
+# halshow watchlist created Sat Oct 12 15:09:48 BST 2024
+
+sig+:table-x
+sig+:saddle-y
+sig+:spindle-z
+sig+:tilt-b
+sig+:rotate-c
+sig+x-pos-cmd
+sig+x-pos-fb
+sig+y-pos-cmd
+sig+y-pos-fb
+sig+z-pos-cmd
+sig+z-pos-fb
+sig+w-pos-cmd
+sig+w-pos-fb
+sig+b-pos-cmd
+sig+b-pos-fb
+sig+c-pos-cmd
+sig+c-pos-fb

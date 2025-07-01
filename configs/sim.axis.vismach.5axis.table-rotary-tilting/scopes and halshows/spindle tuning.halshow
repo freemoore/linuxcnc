@@ -1,0 +1,14 @@
+# halshow watchlist created Thu May 18 15:25:35 BST 2023
+
+pin+hm2_5i23.0.encoder.03.input-a
+pin+hm2_5i23.0.encoder.03.input-b
+pin+hm2_5i23.0.encoder.03.input-index
+pin+hm2_5i23.0.encoder.03.count
+pin+hm2_5i23.0.encoder.03.rawcounts
+pin+hm2_5i23.0.encoder.03.velocity
+pin+hm2_5i23.0.encoder.03.velocity-rpm
+pin+hm2_5i23.0.pwmgen.03.enable
+pin+hm2_5i23.0.pwmgen.03.value
+pin+pid.s.command
+pin+pid.s.enable
+pin+pid.s.output

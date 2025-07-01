@@ -1,0 +1,21 @@
+; Helper macro for containing functionality needed to
+; safely perform a G38.3 move.
+
+o<_psng_probe_tool> sub
+
+; Paramaters for this macro
+#<search_distance> = #1
+
+; Call the Probe Routine
+o<_probe_tool> call [#<search_distance>]
+
+
+; andy added next 3 lines so we move off tool sensor and back to Tool Change Position before any other moves, as sometimes the Safe Z Height is below the toolsetter surface after measuring, causing a crash. 
+
+G53 G0 Z[#<_ini[CHANGE_POSITION]Z>]
+G53 G0 X[#<_ini[CHANGE_POSITION]X>] Y[#<_ini[CHANGE_POSITION]Y>]
+G53 G0 Z[#<_ini[CHANGE_POSITION]Z>]
+
+
+o<_psng_probe_tool> endsub [#<_value>]
+M2

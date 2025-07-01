@@ -1,0 +1,30 @@
+# Halshow settings
+# This file is generated automatically.
+wm geometry . 517x985+1393+27
+placeFrames 0.3405940594059406
+set ::ratio 0.3405940594059406
+set ::old_w_leftf 160
+set ::watchlist {
+    pin+hm2_5i23.0.encoder.06.count
+    pin+hm2_5i23.0.encoder.06.position
+    pin+hm2_5i23.0.encoder.06.rawcounts
+    pin+hm2_5i23.0.encoder.07.count
+    pin+hm2_5i23.0.encoder.07.position
+    pin+hm2_5i23.0.encoder.07.rawcounts
+    pin+joint.3.pos-cmd
+    pin+joint.3.pos-fb
+    pin+joint.4.pos-cmd
+    pin+joint.4.pos-fb
+    pin+hm2_5i23.0.encoder.08.count
+    pin+hm2_5i23.0.encoder.08.input-a
+    pin+hm2_5i23.0.encoder.08.input-b
+    pin+hm2_5i23.0.encoder.08.position
+    pin+hm2_5i23.0.encoder.08.rawcounts
+}
+set ::workmode watchhal
+set ::watchInterval 100
+set ::col1_width 100
+set ::ffmts 
+set ::ifmts 
+set ::alwaysOnTop 0
+set ::autoSaveWatchlist 1

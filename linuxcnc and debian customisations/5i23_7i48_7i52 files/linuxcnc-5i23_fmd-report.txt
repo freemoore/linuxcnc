@@ -1,0 +1,139 @@
+Error report created by /usr/lib/tcltk/linuxcnc/show_errors.tcl:
+
+Print file information:
+RUN_IN_PLACE=no
+LINUXCNC_DIR=
+LINUXCNC_BIN_DIR=/usr/bin
+LINUXCNC_TCL_DIR=/usr/lib/tcltk/linuxcnc
+LINUXCNC_SCRIPT_DIR=
+LINUXCNC_RTLIB_DIR=/usr/lib/linuxcnc/modules
+LINUXCNC_CONFIG_DIR=
+LINUXCNC_LANG_DIR=/usr/lib/tcltk/linuxcnc/msgs
+INIVAR=inivar
+HALCMD=halcmd
+LINUXCNC_EMCSH=/usr/bin/wish8.6
+LINUXCNC - 2.8.4-1-gb7824717b
+Machine configuration directory is '/home/freemoore/linuxcnc/configs/Bridgeport_AJM'
+Machine configuration file is 'Bridgeport_AJM.ini'
+INIFILE=/home/freemoore/linuxcnc/configs/Bridgeport_AJM/Bridgeport_AJM.ini
+VERSION=1.1
+PARAMETER_FILE=linuxcnc.var
+TASK=milltask
+HALUI=halui
+DISPLAY=axis
+COORDINATES=XYZ
+KINEMATICS=trivkins coordinates=XYZ
+Starting LinuxCNC...
+Starting LinuxCNC server program: linuxcncsvr
+Loading Real Time OS, RTAPI, and HAL_LIB modules
+Starting LinuxCNC IO program: io
+Starting HAL User Interface program: halui
+Found file(REL): ./Bridgeport_AJM.hal
+Shutting down and cleaning up LinuxCNC...
+Running HAL shutdown script
+hm2: loading Mesa HostMot2 driver version 0.15
+hm2_pci: loading Mesa AnyIO HostMot2 driver version 0.7
+hm2_pci: discovered 5i23 at 0000:03:02.0
+hm2/hm2_5i23.0: Low Level init 0.15
+hm2: unloading
+Removing HAL_LIB, RTAPI, and Real Time OS modules
+Removing NML shared memory segments
+
+Debug file information:
+Note: Using POSIX realtime
+hm2/hm2_5i23.0: IDROM IOPorts is 3 but MD IOPort NumInstances is 6, inconsistent firmware, aborting driver load
+hm2/hm2_5i23.0: failed to parse Module Descriptor 1
+hm2_5i23.0: board fails HM2 registration
+RTAPI_PCI: Unmapped 65536 bytes at 0x7fee502e1000
+Driver probe function failed!
+hm2_pci: error registering PCI driver
+hm2_pci: rtapi_app_main: Operation not permitted (-1)
+./Bridgeport_AJM.hal:9: waitpid failed /usr/bin/rtapi_app hm2_pci
+./Bridgeport_AJM.hal:9: /usr/bin/rtapi_app exited without becoming ready
+./Bridgeport_AJM.hal:9: insmod for hm2_pci failed, returned -1
+4604
+Stopping realtime threads
+Unloading hal components
+Note: Using POSIX realtime
+
+
+
+-----------------------------------------------------------------------
+Info report created by linuxcnc_info:
+The file:    /tmp/linuxcnc_info.txt
+can be posted to a forum or a web site like:
+     http://pastebin.com
+in order to provide information about the linuxcnc
+system and configuration.
+
+                Date: Thu 23 Nov 09:42:32 GMT 2023
+            UTC Date: Thu 23 Nov 09:42:32 UTC 2023
+        this program: /usr/bin/linuxcnc_info
+              uptime: 09:42:32 up 40 min, 1 user, load average: 0.27, 0.43, 0.45
+     lsb_release -sa: Debian Debian GNU/Linux 10 (buster) 10 buster
+      which linuxcnc: /usr/bin/linuxcnc
+                 pwd: /home/freemoore/linuxcnc/configs/Bridgeport_AJM
+                USER: freemoore
+             LOGNAME: freemoore
+                HOME: /home/freemoore
+              EDITOR: 
+              VISUAL: 
+            LANGUAGE: en_GB:en
+                TERM: dumb
+           COLORTERM: 
+             DISPLAY: :0.0
+             DESKTOP: lightdm-xsession
+        display size: 1680x1050 pixels (444x277 millimeters)
+                PATH: /usr/bin:/home/freemoore/linuxcnc/configs/Bridgeport_AJM/bin:/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+
+uname items:
+         nodename -n: debian
+      kernel-name -s: Linux
+      kernel-vers -v: #1 SMP PREEMPT RT Debian 4.19.289-2 (2023-08-08)
+          machine -m: x86_64
+        processor -p: unknown
+         platform -i: unknown
+      oper system -o: GNU/Linux
+
+/proc items:
+             cmdline: BOOT_IMAGE=/boot/vmlinuz-4.19.0-25-rt-amd64 root=UUID=7fdcd5e8-9645-4d3c-ad34-40fce1365e92 ro initrd=/install/gtk/initrd.gz quiet
+          model name: Intel(R) Core(TM) i5-4590 CPU @ 3.30GHz
+               cores: 4
+             cpu MHz: 3293.093
+             parport: 
+              serial: 0000-0000 : serial
+
+Versions:
+                 gcc: gcc (Debian 8.3.0-6) 8.3.0
+              python: Python 2.7.16
+                 git: git version 2.20.1
+          git commit: NA
+                 tcl: 8.6
+                  tk: 8.6
+               glade: not_in_PATH
+          glade-gtk2: not_in_PATH
+
+linuxcnc_var all:
+
+     LINUXCNCVERSION: 2.8.4-1-gb7824717b
+LINUXCNC_AUX_GLADEVCP: /usr/share/linuxcnc/aux_gladevcp
+LINUXCNC_AUX_EXAMPLES: /usr/share/linuxcnc/aux_examples
+            REALTIME: /etc/init.d/realtime
+                 RTS: uspace
+          HALLIB_DIR: /usr/share/linuxcnc/hallib
+
+dpkg -l '*linuxcnc*':
+Desired=Unknown/Install/Remove/Purge/Hold
+| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
+||/ Name                Version              Architecture Description
++++-===================-====================-============-=====================================================================
+un  linuxcnc            <none>               <none>       (no description available)
+un  linuxcnc-dev        <none>               <none>       (no description available)
+un  linuxcnc-doc        <none>               <none>       (no description available)
+ii  linuxcnc-doc-en     1:2.8.4.1.gb7824717b all          motion controller for CNC machines and robots (English documentation)
+un  linuxcnc-sim        <none>               <none>       (no description available)
+un  linuxcnc-sim-dev    <none>               <none>       (no description available)
+ii  linuxcnc-uspace     1:2.8.4.1.gb7824717b amd64        motion controller for CNC machines and robots
+ii  linuxcnc-uspace-dev 1:2.8.4.1.gb7824717b amd64        PC based motion controller for real-time Linux
+

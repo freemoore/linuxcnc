@@ -1,0 +1,75 @@
+# made by ajm, 08/10/2024 for updating to Linuxcnc 2.9
+# keep all X-axis related hal entries in one place for a tidier hal file
+# AXIS X / JOINT 0
+loadrt 			pid names=pid.x
+addf 			pid.x.do-pid-calcs			servo-thread
+net home-x     					<=  [HMOT](CARD0).7i84.0.0.input-00
+setp   			pid.x.Pgain     [JOINT_0]P
+setp   			pid.x.Igain     [JOINT_0]I
+setp   			pid.x.Dgain     [JOINT_0]D
+setp   			pid.x.bias      [JOINT_0]BIAS
+setp   			pid.x.FF0       [JOINT_0]FF0
+setp   			pid.x.FF1       [JOINT_0]FF1
+setp   			pid.x.FF2       [JOINT_0]FF2
+setp   			pid.x.deadband  [JOINT_0]DEADBAND
+setp   			pid.x.maxoutput [JOINT_0]MAX_OUTPUT
+setp   			pid.x.error-previous-target true
+net 			x-index-enable  =>  pid.x.index-enable
+net 			x-enable        =>  pid.x.enable
+net 			x-pos-cmd       =>  pid.x.command
+net 			x-pos-fb        =>  pid.x.feedback
+net 			x-output        <=  pid.x.output
+# ---PWM Generator signals/setup---
+setp   			[HMOT](CARD0).pwmgen.00.output-type 2
+setp   			[HMOT](CARD0).pwmgen.00.scale  [JOINT_0]OUTPUT_SCALE
+net x-output	[HMOT](CARD0).pwmgen.00.value
+net x-pos-cmd   joint.0.motor-pos-cmd
+net x-enable    joint.0.amp-enable-out
+net x-enable    [HMOT](CARD0).pwmgen.00.enable
+# ---Encoder feedback signals/setup---
+setp    		[HMOT](CARD0).encoder.00.counter-mode 0
+setp    		[HMOT](CARD0).encoder.00.filter 1
+setp    		[HMOT](CARD0).encoder.00.index-invert 0
+setp    		[HMOT](CARD0).encoder.00.index-mask 0
+setp    		[HMOT](CARD0).encoder.00.index-mask-invert 0
+setp    		[HMOT](CARD0).encoder.00.scale  [JOINT_0]ENCODER_SCALE
+net x-pos-fb               <=  	[HMOT](CARD0).encoder.00.position
+net x-vel-fb               <=  	[HMOT](CARD0).encoder.00.velocity
+net x-pos-fb               =>  	joint.0.motor-pos-fb
+net x-index-enable				joint.0.index-enable  <=>  [HMOT](CARD0).encoder.00.index-enable
+net x-pos-rawcounts        <=  	[HMOT](CARD0).encoder.00.rawcounts
+# ---setup home / limit switch signals---
+net home-x					=>  joint.0.home-sw-in
+net all-limits     			=>  joint.0.neg-lim-sw-in
+net all-limits	   			=>  joint.0.pos-lim-sw-in
+#  ---HALUI signals---
+net x-is-homed    			halui.joint.0.is-homed
+
+####### stuff from xyzbc-trt_cmds.hal
+loadrt pid names=pid.x
+loadrt mux2 names=J0_mux
+
+net J0:enable joint.0.amp-enable-out => pid.x.enable
+net J0:on-pos pid.x.output => J0_mux.in1
+net J0:pos-cmd joint.0.motor-pos-cmd => pid.x.command
+
+# parameter values
+
+setp pid.x.do-pid-calcs.tmax      	0
+setp J0_switch.tmax                 0
+
+########removing what i think are simulated components that are unneccesary due to having the real ones
+#setp J0_vel.tmax                    0
+#setp J0_accel.tmax                  0
+#setp J0_mux.tmax                    0
+#net J0:pos-fb J0_mux.out => J0_mux.in0 J0_switch.cur-pos J0_vel.in joint.0.motor-pos-fb
+#net J0:vel J0_vel.out => J0_accel.in
+#net J0:homesw J0_switch.home-sw => joint.0.home-sw-in
+#loadrt ddt names=J0_vel,J0_accel
+#net J0:acc J0_accel.out
+
+addf J0_mux servo-thread
+
+#addf J0_vel servo-thread
+#addf J0_accel servo-thread
+#addf J0_switch servo-thread

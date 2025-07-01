@@ -1,35 +1,36 @@
-T1   P1   D+2.000000 Z-46.070176 ;2mm tialn coated twist drill 
-T22  P22  D+1.400000 Z-156.181419 ;m2 thread mill 
-T3   P3   D+5.000000 Z-21.866000 ;5mm tap drill sample tool 
-T4   P4   D+16.000000 Z+6.899870 ;16mm 4 flute carbide endmill 
-T23  P23  D+12.000000 Z-159.660881 ;1.5mm tialn coated twist drill 
-T6   P6   D+8.000000 Z-142.642000 ;8mm tialn coated twist drill 
-T7   P7   D+3.000000 Z-28.101807 ;3mm 3 flute carbide endmill 
-T8   P8   D+8.000000 Z-20.606200 ;6mm tialn coated twist drill 
-T15  P15  D+6.000000 Z-151.641166 ;6mm 1 flute carbide 
-T10  P10  D+4.500000 Z-11.372100 ;4.5mm tialn coated twist drill 
-T11  P11  D+10.000000 Z-2.666630 ;10mm single insert milling cutter 
-T12  P12  D+2.000000 Z+22.157100 ;5mm tialn coated twist drill 
-T13  P13  D+4.800000 Z-146.863000 ;m6 x1.0 thread mill 
-T14  P14  D+3.000000 ;3mm 2 flute carbide endmill 
-T5   P5   D+3.000000 Z-24.952165 ;3mm tialn coated twist drill 
-T16  P16  D+2.300000 Z-36.345200 ;m3 thread mill 
-T17  P17  D+2.500000 Z-39.360200 ;2.4mm twist drill 
-T2   P2   D+4.000000 Z-51.113500 ;4mm small dia centre drill 
-T21  P21  D+12.000000 Z+63.488200 ;12mm tin coated twist drill 
-T9   P9   D+3.400000 Z-10.262146 ;3.4mm hss twist drill 
-T19  P19  D+8.000000 Z-48.954700 ;8mm 4 flute hss endmill 
-T18  P18  D+3.200000 Z-158.816917 ;3.2mm spot/centre drill 
-T25  P25  D+10.200000 Z-124.721000 ;10.2mm cobalt twist drill for m12 
-T29  P29  D+9.400000 Z-136.784000 ;9.4mm m12 thread mill 
-T20  P20  D+3.000000 Z-152.440727 ;m4 thread mill 
-T30  P30  D+6.000000 Z-17.925900 ;6mm reamer 
-T28  P28  D+2.000000 Z-150.583274 ;2mm false diameter chamfer mill 
-T31  P31  D+16.000000 Z-16.283400 ;16mm 2 flute carbide endmill 
-T32  P32  D+12.000000 Z+18.438700 ;12mm 1 flute carbide insert endmill 
-T35  P35  D+0.360000 Z-144.606000 ;15deg 0.36mm  pcb v-bit 
-T33  P33  D+6.000000 Z-177.869000 ;6mm 3 flute carbide endmill 
-T34  P34  D+0.500000 Z-27.824700 ;0.5mm carbide micro endmill 
-T24  P24  D+6.000000 Z-29.999400 ;m8 thread mill 
-T36  P36  D+3.400000 Z-153.102000 ;integrated 3.4drill and countersink 
-T37  P37  D+75.000000 ;hoffmann brush max 2400rpm 
+T1   P1   D+2.000000 Z-23.398590 ;2mm tialn coated twist drill
+T22  P22  D+1.400000 Z-156.181419 ;m2 thread mill
+T3   P3   D+5.000000 Z-30.208282 ;5mm tap drill sample tool
+T4   P4   D+16.000000 Z+6.899870 ;16mm 4 flute carbide endmill
+T23  P23  D+12.000000 Z-4.401550 ;1.5mm tialn coated twist drill
+T6   P6   D+8.000000 Z-142.642000 ;8mm tialn coated twist drill
+T7   P7   D+3.000000 Z-26.616058 ;3mm 3 flute carbide endmill
+T8   P8   D+8.000000 Z+1.351471 ;6mm tialn coated twist drill
+T15  P15  D+6.000000 Z-27.955322 ;6mm 1 flute carbide
+T10  P10  D+4.500000 Z-11.372100 ;4.5mm tialn coated twist drill
+T11  P11  D+10.000000 Z+7.659149 ;10mm single insert milling cutter
+T12  P12  D+2.000000 Z+22.157100 ;5mm tialn coated twist drill
+T13  P13  D+4.800000 Z-146.863000 ;m6 x1.0 thread mill
+T14  P14  D+3.000000 ;3mm 2 flute carbide endmill
+T5   P5   D+3.000000 Z-1.744232 ;3mm tialn coated twist drill
+T16  P16  D+2.300000 Z-12.851715 ;m3 thread mill
+T17  P17  D+2.500000 Z-39.360200 ;2.4mm twist drill
+T2   P2   D+4.000000 Z-64.574052 ;4mm small dia centre drill
+T21  P21  D+12.000000 Z-144.401017 ;12mm tin coated twist drill
+T9   P9   D+3.400000 Z-10.262146 ;3.4mm hss twist drill
+T19  P19  D+8.000000 Z-48.954700 ;8mm 4 flute hss endmill
+T18  P18  D+3.200000 Z-28.205566 ;3.2mm spot/centre drill
+T25  P25  D+10.200000 Z+44.282684 ;10.2mm cobalt twist drill for m12
+T29  P29  D+9.400000 Z-136.784000 ;9.4mm m12 thread mill
+T20  P20  D+3.000000 Z-152.440727 ;m4 thread mill
+T30  P30  D+6.000000 Z-17.925900 ;6mm reamer
+T28  P28  D+2.000000 Z-33.800659 ;2mm false diameter chamfer mill
+T31  P31  D+16.000000 Z+35.890350 ;16mm 2 flute carbide endmill
+T32  P32  D+12.000000 Z+18.438700 ;12mm 1 flute carbide insert endmill
+T35  P35  D+0.360000 Z-144.606000 ;15deg 0.36mm  pcb v-bit
+T33  P33  D+6.000000 Z-29.609833 ;6mm 3 flute carbide endmill
+T34  P34  D+0.500000 Z-34.439697 ;0.5mm carbide micro endmill
+T24  P24  D+6.000000 Z-29.999400 ;m8 thread mill
+T36  P36  D+3.400000 Z-153.102000 ;integrated 3.4drill and countersink
+T37  P37  D+75.000000 ;hoffmann brush max 2400rpm
+T50  P50  D+3.040000 Z-20.181580 ;m5 thread mill

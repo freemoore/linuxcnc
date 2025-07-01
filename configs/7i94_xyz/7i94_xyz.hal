@@ -1,0 +1,107 @@
+# This file was created with the Mesa Configuration Tool on Feb 04 2024 18:30:57
+# If you make changes to this file DO NOT run the configuration tool again!
+# This file will be replaced with a new file if you do!
+
+# kinematics
+loadrt [KINS](KINEMATICS)
+
+# motion controller
+loadrt [EMCMOT](EMCMOT) servo_period_nsec=[EMCMOT](SERVO_PERIOD) num_joints=[KINS](JOINTS)
+
+# hostmot2 driver
+loadrt hostmot2
+loadrt [HM2](DRIVER) board_ip=[HM2](ADDRESS) config="sserial_port_0=00000000"
+
+#setp hm2_[MESA](BOARD).0.watchdog.timeout_ns 5000000
+
+loadrt pid names=pid.x,pid.y,pid.z,pid.s
+
+# THREADS
+addf hm2_[MESA](BOARD).0.read servo-thread
+addf motion-command-handler servo-thread
+addf motion-controller servo-thread
+addf pid.x.do-pid-calcs servo-thread
+addf pid.y.do-pid-calcs servo-thread
+addf pid.z.do-pid-calcs servo-thread
+addf pid.s.do-pid-calcs servo-thread
+addf hm2_[MESA](BOARD).0.write servo-thread
+
+# amp enable
+net motion-enable <= motion.motion-enabled
+#---------------
+#copyingfromjustinbieber
+#setp   pid.x.Pgain     [JOINT_0]P
+#setp   pid.x.Igain     [JOINT_0]I
+#setp   pid.x.Dgain     [JOINT_0]D
+#setp   pid.x.bias      [JOINT_0]BIAS
+#setp   pid.x.FF0       [JOINT_0]FF0
+#setp   pid.x.FF1       [JOINT_0]FF1
+#setp   pid.x.FF2       [JOINT_0]FF2
+#setp   pid.x.deadband  [JOINT_0]DEADBAND
+#setp   pid.x.maxoutput [JOINT_0]MAX_OUTPUT
+#setp   pid.x.error-previous-target true#
+#
+#net x-index-enable  <=> pid.x.index-enable
+#net x-enable        =>  pid.x.enable
+#net x-pos-cmd       =>  pid.x.command
+##net x-vel-cmd       =>  pid.x.command-deriv
+#net x-pos-fb        =>  pid.x.feedback
+#net x-output        =>  pid.x.output
+
+#setp lin2rev.0.scale 	-13.6384076979 #zerodur calibration 20191018
+                        
+#net x-limit hm2_[MESA](BOARD).0.7i94.0.0.input-00
+
+# lines commented out for 7i84 testing to rescue bridgeport
+#net xposcmd joint.0.motor-pos-cmd  => hm2_[MESA](BOARD).0.stbl.0.0.pos_cmd
+#net xvelcmd joint.0.vel-cmd        => hm2_[MESA](BOARD).0.stbl.0.0.vel_cmd
+#net xposfb  joint.0.motor-pos-fb  <=  hm2_[MESA](BOARD).0.stbl.0.0.pos_fb
+#net xenable joint.0.amp-enable-out => hm2_[MESA](BOARD).0.stbl.0.0.enable
+##net xfault  joint.0.amp-fault-in  <=  hm2_[MESA](BOARD).0.stbl.0.0.fault
+#net xindex  joint.0.index-enable  <=> hm2_[MESA](BOARD).0.stbl.0.0.index_enable
+
+#---------------
+# Spindle PID Setup
+#setp pid.s.Pgain [SPINDLE_0](P)
+#setp pid.s.Igain [SPINDLE_0](I)
+#setp pid.s.Dgain [SPINDLE_0](D)
+#setp pid.s.bias [SPINDLE_0](BIAS)
+#setp pid.s.FF0 [SPINDLE_0](FF0)
+#setp pid.s.FF1 [SPINDLE_0](FF1)
+#setp pid.s.FF2 [SPINDLE_0](FF2)
+#setp pid.s.deadband [SPINDLE_0](DEADBAND)
+#setp pid.s.maxoutput [SPINDLE_0](MAX_OUTPUT)
+#setp pid.s.error-previous-target true
+
+# Spindle PWM Setup
+#setp hm2_[MESA](BOARD).0.pwmgen.00.output-type [SPINDLE_0](PWM_TYPE)
+#setp hm2_[MESA](BOARD).0.pwmgen.pwm_frequency [SPINDLE_0](PWM_FREQUENCY)
+#setp hm2_[MESA](BOARD).0.pwmgen.00.scale [SPINDLE_0]MAX_OUTPUT
+
+# Spindle Enable
+#net spindle-on <= spindle.0.on
+#net spindle-on => pid.s.enable
+#net spindle-on => hm2_[MESA](BOARD).0.pwmgen.00.enable
+
+# Spindle Connections
+#net spindle-vel-cmd <= spindle.0.speed-out-abs
+#net spindle-vel-cmd => pid.s.command
+#net spindle-pid-out <= pid.s.output
+#net spindle-pid-out => hm2_[MESA](BOARD).0.pwmgen.00.value
+
+# Spindle Feedback
+setp spindle.0.at-speed true
+
+# Standard I/O Block - EStop, Etc
+# create a signal for the estop loopback
+net estop-loopback iocontrol.0.emc-enable-in <= iocontrol.0.user-enable-out
+
+#  Manual Tool Change Dialog
+loadusr -W hal_manualtoolchange
+net tool-change-request    =>  hal_manualtoolchange.change
+net tool-change-confirmed  <=  hal_manualtoolchange.changed
+net tool-number            =>  hal_manualtoolchange.number
+
+# create signals for tool loading loopback
+net tool-prep-loop iocontrol.0.tool-prepare => iocontrol.0.tool-prepared
+net tool-change-loop iocontrol.0.tool-change => iocontrol.0.tool-changed

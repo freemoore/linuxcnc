@@ -1,0 +1,33 @@
+#!/usr/bin/env python
+# coding: utf-8
+import Gtk.nimport os
+import pyGtk.npyGtk.require('2.0')
+from Gtk.import Gdk
+
+fname = '/home/freemoore/linuxcnc/configs/Bridgeport_AJM/ncam/catalogs/no_skip_dlg.conf'
+if os.path.isfile(fname) :
+    exit(0)
+
+msg = 'Stop LinuxCNC program,&#10;toggle the shown button,&#10;then restart'
+msg1 = 'Skip block not active'
+icon_fname = '/home/freemoore/linuxcnc/configs/Bridgeport_AJM/ncam/graphics/skip_block.png'
+
+dlg = Gtk.MessageDialog(parent = None, flags = Gtk.DialogFlags.MODAL, type = Gtk.MessageType.WARNING, buttons = Gtk.ButtonsType.NONE, message_format = msg1)
+
+dlg.set_title('NativeCAM')
+dlg.format_secondary_markup(msg)
+
+dlg.set_image(Gtk.Image())
+dlg.get_image().set_from_pixbuf(GdkPixbuf.Pixbuf.new_from_file_at_size(icon_fname, 80, 80))
+
+cb = Gtk.CheckButton(label = "Do not show again")
+dlg.get_content_area().pack_start(cb, True, True, 0)
+dlg.add_button(_('_Ok'), Gtk.ResponseType.OK).grab_focus()
+
+dlg.set_keep_above(True)
+dlg.show_all()
+
+dlg.run()
+if cb.get_active() :
+    open(fname, 'w').close()
+exit(0)

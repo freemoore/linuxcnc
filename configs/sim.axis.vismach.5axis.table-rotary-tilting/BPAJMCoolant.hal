@@ -1,0 +1,59 @@
+# made by ajm, 08/10/2024 for updating to Linuxcnc 2.9
+# keep all coolant related hal entries in one place
+# for a tidier hal file
+
+loadrt not names=coolant-NOT-req
+loadrt and2 names=coolant-req-AND-present
+loadrt or2 names=coolant-on-OR-not-req
+loadrt conv_bit_float names=coolant-logic-to-float
+loadrt oneshot names=coolant-oneshot
+
+addf coolant-NOT-req servo-thread
+addf coolant-req-AND-present servo-thread
+addf coolant-on-OR-not-req servo-thread
+addf coolant-oneshot servo-thread
+addf coolant-logic-to-float servo-thread
+
+setp coolant-oneshot.width 1
+setp coolant-oneshot.retriggerable true
+
+net coolant-flood  			=>		[HMOT](CARD0).7i84.0.0.output-01
+net coolant-mist  			=>		[HMOT](CARD0).7i84.0.0.output-02
+net coolant-sensor-signal 	=>		[HMOT](CARD0).7i84.0.0.input-23
+
+#  ---link coolant signals to ui---
+net coolant-mist      <=  iocontrol.0.coolant-mist
+net coolant-flood     <=  iocontrol.0.coolant-flood
+
+# intermittent coolant sensor input to stabilising oneshot:
+net coolant-sensor-signal 				coolant-oneshot.in
+
+# coolant not requested? then it is off, so not gate out = true
+net coolant-flood 						coolant-NOT-req.in
+net coolant-off 						coolant-NOT-req.out
+
+# coolant is requested? send TRUE to req-AND-present input 1
+net coolant-flood 						coolant-req-AND-present.in0
+
+# coolant is flowing? oneshot out shows true
+net coolant-is-flowing					coolant-oneshot.out
+
+# oneshot indicates coolant is present = send true to req-AND-present input 2
+net coolant-is-flowing 					coolant-req-AND-present.in1
+
+# is coolant both requested and flowing? if so, AND gate out is True
+net coolant-requested-and-flowing 	coolant-req-AND-present.out
+
+# coolant is requested and on, OR it's off
+net coolant-off 						coolant-on-OR-not-req.in0
+net coolant-requested-and-flowing		coolant-on-OR-not-req.in1
+
+# is coolant either not requested, OR requested AND flowing?
+net coolant-is-as-requested-bit			coolant-on-OR-not-req.out
+
+# convert the signal to the float required by motion.adaptive-feed
+net coolant-is-as-requested-bit 		coolant-logic-to-float.in
+net coolant-is-as-requested-float 		coolant-logic-to-float.out
+
+# send converted signal as 100pc to motion.adaptive-feed 
+net coolant-is-as-requested-float motion.adaptive-feed

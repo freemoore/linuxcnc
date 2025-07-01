@@ -1,0 +1,92 @@
+# made by ajm, 11/10/2024 for trying 5 axis
+
+loadrt xyzbc-trt-kins sparm=identityfirst 
+loadrt [EMCMOT]EMCMOT servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[KINS]JOINTS num_spindles=[TRAJ]SPINDLES
+debug 5
+loadrt hostmot2
+loadrt hm2_pci config="firmware=hm2/5i23/5i23_fmd.bit num_encoders=14 num_pwmgens=7 num_stepgens=2 sserial_port_0=1" 
+
+setp    [HMOT](CARD0).pwmgen.pwm_frequency 24000
+setp    [HMOT](CARD0).pwmgen.pdm_frequency 6000
+setp    [HMOT](CARD0).watchdog.timeout_ns 10000000
+
+addf [HMOT](CARD0).read			servo-thread
+addf [HMOT](CARD0).write		servo-thread
+addf motion-command-handler		servo-thread
+addf motion-controller			servo-thread
+
+# set system-enable pin true 
+setp [HMOT](CARD0).7i84.0.0.output-00 true
+setp [HMOT](CARD0).gpio.024.is_output true
+setp [HMOT](CARD0).gpio.024.out false
+
+# All limit switch signals 
+net axes-limit-in   					<=  [HMOT](CARD0).7i84.0.0.input-06-not
+net toolsetter-limit-in     			<=	[HMOT](CARD0).7i84.0.0.input-10-not
+net axes-limit-in				 		=>	toolsetter-or-axis-limit-or.in0
+net toolsetter-limit-in 				=>	toolsetter-or-axis-limit-or.in1
+net all-limits							<=	toolsetter-or-axis-limit-or.out
+
+# Estop signal
+net estop-ext     <=  [HMOT](CARD0).7i84.0.0.input-04
+
+#  ---HALUI signals---
+net machine-is-on         	halui.machine.is-on
+net jog-speed             	halui.axis.jog-speed
+net MDI-mode              	halui.mode.is-mdi
+
+#  ---motion control signals---
+net in-position               <=  motion.in-position
+net machine-is-enabled        <=  motion.motion-enabled
+
+#  ---estop signals---
+net estop-out     <=  iocontrol.0.user-enable-out
+net estop-ext     =>  iocontrol.0.emc-enable-in
+
+# next line means that when motion.motion-enabled pin is TRUE, all the muxes send in1 to out, otherwise in2 goes to out.
+#net sample:enable motion.motion-enabled => J0_mux.sel J1_mux.sel J2_mux.sel J3_mux.sel J4_mux.sel
+setp motion-command-handler.tmax    0
+setp motion-controller.tmax         0
+setp servo-thread.tmax              0
+
+
+
+
+#loadrt sim_home_switch names=J0_switch,J1_switch,J2_switch,J3_switch,J4_switch 
+#net tool:change iocontrol.0.tool-change => hal_manualtoolchange.change
+#net tool:changed hal_manualtoolchange.changed => iocontrol.0.tool-changed
+#net tool:prep-loop iocontrol.0.tool-prepare => iocontrol.0.tool-prepared
+#net tool:prep-number iocontrol.0.tool-prep-number => hal_manualtoolchange.number
+# components
+#preloaded module: loadrt tpmod 
+#preloaded module: loadrt homemod 
+# Wed Oct 09 18:58:29 BST 2024
+#
+# This file:    ./xyzbc-trt_cmds.hal
+# Created by:   /usr/share/linuxcnc/hallib/basic_sim.tcl
+# With options: 
+# From inifile: /home/freemoore/linuxcnc/configs/sim.axis.vismach.5axis.table-rotary-tilting/xyzbc-trt.ini
+# Halfiles:     LIB:basic_sim.tcl
+#
+# This file contains the hal commands produced by basic_sim.tcl
+# (and any hal commands executed prior to its execution).
+# ------------------------------------------------------------------
+# To use ./xyzbc-trt_cmds.hal in the original inifile (or a copy of it),
+# edit to change:
+#     [HAL]
+#     HALFILE = LIB:basic_sim.tcl parameters
+# to:
+#     [HAL]
+#     HALFILE = ./xyzbc-trt_cmds.hal
+#
+# Notes:
+#  1) Inifile Variables substitutions specified in the inifile
+#     and interpreted by halcmd are automatically substituted
+#     in the created halfile (./xyzbc-trt_cmds.hal).
+#  2) Input pins connected to a signal with no writer are
+#     not included in the setp listings herein so must be added
+#     manually
+#
+
+# user space components
+#loadusr -W hal_manualtoolchange

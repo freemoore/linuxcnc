@@ -1,0 +1,15 @@
+(ngcgui: FEATURE 241106:14.31.06)
+(ngcgui: files: < ./remap_subs/centering.ngc >)
+(ngcgui: feature line added) #<_feature:> = 0
+(ngcgui: remaining_features line added) #<_remaining_features:> = 0
+(ngcgui: call subroutine file: ./remap_subs/centering.ngc)
+(ngcgui: positional parameters:)
+(         #1 =       xstart =         -150)
+(         #2 =       ystart =          -50)
+(         #3 =         xlen =            5)
+(         #4 =         ylen =            5)
+(         #5 =       zfinal =           60)
+(         #6 =            n =           12)
+(         #7 =            f =         1000)
+o<centering> call [-150][-50][5][5][60][12][1000]
+(ngcgui: m2 line added) m2 (g54 activated)

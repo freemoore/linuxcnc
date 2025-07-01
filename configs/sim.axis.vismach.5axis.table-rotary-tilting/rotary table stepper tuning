@@ -1,0 +1,21 @@
+encoder goes 2400 pulses per stepper revolution
+commanding 90 degrees gets about 150deg/170 deg
+
+the wheel has 72 teeth
+it moves 1 tooth per stepper rev
+360/72 is 5
+
+so 1 rev goes 5 degrees
+2400 pulses per 5 degrees
+480 pulses per degree then?
+yes!
+
+so steps per degree...
+step scale just now is 200
+but driver is set to on off off, or 800 
+(unless it's off on on, which is 400)
+
+so 800 steps per 5 degrees
+gives 160 steps/deg
+but 220 steps/deg seems to be working so it's that for now. 
+

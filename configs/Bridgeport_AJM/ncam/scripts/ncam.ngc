@@ -80,7 +80,7 @@ G21 G40 G90 G94 G97 G64 P0.001 M52
 
 #<wp_width>         = [50.800000]
 #<wp_length>        = [101.600000]
-#<wp_depth>         = [25.400000]
+#<wp_depth>         = [20.000000]
 #<wp_wall>          = [0.000000]
 #<wp_corner_radius> = [0.000000]
 #<wp_inside_width>  = [#<wp_width> - #<wp_wall> * 2]
@@ -89,11 +89,11 @@ G21 G40 G90 G94 G97 G64 P0.001 M52
 #<wp_x> = 0.000000
 #<wp_y> = 0.000000
 
-o<select> CALL [31] [0] [0.000000] [0.000000 - #<wp_length> / 2] [0.000000 - #<wp_length>]
+o<select> CALL [31] [1] [0.000000] [0.000000 - #<wp_length> / 2] [0.000000 - #<wp_length>]
 #<wp_left>  = #31
 #<wp_right> = [#<wp_left> + #<wp_length>]
 
-o<select> CALL [31] [2] [0.000000 - #<wp_width>] [0.000000 - #<wp_width> / 2] [0.000000]
+o<select> CALL [31] [1] [0.000000 - #<wp_width>] [0.000000 - #<wp_width> / 2] [0.000000]
 #<wp_front> = #31
 #<wp_rear>  = [#<wp_front> + #<wp_width>]
 
@@ -120,34 +120,128 @@ o<select> CALL [31] [0] [0.000000] [0.000000 + #<wp_depth> / 2] [0.000000 + #<wp
 #<_spindle_dir>      =  3
 #<_cooling_mode>     =  8
 
-#<_feed_normal>      =  250.000000
+#<_feed_normal>      =  254.000000
 #<_rpm_normal>       =  1000
-#<_feed_vertical>    =  200.000000
+#<_feed_vertical>    =  203.200000
 #<_penetration_mode> =  0
-#<_depth_step>       =  -3.000000
+#<_depth_step>       =  -3.175000
 #<_ramp_down_ratio>  = [25 / 100]
 #<_tool_usage>       =  0
-#<_stepover_min>     =  0.400000
+#<_stepover_min>     =  0.381000
 #<_stepover_normal>  = [60 / 100]
 #<_tool_dynamic_dia> =  0.000000
 
-o<emill_chng_001_tlc> if [[3 EQ 3] AND [0 GT 0]]
-	M61 Q0
+o<emill_chng_001_tlc> if [[3 EQ 3] AND [15 GT 0]]
+	M61 Q15
 o<emill_chng_001_tlc> endif
 
-o<emill_chng_001_act> if [1 AND [0 NE #5400]]
+o<emill_chng_001_act> if [1 AND [15 NE #5400]]
 	M9
-	T0 M6
+	T15 M6
 o<emill_chng_001_act> endif
 
 o<emill_chng_001_lc> if [[3 EQ 1] OR [3 EQ 2]]
-	G43 H0
+	G43 H15
 o<emill_chng_001_lc> endif
 
 o<emill_chng_001_01> if [[#<_spindle_dir> GT 0] AND #<_spindle_all_time>]
 	o<set_feed_rate_and_speed> CALL [1]
 o<emill_chng_001_01> endif
 (end End Mill Change)
+
+
+(begin Radial Array)
+(radial array authors : Nick Drobchenko and Fernand Veilleux)
+
+o<circ-array_001_active> if [1]
+	(calc radius)
+	o<circ-array_001_option> if [1 EQ 0] (distance is radius)
+		#<radius10> = [13.000000]
+	o<circ-array_001_option> elseif [1 EQ 1] (distance is diameter)
+		#<radius10> = [13.000000 / 2]
+	o<circ-array_001_option> else (distance is between groups of items)
+		o<circ-array_001_optiona> if [[360.000000 MOD 360] EQ 0]
+			#<radius10> = [13.000000 / 2 / SIN[180 / 2]]
+		o<circ-array_001_optiona> else
+			#<radius10> = [13.000000 / SIN[360.000000 / 2]]
+		o<circ-array_001_optiona> endif
+	o<circ-array_001_option> endif
+
+	o<circ-array_001_fill> if [[[360.000000 MOD 360] NE 0] AND [2 GT 1]]
+		#<fill10> = [360.000000 * 2 / [2 - 1]]
+	o<circ-array_001_fill> else
+		#<fill10> = 360.000000
+	o<circ-array_001_fill> endif
+
+	(get and save current coords system offsets)
+	#<old_coord_system10> = [#<_coord_system> / 10]
+	o<get_offsets> CALL
+	#<offset_x10> = #<_offsets_x>
+	#<offset_y10> = #<_offsets_y>
+	#<offset_z10> = #<_offsets_z>
+	#<offset_r10> = #<_offsets_r>
+
+	(calc new offsets)
+	#<cx10>    = [#<_offsets_x> + 0.000000]
+	#<cy10>    = [#<_offsets_y> + 0.000000]
+	#<angle10> = [#<_offsets_r> + 0.000000]
+
+	(change coords system)
+	G#<_off_rot_coord_system>
+
+	o<circ-array_001_loop> repeat [2]
+		(get rotated coordinates then apply to new coords)
+		o<rotate_xy> CALL [#<cx10> + #<radius10>] [#<cy10>] [#<cx10>] [#<cy10>] [#<angle10>]
+
+		o<circ-array_001_change_coords> if [#<_has_z_axis>]
+			o<circ-array_001_rotate_choice> if [0] (enable rotations of items)
+				G10 L2 P#5220 X#<_rotated_x> Y#<_rotated_y> Z#<offset_z10> R#<angle10>
+			o<circ-array_001_rotate_choice> else
+				G10 L2 P#5220 X#<_rotated_x> Y#<_rotated_y> Z#<offset_z10> R#<offset_r10>
+			o<circ-array_001_rotate_choice> endif
+		o<circ-array_001_change_coords> else
+			o<circ-array_001_rotate_choice0> if [0] (enable rotations of items)
+				G10 L2 P#5220 X#<_rotated_x> Y#<_rotated_y> R#<angle10>
+			o<circ-array_001_rotate_choice0> else
+				G10 L2 P#5220 X#<_rotated_x> Y#<_rotated_y> R#<offset_r10>
+			o<circ-array_001_rotate_choice0> endif
+		o<circ-array_001_change_coords> endif
+
+		(begin Radial Array items)
+
+
+		(begin Circle by Center)
+		(circle from center author : Fernand Veilleux)
+		
+		o<circle_001_active> if [1] (if active)
+			o<select> CALL [31] [0] [15.000000] [#<surface>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+			o<select> CALL [32] [0] [-6.300000] [#<bottom_through>] [#<bottom>] [#<surface> - #<wp_depth> / 2] [#<surface> - #<wp_depth> / 4] [#<bottom> + #<wp_depth> / 4] [0]
+		
+			o<select> CALL [33] [1] [8.500000 / 2] [0] [-8.500000 / 2]
+			o<select> CALL [34] [1] [-8.500000 / 2] [0] [8.500000 / 2]
+		
+			o<circle> CALL [0.000000 + #33] [0.000000 + #34] [8.500000] [0.000000] [0.000000] [0] [3] [#31] [#32] [1] [0] [1.016000] [1]
+		
+		o<circle_001_active> endif
+		(end Circle by Center)
+
+
+		(end Radial Array items)
+
+		(angular increment)
+		#<angle10>  = [#<angle10> + #<fill10> / 2]
+	o<circ-array_001_loop> endrepeat
+
+	(restore coordinate system)
+	G#<old_coord_system10>
+	o<circ-array_001_restore_coords> if [#<_has_z_axis>]
+		G10 L2 P#5220 X#<offset_x10> Y#<offset_y10> Z#<offset_z10> R#<offset_r10>
+	o<circ-array_001_restore_coords> else
+		G10 L2 P#5220 X#<offset_x10> Y#<offset_y10> R#<offset_r10>
+	o<circ-array_001_restore_coords> endif
+
+o<circ-array_001_active> endif
+(end Radial Array)
 
  
 M2

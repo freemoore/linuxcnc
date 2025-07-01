@@ -82,15 +82,8 @@ setp    [HMOT](CARD0).encoder.05.scale 0.25
 # mpg signal to hardware pins 
 net mpg-counts-signal   <=  [HMOT](CARD0).encoder.05.count
 
-
-# --- JOG-Y-POS --- disconnect, faulty joystick switch never turns off
-#net jog-y-pos     <=  [HMOT](CARD0).7i84.0.0.input-08
-
 # --- JOG-Y-NEG ---
 net jog-y-neg     <=  [HMOT](CARD0).7i84.0.0.input-09
-
-
-
 
 # --- JOG-X-NEG ---
 net jog-x-neg     <=  [HMOT](CARD0).7i84.0.0.input-11

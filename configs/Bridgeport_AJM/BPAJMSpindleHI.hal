@@ -19,8 +19,7 @@ setp spindle-near-speed.scale 2
 ### spindle 1: High-speed spindle connections
 net spindle-cw  			=>		[HMOT](CARD0).7i84.0.0.output-11
 #net spindle-ccw  			=>		[HMOT](CARD0).7i84.0.0.output-09 
-# --- HIGH SPEED spindle0 0-10V OUTPUT ---
-net hss-10v-in 				<=		[HMOT](CARD0).7i84.0.0.analogin3
+
 
 
 setp   pid.s1.Pgain     [SPINDLE_1]P
@@ -65,11 +64,12 @@ net spindle-index-enable      <=>  spindle.0.index-enable
 #net vfd-has-faulted		      =>  spindle.0.amp-fault-in
 
 # ---Setup spindle at speed signals---
-
+#same signal to both to force it to work temporarily
 net spindle-vel-cmd-rpm-abs spindle-near-speed.in1
-net spindle-fb-rpm-abs-filtered spindle-near-speed.in2
+net spindle-vel-cmd-rpm-abs spindle-near-speed.in2
+#net spindle-fb-rpm-abs-filtered spindle-near-speed.in2
 net spindle-ready <= spindle-near-speed.out => spindle.0.at-speed 
-
+#setp spindle.0.at-speed 1
 #### set halui connections
 
 net spindle-manual-cw     halui.spindle.0.forward
@@ -93,7 +93,8 @@ net spindle-fb-rpm-abs-filtered  lowpass.spindle.out
 ###speed sensing
 
 # HSS speed sensing and scaling to RPM
-
+# --- HIGH SPEED spindle0 0-10V OUTPUT ---
+net hss-10v-in 				<=		[HMOT](CARD0).7i84.0.0.analogin3
 net hss-10v-in =>	scale.spindle.in 
 setp scale.spindle.gain 1806.3754
 net spindle-fb-rpm-abs-unfiltered => scale.spindle.out
