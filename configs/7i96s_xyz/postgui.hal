@@ -1,3 +1,46 @@
 # Put HAL commands in this file that you want to run after the GUI loads
 #ajm maybe we'll put toolchange stuff in here
 #5mm, 1mm, 0.5mm, 0.1mm, 0.05mm, 0.01mm, 0.005mm, 0.001mm
+
+
+loadrt and2 names=stepfaultand,tapersafetyand,spindleoffand
+loadrt timedelay names=stepfaulttimedelay,spindleoffdelay
+loadrt not names=negatespindleenable
+
+
+addf stepfaultand servo-thread
+addf tapersafetyand servo-thread
+addf spindleoffand servo-thread
+
+addf stepfaulttimedelay servo-thread
+addf spindleoffdelay servo-thread
+addf negatespindleenable servo-thread
+
+setp stepfaulttimedelay.on-delay 1
+setp stepfaulttimedelay.off-delay 1
+
+setp spindleoffdelay.on-delay 4
+setp spindleoffdelay.off-delay 0.1
+
+net stepdrive-fault-indicated => hm2_7i96s.0.inm.00.input-08 stepfaultand.in0
+net machine-is-enabled stepfaultand.in1
+net start-servofault-check stepfaultand.out stepfaulttimedelay.in
+
+net amp-has-faulted => stepfaulttimedelay.out
+net amp-has-faulted => joint.0.amp-fault-in 
+net spindle-fault-input spindle.0.amp-fault-in <= hm2_7i96s.0.inm.00.input-04-not
+
+#tool release prevented while spindle is on or slowing
+net spindle-not-enabled spindleoffdelay.in
+net spindle-has-stopped spindleoffdelay.out
+
+net spindle-enable negatespindleenable.in
+net spindle-not-enabled negatespindleenable.out
+
+net spindle-has-stopped spindleoffand.in0
+net spindle-not-enabled spindleoffand.in1
+net spindle-safe-to-release-tool spindleoffand.out
+
+net spindle-safe-to-release-tool tapersafetyand.in0
+net tool-release-switch tapersafetyand.in1
+net tool-release-interlocked tapersafetyand.out

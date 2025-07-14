@@ -5,7 +5,11 @@ placeFrames 0.3
 set ::ratio 0.3
 set ::old_w_leftf 160
 set ::watchlist {
-    pin+hm2_7i96s.0.inm.00.input-02
+    sig+spindle-not-enabled
+    sig+spindle-has-stopped
+    sig+spindle-safe-to-release-tool
+    sig+tool-release-switch
+    sig+probe-in
 }
 set ::workmode watchhal
 set ::watchInterval 100
