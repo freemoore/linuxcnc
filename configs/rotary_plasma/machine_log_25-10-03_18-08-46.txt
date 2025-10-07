@@ -1,0 +1,287 @@
+--- QtVCP Screen Started on: Fri, Oct 03 2025 14:17:37 ---
+--- rotary_plasma - QtPlasmaC v2.9-238.315, powered by QtVCP and LinuxCNC ---
+Fri03 14:17: Materials Error:
+Material number "1000000" is invalid
+Material numbers need to be less than 1000000
+Fri03 14:17: Tool 0: No Tool
+Fri03 14:17: GUI power on
+Fri03 14:18: Machine homed
+Fri03 14:18: Tool 0: torch
+Fri03 14:19: Zeroed Axis X
+Fri03 14:19: Zeroed Axis Y
+Fri03 14:19: Loaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/arm 01.ngc
+Fri03 14:36: Loaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/arm 02.ngc
+Fri03 14:38: Zeroed Axis Y
+Fri03 14:39: Set Origin of Axis X to 66.000000
+Fri03 14:40: Cycle started - Torch disabled
+Fri03 14:40: Materials Error:
+Material # #1000000 not in material list
+Fri03 14:40: Machine idle
+Fri03 14:40: Cycle started - Torch disabled
+Fri03 14:40: Materials Error:
+Material # #1000000 not in material list
+Fri03 14:40: Machine idle
+Fri03 14:40: Cycle started - Torch enabled
+Fri03 14:40: Materials Error:
+Material # #1000000 not in material list
+Fri03 14:40: Cycle paused
+Fri03 14:40: valid arc lost
+program is paused.
+Fri03 14:41: Cycle resumed
+Fri03 14:41: Cycle paused
+Fri03 14:41: valid arc lost
+program is paused.
+Fri03 14:41: Cycle resumed
+Fri03 14:41: Machine idle
+Fri03 14:46: Loaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/vertical long 02.ngc
+Fri03 14:46: Zeroed Axis X
+Fri03 14:47: Zeroed Axis A
+Fri03 14:47: Cycle started - Torch disabled
+Fri03 14:47: Materials Error:
+Material # #1000000 not in material list
+Fri03 14:48: Machine idle
+Fri03 14:48: Cycle started - Torch disabled
+Fri03 14:48: Materials Error:
+Material # #1000000 not in material list
+Fri03 14:48: Machine idle
+Fri03 14:51: Loaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/arm 02.ngc
+Fri03 14:52: Cycle started - Torch enabled
+Fri03 14:52: Materials Error:
+Material # #1000000 not in material list
+Fri03 14:52: Cycle paused
+Fri03 14:52: valid arc lost
+program is paused.
+Fri03 14:53: Cycle aborted
+Fri03 14:53: Machine idle
+Fri03 14:53: Zeroed Axis X
+Fri03 14:53: Cycle started - Torch enabled
+Fri03 14:53: Materials Error:
+Material # #1000000 not in material list
+Fri03 14:53: Cycle paused
+Fri03 14:53: valid arc lost
+program is paused.
+Fri03 14:53: Cycle resumed
+Fri03 14:53: Cycle aborted
+Fri03 14:53: Machine idle
+Fri03 14:53: Cycle started - Torch enabled
+Fri03 14:53: Materials Error:
+Material # #1000000 not in material list
+Fri03 14:53: Cycle paused
+Fri03 14:53: valid arc lost
+program is paused.
+Fri03 14:53: Cycle resumed
+Fri03 14:53: Machine idle
+Fri03 15:50: Cycle started - Torch disabled
+Fri03 15:50: Materials Error:
+Material # #1000000 not in material list
+Fri03 15:50: Cycle aborted
+Fri03 15:50: Machine idle
+Fri03 15:51: GUI power off
+Fri03 15:51: joint 3 following error
+Fri03 15:51: GUI power on
+Fri03 15:53: Cycle started - Torch disabled
+Fri03 15:53: Materials Error:
+Material # #1000000 not in material list
+Fri03 15:53: Machine idle
+Fri03 15:53: Cycle started - Torch enabled
+Fri03 15:53: Materials Error:
+Material # #1000000 not in material list
+Fri03 15:53: Cycle paused
+Fri03 15:53: valid arc lost
+program is paused.
+Fri03 15:53: Cycle resumed
+Fri03 15:53: Machine idle
+Fri03 15:54: Zeroed Axis A
+Fri03 15:55: Cycle started - Torch enabled
+Fri03 15:55: Materials Error:
+Material # #1000000 not in material list
+Fri03 15:55: Machine idle
+Fri03 16:05: Reloaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/arm 02.ngc
+Fri03 16:06: G-Code error in arm 02.ngc
+Near line 1 of
+/tmp/emcflt-l_u5bnrn.d/arm 02.ngc
+File ended with no percent sign (%) or program end (M2)
+Fri03 16:06: Zeroed Axis X
+Fri03 16:06: G-Code error in arm 02.ngc
+Near line 1 of
+/tmp/emcflt-l_u5bnrn.d/arm 02.ngc
+File ended with no percent sign (%) or program end (M2)
+Fri03 16:06: Zeroed Axis Y
+Fri03 16:06: Loaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/tent bracket end cover.ngc
+Fri03 16:06: Zeroed Axis A
+Fri03 16:06: Zeroed Axis Y
+Fri03 16:06: Cycle started - Torch enabled
+Fri03 16:06: Reloaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/tent bracket end cover.ngc
+Fri03 16:06: Machine idle
+Fri03 16:06: Reloaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/tent bracket end cover.ngc
+Fri03 16:07: Zeroed Axis Y
+Fri03 16:07: Zeroed Axis X
+Fri03 16:07: Cycle started - Torch enabled
+Fri03 16:07: Machine idle
+Fri03 16:07: Reloaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/tent bracket end cover.ngc
+Fri03 16:07: Reloaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/tent bracket end cover.ngc
+Fri03 16:07: Zeroed Axis X
+Fri03 16:07: Cycle started - Torch enabled
+Fri03 16:07: Machine idle
+Fri03 16:07: Reloaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/tent bracket end cover.ngc
+Fri03 16:08: Reloaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/tent bracket end cover.ngc
+Fri03 16:08: Zeroed Axis X
+Fri03 16:08: Zeroed Axis Y
+Fri03 16:08: Cycle started - Torch enabled
+Fri03 16:08: Reloaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/tent bracket end cover.ngc
+Fri03 16:08: Machine idle
+Fri03 16:08: Reloaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/tent bracket end cover.ngc
+Fri03 16:08: Zeroed Axis Y
+Fri03 16:08: Zeroed Axis X
+Fri03 16:08: Cycle started - Torch enabled
+Fri03 16:08: Machine idle
+Fri03 16:08: Reloaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/tent bracket end cover.ngc
+Fri03 16:09: Reloaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/tent bracket end cover.ngc
+Fri03 16:09: Zeroed Axis X
+Fri03 16:09: Zeroed Axis Y
+Fri03 16:09: Cycle started - Torch enabled
+Fri03 16:09: Machine idle
+Fri03 16:09: Reloaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/tent bracket end cover.ngc
+Fri03 16:31: Zeroed Axis A
+Fri03 16:32: Loaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/arm 02.ngc
+Fri03 16:32: Cycle started - Torch enabled
+Fri03 16:32: Materials Error:
+Material # #1000000 not in material list
+Fri03 16:32: Cycle aborted
+Fri03 16:32: Machine idle
+Fri03 16:32: Cycle started - Torch enabled
+Fri03 16:32: Materials Error:
+Material # #1000000 not in material list
+Fri03 16:33: Machine idle
+Fri03 16:33: Cycle started - Torch enabled
+Fri03 16:33: Materials Error:
+Material # #1000000 not in material list
+Fri03 16:33: Machine idle
+Fri03 16:34: Cycle started - Torch enabled
+Fri03 16:34: Materials Error:
+Material # #1000000 not in material list
+Fri03 16:34: Machine idle
+Fri03 16:35: Cycle started - Torch enabled
+Fri03 16:35: Materials Error:
+Material # #1000000 not in material list
+Fri03 16:35: Cycle paused
+Fri03 16:35: valid arc lost
+program is paused.
+Fri03 16:35: Cycle resumed
+Fri03 16:35: Machine idle
+Fri03 16:36: Cycle started - Torch enabled
+Fri03 16:36: Materials Error:
+Material # #1000000 not in material list
+Fri03 16:36: Cycle aborted
+Fri03 16:36: Machine idle
+Fri03 16:36: Cycle started - Torch enabled
+Fri03 16:36: Materials Error:
+Material # #1000000 not in material list
+Fri03 16:37: Cycle paused
+Fri03 16:37: valid arc lost
+program is paused.
+Fri03 16:37: Cycle aborted
+Fri03 16:37: Machine idle
+Fri03 16:37: Zeroed Axis A
+Fri03 16:38: Cycle started - Torch enabled
+Fri03 16:38: Materials Error:
+Material # #1000000 not in material list
+Fri03 16:38: Cycle paused
+Fri03 16:38: valid arc lost
+program is paused.
+Fri03 16:38: Cycle resumed
+Fri03 16:39: Cycle paused
+Fri03 16:39: no arc detected after 3 start attempts
+program is paused.
+Fri03 16:39: Cycle resumed
+Fri03 16:39: Machine idle
+Fri03 16:39: Cycle started - Torch enabled
+Fri03 16:39: Materials Error:
+Material # #1000000 not in material list
+Fri03 16:39: Cycle paused
+Fri03 16:39: valid arc lost
+program is paused.
+Fri03 16:39: Cycle resumed
+Fri03 16:39: valid arc lost
+program is paused.
+Fri03 16:39: Cycle paused
+Fri03 16:39: Cycle resumed
+Fri03 16:39: GUI power off
+Fri03 16:39: Machine idle
+Fri03 16:39: GUI power on
+Fri03 16:39: Float Switch has aborted active jogging
+Fri03 16:39: Float Switch has disabled jogging
+Fri03 16:43: Machine homed
+Fri03 16:44: Zeroed Axis A
+Fri03 16:45: Cycle started - Torch enabled
+Fri03 16:45: Materials Error:
+Material # #1000000 not in material list
+Fri03 16:45: Cycle aborted
+Fri03 16:45: Machine idle
+Fri03 17:05: Unexpected realtime delay on task 0 with period 1000000
+This Message will only display once per session.
+Run the Latency Test and resolve before continuing.
+Fri03 17:05: Zeroed Axis A
+Fri03 17:05: Cycle started - Torch enabled
+Fri03 17:05: Materials Error:
+Material # #1000000 not in material list
+Fri03 17:06: safe traverse height has been reduced to 6.8mm.
+Fri03 17:06: Cycle paused
+Fri03 17:06: valid arc lost
+program is paused.
+Fri03 17:06: Cycle aborted
+Fri03 17:06: Machine idle
+Fri03 17:06: Zeroed Axis X
+Fri03 17:06: Cycle started - Torch enabled
+Fri03 17:06: Materials Error:
+Material # #1000000 not in material list
+Fri03 17:06: safe traverse height has been reduced to 5.8mm.
+Fri03 17:06: safe traverse height has been reduced to 5.5mm.
+Fri03 17:06: Cycle paused
+Fri03 17:06: valid arc lost
+program is paused.
+Fri03 17:06: Cycle resumed
+Fri03 17:06: Cycle paused
+Fri03 17:06: pierce height would exceed Z axis maximum limit
+condition found while moving to probe height during float switch probing
+Fri03 17:07: Cycle resumed
+Fri03 17:07: Machine idle
+Fri03 17:08: Cycle started - Torch enabled
+Fri03 17:08: Materials Error:
+Material # #1000000 not in material list
+Fri03 17:08: Cycle paused
+Fri03 17:08: valid arc lost
+program is paused.
+Fri03 17:08: Cycle resumed
+Fri03 17:08: Machine idle
+Fri03 17:09: Cycle started - Torch enabled
+Fri03 17:09: Materials Error:
+Material # #1000000 not in material list
+Fri03 17:09: joint 3 following error
+Fri03 17:09: GUI power off
+Fri03 17:09: Machine idle
+Fri03 17:09: GUI power on
+Fri03 17:09: Cycle started - Torch enabled
+Fri03 17:09: Materials Error:
+Material # #1000000 not in material list
+Fri03 17:09: GUI power off
+Fri03 17:09: Machine idle
+Fri03 17:09: joint 3 following error
+Fri03 17:09: GUI power on
+Fri03 17:09: Cycle started - Torch enabled
+Fri03 17:09: Materials Error:
+Material # #1000000 not in material list
+Fri03 17:10: Cycle paused
+Fri03 17:10: valid arc lost
+program is paused.
+Fri03 17:10: Cycle resumed
+Fri03 17:10: Machine idle
+Fri03 17:10: Cycle started - Torch enabled
+Fri03 17:10: Materials Error:
+Material # #1000000 not in material list
+Fri03 17:10: Cycle paused
+Fri03 17:10: valid arc lost
+program is paused.
+Fri03 17:10: Cycle resumed
+Fri03 17:11: Machine idle
+Fri03 18:08: GUI power off

@@ -1,0 +1,3 @@
+--- QtVCP Screen Started on: Mon, Sep 01 2025 16:32:35 ---
+--- 7i96s_qtplasmac - QtPlasmaC v2.9-238.315, powered by QtVCP and LinuxCNC ---
+Mon01 16:32: Tool 0: No Tool

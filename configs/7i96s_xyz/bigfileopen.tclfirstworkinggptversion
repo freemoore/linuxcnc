@@ -1,0 +1,29 @@
+if {[info proc tkgof] == ""} {
+    rename tk_getOpenFile tkgof
+}
+
+proc tk_getOpenFile {args} {
+    # Hardcoded starting directory
+    set start_dir "/home/freemoore/Desktop"
+
+    set cmd "zenity --file-selection"
+
+    # Optional: include a default file in that directory (to anchor view)
+    append cmd " --filename=\"$start_dir/\""
+
+    # Support custom title if passed by caller
+    set idx [lsearch $args -title]
+    if {$idx >= 0 && [llength $args] > $idx + 1} {
+        set title [lindex $args [expr {$idx + 1}]]
+        append cmd " --title=\"[string map {' ''} $title]\""
+    }
+
+    # Ignore caller’s -initialdir and always use start_dir
+
+    catch {
+        set filename [exec sh -c $cmd]
+        return $filename
+    } err
+
+    return ""
+}

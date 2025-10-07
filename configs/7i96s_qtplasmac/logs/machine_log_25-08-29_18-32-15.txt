@@ -1,0 +1,4 @@
+--- QtVCP Screen Started on: Fri, Aug 29 2025 17:21:51 ---
+--- 7i96s_qtplasmac - QtPlasmaC v2.9-238.315, powered by QtVCP and LinuxCNC ---
+Fri29 17:21: Tool 0: No Tool
+Fri29 18:26: hm2/hm2_7i96s.0: error finishing read! iter=3861181

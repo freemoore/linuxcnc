@@ -1,0 +1,23 @@
+--- QtVCP Screen Started on: Fri, Oct 03 2025 13:50:50 ---
+--- rotary_plasma - QtPlasmaC v2.9-238.315, powered by QtVCP and LinuxCNC ---
+Fri03 13:50: Materials Error:
+Material number "1000000" is invalid
+Material numbers need to be less than 1000000
+Fri03 13:50: Tool 0: No Tool
+Fri03 13:50: GUI power on
+Fri03 13:51: Machine homed
+Fri03 13:51: Tool 0: torch
+Fri03 13:53: Loaded: /home/freemoore/Desktop/Clients/Oliver Kibblewhite/Tent structure pipe joiners/tent bracket end cover.ngc
+Fri03 13:53: Zeroed Axis X
+Fri03 13:53: Zeroed Axis Y
+Fri03 13:53: Cycle started - Torch enabled
+Fri03 13:53: Cycle paused
+Fri03 13:53: no arc detected after 3 start attempts
+program is paused.
+Fri03 13:53: Cycle resumed
+Fri03 13:53: Machine idle
+Fri03 13:54: Cycle started - Torch enabled
+Fri03 13:54: Machine idle
+Fri03 14:13: Cannot do g1 with zero feed rate
+Fri03 14:13: joint 3 following error
+Fri03 14:13: GUI power off

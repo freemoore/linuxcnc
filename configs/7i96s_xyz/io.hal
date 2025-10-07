@@ -5,12 +5,9 @@
 net joint-0-home joint.0.home-sw-in <= hm2_7i96s.0.inm.00.input-01
 net joint-1-home joint.1.home-sw-in <= hm2_7i96s.0.inm.00.input-02
 net joint-2-home joint.2.home-sw-in <= hm2_7i96s.0.inm.00.input-03
-net joint-3-home joint.3.home-sw-in <= hm2_7i96s.0.inm.00.input-09
 
-net system-air-sensor <= hm2_7i96s.0.inm.00.input-06
+#net system-air-sensor <= hm2_7i96s.0.inm.00.input-06
 net tool-release-switch  <= hm2_7i96s.0.inm.00.input-07
-
-
 
 net toolsetter-probe-in	 <= hm2_7i96s.0.inm.00.input-05-not
 net digitising-probe-in  <= hm2_7i96s.0.inm.00.input-10-not
@@ -35,8 +32,7 @@ net remote-estop0 estop-latch.0.fault-in <= hm2_7i96s.0.inm.00.input-00-not
 # Outputs
 net machine-is-enabled => hm2_7i96s.0.ssr.00.out-00
 net spindle-enable => hm2_7i96s.0.ssr.00.out-01 
-net flood-output iocontrol.0.coolant-flood => hm2_7i96s.0.ssr.00.out-02
+net flood-output iocontrol.0.coolant-flood => hm2_7i96s.0.outm.00.out-04
 net tool-release-interlocked => hm2_7i96s.0.ssr.00.out-03
-net spindle-enable => hm2_7i96s.0.outm.00.out-04
-net mist-output iocontrol.0.coolant-mist => hm2_7i96s.0.outm.00.out-05
+net mist-output iocontrol.0.coolant-mist => hm2_7i96s.0.ssr.00.out-02
 

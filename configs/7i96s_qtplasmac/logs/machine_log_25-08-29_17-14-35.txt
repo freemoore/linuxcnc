@@ -1,0 +1,10 @@
+--- QtVCP Screen Started on: Fri, Aug 29 2025 15:56:11 ---
+--- 7i96s_qtplasmac - QtPlasmaC v2.9-238.315, powered by QtVCP and LinuxCNC ---
+Fri29 15:56: Tool 0: No Tool
+Fri29 15:57: GUI power on
+Fri29 15:57: Torch pulse started
+Fri29 15:57: Torch pulse completed
+Fri29 15:57: Torch pulse started
+Fri29 15:57: Torch pulse ended manually
+Fri29 16:28: GUI power off
+Fri29 16:36: hm2/hm2_7i96s.0: error finishing read! iter=2419599

@@ -1,8 +1,8 @@
 # Halshow settings
 # This file is generated automatically.
-wm geometry . 830x951+840+31
-placeFrames 0.3
-set ::ratio 0.3
+wm geometry . 893x951+777+31
+placeFrames 0.44904458598726116
+set ::ratio 0.44904458598726116
 set ::old_w_leftf 160
 set ::watchlist {
     sig+spindle-not-enabled
@@ -10,6 +10,16 @@ set ::watchlist {
     sig+spindle-safe-to-release-tool
     sig+tool-release-switch
     sig+probe-in
+    pin+iocontrol.0.coolant-mist
+    pin+iocontrol.0.coolant-flood
+    pin+hm2_7i96s.0.outm.00.out-05
+    pin+hm2_7i96s.0.inm.00.input-09
+    pin+hm2_7i96s.0.encoder.00.count
+    pin+hm2_7i96s.0.encoder.00.input-b
+    pin+hm2_7i96s.0.encoder.00.input-a
+    pin+hm2_7i96s.0.encoder.00.velocity
+    param+hm2_7i96s.0.encoder.00.counter-mode
+    param+hm2_7i96s.0.encoder.00.scale
 }
 set ::workmode watchhal
 set ::watchInterval 100
