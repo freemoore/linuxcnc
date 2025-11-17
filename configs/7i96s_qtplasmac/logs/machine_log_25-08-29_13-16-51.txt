@@ -1,0 +1,7 @@
+--- QtVCP Screen Started on: Fri, Aug 29 2025 13:11:33 ---
+Fri29 13:11: File Manager error - No such path: /home/freemoore/linuxcnc/nc_files
+--- 7i96s_qtplasmac - QtPlasmaC v2.9-238.315, powered by QtVCP and LinuxCNC ---
+Fri29 13:11: Tool 0: No Tool
+Fri29 13:11: Emergency stop cleared
+Fri29 13:11: GUI power on
+Fri29 13:11: Float Switch has disabled jogging

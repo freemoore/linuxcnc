@@ -1,0 +1,371 @@
+--- QtVCP Screen Started on: Wed, Sep 03 2025 13:37:10 ---
+--- 7i96s_qtplasmac - QtPlasmaC v2.9-238.315, powered by QtVCP and LinuxCNC ---
+Wed03 13:37: Tool 0: No Tool
+Wed03 13:37: GUI power on
+Wed03 13:37: Machine homed
+Wed03 13:37: Tool 0: torch
+Wed03 13:47: GUI power off
+Wed03 13:47: GUI power on
+Wed03 13:47: Machine homed
+Wed03 14:02: Set Origin of Axis X to 450.000000
+Wed03 14:05: Zeroed Axis Y
+Wed03 14:05: Zeroed Axis X
+Wed03 14:05: Cycle paused
+Wed03 14:05: float switch activated
+program is paused.
+Wed03 14:05: Cycle aborted
+Wed03 14:05: Cycle paused
+Wed03 14:05: float switch activated
+program is paused.
+Wed03 14:06: Cycle aborted
+Wed03 14:06: Float Switch has disabled jogging
+Wed03 14:06: Float Switch has disabled jogging
+Wed03 14:06: Float Switch has disabled jogging
+Wed03 14:06: Machine homed
+Wed03 14:08: Program cleared
+Wed03 14:09: valid arc lost
+program is paused.
+Wed03 14:09: Cycle paused
+Wed03 14:09: Cycle resumed
+Wed03 14:09: Program cleared
+Wed03 14:10: Program cleared
+Wed03 14:15: Set Origin of Axis X to 450.000000
+Wed03 14:17: Program cleared
+Wed03 14:17: Cycle aborted
+Wed03 14:18: Program cleared
+Wed03 14:19: Cycle paused
+Wed03 14:19: float switch activated
+program is paused.
+Wed03 14:19: Cycle resumed
+Wed03 14:19: Program cleared
+Wed03 14:21: Cycle paused
+Wed03 14:21: float switch activated
+program is paused.
+Wed03 14:21: Cycle resumed
+Wed03 14:21: Cycle paused
+Wed03 14:21: float switch activated
+program is paused.
+Wed03 14:21: Cycle resumed
+Wed03 14:21: Program cleared
+Wed03 14:21: Cycle paused
+Wed03 14:21: valid arc lost
+program is paused.
+Wed03 14:21: Cycle resumed
+Wed03 14:21: Program cleared
+Wed03 14:24: Cycle paused
+Wed03 14:24: float switch activated
+program is paused.
+Wed03 14:24: Cycle resumed
+Wed03 14:24: Program cleared
+Wed03 14:24: Cycle paused
+Wed03 14:24: float switch activated
+program is paused.
+Wed03 14:24: Cycle resumed
+Wed03 14:25: Program cleared
+Wed03 14:27: Program cleared
+Wed03 14:28: Cycle paused
+Wed03 14:28: valid arc lost
+program is paused.
+Wed03 14:28: Cycle resumed
+Wed03 14:28: Cycle paused
+Wed03 14:28: float switch activated
+program is paused.
+Wed03 14:28: Cycle resumed
+Wed03 14:28: Cycle paused
+Wed03 14:28: no arc detected after 3 start attempts
+program is paused.
+Wed03 14:28: Cycle resumed
+Wed03 14:28: Cycle paused
+Wed03 14:28: Cycle resumed
+Wed03 14:28: Cycle paused
+Wed03 14:28: float switch activated
+program is paused.
+Wed03 14:28: Cycle resumed
+Wed03 14:28: Cycle paused
+Wed03 14:28: float switch activated
+program is paused.
+Wed03 14:28: Cycle resumed
+Wed03 14:28: Program cleared
+Wed03 14:30: valid arc lost
+program is paused.
+Wed03 14:30: Cycle paused
+Wed03 14:30: Cycle resumed
+Wed03 14:30: Cycle paused
+Wed03 14:30: valid arc lost
+program is paused.
+Wed03 14:30: Cycle resumed
+Wed03 14:30: Cycle paused
+Wed03 14:30: valid arc lost
+program is paused.
+Wed03 14:30: Cycle resumed
+Wed03 14:30: Cycle paused
+Wed03 14:30: Cycle resumed
+Wed03 14:30: Cycle paused
+Wed03 14:30: valid arc lost
+program is paused.
+Wed03 14:30: Cycle resumed
+Wed03 14:31: Program cleared
+Wed03 14:31: Program cleared
+Wed03 14:34: Cycle paused
+Wed03 14:34: valid arc lost
+program is paused.
+Wed03 14:34: Cycle resumed
+Wed03 14:34: valid arc lost
+program is paused.
+Wed03 14:34: Cycle paused
+Wed03 14:35: Cycle resumed
+Wed03 14:35: float switch activated
+program is paused.
+Wed03 14:35: Cycle paused
+Wed03 14:35: Cycle resumed
+Wed03 14:35: Cycle paused
+Wed03 14:35: valid arc lost
+program is paused.
+Wed03 14:35: Cycle resumed
+Wed03 14:35: Cycle paused
+Wed03 14:35: valid arc lost
+program is paused.
+Wed03 14:35: Cycle resumed
+Wed03 14:35: Cycle paused
+Wed03 14:35: float switch activated
+program is paused.
+Wed03 14:35: Cycle resumed
+Wed03 14:35: Cycle paused
+Wed03 14:35: float switch activated
+program is paused.
+Wed03 14:35: Cycle resumed
+Wed03 14:35: Cycle paused
+Wed03 14:35: valid arc lost
+program is paused.
+Wed03 14:35: Cycle resumed
+Wed03 14:35: Cycle paused
+Wed03 14:35: valid arc lost
+program is paused.
+Wed03 14:35: Cycle resumed
+Wed03 14:36: Cycle paused
+Wed03 14:36: float switch activated
+program is paused.
+Wed03 14:36: Cycle resumed
+Wed03 14:36: Cycle paused
+Wed03 14:36: valid arc lost
+program is paused.
+Wed03 14:36: Cycle resumed
+Wed03 14:36: Cycle paused
+Wed03 14:36: float switch activated
+program is paused.
+Wed03 14:36: Cycle resumed
+Wed03 14:36: Program cleared
+Wed03 14:37: Program cleared
+Wed03 14:38: Cycle paused
+Wed03 14:38: valid arc lost
+program is paused.
+Wed03 14:38: Cycle resumed
+Wed03 14:38: float switch activated
+program is paused.
+Wed03 14:38: Cycle paused
+Wed03 14:38: Cycle resumed
+Wed03 14:38: Cycle paused
+Wed03 14:38: valid arc lost
+program is paused.
+Wed03 14:38: Cycle resumed
+Wed03 14:38: Cycle paused
+Wed03 14:38: valid arc lost
+program is paused.
+Wed03 14:38: Cycle resumed
+Wed03 14:38: Cycle paused
+Wed03 14:38: float switch activated
+program is paused.
+Wed03 14:38: Cycle resumed
+Wed03 14:38: Cycle paused
+Wed03 14:38: valid arc lost
+program is paused.
+Wed03 14:38: Cycle resumed
+Wed03 14:38: Cycle paused
+Wed03 14:38: valid arc lost
+program is paused.
+Wed03 14:38: Cycle resumed
+Wed03 14:38: Cycle paused
+Wed03 14:38: valid arc lost
+program is paused.
+Wed03 14:38: Cycle resumed
+Wed03 14:38: Program cleared
+Wed03 14:39: Cycle paused
+Wed03 14:39: float switch activated
+program is paused.
+Wed03 14:39: Cycle resumed
+Wed03 14:39: Cycle paused
+Wed03 14:39: float switch activated
+program is paused.
+Wed03 14:39: Cycle resumed
+Wed03 14:39: Program cleared
+Wed03 14:41: Cycle paused
+Wed03 14:41: float switch activated
+program is paused.
+Wed03 14:41: Cycle resumed
+Wed03 14:41: Program cleared
+Wed03 14:41: float switch activated
+program is paused.
+Wed03 14:41: Cycle paused
+Wed03 14:41: Cycle resumed
+Wed03 14:42: Program cleared
+Wed03 14:42: Cycle paused
+Wed03 14:42: float switch activated
+program is paused.
+Wed03 14:42: Cycle resumed
+Wed03 14:43: Cycle paused
+Wed03 14:43: valid arc lost
+program is paused.
+Wed03 14:43: Cycle resumed
+Wed03 14:43: Cycle paused
+Wed03 14:43: float switch activated
+program is paused.
+Wed03 14:43: Cycle resumed
+Wed03 14:43: Cycle paused
+Wed03 14:43: valid arc lost
+program is paused.
+Wed03 14:43: Cycle resumed
+Wed03 14:43: Cycle paused
+Wed03 14:43: valid arc lost
+program is paused.
+Wed03 14:43: Cycle resumed
+Wed03 14:43: Cycle paused
+Wed03 14:43: valid arc lost
+program is paused.
+Wed03 14:43: Cycle resumed
+Wed03 14:43: Program cleared
+Wed03 14:43: Cycle paused
+Wed03 14:43: valid arc lost
+program is paused.
+Wed03 14:43: Cycle resumed
+Wed03 14:43: Cycle paused
+Wed03 14:43: float switch activated
+program is paused.
+Wed03 14:43: Cycle resumed
+Wed03 14:44: Cycle paused
+Wed03 14:44: valid arc lost
+program is paused.
+Wed03 14:44: Cycle resumed
+Wed03 14:44: valid arc lost
+program is paused.
+Wed03 14:44: Cycle paused
+Wed03 14:44: Program cleared
+Wed03 14:44: Cycle aborted
+Wed03 14:45: Program cleared
+Wed03 14:45: Cycle paused
+Wed03 14:45: valid arc lost
+program is paused.
+Wed03 14:45: Cycle resumed
+Wed03 14:46: Program cleared
+Wed03 14:48: Cycle aborted
+Wed03 14:48: Cycle paused
+Wed03 14:48: valid arc lost
+program is paused.
+Wed03 14:49: Program cleared
+Wed03 14:49: Cycle aborted
+Wed03 14:49: Cycle paused
+Wed03 14:49: float switch activated
+program is paused.
+Wed03 14:49: Cycle resumed
+Wed03 14:49: valid arc lost
+program is paused.
+Wed03 14:49: Cycle paused
+Wed03 14:49: Cycle resumed
+Wed03 14:49: valid arc lost
+program is paused.
+Wed03 14:49: Cycle paused
+Wed03 14:49: Cycle resumed
+Wed03 14:49: Cycle paused
+Wed03 14:49: float switch activated
+program is paused.
+Wed03 14:49: Cycle resumed
+Wed03 14:49: Cycle paused
+Wed03 14:49: valid arc lost
+program is paused.
+Wed03 14:49: Cycle resumed
+Wed03 14:50: Program cleared
+Wed03 14:50: Program cleared
+Wed03 14:50: Cycle aborted
+Wed03 14:50: valid arc lost
+program is paused.
+Wed03 14:50: Cycle paused
+Wed03 14:50: Cycle resumed
+Wed03 14:50: Cycle paused
+Wed03 14:50: valid arc lost
+program is paused.
+Wed03 14:50: Cycle resumed
+Wed03 14:51: Cycle paused
+Wed03 14:51: valid arc lost
+program is paused.
+Wed03 14:51: Cycle resumed
+Wed03 14:51: Cycle paused
+Wed03 14:51: valid arc lost
+program is paused.
+Wed03 14:51: Cycle resumed
+Wed03 14:51: Cycle paused
+Wed03 14:51: valid arc lost
+program is paused.
+Wed03 14:51: Cycle resumed
+Wed03 14:52: Cycle paused
+Wed03 14:52: float switch activated
+program is paused.
+Wed03 14:52: Cycle resumed
+Wed03 14:52: Cycle paused
+Wed03 14:52: valid arc lost
+program is paused.
+Wed03 14:52: Cycle resumed
+Wed03 14:52: Cycle paused
+Wed03 14:52: valid arc lost
+program is paused.
+Wed03 14:52: Cycle resumed
+Wed03 14:52: Cycle paused
+Wed03 14:52: valid arc lost
+program is paused.
+Wed03 14:59: Program cleared
+Wed03 14:59: Cycle aborted
+Wed03 15:00: Cycle paused
+Wed03 15:00: valid arc lost
+program is paused.
+Wed03 15:00: Cycle resumed
+Wed03 15:00: Cycle paused
+Wed03 15:00: float switch activated
+program is paused.
+Wed03 15:00: Cycle resumed
+Wed03 15:00: Cycle paused
+Wed03 15:00: float switch activated
+program is paused.
+Wed03 15:00: Cycle resumed
+Wed03 15:00: Cycle paused
+Wed03 15:00: valid arc lost
+program is paused.
+Wed03 15:00: Cycle resumed
+Wed03 15:00: valid arc lost
+program is paused.
+Wed03 15:00: Cycle paused
+Wed03 15:00: Cycle resumed
+Wed03 15:00: Cycle paused
+Wed03 15:00: valid arc lost
+program is paused.
+Wed03 15:00: Cycle resumed
+Wed03 15:00: Cycle paused
+Wed03 15:00: float switch activated
+program is paused.
+Wed03 15:00: Cycle resumed
+Wed03 15:00: Program cleared
+Wed03 15:01: Cycle paused
+Wed03 15:01: float switch activated
+program is paused.
+Wed03 15:01: Cycle resumed
+Wed03 15:01: Cycle paused
+Wed03 15:01: valid arc lost
+program is paused.
+Wed03 15:01: Cycle resumed
+Wed03 15:01: Cycle paused
+Wed03 15:01: valid arc lost
+program is paused.
+Wed03 15:01: Program cleared
+Wed03 15:01: Cycle aborted
+Wed03 15:01: Cycle paused
+Wed03 15:01: valid arc lost
+program is paused.
+Wed03 15:01: Cycle resumed
+Wed03 15:01: Program cleared

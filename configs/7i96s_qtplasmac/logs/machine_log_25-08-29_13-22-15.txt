@@ -1,0 +1,8 @@
+--- QtVCP Screen Started on: Fri, Aug 29 2025 13:16:58 ---
+--- 7i96s_qtplasmac - QtPlasmaC v2.9-238.315, powered by QtVCP and LinuxCNC ---
+Fri29 13:16: Tool 0: No Tool
+Fri29 13:17: Emergency stop cleared
+Fri29 13:17: Emergency stop pressed
+Fri29 13:17: Emergency stop cleared
+Fri29 13:17: GUI power on
+Fri29 13:19: GUI power off

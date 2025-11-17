@@ -1,0 +1,45 @@
+--- QtVCP Screen Started on: Wed, Sep 03 2025 15:20:57 ---
+--- 7i96s_qtplasmac - QtPlasmaC v2.9-238.315, powered by QtVCP and LinuxCNC ---
+Wed03 15:20: Tool 0: No Tool
+Wed03 17:28: Loaded: /home/freemoore/Desktop/Clients/Pearson Farming Partnership/grain barn air duct covers/rack welding jig 01 plasma.ngc
+Wed03 17:28: GUI power on
+Wed03 17:29: Machine homed
+Wed03 17:29: Tool 0: torch
+Wed03 17:32: Zeroed Axis Y
+Wed03 17:32: Zeroed Axis X
+Wed03 17:33: Set Origin of Axis Y to 533.000000
+Wed03 17:33: Zeroed Axis X
+Wed03 17:34: Cycle started - Torch enabled
+Wed03 17:35: Cycle aborted
+Wed03 17:35: Machine idle
+Wed03 17:43: GUI power off
+Wed03 17:45: GUI power on
+Wed03 17:46: Reloaded: /home/freemoore/Desktop/Clients/Pearson Farming Partnership/grain barn air duct covers/rack welding jig 01 plasma.ngc
+Wed03 17:46: Set Origin of Axis Y to 533.000000
+Wed03 17:46: Zeroed Axis X
+Wed03 17:49: Cycle started - Torch enabled
+Wed03 17:49: Cycle aborted
+Wed03 17:49: Machine idle
+Wed03 17:49: Cycle started - Torch enabled
+Wed03 17:50: Cycle aborted
+Wed03 17:50: Machine idle
+Wed03 18:00: Reloaded: /home/freemoore/Desktop/Clients/Pearson Farming Partnership/grain barn air duct covers/rack welding jig 01 plasma.ngc
+Wed03 18:02: Reloaded: /home/freemoore/Desktop/Clients/Pearson Farming Partnership/grain barn air duct covers/rack welding jig 01 plasma.ngc
+Wed03 18:02: Cycle started - Torch enabled
+Wed03 18:02: Cycle aborted
+Wed03 18:02: Machine idle
+Wed03 18:02: Zeroed Axis X
+Wed03 18:02: Cycle started - Torch enabled
+Wed03 18:03: Cycle aborted
+Wed03 18:03: Cycle paused
+Wed03 18:03: float switch activated
+program is paused.
+Wed03 18:13: Cycle resumed
+Wed03 18:13: Machine idle
+Wed03 18:13: Reloaded: /home/freemoore/Desktop/Clients/Pearson Farming Partnership/grain barn air duct covers/rack welding jig 01 plasma.ngc
+Wed03 18:13: Zeroed Axis X
+Wed03 18:13: Cycle started - Torch enabled
+Wed03 18:14: Cycle aborted
+Wed03 18:14: Machine idle
+Wed03 18:44: GUI power off
+Wed03 19:01: hm2/hm2_7i96s.0: error finishing read! iter=13216662

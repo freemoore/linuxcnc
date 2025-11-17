@@ -3,7 +3,7 @@
 o<psng_manual_change> sub
 
 ; BEGIN PSNG PREAMBLE
-M73 ; Save and autorestore model states. This will be used only in case of error, otherwise we will invalidate it.
+M73 ; Save and autorestore modal states. This will be used only in case of error, otherwise we will invalidate it.
 o<_psng_modal_save> call
 o<_psng_hook> call [1]
 ; END PSNG PREAMBLE

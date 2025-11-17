@@ -1,0 +1,5 @@
+T1  P1  Z-26.523075  D6  ;6mm router
+T2  P2  Z8.822925  D12.7  ;12.7mm router
+T3  P3  Z-21.057825  D6.35  ;6.35mm router
+T4  P4  D1  ;90deg chamfer router
+T5  P5  D3  ;3mm endmill

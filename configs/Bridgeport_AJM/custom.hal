@@ -34,7 +34,7 @@ net machine-is-enabled [HMOT](CARD0).7i84.0.0.output-03
 
 # --- SPINDLE-FAULT-IN ---
 #net servo-fault-indicated => [HMOT](CARD0).7i84.0.0.input-16-not and2.0.in0
-net servo-fault-indicated => [HMOT](CARD0).7i84.0.0.input-16-not sfaultand.in0
+net servo-fault-indicated => [HMOT](CARD0).7i84.0.0.input-17-not sfaultand.in0
 
 #net machine-is-enabled and2.0.in1
 net machine-is-enabled sfaultand.in1

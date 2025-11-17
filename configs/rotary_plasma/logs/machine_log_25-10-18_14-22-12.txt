@@ -1,0 +1,12 @@
+--- QtVCP Screen Started on: Sat, Oct 18 2025 14:16:14 ---
+--- rotary_plasma - QtPlasmaC v2.9-238.315, powered by QtVCP and LinuxCNC ---
+Sat18 14:16: Materials Error:
+Material number "1000000" is invalid
+Material numbers need to be less than 1000000
+Sat18 14:16: Tool 0: No Tool
+Sat18 14:16: GUI power on
+Sat18 14:16: float switch activated
+program is paused.
+Sat18 14:16: Machine homed
+Sat18 14:17: GUI power off
+Sat18 14:17: hm2/hm2_7i96s.0: error finishing read! iter=81789

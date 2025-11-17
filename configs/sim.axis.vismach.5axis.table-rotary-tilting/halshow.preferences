@@ -1,8 +1,8 @@
 # Halshow settings
 # This file is generated automatically.
-wm geometry . 577x985+1333+27
-placeFrames 0.41935483870967744
-set ::ratio 0.41935483870967744
+wm geometry . 517x985+1393+27
+placeFrames 0.3405940594059406
+set ::ratio 0.3405940594059406
 set ::old_w_leftf 160
 set ::watchlist {
     pin+hm2_5i23.0.encoder.06.count

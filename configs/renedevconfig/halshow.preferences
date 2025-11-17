@@ -1,0 +1,39 @@
+# Halshow settings
+# This file is generated automatically.
+wm geometry . 830x953+840+31
+placeFrames 0.37775061124694376
+set ::ratio 0.37775061124694376
+set ::old_w_leftf 160
+set ::watchlist {
+    pin+hm2_7i94.0.stbl.0.0.current
+    pin+hm2_7i94.0.stbl.0.0.enable
+    pin+hm2_7i94.0.stbl.0.0.fault
+    pin+hm2_7i94.0.stbl.0.0.fault-not
+    pin+hm2_7i94.0.stbl.0.0.in-00
+    pin+hm2_7i94.0.stbl.0.0.in-00-not
+    pin+hm2_7i94.0.stbl.0.0.in-01
+    pin+hm2_7i94.0.stbl.0.0.in-01-not
+    pin+hm2_7i94.0.stbl.0.0.in-02
+    pin+hm2_7i94.0.stbl.0.0.in-02-not
+    pin+hm2_7i94.0.stbl.0.0.in-03
+    pin+hm2_7i94.0.stbl.0.0.in-03-not
+    pin+hm2_7i94.0.stbl.0.0.index_enable
+    pin+hm2_7i94.0.stbl.0.0.out-00
+    pin+hm2_7i94.0.stbl.0.0.out-01
+    pin+hm2_7i94.0.stbl.0.0.out-02
+    pin+hm2_7i94.0.stbl.0.0.out-03
+    pin+hm2_7i94.0.stbl.0.0.pos_cmd
+    pin+hm2_7i94.0.stbl.0.0.pos_fb
+    pin+hm2_7i94.0.stbl.0.0.vel_cmd
+    pin+hm2_7i94.0.stbl.0.0.vel_fb
+    pin+hm2_7i94.0.sserial.port-0.port_state
+    pin+hm2_7i94.0.sserial.port-0.run
+    param+hm2_7i94.0.stbl.0.0.current-scalemax
+}
+set ::workmode watchhal
+set ::watchInterval 100
+set ::col1_width 100
+set ::ffmts 
+set ::ifmts 
+set ::alwaysOnTop 0
+set ::autoSaveWatchlist 1

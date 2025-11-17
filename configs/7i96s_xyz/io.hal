@@ -1,0 +1,43 @@
+# This file was created with the Mesa Configuration Tool on Jun 23 2025 19:14:02
+# If you make changes to this file DO NOT use the Configuration Tool
+
+# Inputs
+net joint-0-home joint.0.home-sw-in <= hm2_7i96s.0.inm.00.input-01
+net joint-1-home joint.1.home-sw-in <= hm2_7i96s.0.inm.00.input-02
+net joint-2-home joint.2.home-sw-in <= hm2_7i96s.0.gpio.035.in
+
+net system-air-sensor 				<= hm2_7i96s.0.inm.00.input-07
+net tool-release-switch  			<= hm2_7i96s.0.gpio.046.in_not
+net DB-engaged 						<= hm2_7i96s.0.gpio.034.in
+net DB-released						<= hm2_7i96s.0.gpio.036.in
+net toolsetter-probe-in	 			<= hm2_7i96s.0.inm.00.input-05-not
+net digitising-probe-in  			<= hm2_7i96s.0.gpio.048.in_not
+
+net digitising-probe-in				probe-or.in0
+net toolsetter-probe-in				probe-or.in1
+net probe-in						probe-or.out
+net probe-in motion.probe-input
+
+# E-Stop Chain
+loadrt estop_latch count=1
+addf estop-latch.0 servo-thread
+
+# E-Stop Loop
+net estop-loopin iocontrol.0.user-enable-out => estop-latch.0.ok-in
+net estop-loopback estop-latch.0.ok-out => iocontrol.0.emc-enable-in
+
+# E-Stop Reset
+net estop-reset iocontrol.0.user-request-enable
+net estop-reset => estop-latch.0.reset
+net remote-estop0 estop-latch.0.fault-in <= hm2_7i96s.0.inm.00.input-00-not
+
+# Outputs
+net machine-is-enabled 							=> hm2_7i96s.0.ssr.00.out-00
+net spindle-enable 								=> hm2_7i96s.0.ssr.00.out-01 
+net mist-output iocontrol.0.coolant-mist 		=> hm2_7i96s.0.ssr.00.out-02
+net tool-release-interlocked 					=> hm2_7i96s.0.ssr.00.out-03
+#net flood-output iocontrol.0.coolant-flood 		=> hm2_7i96s.0.outm.00.out-04/ is now hardwired to output-01
+net spindle-enable								=> hm2_7i96s.0.outm.00.out-04
+
+
+#net float-switch 					<= hm2_7i96s.0.gpio.50.in

@@ -20,7 +20,7 @@ setp spindle-near-speed.scale 2
 net spindle-cw  			=>		[HMOT](CARD0).7i84.0.0.output-12
 net spindle-ccw  			=>		[HMOT](CARD0).7i84.0.0.output-13
 net spindle-rst  			=>		[HMOT](CARD0).7i84.0.0.output-10
-net spindle-enable 		=>		[HMOT](CARD0).7i84.0.0.output-14
+net spindle-enable 			=>		[HMOT](CARD0).7i84.0.0.output-14
 
 
 setp   pid.s0.Pgain     [SPINDLE_0]P

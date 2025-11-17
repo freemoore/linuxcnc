@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pyvcp>
+<!--
+Build your PyVCP panel between the <pyvcp></pyvcp> tags.
+Make sure your outside the comment tags.
+The contents of this file will not be overwritten
+when you run this wizard again.
+-->
+	<label>
+		<text>"This is a Sample Label:"</text>
+		<font>("Helvetica",10)</font>
+	</label>
+</pyvcp>

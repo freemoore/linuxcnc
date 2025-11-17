@@ -1,0 +1,25 @@
+# Halshow settings
+# This file is generated automatically.
+wm geometry . 700x765+970+31
+placeFrames 0.3706395348837209
+set ::ratio 0.3706395348837209
+set ::old_w_leftf 160
+set ::watchlist {
+    pin+hm2_7i96s.0.stepgen.03.counts
+    pin+hm2_7i96s.0.stepgen.03.velocity-fb
+    pin+hm2_7i96s.0.stepgen.03.position-fb
+    pin+hm2_7i96s.0.stepgen.03.enable
+    pin+halui.estop.activate
+    pin+halui.estop.is-activated
+    pin+hm2_7i96s.0.inm.00.input-00-not
+    pin+hm2_7i96s.0.inm.00.input-00
+    pin+plasmac.float-switch-travel
+    sig+plasmac:float-switch
+}
+set ::workmode watchhal
+set ::watchInterval 100
+set ::col1_width 100
+set ::ffmts 
+set ::ifmts 
+set ::alwaysOnTop 0
+set ::autoSaveWatchlist 1

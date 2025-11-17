@@ -56,4 +56,5 @@ net coolant-is-as-requested-bit 		coolant-logic-to-float.in
 net coolant-is-as-requested-float 		coolant-logic-to-float.out
 
 # send converted signal as 100pc to motion.adaptive-feed 
-net coolant-is-as-requested-float motion.adaptive-feed
+#net coolant-is-as-requested-float motion.adaptive-feed
+setp motion.adaptive-feed 1

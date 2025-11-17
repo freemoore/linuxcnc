@@ -1,0 +1,29 @@
+# Halshow settings
+# This file is generated automatically.
+wm geometry . 830x951+1104+269
+placeFrames 0.3
+set ::ratio 0.3
+set ::old_w_leftf 160
+set ::watchlist {
+    pin+plasmac.torch-on
+    sig+plasmac:arc-ok
+    pin+hm2_7i96s.0.inm.00.input-06
+    pin+plasmac.arc-ok-high
+    pin+plasmac.arc-ok-in
+    pin+plasmac.arc-ok-low
+    pin+plasmac.arc-ok-out
+    pin+plasmac.ignore-arc-ok-1
+    pin+plasmac.mesh-arc-ok
+    sig+plasmac:arc-ok-high
+    sig+plasmac:arc-ok-in
+    sig+plasmac:arc-ok-low
+    sig+plasmac:ignore-arc-ok-0
+    sig+plasmac:ignore-arc-ok-1
+}
+set ::workmode watchhal
+set ::watchInterval 100
+set ::col1_width 100
+set ::ffmts 
+set ::ifmts 
+set ::alwaysOnTop 0
+set ::autoSaveWatchlist 1

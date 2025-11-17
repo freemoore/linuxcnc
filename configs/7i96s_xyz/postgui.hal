@@ -1,0 +1,79 @@
+# Put HAL commands in this file that you want to run after the GUI loads
+#ajm maybe we'll put toolchange stuff in here
+#5mm, 1mm, 0.5mm, 0.1mm, 0.05mm, 0.01mm, 0.005mm, 0.001mm
+
+
+loadrt and2 names=stepfaultand,tapersafetyand,spindleoffand,spindleoffandat0and
+loadrt timedelay names=stepfaulttimedelay,spindleoffdelay
+loadrt not names=negatespindleenable
+loadrt near names=spindlecmdvelnear
+
+addf stepfaultand servo-thread
+addf tapersafetyand servo-thread
+addf spindleoffand servo-thread
+addf stepfaulttimedelay servo-thread
+addf spindleoffdelay servo-thread
+addf negatespindleenable servo-thread
+addf spindlecmdvelnear servo-thread
+addf spindleoffandat0and servo-thread
+
+
+setp stepfaulttimedelay.on-delay 1
+setp stepfaulttimedelay.off-delay 1
+setp spindleoffdelay.on-delay 6
+setp spindleoffdelay.off-delay 0.1
+
+
+
+
+net stepdrive-fault-indicated => hm2_7i96s.0.inm.00.input-08 stepfaultand.in0
+net machine-is-enabled stepfaultand.in1
+net start-servofault-check stepfaultand.out stepfaulttimedelay.in
+net amp-has-faulted => stepfaulttimedelay.out
+net amp-has-faulted => joint.0.amp-fault-in 
+
+
+#is cmd vel more than 0?
+#if so, no tool release
+#is spindle enabled?
+#if so, no tool release
+#is actual vel more than 0?
+#if so, no tool release
+#is tool release switch pressed?
+#if not, no tool release?
+#otherwise, yes tool release
+
+
+#is commanded speed near 0?
+setp spindlecmdvelnear.in1 0
+net spindle-vel-cmd-rpm => spindlecmdvelnear.in2 
+net cmd-vel-is-0 spindlecmdvelnear.out 
+#connect this cmd-vel-is-0 to an and input
+
+#is spindle enabled?
+net spindle-enable negatespindleenable.in
+net spindle-disabled negatespindleenable.out
+#connect spindle-disabled to an and input- done
+
+#is spindle at commanded speed?
+net vfd-at-freq <= hm2_7i96s.0.inm.00.input-04-not
+net vfd-at-freq => spindle.0.at-speed
+
+# spindleoffdelay was fed by at-freq relay on vfd but needs to be fed by is-stopped relay on vfd
+net cmd-vel-is-0 spindleoffdelay.in
+net spindle-has-stopped spindleoffdelay.out
+#connect spindle-has-stopped to an and gate - done
+
+net spindle-has-stopped spindleoffand.in0
+net spindle-disabled spindleoffand.in1
+net spindle-stopped-and-disabled spindleoffand.out
+
+net spindle-stopped-and-disabled spindleoffandat0and.in0
+net cmd-vel-is-0 spindleoffandat0and.in1
+net spindle-safe-to-release-tool spindleoffandat0and.out
+
+
+
+net spindle-safe-to-release-tool tapersafetyand.in0
+net tool-release-switch tapersafetyand.in1
+net tool-release-interlocked tapersafetyand.out

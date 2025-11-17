@@ -1,0 +1,310 @@
+# components
+loadrt threads name1=th period1=1000000 
+#loadrt __th  (not loaded by loadrt, no args saved)
+loadrt hostmot2 
+loadrt hm2_pci config="firmware=hm2/5i23/5i23_7i48_7i52.BIT num_encoders=7 num_pwmgens=6 num_3pwmgens=0 num_stepgens=0 sserial_port_0=11xxxxxx " 
+# pin aliases
+# param aliases
+alias param hm2_5i23.0.gpio.010.invert_output hm2_5i23.0.encoder.00.sel0.invert_output
+alias param hm2_5i23.0.gpio.010.is_opendrain hm2_5i23.0.encoder.00.sel0.is_opendrain
+alias param hm2_5i23.0.gpio.034.invert_output hm2_5i23.0.encoder.06.sel0.invert_output
+alias param hm2_5i23.0.gpio.034.is_opendrain hm2_5i23.0.encoder.06.sel0.is_opendrain
+alias param hm2_5i23.0.gpio.000.invert_output hm2_5i23.0.pwmgen.00.0.enable.invert_output
+alias param hm2_5i23.0.gpio.000.is_opendrain hm2_5i23.0.pwmgen.00.0.enable.is_opendrain
+alias param hm2_5i23.0.gpio.023.invert_output hm2_5i23.0.pwmgen.00.1.enable.invert_output
+alias param hm2_5i23.0.gpio.023.is_opendrain hm2_5i23.0.pwmgen.00.1.enable.is_opendrain
+alias param hm2_5i23.0.gpio.011.invert_output hm2_5i23.0.pwmgen.00.out0.invert_output
+alias param hm2_5i23.0.gpio.011.is_opendrain hm2_5i23.0.pwmgen.00.out0.is_opendrain
+alias param hm2_5i23.0.gpio.012.invert_output hm2_5i23.0.pwmgen.00.out1.invert_output
+alias param hm2_5i23.0.gpio.012.is_opendrain hm2_5i23.0.pwmgen.00.out1.is_opendrain
+alias param hm2_5i23.0.gpio.013.invert_output hm2_5i23.0.pwmgen.01.out0.invert_output
+alias param hm2_5i23.0.gpio.013.is_opendrain hm2_5i23.0.pwmgen.01.out0.is_opendrain
+alias param hm2_5i23.0.gpio.014.invert_output hm2_5i23.0.pwmgen.01.out1.invert_output
+alias param hm2_5i23.0.gpio.014.is_opendrain hm2_5i23.0.pwmgen.01.out1.is_opendrain
+alias param hm2_5i23.0.gpio.015.invert_output hm2_5i23.0.pwmgen.02.out0.invert_output
+alias param hm2_5i23.0.gpio.015.is_opendrain hm2_5i23.0.pwmgen.02.out0.is_opendrain
+alias param hm2_5i23.0.gpio.016.invert_output hm2_5i23.0.pwmgen.02.out1.invert_output
+alias param hm2_5i23.0.gpio.016.is_opendrain hm2_5i23.0.pwmgen.02.out1.is_opendrain
+alias param hm2_5i23.0.gpio.017.invert_output hm2_5i23.0.pwmgen.03.out0.invert_output
+alias param hm2_5i23.0.gpio.017.is_opendrain hm2_5i23.0.pwmgen.03.out0.is_opendrain
+alias param hm2_5i23.0.gpio.018.invert_output hm2_5i23.0.pwmgen.03.out1.invert_output
+alias param hm2_5i23.0.gpio.018.is_opendrain hm2_5i23.0.pwmgen.03.out1.is_opendrain
+alias param hm2_5i23.0.gpio.019.invert_output hm2_5i23.0.pwmgen.04.out0.invert_output
+alias param hm2_5i23.0.gpio.019.is_opendrain hm2_5i23.0.pwmgen.04.out0.is_opendrain
+alias param hm2_5i23.0.gpio.020.invert_output hm2_5i23.0.pwmgen.04.out1.invert_output
+alias param hm2_5i23.0.gpio.020.is_opendrain hm2_5i23.0.pwmgen.04.out1.is_opendrain
+alias param hm2_5i23.0.gpio.021.invert_output hm2_5i23.0.pwmgen.05.out0.invert_output
+alias param hm2_5i23.0.gpio.021.is_opendrain hm2_5i23.0.pwmgen.05.out0.is_opendrain
+alias param hm2_5i23.0.gpio.022.invert_output hm2_5i23.0.pwmgen.05.out1.invert_output
+alias param hm2_5i23.0.gpio.022.is_opendrain hm2_5i23.0.pwmgen.05.out1.is_opendrain
+alias param hm2_5i23.0.gpio.045.invert_output hm2_5i23.0.sserial.00.tx0.invert_output
+alias param hm2_5i23.0.gpio.045.is_opendrain hm2_5i23.0.sserial.00.tx0.is_opendrain
+alias param hm2_5i23.0.gpio.047.invert_output hm2_5i23.0.sserial.00.txen0.invert_output
+alias param hm2_5i23.0.gpio.047.is_opendrain hm2_5i23.0.sserial.00.txen0.is_opendrain
+# signals
+# nets
+# parameter values
+setp hm2_5i23.0.7i84.0.0.analogin0-scalemax         36.3
+setp hm2_5i23.0.7i84.0.0.analogin1-scalemax         36.3
+setp hm2_5i23.0.7i84.0.0.analogin2-scalemax         36.3
+setp hm2_5i23.0.7i84.0.0.analogin3-scalemax         36.3
+setp hm2_5i23.0.7i84.0.0.fieldvoltagea-scalemax         36.3
+setp hm2_5i23.0.7i84.0.0.fieldvoltageb-scalemax         36.3
+setp hm2_5i23.0.7i84.0.0.nvwatchdogtimeout   0x00000032
+setp hm2_5i23.0.7i84.0.0.output-00-invert        FALSE
+setp hm2_5i23.0.7i84.0.0.output-01-invert        FALSE
+setp hm2_5i23.0.7i84.0.0.output-02-invert        FALSE
+setp hm2_5i23.0.7i84.0.0.output-03-invert        FALSE
+setp hm2_5i23.0.7i84.0.0.output-04-invert        FALSE
+setp hm2_5i23.0.7i84.0.0.output-05-invert        FALSE
+setp hm2_5i23.0.7i84.0.0.output-06-invert        FALSE
+setp hm2_5i23.0.7i84.0.0.output-07-invert        FALSE
+setp hm2_5i23.0.7i84.0.0.output-08-invert        FALSE
+setp hm2_5i23.0.7i84.0.0.output-09-invert        FALSE
+setp hm2_5i23.0.7i84.0.0.output-10-invert        FALSE
+setp hm2_5i23.0.7i84.0.0.output-11-invert        FALSE
+setp hm2_5i23.0.7i84.0.0.output-12-invert        FALSE
+setp hm2_5i23.0.7i84.0.0.output-13-invert        FALSE
+setp hm2_5i23.0.7i84.0.0.output-14-invert        FALSE
+setp hm2_5i23.0.7i84.0.0.output-15-invert        FALSE
+setp hm2_5i23.0.encoder.00.counter-mode        FALSE
+setp hm2_5i23.0.encoder.00.filter         TRUE
+setp hm2_5i23.0.encoder.00.index-invert        FALSE
+setp hm2_5i23.0.encoder.00.index-mask        FALSE
+setp hm2_5i23.0.encoder.00.index-mask-invert        FALSE
+setp hm2_5i23.0.encoder.00.scale            1
+setp hm2_5i23.0.encoder.00.sel0.invert_output        FALSE
+setp hm2_5i23.0.encoder.00.sel0.is_opendrain        FALSE
+setp hm2_5i23.0.encoder.00.vel-timeout          0.5
+setp hm2_5i23.0.encoder.01.counter-mode        FALSE
+setp hm2_5i23.0.encoder.01.filter         TRUE
+setp hm2_5i23.0.encoder.01.index-invert        FALSE
+setp hm2_5i23.0.encoder.01.index-mask        FALSE
+setp hm2_5i23.0.encoder.01.index-mask-invert        FALSE
+setp hm2_5i23.0.encoder.01.scale            1
+setp hm2_5i23.0.encoder.01.vel-timeout          0.5
+setp hm2_5i23.0.encoder.02.counter-mode        FALSE
+setp hm2_5i23.0.encoder.02.filter         TRUE
+setp hm2_5i23.0.encoder.02.index-invert        FALSE
+setp hm2_5i23.0.encoder.02.index-mask        FALSE
+setp hm2_5i23.0.encoder.02.index-mask-invert        FALSE
+setp hm2_5i23.0.encoder.02.scale            1
+setp hm2_5i23.0.encoder.02.vel-timeout          0.5
+setp hm2_5i23.0.encoder.03.counter-mode        FALSE
+setp hm2_5i23.0.encoder.03.filter         TRUE
+setp hm2_5i23.0.encoder.03.index-invert        FALSE
+setp hm2_5i23.0.encoder.03.index-mask        FALSE
+setp hm2_5i23.0.encoder.03.index-mask-invert        FALSE
+setp hm2_5i23.0.encoder.03.scale            1
+setp hm2_5i23.0.encoder.03.vel-timeout          0.5
+setp hm2_5i23.0.encoder.04.counter-mode        FALSE
+setp hm2_5i23.0.encoder.04.filter         TRUE
+setp hm2_5i23.0.encoder.04.index-invert        FALSE
+setp hm2_5i23.0.encoder.04.index-mask        FALSE
+setp hm2_5i23.0.encoder.04.index-mask-invert        FALSE
+setp hm2_5i23.0.encoder.04.scale            1
+setp hm2_5i23.0.encoder.04.vel-timeout          0.5
+setp hm2_5i23.0.encoder.05.counter-mode        FALSE
+setp hm2_5i23.0.encoder.05.filter         TRUE
+setp hm2_5i23.0.encoder.05.index-invert        FALSE
+setp hm2_5i23.0.encoder.05.index-mask        FALSE
+setp hm2_5i23.0.encoder.05.index-mask-invert        FALSE
+setp hm2_5i23.0.encoder.05.scale            1
+setp hm2_5i23.0.encoder.05.vel-timeout          0.5
+setp hm2_5i23.0.encoder.06.counter-mode        FALSE
+setp hm2_5i23.0.encoder.06.filter         TRUE
+setp hm2_5i23.0.encoder.06.index-invert        FALSE
+setp hm2_5i23.0.encoder.06.index-mask        FALSE
+setp hm2_5i23.0.encoder.06.index-mask-invert        FALSE
+setp hm2_5i23.0.encoder.06.scale            1
+setp hm2_5i23.0.encoder.06.sel0.invert_output        FALSE
+setp hm2_5i23.0.encoder.06.sel0.is_opendrain        FALSE
+setp hm2_5i23.0.encoder.06.vel-timeout          0.5
+setp hm2_5i23.0.gpio.024.invert_output        FALSE
+setp hm2_5i23.0.gpio.024.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.024.is_output        FALSE
+setp hm2_5i23.0.gpio.028.invert_output        FALSE
+setp hm2_5i23.0.gpio.028.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.028.is_output        FALSE
+setp hm2_5i23.0.gpio.029.invert_output        FALSE
+setp hm2_5i23.0.gpio.029.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.029.is_output        FALSE
+setp hm2_5i23.0.gpio.030.invert_output        FALSE
+setp hm2_5i23.0.gpio.030.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.030.is_output        FALSE
+setp hm2_5i23.0.gpio.031.invert_output        FALSE
+setp hm2_5i23.0.gpio.031.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.031.is_output        FALSE
+setp hm2_5i23.0.gpio.032.invert_output        FALSE
+setp hm2_5i23.0.gpio.032.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.032.is_output        FALSE
+setp hm2_5i23.0.gpio.033.invert_output        FALSE
+setp hm2_5i23.0.gpio.033.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.033.is_output        FALSE
+setp hm2_5i23.0.gpio.035.invert_output        FALSE
+setp hm2_5i23.0.gpio.035.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.035.is_output        FALSE
+setp hm2_5i23.0.gpio.036.invert_output        FALSE
+setp hm2_5i23.0.gpio.036.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.036.is_output        FALSE
+setp hm2_5i23.0.gpio.037.invert_output        FALSE
+setp hm2_5i23.0.gpio.037.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.037.is_output        FALSE
+setp hm2_5i23.0.gpio.038.invert_output        FALSE
+setp hm2_5i23.0.gpio.038.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.038.is_output        FALSE
+setp hm2_5i23.0.gpio.039.invert_output        FALSE
+setp hm2_5i23.0.gpio.039.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.039.is_output        FALSE
+setp hm2_5i23.0.gpio.040.invert_output        FALSE
+setp hm2_5i23.0.gpio.040.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.040.is_output        FALSE
+setp hm2_5i23.0.gpio.041.invert_output        FALSE
+setp hm2_5i23.0.gpio.041.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.041.is_output        FALSE
+setp hm2_5i23.0.gpio.042.invert_output        FALSE
+setp hm2_5i23.0.gpio.042.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.042.is_output        FALSE
+setp hm2_5i23.0.gpio.043.invert_output        FALSE
+setp hm2_5i23.0.gpio.043.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.043.is_output        FALSE
+setp hm2_5i23.0.gpio.044.invert_output        FALSE
+setp hm2_5i23.0.gpio.044.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.044.is_output        FALSE
+setp hm2_5i23.0.gpio.048.invert_output        FALSE
+setp hm2_5i23.0.gpio.048.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.048.is_output        FALSE
+setp hm2_5i23.0.gpio.049.invert_output        FALSE
+setp hm2_5i23.0.gpio.049.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.049.is_output        FALSE
+setp hm2_5i23.0.gpio.050.invert_output        FALSE
+setp hm2_5i23.0.gpio.050.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.050.is_output        FALSE
+setp hm2_5i23.0.gpio.051.invert_output        FALSE
+setp hm2_5i23.0.gpio.051.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.051.is_output        FALSE
+setp hm2_5i23.0.gpio.052.invert_output        FALSE
+setp hm2_5i23.0.gpio.052.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.052.is_output        FALSE
+setp hm2_5i23.0.gpio.053.invert_output        FALSE
+setp hm2_5i23.0.gpio.053.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.053.is_output        FALSE
+setp hm2_5i23.0.gpio.054.invert_output        FALSE
+setp hm2_5i23.0.gpio.054.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.054.is_output        FALSE
+setp hm2_5i23.0.gpio.055.invert_output        FALSE
+setp hm2_5i23.0.gpio.055.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.055.is_output        FALSE
+setp hm2_5i23.0.gpio.056.invert_output        FALSE
+setp hm2_5i23.0.gpio.056.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.056.is_output        FALSE
+setp hm2_5i23.0.gpio.057.invert_output        FALSE
+setp hm2_5i23.0.gpio.057.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.057.is_output        FALSE
+setp hm2_5i23.0.gpio.058.invert_output        FALSE
+setp hm2_5i23.0.gpio.058.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.058.is_output        FALSE
+setp hm2_5i23.0.gpio.059.invert_output        FALSE
+setp hm2_5i23.0.gpio.059.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.059.is_output        FALSE
+setp hm2_5i23.0.gpio.060.invert_output        FALSE
+setp hm2_5i23.0.gpio.060.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.060.is_output        FALSE
+setp hm2_5i23.0.gpio.061.invert_output        FALSE
+setp hm2_5i23.0.gpio.061.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.061.is_output        FALSE
+setp hm2_5i23.0.gpio.062.invert_output        FALSE
+setp hm2_5i23.0.gpio.062.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.062.is_output        FALSE
+setp hm2_5i23.0.gpio.063.invert_output        FALSE
+setp hm2_5i23.0.gpio.063.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.063.is_output        FALSE
+setp hm2_5i23.0.gpio.064.invert_output        FALSE
+setp hm2_5i23.0.gpio.064.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.064.is_output        FALSE
+setp hm2_5i23.0.gpio.065.invert_output        FALSE
+setp hm2_5i23.0.gpio.065.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.065.is_output        FALSE
+setp hm2_5i23.0.gpio.066.invert_output        FALSE
+setp hm2_5i23.0.gpio.066.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.066.is_output        FALSE
+setp hm2_5i23.0.gpio.067.invert_output        FALSE
+setp hm2_5i23.0.gpio.067.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.067.is_output        FALSE
+setp hm2_5i23.0.gpio.068.invert_output        FALSE
+setp hm2_5i23.0.gpio.068.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.068.is_output        FALSE
+setp hm2_5i23.0.gpio.069.invert_output        FALSE
+setp hm2_5i23.0.gpio.069.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.069.is_output        FALSE
+setp hm2_5i23.0.gpio.070.invert_output        FALSE
+setp hm2_5i23.0.gpio.070.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.070.is_output        FALSE
+setp hm2_5i23.0.gpio.071.invert_output        FALSE
+setp hm2_5i23.0.gpio.071.is_opendrain        FALSE
+setp hm2_5i23.0.gpio.071.is_output        FALSE
+setp hm2_5i23.0.io_error        FALSE
+setp hm2_5i23.0.pwmgen.00.0.enable.invert_output        FALSE
+setp hm2_5i23.0.pwmgen.00.0.enable.is_opendrain        FALSE
+setp hm2_5i23.0.pwmgen.00.1.enable.invert_output        FALSE
+setp hm2_5i23.0.pwmgen.00.1.enable.is_opendrain        FALSE
+setp hm2_5i23.0.pwmgen.00.offset-mode        FALSE
+setp hm2_5i23.0.pwmgen.00.out0.invert_output        FALSE
+setp hm2_5i23.0.pwmgen.00.out0.is_opendrain        FALSE
+setp hm2_5i23.0.pwmgen.00.out1.invert_output        FALSE
+setp hm2_5i23.0.pwmgen.00.out1.is_opendrain        FALSE
+setp hm2_5i23.0.pwmgen.00.output-type            1
+setp hm2_5i23.0.pwmgen.00.scale            1
+setp hm2_5i23.0.pwmgen.01.offset-mode        FALSE
+setp hm2_5i23.0.pwmgen.01.out0.invert_output        FALSE
+setp hm2_5i23.0.pwmgen.01.out0.is_opendrain        FALSE
+setp hm2_5i23.0.pwmgen.01.out1.invert_output        FALSE
+setp hm2_5i23.0.pwmgen.01.out1.is_opendrain        FALSE
+setp hm2_5i23.0.pwmgen.01.output-type            1
+setp hm2_5i23.0.pwmgen.01.scale            1
+setp hm2_5i23.0.pwmgen.02.offset-mode        FALSE
+setp hm2_5i23.0.pwmgen.02.out0.invert_output        FALSE
+setp hm2_5i23.0.pwmgen.02.out0.is_opendrain        FALSE
+setp hm2_5i23.0.pwmgen.02.out1.invert_output        FALSE
+setp hm2_5i23.0.pwmgen.02.out1.is_opendrain        FALSE
+setp hm2_5i23.0.pwmgen.02.output-type            1
+setp hm2_5i23.0.pwmgen.02.scale            1
+setp hm2_5i23.0.pwmgen.03.offset-mode        FALSE
+setp hm2_5i23.0.pwmgen.03.out0.invert_output        FALSE
+setp hm2_5i23.0.pwmgen.03.out0.is_opendrain        FALSE
+setp hm2_5i23.0.pwmgen.03.out1.invert_output        FALSE
+setp hm2_5i23.0.pwmgen.03.out1.is_opendrain        FALSE
+setp hm2_5i23.0.pwmgen.03.output-type            1
+setp hm2_5i23.0.pwmgen.03.scale            1
+setp hm2_5i23.0.pwmgen.04.offset-mode        FALSE
+setp hm2_5i23.0.pwmgen.04.out0.invert_output        FALSE
+setp hm2_5i23.0.pwmgen.04.out0.is_opendrain        FALSE
+setp hm2_5i23.0.pwmgen.04.out1.invert_output        FALSE
+setp hm2_5i23.0.pwmgen.04.out1.is_opendrain        FALSE
+setp hm2_5i23.0.pwmgen.04.output-type            1
+setp hm2_5i23.0.pwmgen.04.scale            1
+setp hm2_5i23.0.pwmgen.05.offset-mode        FALSE
+setp hm2_5i23.0.pwmgen.05.out0.invert_output        FALSE
+setp hm2_5i23.0.pwmgen.05.out0.is_opendrain        FALSE
+setp hm2_5i23.0.pwmgen.05.out1.invert_output        FALSE
+setp hm2_5i23.0.pwmgen.05.out1.is_opendrain        FALSE
+setp hm2_5i23.0.pwmgen.05.output-type            1
+setp hm2_5i23.0.pwmgen.05.scale            1
+setp hm2_5i23.0.pwmgen.pdm_frequency   0x00004E20
+setp hm2_5i23.0.pwmgen.pwm_frequency   0x00004E20
+setp hm2_5i23.0.read.tmax            0
+setp hm2_5i23.0.read_gpio.tmax            0
+setp hm2_5i23.0.sserial.00.tx0.invert_output        FALSE
+setp hm2_5i23.0.sserial.00.tx0.is_opendrain        FALSE
+setp hm2_5i23.0.sserial.00.txen0.invert_output        FALSE
+setp hm2_5i23.0.sserial.00.txen0.is_opendrain        FALSE
+setp hm2_5i23.0.sserial.port-0.fault-dec   0x00000001
+setp hm2_5i23.0.sserial.port-0.fault-inc   0x0000000A
+setp hm2_5i23.0.sserial.port-0.fault-lim   0x000000C8
+setp hm2_5i23.0.watchdog.timeout_ns   0x004C4B40
+setp hm2_5i23.0.write.tmax            0
+setp hm2_5i23.0.write_gpio.tmax            0
+setp th.tmax            0
+# realtime thread/function links
+addf hm2_5i23.0.read th
+addf hm2_5i23.0.write th
