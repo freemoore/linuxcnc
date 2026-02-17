@@ -1,0 +1,14 @@
+# load the Modbus driver
+loadrt hm2_modbus ports=[MODBUS](PORTS) mbccbs=[MODBUS](MBCCBS)
+
+addf hm2_[HOSTMOT2](BOARD).0.read         servo-thread
+addf siggen.0.update                      servo-thread
+addf hm2_modbus.0.process                 servo-thread
+addf hm2_[HOSTMOT2](BOARD).0.write        servo-thread
+
+       
+setp hm2_modbus.0.gs10.bus-voltage-00.scale .1
+setp hm2_modbus.0.gs10.frequency-command-00.scale .016667
+setp hm2_modbus.0.gs10.frequency-command-00.offset -30
+
+

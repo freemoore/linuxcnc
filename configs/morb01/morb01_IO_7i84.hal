@@ -1,0 +1,32 @@
+#setp [HMOT](CARD0).[HMOT](CARD1).output-00-invert 1
+net	  relay_4KAF1 [HMOT](CARD0).[HMOT](CARD1).output-00
+net   relay_4KAF2 [HMOT](CARD0).[HMOT](CARD1).output-01
+net	  relay_4KA43 [HMOT](CARD0).[HMOT](CARD1).output-03
+net	  relay_4KA1 [HMOT](CARD0).[HMOT](CARD1).output-07
+net	  relay_4KA59 [HMOT](CARD0).[HMOT](CARD1).output-08
+net	  relay_4KA58 [HMOT](CARD0).[HMOT](CARD1).output-09
+net	  relay_2KAM [HMOT](CARD0).[HMOT](CARD1).output-10
+net	  relay_2KAA [HMOT](CARD0).[HMOT](CARD1).output-11
+net	  relay_UNUSED_01 [HMOT](CARD0).[HMOT](CARD1).output-13
+
+net   x-servopack-fault [HMOT](CARD0).[HMOT](CARD1).input-02
+
+#		x-enable relay is relay-2KAX 
+net	  	x-enable			[HMOT](CARD0).[HMOT](CARD1).output-04
+#		y-enable-relay is relay-2KAY 
+net	  	y-enable 			[HMOT](CARD0).[HMOT](CARD1).output-05
+#	  	z-enable-relay is relay-2KAZ 
+net	  	z-enable			[HMOT](CARD0).[HMOT](CARD1).output-06
+#		relay-2KAZ1 is Z Brake
+net   	z-brake-release		[HMOT](CARD0).[HMOT](CARD1).output-12
+
+#setp 	[HMOT](CARD0).ssr.00.invert-01 1
+net spindle-cw  			[HMOT](CARD0).ssr.00.out-01
+#setp 	[HMOT](CARD0).ssr.00.invert-00 1
+net spindle-ccw 			[HMOT](CARD0).ssr.00.out-00
+
+## spindle relay should be on/off with machine enable, not M3/M5 command - VFD fault reset should be on oneshot with machine-is-enabled
+net spindle-enable 			[HMOT](CARD0).ssr.00.out-02
+#		spindle enable relay is relay-4KA42 
+net	  	machine-is-enabled		[HMOT](CARD0).[HMOT](CARD1).output-02
+net spindle-fault			[HMOT](CARD0).inmux.00.input-03-not

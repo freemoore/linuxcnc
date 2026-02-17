@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="0.4.8" editnum="1">
+    <name>asdfgh</name>
+    <author>freemoore</author>
+    <comment></comment>
+    <ports>
+        <port>
+            <name>Port</name>
+            <parity>No</parity>
+            <timeoutFirstByte>1000</timeoutFirstByte>
+            <flowControl>No</flowControl>
+            <serialPortName>/dev/ttyACM0</serialPortName>
+            <timeoutInterByte>50</timeoutInterByte>
+            <timeout>3000</timeout>
+            <type>RTU</type>
+            <host>localhost</host>
+            <maxconn>10</maxconn>
+            <dataBits>8</dataBits>
+            <stopBits>2</stopBits>
+            <baudRate>9600</baudRate>
+            <isBroadcastEnabled>false</isBroadcastEnabled>
+            <port>502</port>
+        </port>
+    </ports>
+    <windows></windows>
+</project>

@@ -1,0 +1,397 @@
+    1  sudo curl -fsSL https://tailscale.com/install.sh | sh
+    2  sudo tailscale up
+    3  exit
+    4  sudo gdebi synology-assistant_7.0.6-50085_amd64.deb 
+    5  sudo gdebi synology-drive-client-17885.x86_64.deb 
+    6  sudo gdebi mesact_2.1.8_amd64.deb 
+    7  sudo apt-get install git
+    8  sudo apt-get install gh
+    9  sudo apt-get install mbpoll
+   10  rm /etc/{initramfs/post-update.d/,kernel/{postinst.d/,postrm.d/}}z50-raspi-firmware
+   11  sudo rm /etc/{initramfs/post-update.d/,kernel/{postinst.d/,postrm.d/}}z50-raspi-firmware
+   12  apt purge raspi-firmware
+   13  sudo apt purge raspi-firmware
+   14  sudo apt update && sudo apt upgrade
+   15  mesaflash --device=ETHER --readhmid
+   16  mesaflash --device=ETHER --address=192.168.1.121 --readhmid
+   17  exit
+   18  mesaflash --addr 192.168.1.121 --device=ETHER --readhmid
+   19  sudo mesaflash --addr 192.168.1.121 --device=ETHER --readhmid
+   20  mesaflash --device=ETHER --address=192.168.1.121 --readhmid
+   21  mesaflash --addr 192.168.1.121 --device=ETHER --readhmid
+   22  mesaflash --device=ETHER --address=192.168.1.121 --readhmid
+   23  mesaflash --addr 192.168.1.121 --device=ETHER --readhmid
+   24  mesaflash --addr 192.168.1.121 --device=ETHER --readhmid > pinout.txt
+   25  mesaflash --addr 192.168.1.121 --device=ETHER --readhmid --dbname1 7i52s > pinout.txt
+   26  mesaflash --addr 192.168.1.121 --device=ETHER --readhmid --dbname1 7i52s > 7i52s_pinout.txt
+   27  mesaflash --addr 192.168.1.121 --device=ETHER --readhmid > pinout.txt
+   28  mesaflash --addr 192.168.1.121 --device=ETHER --reload
+   29  mesaflash --addr 192.168.1.121 --device=ETHER --readhmid
+   30  sudo nano /etc/network/interfaces
+   31  ping 8.8.8.8
+   32  ping www.news.com
+   33  sudo nano /etc/network/interfaces
+   34  exity
+   35  exit
+   36  sudo nano /etc/network/interfaces
+   37  mesaflash --addr 192.168.1.121 --device=ETHER --readhmid
+   38  history
+   39  locate libmesact
+   40  sudo locate libmesact
+   41  mesaflash --addr 192.168.1.121 --device=ETHER --readhmid
+   42  mesaflash --addr 192.168.1.121 --device=ETHER --readhmid > pinout1.pni
+   43  sudo mesaflash --addr 192.168.1.121 --device=ETHER --readhmid
+   44  sudo nano /etc/network/interfaces
+   45  mesaflash --addr 192.168.1.121 --device=ETHER --readhmid
+   46  ethtool -c eth0
+   47  sudo nano /etc/network/interfaces
+   48  sudo ifup --no-act eth0
+   49  sudo apt-get install ethtool
+   50  ethtool -c eth0
+   51  which ethtool
+   52  sudo apt-get install ethtool
+   53  ethtool --help
+   54  sudo ethtool -c eth0
+   55  ip link
+   56  sudo nano /etc/network/interfaces
+   57  ip link
+   58  sudo ethtool -c eth0
+   59  sudo ethtool -c eno1
+   60  ifup
+   61  sudo ifup
+   62  sudo ifup eno1
+   63  sudo ethtool -c eno1
+   64  sudo ifdown eno1
+   65  sudo ethtool -c eno1
+   66  sudo ethtool --help
+   67  sudo ethtool -c eno1
+   68  sudo ifup eno1
+   69  sudo ethtool -c eno1
+   70  sudo mesaflash --addr 192.168.1.121 --device=ETHER --readhmid
+   71  history | grep ifup
+   72  sudo ifup eno1
+   73  sudo ifdown eno1
+   74  sudo ifup eno1
+   75  ifconfig
+   76  sudo ifconfig
+   77  sudo ipconfig
+   78  ip
+   79  ethtool
+   80  sudo ethtool
+   81  sudo ethtool -h
+   82  history | grep interfaces
+   83  sudo nano /etc/network/interfaces
+   84  sudo mesaflash --addr 192.168.1.121 --device=ETHER --readhmid
+   85  sudo mesaflash --addr 10.10.10.10 --device=ETHER --readhmid
+   86  halrun morb01.hal
+   87  halrun morb01.ini
+   88  halrun -I morb01.ini 
+   89  halcmd --help
+   90  halcmd -help
+   91  halcmd ?
+   92  halcmd --?
+   93  halcmd
+   94  halcmd show
+   95  sudo apt-get install libmodbus-dev
+   96  exit
+   97  cd /dev
+   98  ls
+   99  ls | grep .tty
+  100  ls | grep tty
+  101  dmesg | grep tty
+  102  sudo dmesg | grep tty
+  103  dmesg -w
+  104  sudo dmesg -w
+  105  clear
+  106  journalctl -xe | grep mb2hal
+  107  sudo usermod -a -G adm $USER
+  108  journalctl -xe | grep mb2hal
+  109  ls
+  110  cd Do
+  111  cd Downloads/
+  112  ls
+  113  cd mbtools_0.4.8_amd64/
+  114  ls
+  115  pwd
+  116  history
+  117  ./client
+  118  git clone --recursive https://github.com/serhmarch/ModbusTools.git
+  119  cd ModbusTools
+  120  mkdir build
+  121  cd build
+  122  cmake
+  123  sudo apt-get install cmake
+  124  cmake
+  125  cmake ..
+  126  sudo apt-get install qt5
+  127  sudo apt-get install qt5config
+  128  sudo apt-get install qt
+  129  sudo apt install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
+  130  sudo apt install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools libqt5widgets5
+  131  cmake ..
+  132  sudo apt install qttools5-dev
+  133  cmake ..
+  134  sudo apt install doxygen
+  135  cmake ..
+  136  ls
+  137  cd ..
+  138  ls
+  139  find . -name "Modbus*" -type f -executable
+  140  cd ..
+  141  find . -name "Modbus*" -type f -executable
+  142  sudo usermod -a -G dialout $USER
+  143  ./ModbusTools/modbus/
+  144  ls
+  145  cd ModbusTools/
+  146  ls
+  147  cd modbus/
+  148  ls
+  149  cd ..
+  150  ./ModbusTools.pro
+  151  sudo ./ModbusTools.pro
+  152  ls
+  153  cd build/
+  154  ls
+  155  ./ModbusTools.pro
+  156  find . -name "Modbus*" -type f -executable
+  157  ls
+  158  cd modbus/
+  159  ls
+  160  cd ..
+  161  ls
+  162  ls -a
+  163  ls -l
+  164  make
+  165  ls
+  166  ./client
+  167  nano ~/Desktop/ModbusMaster.desktop
+  168  cd ..
+  169  lsw
+  170  ls
+  171  cd Desktop/
+  172  ls
+  173  chmod +x ~/Desktop/ModbusMaster.desktop
+  174  nano ~/Desktop/ModbusMaster.desktop
+  175  chmod +x ~/Desktop/ModbusTools.desktop
+  176  for addr in {1..10}; do   echo "Testing address $addr...";   mbpoll -a $addr -r 1 -c 1 -t 1 -b 9600 -P none -1 /dev/ttyUSB0 2>&1 | grep -v "Polling\|failed";   sleep 0.5; done
+  177  for addr in {1..10}; do   echo "Testing address $addr...";   mbpoll -a $addr -r 1 -c 1 -t 1 -b 9600 -P none -1 /dev/ttyUSB0 2>&1 | grep -v "Polling\|failed";   sleep 0.1; done
+  178  for addr in {1..10}; do   echo "Testing address $addr...";   mbpoll -a $addr -r 1 -c 1 -t 1 -b 9600 -P none -1 /dev/ttyUSB0 2>&1; done
+  179  sudo journalctl -xe | grep mb2hal
+  180  sudo journalctl -xe
+  181  sudo journalctl -xe | grep mb2hal
+  182  # Simple mbpoll test (adjust port/baud as needed):
+  183  mbpoll -a 1 -r 0 -c 16 -t 1 -b 9600 -P none /dev/ttyUSB0
+  184  mbpoll -a 1 -r 1 -c 16 -t 1 -b 9600 -P none /dev/ttyUSB0
+  185  lsusb
+  186  sudo lsusb
+  187  sudo apt-get install usbutils
+  188  lsusb
+  189  ls - /dev/ttyUSB*
+  190  ls -l /dev/ttyUSB*
+  191  ls -l /dev/ttyUSB0
+  192  sudo usermod -a -G dialout $USER
+  193  shutdown
+  194  sudo apt update && sudo apt upgrade
+  195  sudo apt autoremove
+  196  exit
+  197  sudo dpkg-reconfigure lightdm
+  198  exit
+  199  killall thunar
+  200  Thunar -q; thunar &
+  201  killall thunar
+  202  thunar
+  203  xfce4-panel --restart
+  204  exit
+  205  xfwm4 --replace &
+  206  locate xfwm
+  207  xfce4-settings-manager --reset
+  208  xfce4-settings-manager --help
+  209  xfce4-settings-manager -V
+  210  xfce4-settings-manager -d
+  211  xfce4-settings-manager -D
+  212  xfce4-settings-manager -dialog
+  213  xfce4-settings-manager --help
+  214  xfce4-settings-manager -d
+  215  xfce4-settings-manager -d 1
+  216  cat /dev/ttyUSB0 
+  217  sudo lsof | grep ttyUSB
+  218  for baud in 9600 19200 4800 2400; do   echo "=== Testing baud rate: $baud ===";   for addr in {1..20}; do     echo -n "  Address $addr: ";     timeout 1 mbpoll -a $addr -r 1 -c 1 -t 3 -b $baud -P none -1 /dev/ttyUSB0 2>&1 | head -1;   done; done
+  219  clear
+  220  lsusb | grep -i serial
+  221  lsusb | grep -i "485/|232|FTDI|CP210|CH340|PL2303"
+  222  lsusb | grep -i "485\|232|FTDI|CP210|CH340|PL2303"
+  223  lsusb
+  224  lsusb | grep -i PL2303
+  225  lsusb | grep -i 485\|232|FTDI|CP210|CH340|PL2303
+  226  lsusb | grep -i 485lsusb | grep -i pl2303
+  227  lsusb | grep -i PL2303
+  228  dmesg | tail -20
+  229  sudo dmesg | tail -20
+  230  echo "hello" > /dev/ttyUSB0 &
+  231  cat /dev/ttyUSB0
+  232  stty -F /dev/ttyUSB0 9600 -echo -echoe -echok~
+  233  stty -F /dev/ttyUSB0 9600 -echo -echoe -echok
+  234  python3 << EOF
+  235  import serial
+  236  ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
+  237  ser.rts = True  # Enable RTS
+  238  ser.dtr = True  # Enable DTR
+  239  print("RTS/DTR enabled")
+  240  ser.close()
+  241  EOF
+  242  sudo apt-get install python3-serial
+  243  mbpoll -a 1 -r 1 -c 1 -t 3 -b 9600 -P none -R /dev/ttyUSB0
+  244  which mbpol
+  245  which mbpoll
+  246  clear
+  247  mbpoll -a 1 -r 254 -c 1 -t 3 -b 115200 -P none -R -1 /dev/ttyUSB0
+  248  mbpoll -a 1 -r 254 -c 1 -t 3 -b 9600 -P none -R -1 /dev/ttyUSB0
+  249  mbpoll -a 1 -r 129 -c 16 -t 3 -b 115200 -P none -R -1 /dev/ttyUSB0
+  250  for addr in {1..20}; do   echo -n "Address $addr: ";   mbpoll -a $addr -r 254 -c 1 -t 3 -b 9600 -P none -R -1 /dev/ttyUSB0 2>&1 | grep -v "Polling\|Protocol\|Slave\|Communication\|Data type\|mbpoll\|Copyright\|This\|under"; done
+  251  mbpoll -a 255 -r 254 -c 1 -t 3 -b 9600 -P none -R -1 /dev/ttyUSB0
+  252  for addr in {1..63}; do   echo -n "Testing address $addr: ";   timeout 2 mbpoll -a $addr -r 254 -c 1 -t 3 -b 9600 -P none -R -1 /dev/ttyUSB0 2>&1 | tail -1; done
+  253  for addr in {63..255}; do   echo -n "Testing address $addr: ";   timeout 2 mbpoll -a $addr -r 254 -c 1 -t 3 -b 9600 -P none -R -1 /dev/ttyUSB0 2>&1 | tail -1; done
+  254  cler
+  255  clear
+  256  mbpoll -a 1 -r 254 -c 1 -t 3 -b 9600 -P none -R -1 /dev/ttyUSB0
+  257  python3 << 'EOF'
+  258  from pymodbus.client import ModbusSerialClient
+  259  client = ModbusSerialClient(port='/dev/ttyUSB0', baudrate=9600, timeout=1)
+  260  if client.connect():
+  261      for addr in range(1, 64):
+  262          result = client.read_holding_registers(address=254, count=1, slave=addr)
+  263          if not result.isError():
+  264              print(f"Found device at address {addr}! Value: {result.registers[0]}")
+  265              break
+  266      client.close()
+  267  else:
+  268      print("Failed to connect")
+  269  EOF
+  270  sudo apt-get install pymodbus
+  271  pip3 install pymodbus pyserial
+  272  sudo apt-get install python3-pip
+  273  pip3 install pymodbus pyserial
+  274  apt install python3 pymodbus pyserial
+  275  sudo apt install python3 pymodbus pyserial
+  276  sudo apt-get install pipx
+  277  sudo apt install python3 pymodbus pyserial
+  278  pip3 install pymodbus pyserial
+  279  pipx install pymodbus pyserial
+  280  pipx install pymodbus
+  281  pipx install pyserial
+  282  pipx ensurepath
+  283  exit
+  284  [200~python3 << 'EOF'
+  285  from pymodbus.client import ModbusSerialClient
+  286  client = ModbusSerialClient(port='/dev/ttyUSB0', baudrate=9600, timeout=1)
+  287  if client.connect():
+  288      for addr in range(1, 64):
+  289          result = client.read_holding_registers(address=254, count=1, slave=addr)
+  290          if not result.isError():
+  291              print(f"Found device at address {addr}! Value: {result.registers[0]}")
+  292              break
+  293      client.close()
+  294  else:
+  295      print("Failed to connect")
+  296  EOF~
+  297  python3 << 'EOF'
+  298  from pymodbus.client import ModbusSerialClient
+  299  client = ModbusSerialClient(port='/dev/ttyUSB0', baudrate=9600, timeout=1)
+  300  if client.connect():
+  301      for addr in range(1, 64):
+  302          result = client.read_holding_registers(address=254, count=1, slave=addr)
+  303          if not result.isError():
+  304              print(f"Found device at address {addr}! Value: {result.registers[0]}")
+  305              break
+  306      client.close()
+  307  else:
+  308      print("Failed to connect")
+  309  EOF
+  310  for addr in 1 2 3 4 5 6 7 8 9 10; do   echo "Address $addr:";   mbpoll -a $addr -r 254 -c 1 -t 3 -b 9600 -P none -R -1 /dev/ttyUSB0 2>&1 | tail -1; done
+  311  for addr in {1..20}; do   echo "Address $addr:";   mbpoll -a $addr -r 254 -c 1 -t 3 -b 9600 -P none -R -1 /dev/ttyUSB0 2>&1 | tail
+  312  for addr in {1..20}; do   echo "Address $addr:";   mbpoll -a $addr -r 254 -c 1 -t 3 -b 9600 -P none -R -1 /dev/ttyUSB0 2>&1 | tail
+  313  python3 << 'EOF'
+  314  from pymodbus.client import ModbusSerialClient
+  315  client = ModbusSerialClient(port='/dev/ttyUSB0', baudrate=9600, timeout=1)
+  316  if client.connect():
+  317      for addr in range(1, 64):
+  318          result = client.read_holding_registers(address=254, count=1, slave=addr)
+  319          if not result.isError():
+  320              print(f"Found device at address {addr}! Value: {result.registers[0]}")
+  321              break
+  322      client.close()
+  323  else:
+  324      print("Failed to connect")
+  325  EOF
+  326  pipx ensurepath
+  327  python3 << 'EOF'
+  328  from pymodbus.client import ModbusSerialClient
+  329  client = ModbusSerialClient(port='/dev/ttyUSB0', baudrate=9600, timeout=1)
+  330  if client.connect():
+  331      for addr in range(1, 64):
+  332          result = client.read_holding_registers(address=254, count=1, slave=addr)
+  333          if not result.isError():
+  334              print(f"Found device at address {addr}! Value: {result.registers[0]}")
+  335              break
+  336      client.close()
+  337  else:
+  338      print("Failed to connect")
+  339  EOF
+  340  pip3 install --user pymodbus pyserial
+  341  pip3 install --user pymodbus pyserial --break-system-packages
+  342  python3 << 'EOF'
+  343  from pymodbus.client import ModbusSerialClient
+  344  client = ModbusSerialClient(port='/dev/ttyUSB0', baudrate=9600, timeout=1)
+  345  if client.connect():
+  346      for addr in range(1, 64):
+  347          result = client.read_holding_registers(address=254, count=1, slave=addr)
+  348          if not result.isError():
+  349              print(f"Found device at address {addr}! Value: {result.registers[0]}")
+  350              break
+  351      client.close()
+  352  else:
+  353      print("Failed to connect")
+  354  EOF
+  355  python3 << 'EOF'
+  356  from pymodbus.client import ModbusSerialClient
+  357  client = ModbusSerialClient(port='/dev/ttyUSB0', baudrate=9600, timeout=1)
+  358  if client.connect():
+  359      for addr in range(1, 64):
+  360          result = client.read_holding_registers(address=254, count=1, unit=addr)
+  361          if not result.isError():
+  362              print(f"Found device at address {addr}! Value: {result.registers[0]}")
+  363              break
+  364      client.close()
+  365  else:
+  366      print("Failed to connect")
+  367  EOF
+  368  ls
+  369  cd Desktop/
+  370  python3 modbus\ reader.py 
+  371  python3 modbus_reader.py 
+  372  clear
+  373  which python3
+  374  python3 --version
+  375  pymodbus --version
+  376  python3 -c "import pymodbus; print(pymodbus.__version__)"
+  377  from pymodbus.client import ModbusSerialClient
+  378  import inspect
+  379  print(inspect.signature(ModbusSerialClient.read_holding_registers))
+  380  python3 modbus_reader.py 
+  381  python3 modbus_reader.py
+  382  python3 modbus_reader01.py
+  383  mbpoll -a 1 -r 254 -c 1 -t 3 -b 9600 -P none -1 /dev/ttyUSB0
+  384  strace -x -s 200 mbpoll -a 1 -r 254 -c 1 -t 3 -b 9600 -P none -1 /dev/ttyUSB0 2>&1 | grep read
+  385  mbpoll -a 2 -r 254 -c 1 -t 3 -b 9600 -P none -1 /dev/ttyUSB0
+  386  mbpoll -a 16 -r 254 -c 1 -t 3 -b 9600 -P none -1 /dev/ttyUSB0
+  387  mbpoll -a 32 -r 254 -c 1 -t 3 -b 9600 -P none -1 /dev/ttyUSB0
+  388  mbpoll -a 63 -r 254 -c 1 -t 3 -b 9600 -P none -1 /dev/ttyUSB0
+  389  halcmd show pin | grep card1_out
+  390  exit
+  391  ls
+  392  cd linuxcnc
+  393  ls
+  394  cd configs
+  395  cd ..
+  396  history
+  397  history > history.txt

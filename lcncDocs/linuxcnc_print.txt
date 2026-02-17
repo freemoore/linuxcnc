@@ -1,0 +1,27 @@
+RUN_IN_PLACE=no
+LINUXCNC_DIR=
+LINUXCNC_BIN_DIR=/usr/bin
+LINUXCNC_TCL_DIR=/usr/lib/tcltk/linuxcnc
+LINUXCNC_SCRIPT_DIR=
+LINUXCNC_RTLIB_DIR=/usr/lib/linuxcnc/modules
+LINUXCNC_CONFIG_DIR=
+LINUXCNC_LANG_DIR=/usr/lib/tcltk/linuxcnc/msgs
+INIVAR=inivar
+HALCMD=halcmd
+LINUXCNC_EMCSH=/usr/bin/wish8.6
+INIFILE=/home/freemoore/linuxcnc/configs/morb01/morb01.ini
+VERSION=1.1
+PARAMETER_FILE=linuxcnc.var
+TPMOD=
+HOMEMOD=
+TASK=milltask
+HALUI=halui
+DISPLAY=axis
+COORDINATES=XYZ
+KINEMATICS=trivkins coordinates=XYZ
+Starting LinuxCNC server program: linuxcncsvr
+Loading Real Time OS, RTAPI, and HAL_LIB modules
+Starting LinuxCNC IO program: io
+Starting HAL User Interface program: halui
+Removing HAL_LIB, RTAPI, and Real Time OS modules
+Removing NML shared memory segments

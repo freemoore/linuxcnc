@@ -1,0 +1,50 @@
+wire 576 	3YV66	...to box x30 spindleside
+wire 574	3YV65	not connected black and red pair in Z offset bundle
+wire 573	3YV64	foot in brake off
+wire 573	3YV63	foot in brake off
+wire 572	3YV62	tool release foot out brake on
+wire 571	3YV61	spindle brush height	A
+wire 570	3YV60	spindle brush height	B
+wire 569	3YV59	Main spindle Z offset top stage
+wire 568	3YV58	Main spindle Z offset mid stage
+wire 557	3YV57	Tool carousel DOWN
+wire 556	3YV56	Tool carousel UP
+wire 555	3YV55	Tool carousel IN 
+wire 554	3YV54	Tool carousel OUT
+wire 553	3YV53	spindle brush height	C	UP
+wire 552	3YV52	spindle brush height	C	DOWN
+wire 551	3YV51	Main spindle Z offset bottom stage DOWN
+wire 550	3YV50	Main spindle Z offset bottom stage UP
+wire 033	backstops/endstops for X-negative zone A
+wire 034	backstops for zone B
+wire 035	endstop zone B mid table
+wire 036	endstop zone C mid table (ram stuck but air OK)
+wire 037	backstops for zone C
+wire 038	backstops/endstops for X-positive zone D
+wire 040			rearmost inline Y gang tool
+wire 041			next inline Y gang tool
+wire 042			next inline Y gang tool
+wire 043			next inline Y gang tool
+wire 044			next inline Y gang tool
+wire 045			next inline Y gang tool
+wire 046			next inline Y gang tool
+wire 047			next inline Y gang tool
+wire 048			foremost inline Y gang tool 
+wire 049			(from x negative) tool 1 front row
+wire 050			tool 2 front row
+wire 051			at the T junction between Y gang and X gang
+wire 052			next inline X gang tool
+wire 053			next inline X gang tool
+wire 054			next inline X gang tool
+wire 055			next inline X gang tool
+wire 056			fucked
+wire 057			next inline X gang tool
+wire 058			next one forward in the Y gang
+wire 059			T-head for x-axis slitting/y axis drilling
+wire 060			T-head for y-axis slitting/x axis drilling
+wire 150	solenoid 4YV101 not connected - possibly dust extractor flap
+wire 293	solenoid 4YV125	not connected?
+wire 294	solenoid 4YV126 not connected - other end of 293
+wire 113	parallel to breakers 4QM5, 5QM12 and 4QM42, presume goes high if any of these trip - spindle-vacuum-gang-trip
+
+		

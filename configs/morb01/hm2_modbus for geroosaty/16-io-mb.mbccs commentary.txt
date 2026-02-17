@@ -1,0 +1,41 @@
+commentary removed from 16IO.mbccs
+
+<!--
+UM72 3-Board Configuration - BITFIELD METHOD
+Uses register 0x0070 for outputs and 0x00C0 for inputs
+
+This is the OPTIMAL configuration because:
+1. Register 0x0070 uses STANDARD boolean: 0=OFF, 1=ON (no conversion needed!)
+2. Very efficient: only 6 Modbus transactions per cycle (3 input reads + 3 output writes)
+3. Each board's 16 I/O packed into single 16-bit registers
+
+Boards: 3 @ addresses 0x01, 0x02, 0x03
+Total: 48 inputs + 48 outputs
+
+CRITICAL: This creates U32 HAL pins that need bit extraction in HAL!
+You'll need to use HAL components to pack/unpack individual bits.
+
+HAL Pins Created:
+  hm2_modbus.0.16IOMB01.inputs-all-00  (U32, bits 0-15 = inputs 1-16)
+  hm2_modbus.0.16IOMB01.outputs-all-00 (U32, bits 0-15 = outputs 1-16)
+  hm2_modbus.0.16IOMB02.inputs-all-00  (U32, bits 0-15 = inputs 1-16)
+  hm2_modbus.0.16IOMB02.outputs-all-00 (U32, bits 0-15 = outputs 1-16)
+  hm2_modbus.0.16IOMB03.inputs-all-00  (U32, bits 0-15 = inputs 1-16)
+  hm2_modbus.0.16IOMB03.outputs-all-00 (U32, bits 0-15 = outputs 1-16)
+
+Bit mapping: Bit 0 = Channel 1, Bit 15 = Channel 16
+-->
+   <!-- Initialize all outputs OFF (0x0000) on all boards -->
+   
+   <!-- ========== BOARD 1 (Address 0x01) ========== -->
+   <!-- Read all 16 inputs as single 16-bit word -->
+   
+   <!-- Write all 16 outputs as single 16-bit word -->
+   <!-- Bit N = 1 means output N+1 is ON, Bit N = 0 means output N+1 is OFF -->
+   
+      
+   <!-- ========== BOARD 2 (Address 0x02) ========== -->
+   
+      
+   <!-- ========== BOARD 3 (Address 0x03) ========== -->
+ 

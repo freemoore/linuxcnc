@@ -1,0 +1,10 @@
+Names with "pl" are for plasma setups
+Names with 'sdi" have step/dir index pins for homing to index with step/dir hardware
+Names with "pwm" typically replace some step/dir outputs with pwm/dir
+Names with "pm" have period measurement hardware
+Name with "os" have one-shot firmware
+Names with "pkt" have PktUART firmware for things like MODBUS
+
+sudo mesaflash --addr 10.10.10.10 --device=ETHER --write 7i97t_7i74d.bin
+
+

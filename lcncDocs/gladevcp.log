@@ -1,0 +1,7 @@
+2026-01-02 20:28:16,293 - GladeVCP - INFO - Logging to: /home/freemoore/gladevcp.log
+2026-01-02 20:28:16,676 - GladeVCP.QTVCP.QT_ISTAT - WARNING - INI Parsing Error, No DEFAULT_SPINDLE_0_SPEED Entry in DISPLAY, Using: 200
+2026-01-02 20:28:16,677 - GladeVCP.QTVCP.QT_ISTAT - WARNING - INI Parsing Error, No MIN_SPINDLE_0_SPEED Entry in DISPLAY, Using: 100
+2026-01-02 20:28:16,677 - GladeVCP.QTVCP.QT_ISTAT - WARNING - INI Parsing Error, No MAX_SPINDLE_0_SPEED Entry in DISPLAY, Using: 2500
+2026-01-02 20:28:16,677 - GladeVCP.QTVCP.QT_ISTAT - WARNING - INI Parsing Error, No MAX_SPINDLE_0_OVERRIDE Entry in DISPLAY, Using: 1
+2026-01-02 20:28:16,677 - GladeVCP.QTVCP.QT_ISTAT - WARNING - INI Parsing Error, No MIN_SPINDLE_0_OVERRIDE Entry in DISPLAY, Using: 0.5
+2026-01-02 20:28:16,677 - GladeVCP.QTVCP.QT_ISTAT - WARNING - Embedded tab configuration -invalid number of TAB_NAMES vs TAB_LOCATION - guessing default.

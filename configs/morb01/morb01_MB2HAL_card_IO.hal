@@ -1,0 +1,201 @@
+# Include your custom HAL commands here
+# This file will not be overwritten when you run PNCconf again
+
+# Load mb2hal
+loadusr -W mb2hal config=modbus_io.ini
+
+# Load weighted_sum for converting 16 output bits to bitmask (2 cards)
+loadrt weighted_sum wsum_sizes=16,16,16
+addf process_wsums servo-thread
+
+# ============================================
+# CARD 1 - Weighted Sum Setup
+# ============================================
+setp wsum.0.hold FALSE
+setp wsum.0.bit.0.weight 1
+setp wsum.0.bit.1.weight 2
+setp wsum.0.bit.2.weight 4
+setp wsum.0.bit.3.weight 8
+setp wsum.0.bit.4.weight 16
+setp wsum.0.bit.5.weight 32
+setp wsum.0.bit.6.weight 64
+setp wsum.0.bit.7.weight 128
+setp wsum.0.bit.8.weight 256
+setp wsum.0.bit.9.weight 512
+setp wsum.0.bit.10.weight 1024
+setp wsum.0.bit.11.weight 2048
+setp wsum.0.bit.12.weight 4096
+setp wsum.0.bit.13.weight 8192
+setp wsum.0.bit.14.weight 16384
+setp wsum.0.bit.15.weight 32768
+
+# Connect weighted sum output to modbus
+net card1-out-bitmask wsum.0.sum => mb2hal.card1_out.00.int
+
+# ============================================
+# CARD 2 - Weighted Sum Setup
+# ============================================
+setp wsum.1.hold FALSE
+setp wsum.1.bit.0.weight 1
+setp wsum.1.bit.1.weight 2
+setp wsum.1.bit.2.weight 4
+setp wsum.1.bit.3.weight 8
+setp wsum.1.bit.4.weight 16
+setp wsum.1.bit.5.weight 32
+setp wsum.1.bit.6.weight 64
+setp wsum.1.bit.7.weight 128
+setp wsum.1.bit.8.weight 256
+setp wsum.1.bit.9.weight 512
+setp wsum.1.bit.10.weight 1024
+setp wsum.1.bit.11.weight 2048
+setp wsum.1.bit.12.weight 4096
+setp wsum.1.bit.13.weight 8192
+setp wsum.1.bit.14.weight 16384
+setp wsum.1.bit.15.weight 32768
+
+# Connect weighted sum output to modbus
+net card2-out-bitmask wsum.1.sum => mb2hal.card2_out.00.int
+
+# ============================================
+# CARD 3 - Weighted Sum Setup
+# ============================================
+setp wsum.2.hold FALSE
+setp wsum.2.bit.0.weight 1
+setp wsum.2.bit.1.weight 2
+setp wsum.2.bit.2.weight 4
+setp wsum.2.bit.3.weight 8
+setp wsum.2.bit.4.weight 16
+setp wsum.2.bit.5.weight 32
+setp wsum.2.bit.6.weight 64
+setp wsum.2.bit.7.weight 128
+setp wsum.2.bit.8.weight 256
+setp wsum.2.bit.9.weight 512
+setp wsum.2.bit.10.weight 1024
+setp wsum.2.bit.11.weight 2048
+setp wsum.2.bit.12.weight 4096
+setp wsum.2.bit.13.weight 8192
+setp wsum.2.bit.14.weight 16384
+setp wsum.2.bit.15.weight 32768
+
+# Connect weighted sum output to modbus
+net card3-out-bitmask wsum.2.sum => mb2hal.card3_out.00.int
+
+# ============================================
+# CARD 1 - INPUTS
+# ============================================
+net MBcard01_input01 <= mb2hal.card1_in.00.int
+net MBcard01_input02 <= mb2hal.card1_in.01.int
+net MBcard01_input03 <= mb2hal.card1_in.02.int
+net MBcard01_input04 <= mb2hal.card1_in.03.int
+net MBcard01_input05 <= mb2hal.card1_in.04.int
+net MBcard01_input06 <= mb2hal.card1_in.05.int
+net MBcard01_input07 <= mb2hal.card1_in.06.int
+net MBcard01_input08 <= mb2hal.card1_in.07.int
+net MBcard01_input09 <= mb2hal.card1_in.08.int
+net MBcard01_input10 <= mb2hal.card1_in.09.int
+net MBcard01_input11 <= mb2hal.card1_in.10.int
+net MBcard01_input12 <= mb2hal.card1_in.11.int
+net MBcard01_input13 <= mb2hal.card1_in.12.int
+net MBcard01_input14 <= mb2hal.card1_in.13.int
+net MBcard01_input15 <= mb2hal.card1_in.14.int
+net MBcard01_input16 <= mb2hal.card1_in.15.int
+
+# ============================================
+# CARD 1 - OUTPUTS
+# ============================================
+net MBcard01_output01 => wsum.0.bit.0.in
+net MBcard01_output02 => wsum.0.bit.1.in
+net MBcard01_output03 => wsum.0.bit.2.in
+net MBcard01_output04 => wsum.0.bit.3.in
+net MBcard01_output05 => wsum.0.bit.4.in
+net MBcard01_output06 => wsum.0.bit.5.in
+net MBcard01_output07 => wsum.0.bit.6.in
+net MBcard01_output08 => wsum.0.bit.7.in
+net MBcard01_output09 => wsum.0.bit.8.in
+net MBcard01_output10 => wsum.0.bit.9.in
+net MBcard01_output11 => wsum.0.bit.10.in
+net MBcard01_output12 => wsum.0.bit.11.in
+net MBcard01_output13 => wsum.0.bit.12.in
+net MBcard01_output14 => wsum.0.bit.13.in
+net MBcard01_output15 => wsum.0.bit.14.in
+net MBcard01_output16 => wsum.0.bit.15.in
+
+# ============================================
+# CARD 2 - INPUTS
+# ============================================
+net MBcard02_input01 <= mb2hal.card2_in.00.int
+net MBcard02_input02 <= mb2hal.card2_in.01.int
+net MBcard02_input03 <= mb2hal.card2_in.02.int
+net MBcard02_input04 <= mb2hal.card2_in.03.int
+net MBcard02_input05 <= mb2hal.card2_in.04.int
+net MBcard02_input06 <= mb2hal.card2_in.05.int
+net MBcard02_input07 <= mb2hal.card2_in.06.int
+net MBcard02_input08 <= mb2hal.card2_in.07.int
+net MBcard02_input09 <= mb2hal.card2_in.08.int
+net MBcard02_input10 <= mb2hal.card2_in.09.int
+net MBcard02_input11 <= mb2hal.card2_in.10.int
+net MBcard02_input12 <= mb2hal.card2_in.11.int
+net MBcard02_input13 <= mb2hal.card2_in.12.int
+net MBcard02_input14 <= mb2hal.card2_in.13.int
+net MBcard02_input15 <= mb2hal.card2_in.14.int
+net MBcard02_input16 <= mb2hal.card2_in.15.int
+
+# ============================================
+# CARD 2 - OUTPUTS
+# ============================================
+net MBcard02_output01 => wsum.1.bit.0.in
+net MBcard02_output02 => wsum.1.bit.1.in
+net MBcard02_output03 => wsum.1.bit.2.in
+net MBcard02_output04 => wsum.1.bit.3.in
+net MBcard02_output05 => wsum.1.bit.4.in
+net MBcard02_output06 => wsum.1.bit.5.in
+net MBcard02_output07 => wsum.1.bit.6.in
+net MBcard02_output08 => wsum.1.bit.7.in
+net MBcard02_output09 => wsum.1.bit.8.in
+net MBcard02_output10 => wsum.1.bit.9.in
+net MBcard02_output11 => wsum.1.bit.10.in
+net MBcard02_output12 => wsum.1.bit.11.in
+net MBcard02_output13 => wsum.1.bit.12.in
+net MBcard02_output14 => wsum.1.bit.13.in
+net MBcard02_output15 => wsum.1.bit.14.in
+net MBcard02_output16 => wsum.1.bit.15.in
+
+# ============================================
+# CARD 3 - INPUTS
+# ============================================
+net MBcard03_input01 <= mb2hal.card3_in.00.int
+net MBcard03_input02 <= mb2hal.card3_in.01.int
+net MBcard03_input03 <= mb2hal.card3_in.02.int
+net MBcard03_input04 <= mb2hal.card3_in.03.int
+net MBcard03_input05 <= mb2hal.card3_in.04.int
+net MBcard03_input06 <= mb2hal.card3_in.05.int
+net MBcard03_input07 <= mb2hal.card3_in.06.int
+net MBcard03_input08 <= mb2hal.card3_in.07.int
+net MBcard03_input09 <= mb2hal.card3_in.08.int
+net MBcard03_input10 <= mb2hal.card3_in.09.int
+net MBcard03_input11 <= mb2hal.card3_in.10.int
+net MBcard03_input12 <= mb2hal.card3_in.11.int
+net MBcard03_input13 <= mb2hal.card3_in.12.int
+net MBcard03_input14 <= mb2hal.card3_in.13.int
+net MBcard03_input15 <= mb2hal.card3_in.14.int
+net MBcard03_input16 <= mb2hal.card3_in.15.int
+
+# ============================================
+# CARD 3 - OUTPUTS
+# ============================================
+net MBcard03_output01 => wsum.2.bit.0.in
+net MBcard03_output02 => wsum.2.bit.1.in
+net MBcard03_output03 => wsum.2.bit.2.in
+net MBcard03_output04 => wsum.2.bit.3.in
+net MBcard03_output05 => wsum.2.bit.4.in
+net MBcard03_output06 => wsum.2.bit.5.in
+net MBcard03_output07 => wsum.2.bit.6.in
+net MBcard03_output08 => wsum.2.bit.7.in
+net MBcard03_output09 => wsum.2.bit.8.in
+net MBcard03_output10 => wsum.2.bit.9.in
+net MBcard03_output11 => wsum.2.bit.10.in
+net MBcard03_output12 => wsum.2.bit.11.in
+net MBcard03_output13 => wsum.2.bit.12.in
+net MBcard03_output14 => wsum.2.bit.13.in
+net MBcard03_output15 => wsum.2.bit.14.in
+net MBcard03_output16 => wsum.2.bit.15.in

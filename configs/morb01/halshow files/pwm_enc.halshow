@@ -1,0 +1,18 @@
+# halshow watchlist created Sat Jan 24 17:01:27 GMT 2026
+
+pin+hm2_7i80.0.pwmgen.00.value
+pin+hm2_7i80.0.encoder.00.count
+pin+hm2_7i80.0.encoder.00.rawcounts
+pin+halui.axis.x.pos-commanded
+pin+halui.axis.x.pos-feedback
+pin+hm2_7i80.0.encoder.00.position
+pin+hm2_7i80.0.encoder.00.velocity
+pin+hm2_7i80.0.encoder.00.velocity-rpm
+pin+hm2_7i80.0.pwmgen.03.value
+pin+hm2_7i80.0.encoder.03.count
+pin+hm2_7i80.0.encoder.03.rawcounts
+pin+halui.axis.y.pos-commanded
+pin+halui.axis.y.pos-feedback
+pin+hm2_7i80.0.encoder.03.position
+pin+hm2_7i80.0.encoder.03.velocity
+pin+hm2_7i80.0.encoder.03.velocity-rpm

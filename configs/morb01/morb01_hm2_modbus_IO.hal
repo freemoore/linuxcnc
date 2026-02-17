@@ -1,0 +1,246 @@
+# Include your custom HAL commands here
+# This file will not be overwritten when you run PNCconf again
+
+# Load weighted_sum for converting 16 output bits to bitmask (2 cards)
+loadrt weighted_sum wsum_sizes=16,16,16
+loadrt conv_s32_u32 names=convsu1,convsu2,convsu3
+loadrt bitslice names=io-mb01-input,io-mb02-input,io-mb03-input personality=16,16,16
+
+addf process_wsums 		servo-thread
+addf convsu1			servo-thread
+addf convsu2			servo-thread
+addf convsu3			servo-thread
+addf io-mb01-input				servo-thread
+addf io-mb02-input				servo-thread
+addf io-mb03-input				servo-thread
+
+# ============================================
+# CARD 1 - Bitslice Setup fof Inputs
+# ============================================
+
+net io-mb01-allinputs	io-mb01-input.in
+net io-mb01-allinputs	hm2_modbus.0.io-mb-01.inputs-all-00
+
+# ============================================
+# CARD 1 - INPUTS
+# ============================================
+net io-mb01-in01 <= io-mb01-input.out-00
+net io-mb01-in02 <= io-mb01-input.out-01
+net io-mb01-in03 <= io-mb01-input.out-02
+net io-mb01-in04 <= io-mb01-input.out-03
+net io-mb01-in05 <= io-mb01-input.out-04
+net io-mb01-in06 <= io-mb01-input.out-05
+net io-mb01-in07 <= io-mb01-input.out-06
+net io-mb01-in08 <= io-mb01-input.out-07
+net io-mb01-in09 <= io-mb01-input.out-08
+net io-mb01-in10 <= io-mb01-input.out-09
+net io-mb01-in11 <= io-mb01-input.out-10
+net io-mb01-in12 <= io-mb01-input.out-11
+net io-mb01-in13 <= io-mb01-input.out-12
+net io-mb01-in14 <= io-mb01-input.out-13
+net io-mb01-in15 <= io-mb01-input.out-14
+net io-mb01-in16 <= io-mb01-input.out-15
+
+
+# ============================================
+# CARD 1 - Weighted Sum Setup for Outputs
+# ============================================
+
+setp wsum.0.hold FALSE
+setp wsum.0.bit.0.weight 1
+setp wsum.0.bit.1.weight 2
+setp wsum.0.bit.2.weight 4
+setp wsum.0.bit.3.weight 8
+setp wsum.0.bit.4.weight 16
+setp wsum.0.bit.5.weight 32
+setp wsum.0.bit.6.weight 64
+setp wsum.0.bit.7.weight 128
+setp wsum.0.bit.8.weight 256
+setp wsum.0.bit.9.weight 512
+setp wsum.0.bit.10.weight 1024
+setp wsum.0.bit.11.weight 2048
+setp wsum.0.bit.12.weight 4096
+setp wsum.0.bit.13.weight 8192
+setp wsum.0.bit.14.weight 16384
+setp wsum.0.bit.15.weight 32768
+
+# Connect weighted sum output to modbus
+net signed-bitmask1 wsum.0.sum
+net signed-bitmask1	convsu1.in
+net card1-out-bitmask convsu1.out
+net card1-out-bitmask hm2_modbus.0.io-mb-01.outputs-all-00
+
+# ============================================
+# CARD 1 - OUTPUTS
+# ============================================
+
+net io-mb01-out01 => wsum.0.bit.0.in
+net io-mb01-out02 => wsum.0.bit.1.in
+net io-mb01-out03 => wsum.0.bit.2.in
+net io-mb01-out04 => wsum.0.bit.3.in
+net io-mb01-out05 => wsum.0.bit.4.in
+net io-mb01-out06 => wsum.0.bit.5.in
+net io-mb01-out07 => wsum.0.bit.6.in
+net io-mb01-out08 => wsum.0.bit.7.in
+net io-mb01-out09 => wsum.0.bit.8.in
+net io-mb01-out10 => wsum.0.bit.9.in
+net io-mb01-out11 => wsum.0.bit.10.in
+net io-mb01-out12 => wsum.0.bit.11.in
+net io-mb01-out13 => wsum.0.bit.12.in
+net io-mb01-out14 => wsum.0.bit.13.in
+net io-mb01-out15 => wsum.0.bit.14.in
+net io-mb01-out16 => wsum.0.bit.15.in
+
+# ============================================
+# CARD 1 - Bitslice Setup fof Inputs
+# ============================================
+
+net io-mb02-allinputs	io-mb02-input.in
+net io-mb02-allinputs	hm2_modbus.0.io-mb-02.inputs-all-00
+
+# ============================================
+# CARD 2 - INPUTS
+# ============================================
+
+net io-mb02-in01 <= io-mb02-input.out-00
+net io-mb02-in02 <= io-mb02-input.out-01
+net io-mb02-in03 <= io-mb02-input.out-02
+net io-mb02-in04 <= io-mb02-input.out-03
+net io-mb02-in05 <= io-mb02-input.out-04
+net io-mb02-in06 <= io-mb02-input.out-05
+net io-mb02-in07 <= io-mb02-input.out-06
+net io-mb02-in08 <= io-mb02-input.out-07
+net io-mb02-in09 <= io-mb02-input.out-08
+net io-mb02-in10 <= io-mb02-input.out-09
+net io-mb02-in11 <= io-mb02-input.out-10
+net io-mb02-in12 <= io-mb02-input.out-11
+net io-mb02-in13 <= io-mb02-input.out-12
+net io-mb02-in14 <= io-mb02-input.out-13
+net io-mb02-in15 <= io-mb02-input.out-14
+net io-mb02-in16 <= io-mb02-input.out-15
+
+# ============================================
+# CARD 2 - Weighted Sum Setup for Outputs
+# ============================================
+
+setp wsum.1.hold FALSE
+setp wsum.1.bit.0.weight 1
+setp wsum.1.bit.1.weight 2
+setp wsum.1.bit.2.weight 4
+setp wsum.1.bit.3.weight 8
+setp wsum.1.bit.4.weight 16
+setp wsum.1.bit.5.weight 32
+setp wsum.1.bit.6.weight 64
+setp wsum.1.bit.7.weight 128
+setp wsum.1.bit.8.weight 256
+setp wsum.1.bit.9.weight 512
+setp wsum.1.bit.10.weight 1024
+setp wsum.1.bit.11.weight 2048
+setp wsum.1.bit.12.weight 4096
+setp wsum.1.bit.13.weight 8192
+setp wsum.1.bit.14.weight 16384
+setp wsum.1.bit.15.weight 32768
+
+# Connect weighted sum output to modbus
+net signed-bitmask2 wsum.1.sum
+net signed-bitmask2	convsu2.in
+net card2-out-bitmask convsu2.out
+net card2-out-bitmask hm2_modbus.0.io-mb-02.outputs-all-00
+
+# ============================================
+# CARD 2 - OUTPUTS
+# ============================================
+
+net io-mb02-out01 => wsum.1.bit.0.in
+net io-mb02-out02 => wsum.1.bit.1.in
+net io-mb02-out03 => wsum.1.bit.2.in
+net io-mb02-out04 => wsum.1.bit.3.in
+net io-mb02-out05 => wsum.1.bit.4.in
+net io-mb02-out06 => wsum.1.bit.5.in
+net io-mb02-out07 => wsum.1.bit.6.in
+net io-mb02-out08 => wsum.1.bit.7.in
+net io-mb02-out09 => wsum.1.bit.8.in
+net io-mb02-out10 => wsum.1.bit.9.in
+net io-mb02-out11 => wsum.1.bit.10.in
+net io-mb02-out12 => wsum.1.bit.11.in
+net io-mb02-out13 => wsum.1.bit.12.in
+net io-mb02-out14 => wsum.1.bit.13.in
+net io-mb02-out15 => wsum.1.bit.14.in
+net io-mb02-out16 => wsum.1.bit.15.in
+
+# ============================================
+# CARD 1 - Bitslice Setup fof Inputs
+# ============================================
+
+net io-mb03-allinputs	io-mb03-input.in
+net io-mb03-allinputs	hm2_modbus.0.io-mb-03.inputs-all-00
+
+# ============================================
+# CARD 3 - INPUTS
+# ============================================
+
+net io-mb03-in01 <= io-mb03-input.out-00
+net io-mb03-in02 <= io-mb03-input.out-01
+net io-mb03-in03 <= io-mb03-input.out-02
+net io-mb03-in04 <= io-mb03-input.out-03
+net io-mb03-in05 <= io-mb03-input.out-04
+net io-mb03-in06 <= io-mb03-input.out-05
+net io-mb03-in07 <= io-mb03-input.out-06
+net io-mb03-in08 <= io-mb03-input.out-07
+net io-mb03-in09 <= io-mb03-input.out-08
+net io-mb03-in10 <= io-mb03-input.out-09
+net io-mb03-in11 <= io-mb03-input.out-10
+net io-mb03-in12 <= io-mb03-input.out-11
+net io-mb03-in13 <= io-mb03-input.out-12
+net io-mb03-in14 <= io-mb03-input.out-13
+net io-mb03-in15 <= io-mb03-input.out-14
+net io-mb03-in16 <= io-mb03-input.out-15
+
+# ============================================
+# CARD 3 - Weighted Sum Setup for Outputs
+# ============================================
+
+setp wsum.2.hold FALSE
+setp wsum.2.bit.0.weight 1
+setp wsum.2.bit.1.weight 2
+setp wsum.2.bit.2.weight 4
+setp wsum.2.bit.3.weight 8
+setp wsum.2.bit.4.weight 16
+setp wsum.2.bit.5.weight 32
+setp wsum.2.bit.6.weight 64
+setp wsum.2.bit.7.weight 128
+setp wsum.2.bit.8.weight 256
+setp wsum.2.bit.9.weight 512
+setp wsum.2.bit.10.weight 1024
+setp wsum.2.bit.11.weight 2048
+setp wsum.2.bit.12.weight 4096
+setp wsum.2.bit.13.weight 8192
+setp wsum.2.bit.14.weight 16384
+setp wsum.2.bit.15.weight 32768
+
+# Connect weighted sum output to modbus
+net signed-bitmask3 wsum.2.sum
+net signed-bitmask3	convsu3.in
+net card3-out-bitmask convsu3.out
+net card3-out-bitmask hm2_modbus.0.io-mb-03.outputs-all-00
+
+# ============================================
+# CARD 3 - OUTPUTS
+# ============================================
+
+net io-mb03-out01 => wsum.2.bit.0.in
+net io-mb03-out02 => wsum.2.bit.1.in
+net io-mb03-out03 => wsum.2.bit.2.in
+net io-mb03-out04 => wsum.2.bit.3.in
+net io-mb03-out05 => wsum.2.bit.4.in
+net io-mb03-out06 => wsum.2.bit.5.in
+net io-mb03-out07 => wsum.2.bit.6.in
+net io-mb03-out08 => wsum.2.bit.7.in
+net io-mb03-out09 => wsum.2.bit.8.in
+net io-mb03-out10 => wsum.2.bit.9.in
+net io-mb03-out11 => wsum.2.bit.10.in
+net io-mb03-out12 => wsum.2.bit.11.in
+net io-mb03-out13 => wsum.2.bit.12.in
+net io-mb03-out14 => wsum.2.bit.13.in
+net io-mb03-out15 => wsum.2.bit.14.in
+net io-mb03-out16 => wsum.2.bit.15.in

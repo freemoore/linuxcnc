@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=ModbusTools
+Comment=Modbus RTU/TCP Client
+Exec=/home/freemoore/Downloads/mbtools_0.4.8_amd64/client
+Icon=utilities-terminal
+Terminal=false
+Categories=Development;

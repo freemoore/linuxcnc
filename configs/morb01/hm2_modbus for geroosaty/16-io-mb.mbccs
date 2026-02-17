@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<mesamodbus baudrate="9600" parity="N" interval="100" stopbits="1">
+ <devices>
+  <device name="io-mb-01" address="0x01"/>
+  <device name="io-mb-02" address="0x02"/>
+  <device name="io-mb-03" address="0x03"/>
+ </devices>
+ 
+ <initlist>
+
+   <command device="io-mb-01" address="0x0070" function="6">
+     <description>Board 1: All outputs OFF</description>
+     <data value="0"/>
+   </command>
+   <command device="io-mb-02" address="0x0070" function="6">
+     <description>Board 2: All outputs OFF</description>
+     <data value="0"/>
+   </command>
+   <command device="io-mb-03" address="0x0070" function="6">
+     <description>Board 3: All outputs OFF</description>
+     <data value="0"/>
+   </command>
+ </initlist>
+ 
+ <commands>
+
+   <command device="io-mb-01" address="0x00C0" function="3" name="inputs-all" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="io-mb-01" address="0x0070" function="6" name="outputs-all" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="io-mb-02" address="0x00C0" function="3" name="inputs-all" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="io-mb-02" address="0x0070" function="6" name="outputs-all" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="io-mb-03" address="0x00C0" function="3" name="inputs-all" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="io-mb-03" address="0x0070" function="6" name="outputs-all" haltype="HAL_U32" modbustype="U_AB"/>
+   
+ </commands>
+</mesamodbus>

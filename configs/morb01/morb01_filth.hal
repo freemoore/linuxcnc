@@ -1,0 +1,14 @@
+loadrt wcomp names=ydir
+ 
+addf ydir servo-thread
+setp ydir.in 0
+
+net y-output ydir.in 
+
+net yplusdir ydir.over
+#net yminusdir ydir.under 
+
+
+######7I42ta Terminal IO22 = 7i80 pin 046
+setp  hm2_7i80.0.gpio.046.is_output 1
+net yplusdir hm2_7i80.0.gpio.046.out

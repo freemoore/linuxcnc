@@ -1,0 +1,54 @@
+removing commentary from the um72_3boards_individual.mbccs file as per the man page this format may not allow this kind of xml comment. 
+
+<!--
+UM72 3-Board Configuration - INDIVIDUAL REGISTER METHOD
+Uses registers 0x0001-0x0010 for outputs, 0x0081-0x0090 for inputs
+
+This creates INDIVIDUAL HAL PINS for each I/O point (48 boolean-like pins total)
+
+Boards: 3 @ addresses 0x01, 0x02, 0x03  
+Total: 48 individual input pins + 48 individual output pins
+
+CRITICAL OUTPUT VALUE ENCODING:
+The output registers 0x0001-0x0010 use NON-STANDARD values:
+  Write 1 = Turn ON
+  Write 2 = Turn OFF
+You MUST use HAL scale component: gain=-1, offset=2
+
+Input registers 0x0081-0x0090 use STANDARD values:
+  Read 0 = No input (NPN high/floating)
+  Read 1 = Has input (NPN low)
+
+HAL Pins Created:
+Board 1:
+  Inputs:  hm2_modbus.0.um72_01.input-01-00 through input-16-00
+  Outputs: hm2_modbus.0.um72_01.output-01-00 through output-16-00
+Board 2:
+  Inputs:  hm2_modbus.0.um72_02.input-01-00 through input-16-00
+  Outputs: hm2_modbus.0.um72_02.output-01-00 through output-16-00
+Board 3:
+  Inputs:  hm2_modbus.0.um72_03.input-01-00 through input-16-00
+  Outputs: hm2_modbus.0.um72_03.output-01-00 through output-16-00
+-->
+
+
+   <!-- Initialize all outputs to OFF (value=2) on all 3 boards -->
+   <!-- BOARD 1 -->
+   
+   
+      
+   <!-- BOARD 2 -->
+      
+   <!-- BOARD 3 -->   
+   
+   <!-- ========== BOARD 1 (Address 0x01) ========== -->
+   <!-- Read Inputs: Function 03, Registers 0x0081-0x0090 -->
+   
+       
+   <!-- Write Outputs: Function 06, Registers 0x0001-0x0010 -->
+   
+      
+   <!-- ========== BOARD 2 (Address 0x02) ========== -->
+   
+      
+   <!-- ========== BOARD 3 (Address 0x03) ========== -->

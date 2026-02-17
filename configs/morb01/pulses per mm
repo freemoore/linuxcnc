@@ -1,0 +1,10 @@
+1024 steps per motor rev
+5 revs per 2 nut rev
+= 5120 steps per nut rev
+80mm per nut rev
+5120/80 = 64 steps per mm
+
+
+2048 steps per motor rev
+20mm per 1 rev 
+2048/20 = 102.4

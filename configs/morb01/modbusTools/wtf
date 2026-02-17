@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="0.4.8" editnum="3">
+    <name>asdfgh</name>
+    <author>freemoore</author>
+    <comment></comment>
+    <ports>
+        <port>
+            <name>Port</name>
+            <parity>No</parity>
+            <timeoutFirstByte>1000</timeoutFirstByte>
+            <flowControl>No</flowControl>
+            <serialPortName>/dev/ttyACM0</serialPortName>
+            <timeoutInterByte>50</timeoutInterByte>
+            <timeout>3000</timeout>
+            <type>RTU</type>
+            <host>localhost</host>
+            <maxconn>10</maxconn>
+            <dataBits>8</dataBits>
+            <stopBits>1</stopBits>
+            <baudRate>9600</baudRate>
+            <isBroadcastEnabled>false</isBroadcastEnabled>
+            <port>502</port>
+        </port>
+    </ports>
+    <devices>
+        <device>
+            <byteArrayFormat>Hex</byteArrayFormat>
+            <byteArraySeparator>\s</byteArraySeparator>
+            <byteOrder>LessSignifiedFirst</byteOrder>
+            <maxReadCoils>2000</maxReadCoils>
+            <maxReadDiscreteInputs>2000</maxReadDiscreteInputs>
+            <maxReadHoldingRegisters>125</maxReadHoldingRegisters>
+            <maxReadInputRegisters>125</maxReadInputRegisters>
+            <maxWriteMultipleCoils>1968</maxWriteMultipleCoils>
+            <maxWriteMultipleRegisters>123</maxWriteMultipleRegisters>
+            <name>Device</name>
+            <portName>Port</portName>
+            <registerOrder>R0R1R2R3</registerOrder>
+            <stringEncoding>UTF-8</stringEncoding>
+            <stringLengthType>ZerroEnded</stringLengthType>
+            <unit>1</unit>
+        </device>
+    </devices>
+    <windows></windows>
+</project>

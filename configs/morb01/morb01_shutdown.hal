@@ -1,0 +1,58 @@
+# Include your shutdown HAL commands here
+# This file will not be overwritten when you run PNCconf again
+
+# Shutdown all Modbus outputs to 0
+#setp mb2hal.card1_out.00.int 0
+#setp mb2hal.card2_out.00.int 0
+#setp mb2hal.card3_out.00.int 0
+
+# Shutdown - turn off all outputs by setting weighted_sum bits to 0
+
+sets MBcard01_output01 0
+sets MBcard01_output02 0
+sets MBcard01_output03 0
+sets MBcard01_output04 0
+sets MBcard01_output05 0
+sets MBcard01_output06 0
+sets MBcard01_output07 0
+sets MBcard01_output08 0
+sets MBcard01_output09 0
+sets MBcard01_output10 0
+sets MBcard01_output11 0
+sets MBcard01_output12 0
+sets MBcard01_output13 0
+sets MBcard01_output14 0
+sets MBcard01_output15 0
+sets MBcard01_output16 0
+sets MBcard02_output01 0
+sets MBcard02_output02 0
+sets MBcard02_output03 0
+sets MBcard02_output04 0
+sets MBcard02_output05 0
+sets MBcard02_output06 0
+sets MBcard02_output07 0
+sets MBcard02_output08 0
+sets MBcard02_output09 0
+sets MBcard02_output10 0
+sets MBcard02_output11 0
+sets MBcard02_output12 0
+sets MBcard02_output13 0
+sets MBcard02_output14 0
+sets MBcard02_output15 0
+sets MBcard02_output16 0
+sets MBcard03_output01 0
+sets MBcard03_output02 0
+sets MBcard03_output03 0
+sets MBcard03_output04 0
+sets MBcard03_output05 0
+sets MBcard03_output06 0
+sets MBcard03_output07 0
+sets MBcard03_output08 0
+sets MBcard03_output09 0
+sets MBcard03_output10 0
+sets MBcard03_output11 0
+sets MBcard03_output12 0
+sets MBcard03_output13 0
+sets MBcard03_output14 0
+sets MBcard03_output15 0
+sets MBcard03_output16 0

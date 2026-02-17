@@ -1,0 +1,109 @@
+######7I42ta Terminal IO00 = 7i80 pin 048
+setp  hm2_7i80.0.gpio.048.is_output 1
+setp  hm2_7i80.0.gpio.048.invert_output true
+net	  relay_4KAF1 hm2_7i80.0.gpio.048.out
+
+######7I42ta Terminal IO01 = 7i80 pin 049
+#setp  hm2_7i80.0.gpio.049.is_output 1
+#setp  hm2_7i80.0.gpio.049.invert_output true
+net   relay_4KAF2 hm2_7i80.0.gpio.049.out
+
+######7I42ta Terminal IO02 = 7i80 pin 050
+setp  hm2_7i80.0.gpio.050.is_output 1
+setp  hm2_7i80.0.gpio.050.invert_output true
+net	  relay_4KA42 hm2_7i80.0.gpio.050.out
+
+######7I42ta Terminal IO03 = 7i80 pin 051 
+setp  hm2_7i80.0.gpio.051.is_output 1
+setp  hm2_7i80.0.gpio.051.invert_output true
+net	  relay_4KA43 hm2_7i80.0.gpio.051.out
+
+######7I42ta Terminal IO04 = 7i80 pin 052 
+setp  hm2_7i80.0.gpio.052.is_output 1
+setp  hm2_7i80.0.gpio.052.invert_output true
+net	  relay_2KAX hm2_7i80.0.gpio.052.out
+
+######7I42ta Terminal IO05 = 7i80 pin 053 
+setp  hm2_7i80.0.gpio.053.is_output 1
+setp  hm2_7i80.0.gpio.053.invert_output true
+net	  relay_2KAY hm2_7i80.0.gpio.053.out
+
+######7I42ta Terminal IO06 = 7i80 pin 054 
+setp  hm2_7i80.0.gpio.054.is_output 1
+setp  hm2_7i80.0.gpio.054.invert_output true
+net	  relay_2KAZ hm2_7i80.0.gpio.054.out
+
+######7I42ta Terminal IO07 = 7i80 pin 055 
+setp  hm2_7i80.0.gpio.055.is_output 1
+setp  hm2_7i80.0.gpio.055.invert_output true
+net	  relay_4KA1 hm2_7i80.0.gpio.055.out
+
+######7I42ta Terminal IO08 = 7i80 pin 056
+setp  hm2_7i80.0.gpio.056.is_output 1
+net	  relay_4KA59 hm2_7i80.0.gpio.056.out
+
+######7I42ta Terminal IO09 = 7i80 pin 057
+setp  hm2_7i80.0.gpio.057.is_output 1
+net	  relay_4KA58 hm2_7i80.0.gpio.057.out
+
+######7I42ta Terminal IO10 = 7i80 pin 058
+setp  hm2_7i80.0.gpio.058.is_output 1
+net	  relay_2KAM hm2_7i80.0.gpio.058.out
+
+######7I42ta Terminal IO11 = 7i80 pin 059
+setp  hm2_7i80.0.gpio.059.is_output 1
+net	  relay_2KAA hm2_7i80.0.gpio.059.out
+
+######7I42ta Terminal IO12 = 7i80 pin 060
+setp  hm2_7i80.0.gpio.060.is_output 1
+net z-enable_relay_2KAZ1_ZBRAKE hm2_7i80.0.gpio.060.out
+
+######7I42ta Terminal IO13 = 7i80 pin 061
+setp  hm2_7i80.0.gpio.061.is_output 1
+net	  relay_UNUSED_03 hm2_7i80.0.gpio.061.out
+
+######7I42ta Terminal IO14 = 7i80 pin 062
+setp  hm2_7i80.0.gpio.062.is_output 1
+net	  relay_UNUSED_02 hm2_7i80.0.gpio.062.out
+
+######7I42ta Terminal IO15 = 7i80 pin 063
+setp  hm2_7i80.0.gpio.063.is_output 1
+net	  relay_UNUSED_03 hm2_7i80.0.gpio.063.out
+
+######7I42ta Terminal IO16 = 7i80 pin 064
+setp  hm2_7i80.0.gpio.064.is_output 1
+net	  relay_UNUSED_02 hm2_7i80.0.gpio.064.out
+
+######7I42ta Terminal IO17 = 7i80 pin 065
+setp  hm2_7i80.0.gpio.065.is_output 1
+net	  relay_UNUSED_01 hm2_7i80.0.gpio.065.out
+
+######7I42ta Terminal IO18 = 7i80 pin 066
+setp  hm2_7i80.0.gpio.066.is_output 1
+setp  hm2_7i80.0.gpio.066.invert_output true
+net	  relay_4KAF1 hm2_7i80.0.gpio.066.out
+
+######7I42ta Terminal IO19 = 7i80 pin 067
+setp  hm2_7i80.0.gpio.067.is_output 1
+setp  hm2_7i80.0.gpio.067.invert_output true
+net	  relay_4KAF1 hm2_7i80.0.gpio.067.out
+
+######7I42ta Terminal IO20 = 7i80 pin 068
+setp  hm2_7i80.0.gpio.068.is_output 1
+setp  hm2_7i80.0.gpio.068.invert_output true
+net	  relay_4KAF1 hm2_7i80.0.gpio.068.out
+
+######7I42ta Terminal IO21 = 7i80 pin 069
+setp  hm2_7i80.0.gpio.069.is_output 1
+setp  hm2_7i80.0.gpio.069.invert_output true
+net	  relay_4KAF1 hm2_7i80.0.gpio.069.out
+
+######7I42ta Terminal IO22 = 7i80 pin 070
+setp  hm2_7i80.0.gpio.070.is_output 1
+setp  hm2_7i80.0.gpio.070.invert_output true
+net	  relay_4KAF1 hm2_7i80.0.gpio.070.out
+
+######7I42ta Terminal IO23 = 7i80 pin 71
+setp  hm2_7i80.0.gpio.070.is_output 1
+setp  hm2_7i80.0.gpio.070.invert_output true
+net	  relay_4KAF1 hm2_7i80.0.gpio.071.out

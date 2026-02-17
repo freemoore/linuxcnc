@@ -1,0 +1,16 @@
+# halshow watchlist created Thu Feb 12 19:00:31 GMT 2026
+
+pin+halui.estop.activate
+pin+halui.estop.is-activated
+pin+halui.estop.reset
+pin+motion.motion-enabled
+sig+machine-is-enabled
+pin+iocontrol.0.emc-enable-in
+pin+iocontrol.0.user-enable-out
+pin+iocontrol.0.user-request-enable
+pin+estop-latch.0.fault-in
+pin+estop-latch.0.fault-out
+pin+estop-latch.0.ok-in
+pin+estop-latch.0.ok-out
+pin+estop-latch.0.reset
+pin+hm2_7i97.0.inmux.00.input-08

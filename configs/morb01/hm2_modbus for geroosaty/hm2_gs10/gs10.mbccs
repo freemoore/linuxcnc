@@ -1,0 +1,24 @@
+<mesamodbus baudrate="38400" parity="N" interval="1000" stopbits="2">
+ <devices>
+  <device name="gs10" address="0x01"/>
+ </devices>
+ <initlist> 
+   <command device="gs10" address="0x2000" function="W_REGISTER">
+     <description> Zero Operation</description>
+     <data value="0"/>
+  </command> 
+   <command device="gs10" address="0x2001" function="W_REGISTER">
+     <description>Zero Frequency</description>
+     <data value="0"/>
+  </command>   
+ </initlist>
+ <commands>
+   <command device="gs10" address="0x0611" function="R_REGISTERS" name="error-code"  haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="gs10" address="0x2101" function="R_REGISTERS" name="status"  haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="gs10" address="0x2104" function="R_REGISTERS" name="output-current"  haltype="HAL_FLOAT" modbustype="U_AB" count="1"/>
+   <command device="gs10" address="0x2105" function="R_REGISTERS" name="bus-voltage"  haltype="HAL_FLOAT" modbustype="U_AB" count="1"/>
+   <command device="gs10" address="0x210C" function="R_REGISTERS" name="motor-speed"  haltype="HAL_FLOAT" modbustype="U_AB" count="1"/>
+   <command device="gs10" address="0x2001" function="W_REGISTER"  name="frequency-command"  haltype="HAL_FLOAT" modbustype="U_AB"/>
+   <command device="gs10" address="0x2000" function="W_REGISTER"  name="operation"  haltype="HAL_U32" modbustype="U_AB"/>
+ </commands>
+</mesamodbus>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+
+
+<mesamodbus baudrate="9600" parity="N" interval="100" stopbits="1">
+ <devices>
+  <device address="0x01" name="um72-01"/>
+  <device address="0x02" name="um72-02"/>
+  <device address="0x03" name="um72-03"/>
+ </devices>
+
+ <initlist>
+   <command device="um72-01" address="0x0001" function="6"><description>B1-CH1 OFF</description><data value="0"/></command>
+   <command device="um72-01" address="0x0002" function="6"><description>B1-CH2 OFF</description><data value="0"/></command>
+   <command device="um72-01" address="0x0003" function="6"><description>B1-CH3 OFF</description><data value="0"/></command>
+   <command device="um72-01" address="0x0004" function="6"><description>B1-CH4 OFF</description><data value="0"/></command>
+   <command device="um72-01" address="0x0005" function="6"><description>B1-CH5 OFF</description><data value="0"/></command>
+   <command device="um72-01" address="0x0006" function="6"><description>B1-CH6 OFF</description><data value="0"/></command>
+   <command device="um72-01" address="0x0007" function="6"><description>B1-CH7 OFF</description><data value="0"/></command>
+   <command device="um72-01" address="0x0008" function="6"><description>B1-CH8 OFF</description><data value="0"/></command>
+   <command device="um72-01" address="0x0009" function="6"><description>B1-CH9 OFF</description><data value="0"/></command>
+   <command device="um72-01" address="0x000A" function="6"><description>B1-CH10 OFF</description><data value="0"/></command>
+   <command device="um72-01" address="0x000B" function="6"><description>B1-CH11 OFF</description><data value="0"/></command>
+   <command device="um72-01" address="0x000C" function="6"><description>B1-CH12 OFF</description><data value="0"/></command>
+   <command device="um72-01" address="0x000D" function="6"><description>B1-CH13 OFF</description><data value="0"/></command>
+   <command device="um72-01" address="0x000E" function="6"><description>B1-CH14 OFF</description><data value="0"/></command>
+   <command device="um72-01" address="0x000F" function="6"><description>B1-CH15 OFF</description><data value="0"/></command>
+   <command device="um72-01" address="0x0010" function="6"><description>B1-CH16 OFF</description><data value="0"/></command>
+
+   <command device="um72-02" address="0x0001" function="6"><description>B2-CH1 OFF</description><data value="0"/></command>
+   <command device="um72-02" address="0x0002" function="6"><description>B2-CH2 OFF</description><data value="0"/></command>
+   <command device="um72-02" address="0x0003" function="6"><description>B2-CH3 OFF</description><data value="0"/></command>
+   <command device="um72-02" address="0x0004" function="6"><description>B2-CH4 OFF</description><data value="0"/></command>
+   <command device="um72-02" address="0x0005" function="6"><description>B2-CH5 OFF</description><data value="0"/></command>
+   <command device="um72-02" address="0x0006" function="6"><description>B2-CH6 OFF</description><data value="0"/></command>
+   <command device="um72-02" address="0x0007" function="6"><description>B2-CH7 OFF</description><data value="0"/></command>
+   <command device="um72-02" address="0x0008" function="6"><description>B2-CH8 OFF</description><data value="0"/></command>
+   <command device="um72-02" address="0x0009" function="6"><description>B2-CH9 OFF</description><data value="0"/></command>
+   <command device="um72-02" address="0x000A" function="6"><description>B2-CH10 OFF</description><data value="0"/></command>
+   <command device="um72-02" address="0x000B" function="6"><description>B2-CH11 OFF</description><data value="0"/></command>
+   <command device="um72-02" address="0x000C" function="6"><description>B2-CH12 OFF</description><data value="0"/></command>
+   <command device="um72-02" address="0x000D" function="6"><description>B2-CH13 OFF</description><data value="0"/></command>
+   <command device="um72-02" address="0x000E" function="6"><description>B2-CH14 OFF</description><data value="0"/></command>
+   <command device="um72-02" address="0x000F" function="6"><description>B2-CH15 OFF</description><data value="0"/></command>
+   <command device="um72-02" address="0x0010" function="6"><description>B2-CH16 OFF</description><data value="0"/></command>
+
+   <command device="um72-03" address="0x0001" function="6"><description>B3-CH1 OFF</description><data value="0"/></command>
+   <command device="um72-03" address="0x0002" function="6"><description>B3-CH2 OFF</description><data value="0"/></command>
+   <command device="um72-03" address="0x0003" function="6"><description>B3-CH3 OFF</description><data value="0"/></command>
+   <command device="um72-03" address="0x0004" function="6"><description>B3-CH4 OFF</description><data value="0"/></command>
+   <command device="um72-03" address="0x0005" function="6"><description>B3-CH5 OFF</description><data value="0"/></command>
+   <command device="um72-03" address="0x0006" function="6"><description>B3-CH6 OFF</description><data value="0"/></command>
+   <command device="um72-03" address="0x0007" function="6"><description>B3-CH7 OFF</description><data value="0"/></command>
+   <command device="um72-03" address="0x0008" function="6"><description>B3-CH8 OFF</description><data value="0"/></command>
+   <command device="um72-03" address="0x0009" function="6"><description>B3-CH9 OFF</description><data value="0"/></command>
+   <command device="um72-03" address="0x000A" function="6"><description>B3-CH10 OFF</description><data value="0"/></command>
+   <command device="um72-03" address="0x000B" function="6"><description>B3-CH11 OFF</description><data value="0"/></command>
+   <command device="um72-03" address="0x000C" function="6"><description>B3-CH12 OFF</description><data value="0"/></command>
+   <command device="um72-03" address="0x000D" function="6"><description>B3-CH13 OFF</description><data value="0"/></command>
+   <command device="um72-03" address="0x000E" function="6"><description>B3-CH14 OFF</description><data value="0"/></command>
+   <command device="um72-03" address="0x000F" function="6"><description>B3-CH15 OFF</description><data value="0"/></command>
+   <command device="um72-03" address="0x0010" function="6"><description>B3-CH16 OFF</description><data value="0"/></command>
+ </initlist>
+ 
+ <commands>
+   <command device="um72-01" address="0x0081" function="3" name="input-01" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-01" address="0x0082" function="3" name="input-02" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-01" address="0x0083" function="3" name="input-03" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-01" address="0x0084" function="3" name="input-04" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-01" address="0x0085" function="3" name="input-05" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-01" address="0x0086" function="3" name="input-06" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-01" address="0x0087" function="3" name="input-07" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-01" address="0x0088" function="3" name="input-08" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-01" address="0x0089" function="3" name="input-09" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-01" address="0x008A" function="3" name="input-10" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-01" address="0x008B" function="3" name="input-11" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-01" address="0x008C" function="3" name="input-12" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-01" address="0x008D" function="3" name="input-13" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-01" address="0x008E" function="3" name="input-14" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-01" address="0x008F" function="3" name="input-15" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-01" address="0x0090" function="3" name="input-16" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+
+   <command device="um72-01" address="0x0001" function="6" name="output-01" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-01" address="0x0002" function="6" name="output-02" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-01" address="0x0003" function="6" name="output-03" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-01" address="0x0004" function="6" name="output-04" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-01" address="0x0005" function="6" name="output-05" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-01" address="0x0006" function="6" name="output-06" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-01" address="0x0007" function="6" name="output-07" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-01" address="0x0008" function="6" name="output-08" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-01" address="0x0009" function="6" name="output-09" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-01" address="0x000A" function="6" name="output-10" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-01" address="0x000B" function="6" name="output-11" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-01" address="0x000C" function="6" name="output-12" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-01" address="0x000D" function="6" name="output-13" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-01" address="0x000E" function="6" name="output-14" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-01" address="0x000F" function="6" name="output-15" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-01" address="0x0010" function="6" name="output-16" haltype="HAL_U32" modbustype="U_AB"/>
+
+   <command device="um72-02" address="0x0081" function="3" name="input-01" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-02" address="0x0082" function="3" name="input-02" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-02" address="0x0083" function="3" name="input-03" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-02" address="0x0084" function="3" name="input-04" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-02" address="0x0085" function="3" name="input-05" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-02" address="0x0086" function="3" name="input-06" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-02" address="0x0087" function="3" name="input-07" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-02" address="0x0088" function="3" name="input-08" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-02" address="0x0089" function="3" name="input-09" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-02" address="0x008A" function="3" name="input-10" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-02" address="0x008B" function="3" name="input-11" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-02" address="0x008C" function="3" name="input-12" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-02" address="0x008D" function="3" name="input-13" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-02" address="0x008E" function="3" name="input-14" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-02" address="0x008F" function="3" name="input-15" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-02" address="0x0090" function="3" name="input-16" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   
+   <command device="um72-02" address="0x0001" function="6" name="output-01" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-02" address="0x0002" function="6" name="output-02" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-02" address="0x0003" function="6" name="output-03" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-02" address="0x0004" function="6" name="output-04" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-02" address="0x0005" function="6" name="output-05" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-02" address="0x0006" function="6" name="output-06" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-02" address="0x0007" function="6" name="output-07" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-02" address="0x0008" function="6" name="output-08" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-02" address="0x0009" function="6" name="output-09" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-02" address="0x000A" function="6" name="output-10" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-02" address="0x000B" function="6" name="output-11" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-02" address="0x000C" function="6" name="output-12" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-02" address="0x000D" function="6" name="output-13" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-02" address="0x000E" function="6" name="output-14" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-02" address="0x000F" function="6" name="output-15" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-02" address="0x0010" function="6" name="output-16" haltype="HAL_U32" modbustype="U_AB"/>
+
+   <command device="um72-03" address="0x0081" function="3" name="input-01" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-03" address="0x0082" function="3" name="input-02" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-03" address="0x0083" function="3" name="input-03" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-03" address="0x0084" function="3" name="input-04" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-03" address="0x0085" function="3" name="input-05" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-03" address="0x0086" function="3" name="input-06" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-03" address="0x0087" function="3" name="input-07" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-03" address="0x0088" function="3" name="input-08" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-03" address="0x0089" function="3" name="input-09" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-03" address="0x008A" function="3" name="input-10" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-03" address="0x008B" function="3" name="input-11" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-03" address="0x008C" function="3" name="input-12" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-03" address="0x008D" function="3" name="input-13" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-03" address="0x008E" function="3" name="input-14" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-03" address="0x008F" function="3" name="input-15" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="um72-03" address="0x0090" function="3" name="input-16" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   
+   <command device="um72-03" address="0x0001" function="6" name="output-01" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-03" address="0x0002" function="6" name="output-02" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-03" address="0x0003" function="6" name="output-03" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-03" address="0x0004" function="6" name="output-04" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-03" address="0x0005" function="6" name="output-05" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-03" address="0x0006" function="6" name="output-06" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-03" address="0x0007" function="6" name="output-07" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-03" address="0x0008" function="6" name="output-08" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-03" address="0x0009" function="6" name="output-09" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-03" address="0x000A" function="6" name="output-10" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-03" address="0x000B" function="6" name="output-11" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-03" address="0x000C" function="6" name="output-12" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-03" address="0x000D" function="6" name="output-13" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-03" address="0x000E" function="6" name="output-14" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-03" address="0x000F" function="6" name="output-15" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="um72-03" address="0x0010" function="6" name="output-16" haltype="HAL_U32" modbustype="U_AB"/>
+   
+ </commands>
+</mesamodbus>
