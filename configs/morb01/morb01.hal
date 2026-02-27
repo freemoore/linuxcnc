@@ -4,12 +4,12 @@
 loadrt [KINS]KINEMATICS
 loadrt [EMCMOT]EMCMOT servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[KINS]JOINTS
 loadrt hostmot2
-#loadrt hm2_eth board_ip="10.10.10.10" config="num_encoders=6 num_pwmgens=6 num_pktuarts=1 sserial_port_0=0xxxxxxx" 
+
 loadrt hm2_eth board_ip="10.10.10.10" config="num_encoders=6 num_pwmgens=6 num_pktuarts=1 sserial_port_0=0000000" 
 
-loadrt hm2_modbus ports=[HMOT](CARD0).pktuart.0 mbccbs=16-io-mb.mbccb
-#loadrt hm2_modbus ports=[HMOT](CARD0).pktuart.0 mbccbs=um72-allpins.mbccb
-
+#loadrt hm2_modbus ports=[HMOT](CARD0).pktuart.0 mbccbs=16-io-mb.mbccb
+#loadrt hm2_modbus ports=[HMOT](CARD0).pktuart.0 mbccbs=at903vfd.mbccb
+loadrt hm2_modbus ports=[HMOT](CARD0).pktuart.0 mbccbs=hs321vfd.mbccb
 
 setp    [HMOT](CARD0).pwmgen.pwm_frequency 75000
 setp    [HMOT](CARD0).watchdog.timeout_ns 10000000
@@ -23,14 +23,17 @@ addf pid.x.do-pid-calcs       servo-thread
 addf pid.y.do-pid-calcs       servo-thread
 addf pid.z.do-pid-calcs       servo-thread
 addf pid.s.do-pid-calcs       servo-thread
-addf hm2_modbus.0.process		servo-thread
-addf [HMOT](CARD0).write         servo-thread
-#setp [HMOT](CARD0).dpll.01.timer-us -50
 
+# Add any functions here that process data that will be sent to
+# the Modbus device(s).
+addf hm2_modbus.0.process		servo-thread
+# Add any functions here that process data received from the
+# Modbus device(s). 
+
+addf [HMOT](CARD0).write         servo-thread
 
 
 # --- HOME-X ---
-net home-x      <=	[HMOT](CARD0).inmux.00.input-00
 #*******************
 #  AXIS X JOINT 0
 #*******************
@@ -64,12 +67,13 @@ net x-pos-fb               <=  	[HMOT](CARD0).encoder.00.position
 net x-vel-fb               <=  	[HMOT](CARD0).encoder.00.velocity
 net x-pos-fb               =>  	joint.0.motor-pos-fb
 net x-pos-rawcounts        <=  	[HMOT](CARD0).encoder.00.rawcounts
+
 # ---setup home / limit switch signals---
+net home-x      <=	[HMOT](CARD0).inmux.00.input-00
 net home-x					=>  joint.0.home-sw-in
-#net all-limits     			=>  joint.0.neg-lim-sw-in
-#net all-limits	   			=>  joint.0.pos-lim-sw-in
 #  ---HALUI signals---
 net x-is-homed    			halui.joint.0.is-homed
+
 # ---setup home / limit switch signals---
 #net x-neg-limit     =>  joint.0.neg-lim-sw-in
 #net x-pos-limit     =>  joint.0.pos-lim-sw-in
@@ -80,7 +84,6 @@ net x-is-homed    			halui.joint.0.is-homed
 #*******************
 # AXIS Y / JOINT 1
 
-net home-y     <=	[HMOT](CARD0).inmux.00.input-01
 setp   			pid.y.Pgain     [JOINT_1]P
 setp   			pid.y.Igain     [JOINT_1]I
 setp   			pid.y.Dgain     [JOINT_1]D
@@ -111,10 +114,13 @@ net y-pos-fb               <=	[HMOT](CARD0).encoder.01.position
 net y-vel-fb               <=	[HMOT](CARD0).encoder.01.velocity
 net y-pos-fb               =>	joint.1.motor-pos-fb
 net y-pos-rawcounts        <=	[HMOT](CARD0).encoder.01.rawcounts
+
+
 # ---setup home / limit switch signals---
+net home-y     <=	[HMOT](CARD0).inmux.00.input-01
 net home-y     				=>	joint.1.home-sw-in
-#net all-limits     			=>	joint.1.neg-lim-sw-in
-#net all-limits				=>	joint.1.pos-lim-sw-in
+#net y-neg-limit     =>  joint.1.neg-lim-sw-in
+#net y-pos-limit     =>  joint.1.pos-lim-sw-in
 #  ---HALUI signals---
 net y-is-homed     			halui.joint.1.is-homed
 
@@ -158,56 +164,12 @@ net z-pos-rawcounts        <=	[HMOT](CARD0).encoder.02.rawcounts
 # ---setup home / limit switch signals---
 net home-z      <=	[HMOT](CARD0).inmux.00.input-02
 net home-z					=>	joint.2.home-sw-in
-#net all-limits				=>	joint.2.neg-lim-sw-in
-#net all-limits				=>	joint.2.pos-lim-sw-in
+#net z-neg-limit     		=>  joint.2.neg-lim-sw-in
+#net z-pos-limit     		=>  joint.2.pos-lim-sw-in
 net x-servopack-fault		=>	joint.2.amp-fault-in
 #  ---HALUI signals---
 net z-is-homed     			halui.joint.2.is-homed
 
-#*******************
-#  SPINDLE
-#*******************
-setp   pid.s.Pgain     [SPINDLE_0]P
-setp   pid.s.Igain     [SPINDLE_0]I
-setp   pid.s.Dgain     [SPINDLE_0]D
-setp   pid.s.bias      [SPINDLE_0]BIAS
-setp   pid.s.FF0       [SPINDLE_0]FF0
-setp   pid.s.FF1       [SPINDLE_0]FF1
-setp   pid.s.FF2       [SPINDLE_0]FF2
-setp   pid.s.deadband  [SPINDLE_0]DEADBAND
-setp   pid.s.maxoutput [SPINDLE_0]MAX_OUTPUT
-setp   pid.s.error-previous-target true
-
-net spindle-enable        	=>  pid.s.enable
-net spindle-vel-cmd-rpm-abs =>  pid.s.command
-net spindle-vel-fb-rpm      =>  pid.s.feedback
-net spindle-output       	<=  pid.s.output
-
-# ---PWM Generator signals/setup---
-
-setp   						[HMOT](CARD0).pwmgen.05.output-type 1 #PWM pin0
-setp   						[HMOT](CARD0).pwmgen.05.offset-mode 1 # offset mode so 50% = 0
-setp  						[HMOT](CARD0).pwmgen.05.scale   [SPINDLE_0]OUTPUT_SCALE
-net spindle-output      =>  [HMOT](CARD0).pwmgen.05.value
-net spindle-enable      =>  [HMOT](CARD0).pwmgen.05.enable
-
-# ---setup spindle control signals---
-
-net spindle-vel-cmd-rps        <=  spindle.0.speed-out-rps
-net spindle-vel-cmd-rps-abs    <=  spindle.0.speed-out-rps-abs
-net spindle-vel-cmd-rpm        <=  spindle.0.speed-out
-net spindle-vel-cmd-rpm-abs    <=  spindle.0.speed-out-abs
-net spindle-enable             <=  spindle.0.on
-net spindle-cw                 <=  spindle.0.forward
-net spindle-ccw                <=  spindle.0.reverse
-net spindle-brake              <=  spindle.0.brake
-net spindle-revs               =>  spindle.0.revs
-net spindle-at-speed           =>  spindle.0.at-speed
-net spindle-vel-fb-rps         =>  spindle.0.speed-in
-net spindle-fault				   spindle.0.amp-fault-in
-
-# ---Setup spindle at speed signals---
-sets spindle-at-speed true
 
 
 #******************************

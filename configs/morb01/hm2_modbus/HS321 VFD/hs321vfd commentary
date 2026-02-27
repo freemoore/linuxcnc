@@ -1,0 +1,233 @@
+top of file
+<!--
+    HS321 VFD Modbus configuration for hm2_modbus / mesambccc
+    
+    Hardware:   HARS HS321 VFD (SD321/SD320 series)
+    Bus:        RS485, 9600 baud, 8N1
+    Slave addr: 5
+    
+    VFD setup required (set on keypad before use):
+        F0.02 = 2  (run command source = serial comms)
+        F0.03 = 8  (frequency source = serial comms)
+    
+    Register map (0-based Modbus addresses):
+        Write 0x2000 (8192)  : run command
+                               1 = forward run
+                               2 = reverse run
+                               3 = forward jog (10Hz)
+                               4 = reverse jog (10Hz)
+                               0 = stop
+                               6 = decelerate to stop
+                               7 = fault reset
+        Write 0x1000 (4096)  : frequency setpoint
+                               0-10000 = 0-100% of F0.08 max frequency
+                               e.g. F0.08=300Hz, so 10000=300Hz=18000rpm (2-pole)
+        Read  0x3000 (12288) : drive status (read-only)
+                               1 = forward running
+                               2 = reverse running
+                               3 = stopped
+        Read  0x7000 (28672) : set frequency (Hz x 10)
+        Read  0x7001 (28673) : output voltage (V)  [confirm with motor]
+        Read  0x7003 (28675) : output current (A x 10)  [confirm with motor]
+        Read  0x7018 (28696) : shaft speed (RPM) - requires F9.03 set to rated RPM
+        Read  0x0B03 (2819)  : current fault code
+        Read  0x0B04 (2820)  : previous fault code
+        Read  0x0B05 (2821)  : fault before previous
+        Read  0x0B06 (2822)  : bus voltage at last fault (V)
+        Read  0x0B07 (2823)  : current at last fault (A x 10)
+        Read  0x0B08 (2824)  : set frequency at last fault (Hz x 10)
+        Read  0x0B09 (2825)  : running frequency at last fault (Hz x 10)
+
+    HAL pins created (prefix: hm2_modbus.0.hs321vfd.):
+        Writes (in):
+            cmd-run         HAL_U32  : run command word (1=fwd, 2=rev, 0=stop, 7=reset)
+            freq-set        HAL_S32  : frequency setpoint (0-10000)
+        Reads (out):
+            status          HAL_U32  : drive status word
+            freq-display    HAL_S32  : set frequency Hz x 10
+            volts-out       HAL_U32  : output voltage V
+            amps-out        HAL_S32  : output current A x 10
+            rpm             HAL_U32  : shaft speed RPM
+            fault-current   HAL_U32  : current fault code
+            fault-prev1     HAL_U32  : previous fault code
+            fault-prev2     HAL_U32  : fault before previous
+            fault-voltage   HAL_U32  : bus voltage at last fault
+            fault-amps      HAL_U32  : current at last fault
+            fault-freq-set  HAL_U32  : set freq at last fault
+            fault-freq-run  HAL_U32  : running freq at last fault
+-->
+after 'initlist'
+        <!-- Small delay on startup to ensure pins are flushed before
+             any write commands fire -->
+after first 'commands'
+
+        <!-- ============================================================
+             WRITE: Run command
+             W_REGISTER (FC06) to 0x2000
+             resend="1" ensures the stop/run state is continuously
+             re-sent, not just on change
+        ============================================================ -->
+before 'frequency setpoint' command block
+
+        <!-- ============================================================
+             WRITE: Frequency setpoint
+             W_REGISTER (FC06) to 0x1000
+             0-10000 = 0-100% of F0.08 max frequency
+             resend="1" to continuously maintain setpoint
+        ============================================================ -->
+before 'read 0x3000' drive status block
+
+        <!-- ============================================================
+             READ: Drive status
+             R_REGISTERS (FC03) from 0x3000
+             1=fwd running, 2=rev running, 3=stopped
+        ============================================================ -->
+before 'read 0x7000' monitoring block
+
+        <!-- ============================================================
+             READ: Monitoring block - set freq, output voltage, 
+             (reserved gap), output current
+             R_REGISTERS (FC03) from 0x7000, 4 registers
+             0x7000 = set frequency (Hz x 10)
+             0x7001 = output voltage (V)
+             0x7002 = reserved/unknown
+             0x7003 = output current (A x 10)
+        ============================================================ -->
+        
+before 'shaft speed' block
+
+        <!-- ============================================================
+             READ: Shaft speed
+             R_REGISTERS (FC03) from 0x7018
+             RPM - requires F9.03 set to motor rated RPM
+        ============================================================ -->
+before 'fault history' block
+
+        <!-- ============================================================
+             READ: Fault history block
+             R_REGISTERS (FC03) from 0x0B03, 7 registers
+             0x0B03 = current fault code
+             0x0B04 = previous fault code
+             0x0B05 = fault before previous
+             0x0B06 = bus voltage at last fault (V)
+             0x0B07 = current at last fault (A x 10)
+             0x0B08 = set frequency at last fault (Hz x 10)
+             0x0B09 = running frequency at last fault (Hz x 10)
+        ============================================================ -->
+deleted sections during debug:
+ (between devices and commands) 
+ 
+    <initlist>
+        <command delay="1000"/>
+    </initlist>
+
+whole file, will hashtag deleted bits:
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mesamodbus baudrate="9600" parity="N" interval="100" stopbits="1">
+
+    <devices>
+        <device address="1" name="hs321vfd"/>
+    </devices>
+
+    <commands>
+        <command device="hs321vfd"
+                 function="W_REGISTER"
+                 address="0x2000"
+                 modbustype="U_AB"
+                 haltype="HAL_U32"
+                 resend="1"
+                 noanswer="0">
+            <pin name="cmd-run"/>
+#            <description>
+#                Run command word (write-only register).
+#                HAL pin: hm2_modbus.0.hs321vfd.cmd-run (in, HAL_U32)
+#                Values: 1=fwd run, 2=rev run, 0=stop, 6=decel stop, 7=fault reset
+#            </description>
+        </command>
+
+        <command device="hs321vfd"
+                 function="W_REGISTER"
+                 address="0x1000"
+                 modbustype="S_AB"
+                 haltype="HAL_S32"
+                 resend="1"
+                 noanswer="0">
+            <pin name="freq-set"/>
+#            <description>
+#                Frequency setpoint (write-only register).
+#                HAL pin: hm2_modbus.0.hs321vfd.freq-set (in, HAL_S32)
+#                0-10000 = 0% to 100% of F0.08 max frequency.
+#                With F0.08=300Hz: 10000=300Hz=18000rpm (2-pole motor)
+#            </description>
+        </command>
+
+        <command device="hs321vfd"
+                 function="R_REGISTERS"
+                 address="0x3000"
+                 modbustype="U_AB"
+                 haltype="HAL_U32">
+            <pin name="status"/>
+#            <description>
+#                Drive status word (read-only register).
+#                HAL pin: hm2_modbus.0.hs321vfd.status (out, HAL_U32)
+#                1=forward running, 2=reverse running, 3=stopped
+#            </description>
+        </command>
+
+        <command device="hs321vfd"
+                 function="R_REGISTERS"
+                 address="0x7000"
+                 count="4">
+            <pin name="freq-display"  modbustype="S_AB" haltype="HAL_S32"/>
+            <pin name="volts-out"     modbustype="U_AB" haltype="HAL_U32"/>
+            <pin name="reserved-7002" modbustype="U_AB" haltype="HAL_U32"/>
+            <pin name="amps-out"      modbustype="S_AB" haltype="HAL_S32"/>
+#            <description>
+#                Monitoring block from 0x7000.
+#                freq-display: set frequency Hz x 10 (out, HAL_S32)
+#                volts-out:    output voltage V (out, HAL_U32) - confirm scaling with motor
+#                amps-out:     output current A x 10 (out, HAL_S32) - confirm scaling with motor
+#            </description>
+        </command>
+
+        <command device="hs321vfd"
+                 function="R_REGISTERS"
+                 address="0x7018"
+                 modbustype="U_AB"
+                 haltype="HAL_U32">
+            <pin name="rpm"/>
+#            <description>
+#                Shaft speed in RPM (read-only).
+#                HAL pin: hm2_modbus.0.hs321vfd.rpm (out, HAL_U32)
+#                Requires F9.03 set to motor rated RPM on the VFD keypad.
+#            </description>
+        </command>
+
+        <command device="hs321vfd"
+                 function="R_REGISTERS"
+                 address="0x0B03"
+                 count="7">
+            <pin name="fault-current"  modbustype="U_AB" haltype="HAL_U32"/>
+            <pin name="fault-prev1"    modbustype="U_AB" haltype="HAL_U32"/>
+            <pin name="fault-prev2"    modbustype="U_AB" haltype="HAL_U32"/>
+            <pin name="fault-voltage"  modbustype="U_AB" haltype="HAL_U32"/>
+            <pin name="fault-amps"     modbustype="U_AB" haltype="HAL_U32"/>
+            <pin name="fault-freq-set" modbustype="U_AB" haltype="HAL_U32"/>
+            <pin name="fault-freq-run" modbustype="U_AB" haltype="HAL_U32"/>
+#            <description>
+#                Fault history registers from 0x0B03 (Fb group).
+#                fault-current:  current fault code (out, HAL_U32)
+#                fault-prev1:    previous fault code (out, HAL_U32)
+#                fault-prev2:    fault before previous (out, HAL_U32)
+#                fault-voltage:  bus voltage at last fault in V (out, HAL_U32)
+#                fault-amps:     current at last fault A x 10 (out, HAL_U32)
+#                fault-freq-set: set frequency at fault Hz x 10 (out, HAL_U32)
+#                fault-freq-run: running frequency at fault Hz x 10 (out, HAL_U32)
+            </description>
+        </command>
+
+    </commands>
+
+</mesamodbus>
+

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<mesamodbus baudrate="9600" parity="N" stopbits="1" interval="100">
+
+  <devices>
+    <device name="at903vfd" address="0x05"/>
+  </devices>
+
+  <initlist>
+    <command device="at903vfd" address="0x2000" function="6">
+      <description>fault reset on startup</description>
+      <data value="0x0005"/>
+    </command>
+    <command device="at903vfd" address="0x2000" function="6">
+      <description>stop command on startup</description>
+      <data value="0x0003"/>
+    </command>
+    <command device="at903vfd" address="0x2001" function="6">
+      <description>zero frequency setpoint on startup</description>
+      <data value="0"/>
+    </command>
+  </initlist>
+
+  <commands>
+    <command device="at903vfd" address="0x2000" function="6"
+             name="control-word" haltype="HAL_U32" modbustype="U_AB">
+      <description>run/stop/direction control word</description>
+    </command>
+
+    <command device="at903vfd" address="0x2001" function="6"
+             name="freq-setpoint" haltype="HAL_U32" modbustype="U_AB">
+      <description>frequency setpoint in 0.01hz units</description>
+    </command>
+
+    <command device="at903vfd" address="0x2100" function="3" count="1"
+             name="output-freq" haltype="HAL_U32" modbustype="U_AB">
+      <description>actual output frequency in 0.01hz units</description>
+    </command>
+
+    <command device="at903vfd" address="0x2101" function="3" count="1"
+             name="output-current" haltype="HAL_U32" modbustype="U_AB">
+      <description>output current in 0.1a units</description>
+    </command>
+
+    <command device="at903vfd" address="0x2104" function="3" count="1"
+             name="status-word" haltype="HAL_U32" modbustype="U_AB">
+      <description>status word bit0=running bit5=fault</description>
+    </command>
+
+    <command device="at903vfd" address="0x2105" function="3" count="1"
+             name="fault-code" haltype="HAL_U32" modbustype="U_AB">
+      <description>active fault code</description>
+    </command>
+  </commands>
+
+</mesamodbus>

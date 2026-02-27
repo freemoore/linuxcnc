@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<mesamodbus baudrate="9600" parity="N" stopbits="1" interval="100">
+
+  <devices>
+    <device name="at903vfd" address="0x05"/>
+  </devices>
+
+
+
+  <commands>
+    <command device="at903vfd" address="0x2000" function="6"
+             name="control-word" haltype="HAL_U32" modbustype="U_AB">
+      <description>run/stop/direction control word</description>
+    </command>
+
+    <command device="at903vfd" address="0x2001" function="6"
+             name="freq-setpoint" haltype="HAL_U32" modbustype="U_AB">
+      <description>frequency setpoint in 0.01hz units</description>
+    </command>
+
+
+  </commands>
+
+</mesamodbus>

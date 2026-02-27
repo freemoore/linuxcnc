@@ -1,7 +1,5 @@
 #setp [HMOT](CARD0).[HMOT](CARD1).output-00-invert 1
-net	  relay_4KAF1 [HMOT](CARD0).[HMOT](CARD1).output-00
-net   relay_4KAF2 [HMOT](CARD0).[HMOT](CARD1).output-01
-net	  relay_4KA43 [HMOT](CARD0).[HMOT](CARD1).output-03
+
 net	  relay_4KA1 [HMOT](CARD0).[HMOT](CARD1).output-07
 net	  relay_4KA59 [HMOT](CARD0).[HMOT](CARD1).output-08
 net	  relay_4KA58 [HMOT](CARD0).[HMOT](CARD1).output-09
@@ -20,13 +18,26 @@ net	  	z-enable			[HMOT](CARD0).[HMOT](CARD1).output-06
 #		relay-2KAZ1 is Z Brake
 net   	z-brake-release		[HMOT](CARD0).[HMOT](CARD1).output-12
 
-#setp 	[HMOT](CARD0).ssr.00.invert-01 1
-net spindle-cw  			[HMOT](CARD0).ssr.00.out-01
-#setp 	[HMOT](CARD0).ssr.00.invert-00 1
-net spindle-ccw 			[HMOT](CARD0).ssr.00.out-00
+#		spindle-FWD is 7i97T output 00
+#net spindle-cw  			[HMOT](CARD0).ssr.00.out-00
+#		spindle-REV is 7i97T output 01
+#net spindle-ccw 			[HMOT](CARD0).ssr.00.out-01
 
 ## spindle relay should be on/off with machine enable, not M3/M5 command - VFD fault reset should be on oneshot with machine-is-enabled
-net spindle-enable 			[HMOT](CARD0).ssr.00.out-02
+#net spindle-enable 			[HMOT](CARD0).ssr.00.out-02
 #		spindle enable relay is relay-4KA42 
 net	  	machine-is-enabled		[HMOT](CARD0).[HMOT](CARD1).output-02
-net spindle-fault			[HMOT](CARD0).inmux.00.input-03-not
+#net spindle-fault			[HMOT](CARD0).inmux.00.input-03-not
+
+#		spindle-FWD is relay_4KAF1
+#net	  spindle-cw  [HMOT](CARD0).[HMOT](CARD1).output-00
+#		spindle-REV is 7i97T relay_4KAF2
+#net   spindle-ccw [HMOT](CARD0).[HMOT](CARD1).output-01
+# 		spindle-reset is relay_4KA43
+#net	  machine-is-enabled [HMOT](CARD0).[HMOT](CARD1).output-03
+
+##MORBIDELLI SPINDLE FAULT CHAIN:
+##power to VFD is supplied by BREAKER 4QF15 which is monitored by wire blue 25 to blue 514. 25 goes to VFD relay FAULT terminal 30C (relay common, NC to term. 30B). (30A isn't connected). 30B is wire 80, system +24VDC supply. 514 suspected signal to PR2 Input. Logic: if breaker broken, or if vfd is faulted, this line goes low. 
+##additional safety: 511 VFD terminal P1 to BREAKER 5QFFR IN, OUT is 517 to BRAKING RESISTOR IN, OUT is 512 to DC brake terminal -. Breaker sensor is 500 NC to 506; if Braking resistor overcurrents, breaker trips, 506 to THERM input on VFD trips and VFD faults out.  
+
+

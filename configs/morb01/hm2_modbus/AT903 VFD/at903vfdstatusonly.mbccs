@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<mesamodbus baudrate="9600" parity="N" stopbits="1" interval="100">
+
+  <devices>
+    <device name="at903vfd" address="0x05"/>
+  </devices>
+
+
+
+  <commands>
+
+
+    <command device="at903vfd" address="0x1000" function="3" count="1"
+             name="output-freq" haltype="HAL_U32" modbustype="U_AB">
+      <description>actual output frequency in 0.01hz units</description>
+    </command>
+
+    <command device="at903vfd" address="0x1004" function="3" count="1"
+             name="output-current" haltype="HAL_U32" modbustype="U_AB">
+      <description>output current in 0.1a units</description>
+    </command>
+
+    <command device="at903vfd" address="0x101B" function="3" count="1"
+             name="status-word" haltype="HAL_U32" modbustype="U_AB">
+      <description>status word bit0=running bit5=fault</description>
+    </command>
+
+  </commands>
+
+</mesamodbus>

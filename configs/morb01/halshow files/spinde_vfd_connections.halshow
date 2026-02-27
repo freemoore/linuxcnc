@@ -1,0 +1,9 @@
+# halshow watchlist created Thu Feb 19 15:24:02 GMT 2026
+
+pin+motion.motion-enabled
+sig+machine-is-enabled
+sig+spindle-fault
+pin+spindle.0.amp-fault-in
+sig+spindle-ccw
+sig+spindle-cw
+sig+spindle-enable

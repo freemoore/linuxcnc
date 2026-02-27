@@ -1,3 +1,5 @@
+NB the front edge of the work backstops is at Y=155. Max movement envelope is 1270mm. Sheet size = 1220mm. Total room to move outside sheet boundary is => 50mm, or 25mm each side. => controlled point y=0 needs to move to (155-25=) Y=130mm, i.e. 130mm in Y+ direction, to get main spindle access to full sheed + room to move along either edge. 130mm thick extension to main spindle mount only. 
+
 wire 576 	3YV66	...to box x30 spindleside
 wire 574	3YV65	not connected black and red pair in Z offset bundle
 wire 573	3YV64	foot in brake off

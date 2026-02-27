@@ -37,21 +37,14 @@ net	machine-powerup		[HMOT](CARD0).[HMOT](CARD1).output-15
 
 net machine-is-enabled	<=  motion.motion-enabled
 
-#when machine is ready to move: turn on z amp/pid/pwm, delay 0.2 sec, then release brake. 
-#when machine has to stop: apply brake, delay 0.2 sec, then switch off amp/pid/pwm. 
-
-loadrt timedelay count=2
+loadrt timedelay count=1
 
 addf timedelay.0 servo-thread
-#addf timedelay.1 servo-thread
 
 setp timedelay.0.on-delay 1
 setp timedelay.0.off-delay 0
-#setp timedelay.1.on-delay 0
-#setp timedelay.1.off-delay 1
 
 net z-enable 			timedelay.0.in
 net z-brake-release		timedelay.0.out
-#net z-enable			timedelay.1.in
-#net z-enable-delayed	timedelay.1.out => [HMOT](CARD0).pwmgen.02.enable 
+
 
