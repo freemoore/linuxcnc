@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.40.0 -->
+<interface>
+  <requires lib="gtk+" version="3.0"/>
+  <requires lib="gladevcp" version="0.0"/>
+  <object class="GtkWindow" id="window1">
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkVBox" id="vbox-main">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkFrame" id="frame-speed">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label-xalign">0</property>
+            <property name="shadow-type">none</property>
+            <child>
+              <object class="GtkAlignment" id="alignment-speed">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="left-padding">12</property>
+                <child>
+                  <object class="GtkTable" id="table-speed">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkLabel" id="lbl-actual-hdr">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">RPM (feedback)</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="HAL_HBar" id="rpm-actual">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="max">18000</property>
+                        <property name="z0-border">0.6000000238418579</property>
+                        <property name="z0-color">#0000ffff0000</property>
+                        <property name="z1-border">0.89999997615814209</property>
+                        <property name="z1-color">#ffffffff0000</property>
+                        <property name="z2-color">#ffff00000000</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl-cmd-hdr">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">RPM (set)</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="HAL_Label" id="rpm-cmd">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">0</property>
+                        <property name="label-pin-type">1</property>
+                        <property name="text-template">%d RPM</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl-freq-hdr">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">Set Freq</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="HAL_Label" id="freq-set">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">0</property>
+                        <property name="label-pin-type">1</property>
+                        <property name="text-template">%d (Hz x10)</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="label">
+              <object class="GtkLabel" id="lbl-speed-frame">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label">&lt;b&gt;Speed&lt;/b&gt;</property>
+                <property name="use-markup">True</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkFrame" id="frame-electrical">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label-xalign">0</property>
+            <property name="shadow-type">none</property>
+            <child>
+              <object class="GtkAlignment" id="alignment-electrical">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="left-padding">12</property>
+                <child>
+                  <object class="GtkTable" id="table-electrical">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkLabel" id="lbl-volts-hdr">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">Output Voltage</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="HAL_Label" id="volts-out">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">0</property>
+                        <property name="label-pin-type">2</property>
+                        <property name="text-template">%d V</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl-amps-hdr">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">Output Current</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="HAL_Label" id="amps-out">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">0</property>
+                        <property name="label-pin-type">1</property>
+                        <property name="text-template">%d (A x10)</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="label">
+              <object class="GtkLabel" id="lbl-electrical-frame">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label">&lt;b&gt;Electrical&lt;/b&gt;</property>
+                <property name="use-markup">True</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkFrame" id="frame-status">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label-xalign">0</property>
+            <property name="shadow-type">none</property>
+            <child>
+              <object class="GtkAlignment" id="alignment-status">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="left-padding">12</property>
+                <child>
+                  <object class="GtkTable" id="table-status">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkLabel" id="lbl-status-hdr">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">Drive Status</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="HAL_Label" id="drive-status">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">0</property>
+                        <property name="label-pin-type">2</property>
+                        <property name="text-template">%d (1=fwd 2=rev 3=stop)</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl-fault-led-hdr">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">Fault</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="HAL_LED" id="fault-led">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="led-blink-rate">0</property>
+                        <property name="pick-color-off">#0000ffff0000</property>
+                        <property name="pick-color-on">#ffff00000000</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="label">
+              <object class="GtkLabel" id="lbl-status-frame">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label">&lt;b&gt;Drive Status&lt;/b&gt;</property>
+                <property name="use-markup">True</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkFrame" id="frame-faults">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label-xalign">0</property>
+            <property name="shadow-type">none</property>
+            <child>
+              <object class="GtkAlignment" id="alignment-faults">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="left-padding">12</property>
+                <child>
+                  <object class="GtkTable" id="table-faults">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkLabel" id="lbl-fault-code-hdr">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">Current Fault</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="HAL_Label" id="fault-code">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">0</property>
+                        <property name="label-pin-type">2</property>
+                        <property name="text-template">%d</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl-fault-prev-hdr">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">Previous Fault</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="HAL_Label" id="fault-prev1">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">0</property>
+                        <property name="label-pin-type">2</property>
+                        <property name="text-template">%d</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl-fault-v-hdr">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">Bus V at Fault</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="HAL_Label" id="fault-voltage">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">0</property>
+                        <property name="label-pin-type">2</property>
+                        <property name="text-template">%d V</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="label">
+              <object class="GtkLabel" id="lbl-faults-frame">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label">&lt;b&gt;Fault History&lt;/b&gt;</property>
+                <property name="use-markup">True</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

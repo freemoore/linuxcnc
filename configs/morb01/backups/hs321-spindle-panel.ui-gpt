@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk+" version="2.16"/>
+
+  <object class="GtkVBox" id="main-vbox">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="spacing">6</property>
+
+    <!-- ===================== -->
+    <!-- TOP TELEMETRY TABLE   -->
+    <!-- ===================== -->
+
+    <child>
+      <object class="GtkFrame" id="frame-telemetry">
+        <property name="visible">True</property>
+        <property name="label-xalign">0</property>
+        <property name="shadow-type">etched-in</property>
+
+        <child>
+          <object class="GtkAlignment">
+            <property name="visible">True</property>
+            <property name="left-padding">8</property>
+            <property name="right-padding">4</property>
+            <property name="top-padding">4</property>
+            <property name="bottom-padding">4</property>
+
+            <child>
+              <object class="GtkTable" id="table-telemetry">
+                <property name="visible">True</property>
+                <property name="n-rows">5</property>
+                <property name="n-columns">2</property>
+                <property name="row-spacing">1</property>
+                <property name="column-spacing">4</property>
+
+                <!-- Code -->
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="label">Code</property>
+                    <property name="halign">start</property>
+                  </object>
+                  <packing><property name="left-attach">0</property><property name="top-attach">0</property></packing>
+                </child>
+
+                <child>
+                  <object class="HAL_Label" id="fault-code">
+                    <property name="visible">True</property>
+                    <property name="label">0</property>
+                    <property name="label-pin-type">3</property>
+                    <property name="text-template">%d</property>
+                  </object>
+                  <packing><property name="left-attach">1</property><property name="top-attach">0</property></packing>
+                </child>
+
+                <!-- Bus Voltage -->
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="label">Bus V</property>
+                    <property name="halign">start</property>
+                  </object>
+                  <packing><property name="left-attach">0</property><property name="top-attach">1</property></packing>
+                </child>
+
+                <child>
+                  <object class="HAL_Label" id="fault-voltage">
+                    <property name="visible">True</property>
+                    <property name="label">0</property>
+                    <property name="label-pin-type">3</property>
+                    <property name="text-template">%d V</property>
+                  </object>
+                  <packing><property name="left-attach">1</property><property name="top-attach">1</property></packing>
+                </child>
+
+                <!-- Amps -->
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="label">Amps</property>
+                    <property name="halign">start</property>
+                  </object>
+                  <packing><property name="left-attach">0</property><property name="top-attach">2</property></packing>
+                </child>
+
+                <child>
+                  <object class="HAL_Label" id="fault-amps">
+                    <property name="visible">True</property>
+                    <property name="label">0</property>
+                    <property name="label-pin-type">3</property>
+                    <property name="text-template">%d (Ax10)</property>
+                  </object>
+                  <packing><property name="left-attach">1</property><property name="top-attach">2</property></packing>
+                </child>
+
+                <!-- Set Hz -->
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="label">Set Hz</property>
+                    <property name="halign">start</property>
+                  </object>
+                  <packing><property name="left-attach">0</property><property name="top-attach">3</property></packing>
+                </child>
+
+                <child>
+                  <object class="HAL_Label" id="fault-freq-set">
+                    <property name="visible">True</property>
+                    <property name="label">0</property>
+                    <property name="label-pin-type">3</property>
+                    <property name="text-template">%d (Hzx10)</property>
+                  </object>
+                  <packing><property name="left-attach">1</property><property name="top-attach">3</property></packing>
+                </child>
+
+                <!-- Run Hz -->
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="label">Run Hz</property>
+                    <property name="halign">start</property>
+                  </object>
+                  <packing><property name="left-attach">0</property><property name="top-attach">4</property></packing>
+                </child>
+
+                <child>
+                  <object class="HAL_Label" id="fault-freq-run">
+                    <property name="visible">True</property>
+                    <property name="label">0</property>
+                    <property name="label-pin-type">3</property>
+                    <property name="text-template">%d (Hzx10)</property>
+                  </object>
+                  <packing><property name="left-attach">1</property><property name="top-attach">4</property></packing>
+                </child>
+
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child type="label">
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="label">&lt;b&gt;Spindle Telemetry&lt;/b&gt;</property>
+            <property name="use-markup">True</property>
+          </object>
+        </child>
+      </object>
+    </child>
+
+    <!-- ===================== -->
+    <!-- ACCEL / DECEL         -->
+    <!-- ===================== -->
+
+    <child>
+      <object class="GtkFrame" id="frame-accel">
+        <property name="visible">True</property>
+        <property name="label-xalign">0</property>
+        <property name="shadow-type">etched-in</property>
+
+        <child>
+          <object class="GtkAlignment">
+            <property name="visible">True</property>
+            <property name="left-padding">8</property>
+            <property name="right-padding">4</property>
+            <property name="top-padding">2</property>
+            <property name="bottom-padding">2</property>
+
+            <child>
+              <object class="GtkTable">
+                <property name="visible">True</property>
+                <property name="n-rows">1</property>
+                <property name="n-columns">4</property>
+                <property name="column-spacing">6</property>
+
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="label">Accel</property>
+                  </object>
+                  <packing><property name="left-attach">0</property></packing>
+                </child>
+
+                <child>
+                  <object class="HAL_Label" id="accel-time">
+                    <property name="visible">True</property>
+                    <property name="label">0</property>
+                    <property name="label-pin-type">3</property>
+                    <property name="text-template">%d (sx10)</property>
+                  </object>
+                  <packing><property name="left-attach">1</property></packing>
+                </child>
+
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="label">Decel</property>
+                  </object>
+                  <packing><property name="left-attach">2</property></packing>
+                </child>
+
+                <child>
+                  <object class="HAL_Label" id="decel-time">
+                    <property name="visible">True</property>
+                    <property name="label">0</property>
+                    <property name="label-pin-type">3</property>
+                    <property name="text-template">%d (sx10)</property>
+                  </object>
+                  <packing><property name="left-attach">3</property></packing>
+                </child>
+
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child type="label">
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="label">&lt;b&gt;Accel / Decel&lt;/b&gt;</property>
+            <property name="use-markup">True</property>
+          </object>
+        </child>
+      </object>
+    </child>
+
+    <!-- ===================== -->
+    <!-- FAULT RESET           -->
+    <!-- ===================== -->
+
+    <child>
+      <object class="GtkFrame" id="frame-fault-reset">
+        <property name="visible">True</property>
+        <property name="label-xalign">0</property>
+        <property name="shadow-type">etched-in</property>
+
+        <child>
+          <object class="GtkAlignment">
+            <property name="visible">True</property>
+            <property name="left-padding">8</property>
+            <property name="right-padding">4</property>
+            <property name="top-padding">4</property>
+            <property name="bottom-padding">4</property>
+
+            <child>
+              <object class="HAL_Button" id="fault-reset-btn">
+                <property name="visible">True</property>
+                <property name="label">Reset VFD Fault</property>
+              </object>
+            </child>
+
+          </object>
+        </child>
+
+        <child type="label">
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="label">&lt;b&gt;Fault Reset&lt;/b&gt;</property>
+            <property name="use-markup">True</property>
+          </object>
+        </child>
+
+      </object>
+    </child>
+
+  </object>
+</interface>

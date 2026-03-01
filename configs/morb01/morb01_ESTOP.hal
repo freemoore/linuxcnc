@@ -13,9 +13,11 @@
 
 loadrt		oneshot names=pnozv_onswitch
 loadrt		estop_latch 
+loadrt		not count=1
 
 addf		estop-latch.0 servo-thread
 addf		pnozv_onswitch servo-thread
+addf		not.0	servo-thread
 setp		pnozv_onswitch.width 0.5
 
 net estop-front-panel	[HMOT](CARD0).inmux.00.input-08
@@ -35,16 +37,24 @@ net	machine-is-enabled	pnozv_onswitch.in
 net	machine-powerup 	pnozv_onswitch.out
 net	machine-powerup		[HMOT](CARD0).[HMOT](CARD1).output-15
 
-net machine-is-enabled	<=  motion.motion-enabled
+net machine-is-enabled	motion.motion-enabled
+setp hm2_modbus.0.suspend true
+net machine-is-enabled	not.0.in
+net release-modbus		not.0.out
+net	release-modbus 		hm2_modbus.0.suspend 
 
 loadrt timedelay count=1
-
 addf timedelay.0 servo-thread
-
 setp timedelay.0.on-delay 1
 setp timedelay.0.off-delay 0
 
 net z-enable 			timedelay.0.in
 net z-brake-release		timedelay.0.out
 
+
+## spindle relay should be on/off with 'not-in-estop' signal 
+## VFD fault reset should be on oneshot with machine-is-enabled
+
+#		spindle enable relay is relay-4KA42 
+net	  	estop-safed		[HMOT](CARD0).[HMOT](CARD1).output-02
 

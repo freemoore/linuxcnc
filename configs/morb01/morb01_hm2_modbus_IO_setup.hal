@@ -2,7 +2,7 @@
 # This file will not be overwritten when you run PNCconf again
 
 # Load weighted_sum for converting 16 output bits to bitmask (2 cards)
-loadrt weighted_sum wsum_sizes=16,16,16
+loadrt weighted_sum wsum_sizes=16,16,16,2
 loadrt conv_s32_u32 names=convsu1,convsu2,convsu3
 loadrt bitslice names=io-mb01-input,io-mb02-input,io-mb03-input personality=16,16,16
 

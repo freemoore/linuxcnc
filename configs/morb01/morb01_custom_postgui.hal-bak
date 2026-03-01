@@ -1,0 +1,137 @@
+# Include your custom_postgui HAL commands here
+# This file will not be overwritten when you run PNCconf again
+# freq-set: U32 (x10) -> float -> scale x0.1 -> Hz display
+# amps-out: U32 (x10) -> float -> scale x0.1 -> Amps display
+
+loadrt conv_u32_float names=freqdispconv,ampsdispconv,rpmdispconv,fault-code-to-float,freqfaultconv,ampfaultconv,rpmfaultconv
+loadrt wcomp names=spindle-fault-detect
+loadrt or2 names=feed-hold-or
+addf fault-reset-scale servo-thread
+setp fault-reset-scale.gain 2
+
+loadrt mux2 names=fault-reset-mux
+addf fault-reset-mux servo-thread
+addf fault-reset-conv servo-thread
+
+# --- Type conversion components ---
+addf freqdispconv servo-thread
+addf ampsdispconv servo-thread
+addf freqfaultconv servo-thread
+addf ampfaultconv servo-thread
+addf rpmfaultconv servo-thread
+addf fault-code-to-float servo-thread
+
+# --- Scaling components so things display properly in spindle window etc ---
+addf freqdispscale servo-thread
+addf ampsdispscale servo-thread
+addf rpmdispconv servo-thread
+addf freqfaultscale servo-thread
+addf ampfaultscale servo-thread
+addf rpmfaultscale servo-thread
+addf accelscale servo-thread
+addf decelscale servo-thread
+
+# Spindle fault detection - any non-zero fault-current = fault
+addf spindle-fault-detect servo-thread
+addf feed-hold-or servo-thread
+
+# wcomp window: exactly 0 = no fault
+setp spindle-fault-detect.min 0
+setp spindle-fault-detect.max 1
+
+# fault-current -> float -> wcomp
+net vfd-fault-raw    		hm2_modbus.0.hs321vfd.fault-current => fault-code-to-float.in
+net vfd-fault-float  		fault-code-to-float.out             => spindle-fault-detect.in
+
+# wcomp.over = TRUE when fault-current > 0
+net spindle-vfd-fault 		spindle-fault-detect.over 			=> feed-hold-or.in0
+
+# in1 left unconnected for now, will be vacuum/toolchange/etc later
+# or2 output drives feed-hold
+net feed-hold-active feed-hold-or.out => motion.feed-hold
+
+# has VFD faulted?
+net spindle-vfd-fault  		hs321-spindle-panel.fault-led
+# what's the fault code?
+net vfd-fault-raw   		hs321-spindle-panel.fault-code
+
+
+# freq-set scaling: register value is Hz x100, display in Hz
+setp freqdispscale.gain 0.01
+net vfd-set-freq-raw  		hm2_modbus.0.hs321vfd.set-freq => freqdispconv.in
+net vfd-set-freq-f    		freqdispconv.out => freqdispscale.in
+net vfd-set-freq-hz   		freqdispscale.out => hs321-spindle-panel.freq-set
+#set-freq			read (3)U32
+#net vfd-set-freq 	hm2_modbus.0.hs321vfd.set-freq  		hs321-spindle-panel.freq-set
+
+# amps-out scaling: register value is A x100, display in Amps
+setp ampsdispscale.gain 0.01
+net vfd-amps-raw      hm2_modbus.0.hs321vfd.output-current => ampsdispconv.in
+net vfd-amps-f        ampsdispconv.out => ampsdispscale.in
+net vfd-amps-hz       ampsdispscale.out => hs321-spindle-panel.amps-out
+
+# Fault detail registers
+# freqfaultscale
+setp freqfaultscale.gain 0.01
+net vfd-freqfault-raw   hm2_modbus.0.hs321vfd.fault-freq-set => freqfaultconv.in
+net vfd-freqfault-f     freqfaultconv.out => freqfaultscale.in
+net vfd-freqfault-disp  freqfaultscale.out => hs321-spindle-panel.fault-freq-set
+
+# ampfaultscale
+setp ampfaultscale.gain 0.01
+net vfd-ampfault-raw    hm2_modbus.0.hs321vfd.fault-amps => ampfaultconv.in
+net vfd-ampfault-f      ampfaultconv.out => ampfaultscale.in
+net vfd-ampfault-disp   ampfaultscale.out => hs321-spindle-panel.fault-amps
+
+# rpmfaultscale
+setp rpmfaultscale.gain 0.01
+net vfd-rpmfault-raw    hm2_modbus.0.hs321vfd.fault-freq-run => rpmfaultconv.in
+net vfd-rpmfault-f      rpmfaultconv.out => rpmfaultscale.in
+net vfd-rpmfault-disp   rpmfaultscale.out => hs321-spindle-panel.fault-freq-run
+
+# Accel/decel time display
+# accelscale
+setp accelscale.gain 0.1
+net vfd-accel-raw       hm2_modbus.0.hs321vfd.accel-time => accelconv.in
+net vfd-accel-f         accelconv.out => accelscale.in
+net vfd-accel-disp      accelscale.out => hs321-spindle-panel.accel-time
+
+# decelscale
+setp decelscale.gain 0.1
+net vfd-decel-raw       hm2_modbus.0.hs321vfd.decel-time => decelconv.in
+net vfd-decel-f         decelconv.out => decelscale.in
+net vfd-decel-disp      decelscale.out => hs321-spindle-panel.decel-time
+
+
+
+
+#status				read (3)U32
+net vfd-status    	hm2_modbus.0.hs321vfd.status        	hs321-spindle-panel.drive-status
+
+#set-pc-max-rpm		write (6)U32
+net spindle-vel-cmd-rpm-abs									hs321-spindle-panel.rpm-cmd
+
+net spindle-vel-fb-rpm  	hm2_modbus.0.hs321vfd.rpm => rpmdispconv.in
+net vfd-rpm-float rpmdispconv.out      => hs321-spindle-panel.rpm-actual
+
+setp hm2_modbus.0.hs321vfd.set-accel-time 25
+setp hm2_modbus.0.hs321vfd.set-decel-time 25
+
+#running-freq		read (3)S32
+net spindle-mb-fb-freq	hm2_modbus.0.hs321vfd.running-freq	
+#bus-voltage		read (3)U32
+net vfd-bus-voltage	hm2_modbus.0.hs321vfd.bus-voltage   	hs321-spindle-panel.volts-out
+# Output voltage DC bus (U32 -> U32)
+net vfd-bus-voltage   hm2_modbus.0.hs321vfd.bus-voltage     hs321-spindle-panel.volts-out
+
+#fault-voltage		read (3)U32
+net vfd-fault-v    hm2_modbus.0.hs321vfd.fault-voltage  	hs321-spindle-panel.fault-voltage
+
+
+
+# Fault reset button: HAL_Button creates a bit pin
+setp fault-reset-mux.in0 0
+setp fault-reset-mux.in1 2
+net fault-reset-btn-bit  hs321-spindle-panel.fault-reset-btn => fault-reset-mux.sel
+net fault-reset-float    fault-reset-mux.out                 => fault-reset-conv.in
+net fault-reset-cmd      fault-reset-conv.out                => hm2_modbus.0.hs321vfd.param-init

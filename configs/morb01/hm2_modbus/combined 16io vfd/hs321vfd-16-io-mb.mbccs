@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mesamodbus baudrate="9600" parity="N" interval="100" stopbits="1" txdelay="20" rxdelay="20">
-    <devices>
-        <device address="1" name="hs321vfd"/>
-    </devices>
 
+<mesamodbus baudrate="9600" parity="N" interval="100" stopbits="1" txdelay="20" rxdelay="20" suspend="true">
+    <devices>
+        <device name="hs321vfd"	address="0x01" />
+        <device name="io-mb-01" address="0x02"/>
+		<device name="io-mb-02" address="0x03"/>
+		<device name="io-mb-03" address="0x04"/>
+    </devices>
+    
+ <initlist>
+   <command device="io-mb-01" address="0x0070" function="6">
+     <description>Board 1: All outputs OFF</description>
+     <data value="0"/>
+   </command>
+   <command device="io-mb-02" address="0x0070" function="6">
+     <description>Board 2: All outputs OFF</description>
+     <data value="0"/>
+   </command>
+   <command device="io-mb-03" address="0x0070" function="6">
+     <description>Board 3: All outputs OFF</description>
+     <data value="0"/>
+   </command>
+   
+ </initlist>
+ 
     <commands>
         <command device="hs321vfd" 		function="6" 		address="0x2000" resend="1" noanswer="0"> 
             <pin name="set-status" 		modbustype="S_AB" 	haltype="HAL_S32"/>
@@ -13,11 +33,11 @@
             <pin name="set-pc-max-rpm" 	modbustype="U_AB" 	haltype="HAL_U32"/>
         </command>
         
-        <command device="hs321vfd" 		function="6" 		address="0x000C">
+        <command device="hs321vfd" 		function="6" 		address="0x000C" resend="1" noanswer="0">
             <pin name="set-accel-time" 	modbustype="U_AB" 	haltype="HAL_U32"/>
         </command>
         
-        <command device="hs321vfd" 		function="6" 		address="0x000D">
+        <command device="hs321vfd" 		function="6" 		address="0x000D" resend="1" noanswer="0">
             <pin name="set-decel-time" 	modbustype="U_AB" 	haltype="HAL_U32"/>
         </command>
                         
@@ -37,13 +57,17 @@
             <pin name="running-freq" 	modbustype="S_AB" 	haltype="HAL_S32"/>
             <pin name="set-freq"	 	modbustype="U_AB" haltype="HAL_U32"/>
             <pin name="bus-voltage" 	modbustype="U_AB" 	haltype="HAL_U32"/>
-            <pin name="output-voltage" 	modbustype="S_AB" 	haltype="HAL_S32"/>
-            <pin name="output-current" 	modbustype="S_AB" 	haltype="HAL_S32"/>
+            <pin name="output-voltage" 	modbustype="U_AB" 	haltype="HAL_U32"/>
+            <pin name="output-current" 	modbustype="U_AB" 	haltype="HAL_U32"/>
         </command>
         
         <command device="hs321vfd" 		function="3" 		address="0x7018">
             <pin name="rpm" 			modbustype="U_AB" 	haltype="HAL_U32"/>
         </command>
+        
+        <command device="hs321vfd" function="6" address="0x0011">
+			<pin name="param-init" modbustype="U_AB" haltype="HAL_U32"/>
+		</command>
         
         <command device="hs321vfd" 		function="3" 		address="0x0B03" count="7">
             <pin name="fault-current"  	modbustype="U_AB" 	haltype="HAL_U32"/>
@@ -54,5 +78,17 @@
             <pin name="fault-freq-set" 	modbustype="U_AB" 	haltype="HAL_U32"/>
             <pin name="fault-freq-run" 	modbustype="U_AB" 	haltype="HAL_U32"/>
         </command>
+
+
+   <command device="io-mb-01" address="0x00C0" function="3" name="inputs-all" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="io-mb-01" address="0x0070" function="6" name="outputs-all" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="io-mb-02" address="0x00C0" function="3" name="inputs-all" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="io-mb-02" address="0x0070" function="6" name="outputs-all" haltype="HAL_U32" modbustype="U_AB"/>
+   <command device="io-mb-03" address="0x00C0" function="3" name="inputs-all" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+   <command device="io-mb-03" address="0x0070" function="6" name="outputs-all" haltype="HAL_U32" modbustype="U_AB"/>
+   
+  
+        
+        
     </commands>
 </mesamodbus>

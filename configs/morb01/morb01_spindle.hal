@@ -1,41 +1,25 @@
-loadrt scale count=2
-loadrt mux4 count=1
-loadrt conv_float_u32 names=freqconv,commandword
+loadrt scale names=freqdispscale,ampsdispscale,fq-to-pc,fault-reset-scale,freqfaultscale,ampfaultscale,rpmfaultscale,accelscale,decelscale
+loadrt conv_float_u32 names=freqconv,fault-reset-conv,
+loadrt conv_u32_float names=freqdispconv,ampsdispconv,rpmdispconv,fault-code-to-float,freqfaultconv,ampfaultconv,rpmfaultconv,accelconv,decelconv,faultcodeconv
 
-addf scale.0 servo-thread
-addf scale.1 servo-thread
-addf mux4.0 servo-thread
+loadrt limit1 names=spindlemaxvel
+
+addf fq-to-pc servo-thread
 addf freqconv servo-thread
-addf commandword servo-thread
+addf spindlemaxvel servo-thread
 
-setp scale.0.gain 1.666666   
 
-net spindle-rpm-cmd spindle.0.speed-out 
-net spindle-rpm-cmd scale.0.in
 
-net vfd-freq-cmd scale.0.out
-net vfd-freq-cmd freqconv.in
-net u32-freq	freqconv.out
-#net u32-freq	hm2_modbus.0.hs321vfd.freq-setpoint-00
-
-setp mux4.0.in0	0x0003
-setp mux4.0.in1 0x0001
-setp mux4.0.in2 0x0002
-setp mux4.0.in3 0x0003
-
+######### set spindle status: 0=stop, 1=fwd run, 2=rev run
 net spindle-cw	spindle.0.forward 
-net spindle-cw	mux4.0.sel0
+setp wsum.3.bit.0.weight 1
+net spindle-cw	wsum.3.bit.0.in
 net spindle-ccw	spindle.0.reverse
-net spindle-ccw	mux4.0.sel1
+setp wsum.3.bit.1.weight 2
+net spindle-ccw	wsum.3.bit.1.in
+net spindle-cmd wsum.3.sum hm2_modbus.0.hs321vfd.set-status
+###########
 
-net control-word mux4.0.out 
-net control-word commandword.in
-net u32-command commandword.out
-#net u32-command hm2_modbus.0.hs321vfd.control-word-00
-
-#*******************
-#  SPINDLE
-#*******************
 setp   pid.s.Pgain     [SPINDLE_0]P
 setp   pid.s.Igain     [SPINDLE_0]I
 setp   pid.s.Dgain     [SPINDLE_0]D
@@ -49,7 +33,18 @@ setp   pid.s.error-previous-target true
 
 net spindle-enable        	=>  pid.s.enable
 net spindle-vel-cmd-rpm-abs =>  pid.s.command
-net spindle-vel-fb-rpm      =>  pid.s.feedback
+net spindle-vel-fb-rpm      =>  hm2_modbus.0.hs321vfd.rpm 
 net spindle-output       	<=  pid.s.output
 
+setp spindlemaxvel.max 10000
+setp spindlemaxvel.min 0
 
+setp fq-to-pc.gain 0.55556   
+net spindle-vel-cmd-rpm-abs spindle.0.speed-out-abs
+net spindle-vel-cmd-rpm-abs fq-to-pc.in
+net vfd-pc-of-max-rpm-cmd fq-to-pc.out
+net vfd-pc-of-max-rpm-cmd spindlemaxvel.in
+net vfd-pc-of-max-rpm-cmd-clamped spindlemaxvel.out
+net vfd-pc-of-max-rpm-cmd-clamped freqconv.in
+net u32-pc-of-max-rpm-cmd freqconv.out
+net u32-pc-of-max-rpm-cmd hm2_modbus.0.hs321vfd.set-pc-max-rpm

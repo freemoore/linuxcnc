@@ -1,0 +1,22 @@
+#net spindle-vel-cmd-rpm-abs      => hs321-spindle-panel.rpm-cmd
+#net vfd-rpm       hm2_modbus.0.hs321vfd.rpm           => hs321-spindle-panel.rpm-actual
+#net vfd-freq-set  hm2_modbus.0.hs321vfd.freq-display  => hs321-spindle-panel.freq-set
+#net vfd-volts     hm2_modbus.0.hs321vfd.volts-out     => hs321-spindle-panel.volts-out
+#net vfd-amps      hm2_modbus.0.hs321vfd.amps-out      => hs321-spindle-panel.amps-out
+#net vfd-status    hm2_modbus.0.hs321vfd.status        => hs321-spindle-panel.drive-status
+#net spindle-faulted                                   => hs321-spindle-panel.fault-led
+#net vfd-fault-code hm2_modbus.0.hs321vfd.fault-current  => hs321-spindle-panel.fault-code
+#net vfd-fault-prev hm2_modbus.0.hs321vfd.fault-prev1    => hs321-spindle-panel.fault-prev1
+#net vfd-fault-v    hm2_modbus.0.hs321vfd.fault-voltage  => hs321-spindle-panel.fault-voltage
+
+
+net spindle-vel-cmd-rpm-abs      => hs321-spindle-panel.rpm-cmd
+net vfd-rpm       hm2_modbus.0.hs321vfd.rpm           => hs321-spindle-panel.rpm-actual-s
+#net vfd-freq-set  hm2_modbus.0.hs321vfd.freq-display  => hs321-spindle-panel.freq-set-s
+#net vfd-volts     hm2_modbus.0.hs321vfd.volts-out     => hs321-spindle-panel.volts-out-s
+#net vfd-amps      hm2_modbus.0.hs321vfd.amps-out      => hs321-spindle-panel.amps-out-s
+#net vfd-status    hm2_modbus.0.hs321vfd.status        => hs321-spindle-panel.drive-status-s
+#net spindle-faulted                                   => hs321-spindle-panel.fault-led
+#net vfd-fault-code hm2_modbus.0.hs321vfd.fault-current  => hs321-spindle-panel.fault-code-s
+#net vfd-fault-prev hm2_modbus.0.hs321vfd.fault-prev1    => hs321-spindle-panel.fault-prev1-s
+#net vfd-fault-v    hm2_modbus.0.hs321vfd.fault-voltage  => hs321-spindle-panel.fault-voltage-s

@@ -9,12 +9,15 @@ loadrt hm2_eth board_ip="10.10.10.10" config="num_encoders=6 num_pwmgens=6 num_p
 
 #loadrt hm2_modbus ports=[HMOT](CARD0).pktuart.0 mbccbs=16-io-mb.mbccb
 #loadrt hm2_modbus ports=[HMOT](CARD0).pktuart.0 mbccbs=at903vfd.mbccb
-loadrt hm2_modbus ports=[HMOT](CARD0).pktuart.0 mbccbs=hs321vfd.mbccb
+#loadrt hm2_modbus ports=[HMOT](CARD0).pktuart.0 mbccbs=hs321vfd.mbccb
+loadrt hm2_modbus ports=[HMOT](CARD0).pktuart.0 mbccbs=hs321vfd-16-io-mb.mbccb
+
 
 setp    [HMOT](CARD0).pwmgen.pwm_frequency 75000
 setp    [HMOT](CARD0).watchdog.timeout_ns 10000000
 
 loadrt pid names=pid.x,pid.y,pid.z,pid.s
+
 
 addf [HMOT](CARD0).read          servo-thread
 addf motion-command-handler   servo-thread

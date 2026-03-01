@@ -1,0 +1,65 @@
+loadrt scale count=2
+loadrt mux4 count=1
+loadrt conv_float_u32 names=freqconv,commandword
+loadrt not
+
+addf scale.0 servo-thread
+addf scale.1 servo-thread
+addf mux4.0 servo-thread
+addf freqconv servo-thread
+addf commandword servo-thread
+addf not.0 servo-thread
+
+setp scale.0.gain 1.666666   
+
+net spindle-rpm-cmd spindle.0.speed-out 
+net spindle-rpm-cmd scale.0.in
+
+net vfd-freq-cmd scale.0.out
+net vfd-freq-cmd freqconv.in
+net u32-freq	freqconv.out
+#net u32-freq	hm2_modbus.0.hs321vfd.freq-setpoint-00
+#
+# mux4 logic: 2 bits in, 0 and 1. 
+
+
+if spindle fwd 
+setp mux4.0.in0	0x0003
+setp mux4.0.in1 0x0001
+setp mux4.0.in2 0x0002
+setp mux4.0.in3 0x0003
+
+net spindle-cw	spindle.0.forward 
+net spindle-cw	mux4.0.sel1
+net spindle-ccw	spindle.0.reverse
+net spindle-ccw	mux4.0.sel2
+net spindle-on	spindle.0.on
+net spindle-on	not.0.in
+net spindle-on-inverted not.0.out
+net spindle-on-inverted mux.0.sel0
+
+net control-word mux4.0.out 
+net control-word commandword.in
+net u32-command commandword.out
+net u32-command hm2_modbus.0.hs321vfd.set-status-00
+
+#*******************
+#  SPINDLE
+#*******************
+setp   pid.s.Pgain     [SPINDLE_0]P
+setp   pid.s.Igain     [SPINDLE_0]I
+setp   pid.s.Dgain     [SPINDLE_0]D
+setp   pid.s.bias      [SPINDLE_0]BIAS
+setp   pid.s.FF0       [SPINDLE_0]FF0
+setp   pid.s.FF1       [SPINDLE_0]FF1
+setp   pid.s.FF2       [SPINDLE_0]FF2
+setp   pid.s.deadband  [SPINDLE_0]DEADBAND
+setp   pid.s.maxoutput [SPINDLE_0]MAX_OUTPUT
+setp   pid.s.error-previous-target true
+
+net spindle-enable        	=>  pid.s.enable
+net spindle-vel-cmd-rpm-abs =>  pid.s.command
+net spindle-vel-fb-rpm      =>  pid.s.feedback
+net spindle-output       	<=  pid.s.output
+
+
