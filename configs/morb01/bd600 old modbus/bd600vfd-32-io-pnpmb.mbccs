@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mesamodbus baudrate="9600" parity="N" stopbits="1" suspend="false" writeflush="false" interval="500000" txdelay="500" rxdelay="500" drivedelay="10" duplex="half">
+    <devices>
+        <device name="bd600vfd" address="0x01"/>
+    </devices>
+    <commands>
+        <command device="bd600vfd" function="6" address="0x1000" timeout="30000000">
+            <pin name="cmd-run" modbustype="U_AB" haltype="HAL_U32"/>
+        </command>
+    </commands>
+</mesamodbus>

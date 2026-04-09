@@ -1,0 +1,43 @@
+#  ---AXIS Y JOINT 1---
+setp   			pid.y.Pgain     [JOINT_1]P
+setp   			pid.y.Igain     [JOINT_1]I
+setp   			pid.y.Dgain     [JOINT_1]D
+setp   			pid.y.bias      [JOINT_1]BIAS
+setp   			pid.y.FF0       [JOINT_1]FF0
+setp   			pid.y.FF1       [JOINT_1]FF1
+setp   			pid.y.FF2       [JOINT_1]FF2
+setp   			pid.y.deadband  [JOINT_1]DEADBAND
+setp   			pid.y.maxoutput [JOINT_1]MAX_OUTPUT
+setp   			pid.y.error-previous-target true
+net 			y-enable        =>  pid.y.enable
+net 			y-pos-cmd       =>  pid.y.command
+net 			y-pos-fb        =>  pid.y.feedback
+net 			y-output        <=  pid.y.output
+# ---PWM Generator signals/setup---
+setp   			[HMOT](CARD0).pwmgen.01.output-type 1
+setp 			[HMOT](CARD0).pwmgen.01.offset-mode 1 # offset mode so 50% = 0
+setp   			[HMOT](CARD0).pwmgen.01.scale  [JOINT_1]OUTPUT_SCALE
+net y-output	[HMOT](CARD0).pwmgen.01.value
+net y-pos-cmd	joint.1.motor-pos-cmd
+net y-enable	joint.1.amp-enable-out
+net y-enable	[HMOT](CARD0).pwmgen.01.enable
+# ---Encoder feedback signals/setup---
+setp    		[HMOT](CARD0).encoder.01.counter-mode 0
+setp    		[HMOT](CARD0).encoder.01.filter 0
+setp    		[HMOT](CARD0).encoder.01.scale  [JOINT_1]ENCODER_SCALE
+net y-pos-fb	[HMOT](CARD0).encoder.01.position
+net y-vel-fb	[HMOT](CARD0).encoder.01.velocity
+net y-pos-fb	joint.1.motor-pos-fb
+net y-pos-rawcounts	[HMOT](CARD0).encoder.01.rawcounts
+
+# ---setup home / limit switch signals---
+net home-y		[HMOT](CARD0).inmux.00.input-01
+net home-y		joint.1.home-sw-in
+#net y-neg-limit	joint.1.neg-lim-sw-in
+#net y-pos-limit	joint.1.pos-lim-sw-in
+#  ---HALUI signals---
+net y-is-homed		halui.joint.1.is-homed
+net axis-select-y  halui.axis.y.select
+net jog-y-pos      halui.axis.y.plus
+net jog-y-neg      halui.axis.y.minus
+net y-is-homed     halui.joint.1.is-homed

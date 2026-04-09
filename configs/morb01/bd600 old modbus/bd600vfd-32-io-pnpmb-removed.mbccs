@@ -1,0 +1,63 @@
+        <device name="io-pnpmb-01"      address="0x02"/>
+        <device name="io-pnpmb-02"      address="0x03"/> 
+ 
+ 
+    <initlist>
+
+        <command device="bd600vfd" address="0x1000" function="6">
+            <description>VFD: decelerate to stop</description>
+            <data value="6"/>
+        </command>
+
+        <command device="io-pnpmb-01" address="0x0070" function="6">
+            <description>Board 1: All outputs low word OFF</description>
+            <data value="0"/>
+        </command>
+        <command device="io-pnpmb-01" address="0x0071" function="6">
+            <description>Board 1: All outputs high word OFF</description>
+            <data value="0"/>
+        </command>
+
+        <command device="io-pnpmb-02" address="0x0070" function="6">
+            <description>Board 2: All outputs low word OFF</description>
+            <data value="0"/>
+        </command>
+        <command device="io-pnpmb-02" address="0x0071" function="6">
+            <description>Board 2: All outputs high word OFF</description>
+            <data value="0"/>
+        </command>
+    </initlist>
+    
+    
+    
+            <command device="bd600vfd"  function="3"    address="0x2000">
+            <pin name="status"          modbustype="U_AB"   haltype="HAL_U32"/>
+        </command>
+
+        <command device="bd600vfd"  function="3"    address="0x3001" count="7">
+            <pin name="running-freq"    modbustype="U_AB"   haltype="HAL_U32"/>
+            <pin name="bus-voltage"     modbustype="U_AB"   haltype="HAL_U32"/>
+            <pin name="output-voltage"  modbustype="U_AB"   haltype="HAL_U32"/>
+            <pin name="output-current"  modbustype="U_AB"   haltype="HAL_U32"/>
+            <pin name="output-power"    modbustype="U_AB"   haltype="HAL_U32"/>
+            <pin name="output-torque"   modbustype="U_AB"   haltype="HAL_U32"/>
+            <pin name="rpm"       modbustype="U_AB"   haltype="HAL_U32"/>
+        </command>
+
+
+        <command device="bd600vfd"  function="3"    address="0x8000">
+            <pin name="fault-code"      modbustype="U_AB"   haltype="HAL_U32"/>
+        </command>
+
+        <command device="bd600vfd"  function="3"    address="0x8001">
+            <pin name="fault-comms"     modbustype="U_AB"   haltype="HAL_U32"/>
+        </command>
+
+        <command device="io-pnpmb-01" address="0x00C0" function="3" name="inputs-a" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+        <command device="io-pnpmb-01" address="0x00C1" function="3" name="inputs-b" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+        <command device="io-pnpmb-01" address="0x0070" function="6" name="outputs-a" haltype="HAL_U32" modbustype="U_AB"/>
+        <command device="io-pnpmb-01" address="0x0071" function="6" name="outputs-b" haltype="HAL_U32" modbustype="U_AB"/>
+        <command device="io-pnpmb-02" address="0x00C0" function="3" name="inputs-a" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+        <command device="io-pnpmb-02" address="0x00C1" function="3" name="inputs-b" haltype="HAL_U32" modbustype="U_AB" count="1"/>
+        <command device="io-pnpmb-02" address="0x0070" function="6" name="outputs-a" haltype="HAL_U32" modbustype="U_AB"/>
+        <command device="io-pnpmb-02" address="0x0071" function="6" name="outputs-b" haltype="HAL_U32" modbustype="U_AB"/>

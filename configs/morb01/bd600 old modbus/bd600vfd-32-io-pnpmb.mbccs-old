@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mesamodbus baudrate="38400" parity="N" interval="500" stopbits="1" txdelay="500" rxdelay="500" suspend="true" writeflush="false" timeout="5000000">
+    <devices>
+        <device name="bd600vfd"     address="0x01"/>
+
+    </devices>
+
+
+
+    <commands>
+		
+		<command device="bd600vfd"  function="6"    address="0x3000" resend="1">
+            <pin name="set-freq"        modbustype="S_AB"   haltype="HAL_S32"/>
+        </command>
+<command delay="500000"/>
+        <command device="bd600vfd" function="6" address="0x1000" resend="1" timeout="5000000" timesout="true">
+            <pin name="cmd-run"         modbustype="U_AB"   haltype="HAL_U32"/>
+        </command>
+<command delay="500000"/>
+
+        <command device="bd600vfd"  function="3"    address="0x2000">
+            <pin name="status"          modbustype="U_AB"   haltype="HAL_U32"/>
+        </command>
+<command delay="500000"/>
+    </commands>
+</mesamodbus>

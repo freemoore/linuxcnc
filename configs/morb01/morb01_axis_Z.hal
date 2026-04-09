@@ -1,0 +1,43 @@
+#  ---AXIS Z JOINT 2---
+setp			pid.z.Pgain     [JOINT_2]P
+setp			pid.z.Igain     [JOINT_2]I
+setp			pid.z.Dgain     [JOINT_2]D
+setp			pid.z.bias      [JOINT_2]BIAS
+setp			pid.z.FF0       [JOINT_2]FF0
+setp			pid.z.FF1       [JOINT_2]FF1
+setp			pid.z.FF2       [JOINT_2]FF2
+setp			pid.z.deadband  [JOINT_2]DEADBAND
+setp			pid.z.maxoutput [JOINT_2]MAX_OUTPUT
+setp			pid.z.error-previous-target true
+net				z-enable		=>  pid.z.enable
+net				z-pos-cmd       =>  pid.z.command
+net				z-pos-fb        =>  pid.z.feedback
+net				z-output        <=  pid.z.output
+# ---PWM Generator signals/setup---
+setp   			[HMOT](CARD0).pwmgen.02.output-type 1
+setp 			[HMOT](CARD0).pwmgen.02.offset-mode 1 # offset mode so 50% = 0
+setp			[HMOT](CARD0).pwmgen.02.scale  [JOINT_2]OUTPUT_SCALE
+net z-output	[HMOT](CARD0).pwmgen.02.value
+net z-pos-cmd	joint.2.motor-pos-cmd
+net z-enable	joint.2.amp-enable-out
+net z-enable	[HMOT](CARD0).pwmgen.02.enable
+# ---Encoder feedback signals/setup---
+setp			[HMOT](CARD0).encoder.02.counter-mode 0
+setp			[HMOT](CARD0).encoder.02.filter 0
+setp			[HMOT](CARD0).encoder.02.scale  [JOINT_2]ENCODER_SCALE
+net z-pos-fb	[HMOT](CARD0).encoder.02.position
+net z-vel-fb	[HMOT](CARD0).encoder.02.velocity
+net z-pos-fb	joint.2.motor-pos-fb
+net z-pos-rawcounts	[HMOT](CARD0).encoder.02.rawcounts 
+
+# ---setup home / limit switch signals---
+net home-z		[HMOT](CARD0).inmux.00.input-02
+net home-z		joint.2.home-sw-in
+#net z-neg-limit	joint.2.neg-lim-sw-in
+#net z-pos-limit	joint.2.pos-lim-sw-in
+#  ---HALUI signals---
+net z-is-homed		halui.joint.2.is-homed
+net axis-select-z  halui.axis.z.select
+net jog-z-pos      halui.axis.z.plus
+net jog-z-neg      halui.axis.z.minus
+net z-is-homed     halui.joint.2.is-homed

@@ -1,0 +1,43 @@
+# ---AXIS X JOINT 0---
+setp			pid.x.Pgain     [JOINT_0]P
+setp			pid.x.Igain     [JOINT_0]I
+setp			pid.x.Dgain     [JOINT_0]D
+setp			pid.x.bias      [JOINT_0]BIAS
+setp			pid.x.FF0       [JOINT_0]FF0
+setp			pid.x.FF1       [JOINT_0]FF1
+setp			pid.x.FF2       [JOINT_0]FF2
+setp			pid.x.deadband  [JOINT_0]DEADBAND
+setp			pid.x.maxoutput [JOINT_0]MAX_OUTPUT
+setp			pid.x.error-previous-target true
+net 			x-enable        =>  pid.x.enable
+net 			x-pos-cmd       =>  pid.x.command
+net 			x-pos-fb        =>  pid.x.feedback
+net 			x-output        <=  pid.x.output
+# ---PWM Generator signals/setup---
+setp   			[HMOT](CARD0).pwmgen.00.output-type 1
+setp 			[HMOT](CARD0).pwmgen.00.offset-mode 1 # offset mode so 50% = 0
+setp   			[HMOT](CARD0).pwmgen.00.scale  [JOINT_0]OUTPUT_SCALE
+net x-output	[HMOT](CARD0).pwmgen.00.value
+net x-pos-cmd   joint.0.motor-pos-cmd
+net x-enable    joint.0.amp-enable-out
+net x-enable    [HMOT](CARD0).pwmgen.00.enable
+# ---Encoder feedback signals/setup---
+setp    		[HMOT](CARD0).encoder.00.counter-mode 0
+setp    		[HMOT](CARD0).encoder.00.filter 0
+setp    		[HMOT](CARD0).encoder.00.scale  [JOINT_0]ENCODER_SCALE
+net x-pos-fb    [HMOT](CARD0).encoder.00.position
+net x-vel-fb    [HMOT](CARD0).encoder.00.velocity
+net x-pos-fb    joint.0.motor-pos-fb
+net x-pos-rawcounts	[HMOT](CARD0).encoder.00.rawcounts
+net x-servopack-fault	joint.0.amp-fault-in
+# ---setup home / limit switch signals---
+net home-x		[HMOT](CARD0).inmux.00.input-00
+net home-x		joint.0.home-sw-in
+#net x-neg-limit	joint.0.neg-lim-sw-in
+#net x-pos-limit	joint.0.pos-lim-sw-in
+#  ---HALUI signals---
+net x-is-homed		halui.joint.0.is-homed
+net axis-select-x  halui.axis.x.select
+net jog-x-pos      halui.axis.x.plus
+net jog-x-neg      halui.axis.x.minus
+net x-is-homed     halui.joint.0.is-homed

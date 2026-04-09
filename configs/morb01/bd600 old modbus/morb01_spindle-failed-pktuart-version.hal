@@ -18,6 +18,8 @@
 # mux4.out is float; cmd-run is U32; use conv_float_u32 for conversion
 # fq-to-pc (scale) and freqconv (conv_float_u32) loaded in morb01.hal
 
+
+# ---- Run command logic ----
 setp mux4.0.in0 6
 setp mux4.0.in1 1
 setp mux4.0.in2 2
@@ -25,18 +27,31 @@ setp mux4.0.in3 6
 
 net spindle-cw    		spindle.0.forward 	=> mux4.0.sel0
 net spindle-ccw   		spindle.0.reverse 	=> mux4.0.sel1
-net spindle-run-cmd-f  	mux4.0.out 			=> freq-to-s32-cmd.in
-#net spindle-cmd-s32    	freq-to-s32-cmd.out => bd600.cmd-run.00.int
+net spindle-run-cmd-f  	mux4.0.out 			=> fault-reset-mux.in0
 
+# ---- Frequency setpoint ----
+# fq-to-pc (scale component) loaded in morb01.hal
+# freqconv (conv_float_s32) loaded in morb01.hal
+# chain: speed-out (float, signed RPM) -> fq-to-pc -> spindlemaxvel -> freqconv -> set-freq-pct (S32)
 setp fq-to-pc.gain 0.5556
 setp spindlemaxvel.max 10000
 setp spindlemaxvel.min -10000
 
+#freq-to-s32
+
 net spindle-vel-cmd-rpm   spindle.0.speed-out => fq-to-pc.in
-net vfd-pc-of-max-rpm-cmd fq-to-pc.out        => spindlemaxvel.in
-net vfd-pc-of-max-rpm-clamped  spindlemaxvel.out	=> freq-to-s32.in
+net vfd-pc-of-max-rpm-cmd     fq-to-pc.out            => spindlemaxvel.in
+#net vfd-pc-of-max-rpm-clamped spindlemaxvel.out        => freqconv.in
+#net s32-freq-cmd              freqconv.out             => hm2_modbus.0.bd600vfd.set-freq
+
+net vfd-pc-of-max-rpm-clamped spindlemaxvel.out        => freq-to-s32.in
+#net s32-freq-cmd              freq-to-s32.out             => hm2_modbus.0.bd600vfd.set-freq
+
 
 net spindle-enable          spindle.0.on 
+
+# ---- RPM feedback (for monitoring and at-speed detection) ----
+#net spindle-vel-fb-rpm      hm2_modbus.0.bd600vfd.rpm
 
 # ---- HALUI spindle manual control ----
 net spindle-manual-cw     halui.spindle.0.forward

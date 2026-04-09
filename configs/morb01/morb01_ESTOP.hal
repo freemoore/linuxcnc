@@ -38,10 +38,10 @@ net	machine-powerup 	pnozv_onswitch.out
 net	machine-powerup		[HMOT](CARD0).[HMOT](CARD1).output-15
 
 net machine-is-enabled	motion.motion-enabled
-setp hm2_modbus.0.suspend true
+#setp hm2_modbus.0.suspend true
 net machine-is-enabled	not.0.in
 net release-modbus		not.0.out
-net	release-modbus 		hm2_modbus.0.suspend 
+#net	release-modbus 		hm2_modbus.0.suspend 
 
 loadrt timedelay count=1
 addf timedelay.0 servo-thread

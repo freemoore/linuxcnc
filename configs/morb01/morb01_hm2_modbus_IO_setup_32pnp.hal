@@ -1,0 +1,301 @@
+# Include your custom HAL commands here
+# This file will not be overwritten when you run PNCconf again
+
+# 2x 32-channel PNP Modbus IO boards (eletechsup 25IOC32_PNP / 23IOD32_PNP)
+# replacing 3x Geroosaty UM72 16-channel NPN boards.
+# Each 32-channel board uses 2x wsum (one per 16-bit output register)
+# and 2x bitslice (one per 16-bit input register).
+# wsum.4 (size 2) retained for VFD control word logic (spindle HAL).
+
+# Note: HS321 VFD config is retained in the mbccs file and may be useful
+# for future deployments (e.g. with the 7.5kW Morbidelli spindle motor).
+# Working mbccs config: hs321vfd-32-io-pnpmb.mbccs
+
+loadrt weighted_sum wsum_sizes=16,16,16,16,2
+loadrt conv_s32_u32 names=convsu1,convsu2,convsu3,convsu4
+loadrt bitslice names=io-pnpmb01-inputs-a,io-pnpmb01-inputs-b,io-pnpmb02-inputs-a,io-pnpmb02-inputs-b personality=16,16,16,16
+
+addf process_wsums            servo-thread
+addf convsu1                  servo-thread
+addf convsu2                  servo-thread
+addf convsu3                  servo-thread
+addf convsu4                  servo-thread
+addf io-pnpmb01-inputs-a        servo-thread
+addf io-pnpmb01-inputs-b        servo-thread
+addf io-pnpmb02-inputs-a        servo-thread
+addf io-pnpmb02-inputs-b        servo-thread
+
+# ============================================
+# BOARD 1 (io-pnpmb-01) - Input channels 1-16
+# ============================================
+
+net io-pnpmb01-allinputs-a   io-pnpmb01-inputs-a.in
+net io-pnpmb01-allinputs-a   hm2_modbus.0.io-pnpmb-01.inputs-a-00
+
+net io-pnpmb01-in01 <= io-pnpmb01-inputs-a.out-00
+net io-pnpmb01-in02 <= io-pnpmb01-inputs-a.out-01
+net io-pnpmb01-in03 <= io-pnpmb01-inputs-a.out-02
+net io-pnpmb01-in04 <= io-pnpmb01-inputs-a.out-03
+net io-pnpmb01-in05 <= io-pnpmb01-inputs-a.out-04
+net io-pnpmb01-in06 <= io-pnpmb01-inputs-a.out-05
+net io-pnpmb01-in07 <= io-pnpmb01-inputs-a.out-06
+net io-pnpmb01-in08 <= io-pnpmb01-inputs-a.out-07
+net io-pnpmb01-in09 <= io-pnpmb01-inputs-a.out-08
+net io-pnpmb01-in10 <= io-pnpmb01-inputs-a.out-09
+net io-pnpmb01-in11 <= io-pnpmb01-inputs-a.out-10
+net io-pnpmb01-in12 <= io-pnpmb01-inputs-a.out-11
+net io-pnpmb01-in13 <= io-pnpmb01-inputs-a.out-12
+net io-pnpmb01-in14 <= io-pnpmb01-inputs-a.out-13
+net io-pnpmb01-in15 <= io-pnpmb01-inputs-a.out-14
+net io-pnpmb01-in16 <= io-pnpmb01-inputs-a.out-15
+
+# ============================================
+# bOaRD 1 (io-pnpmb-01) - Input channels 17-32
+# ============================================
+
+net io-pnpmb01-allinputs-b   io-pnpmb01-inputs-b.in
+net io-pnpmb01-allinputs-b   hm2_modbus.0.io-pnpmb-01.inputs-b-00
+
+net io-pnpmb01-in17 <= io-pnpmb01-inputs-b.out-00
+net io-pnpmb01-in18 <= io-pnpmb01-inputs-b.out-01
+net io-pnpmb01-in19 <= io-pnpmb01-inputs-b.out-02
+net io-pnpmb01-in20 <= io-pnpmb01-inputs-b.out-03
+net io-pnpmb01-in21 <= io-pnpmb01-inputs-b.out-04
+net io-pnpmb01-in22 <= io-pnpmb01-inputs-b.out-05
+net io-pnpmb01-in23 <= io-pnpmb01-inputs-b.out-06
+net io-pnpmb01-in24 <= io-pnpmb01-inputs-b.out-07
+net io-pnpmb01-in25 <= io-pnpmb01-inputs-b.out-08
+net io-pnpmb01-in26 <= io-pnpmb01-inputs-b.out-09
+net io-pnpmb01-in27 <= io-pnpmb01-inputs-b.out-10
+net io-pnpmb01-in28 <= io-pnpmb01-inputs-b.out-11
+net io-pnpmb01-in29 <= io-pnpmb01-inputs-b.out-12
+net io-pnpmb01-in30 <= io-pnpmb01-inputs-b.out-13
+net io-pnpmb01-in31 <= io-pnpmb01-inputs-b.out-14
+net io-pnpmb01-in32 <= io-pnpmb01-inputs-b.out-15
+
+# ============================================
+# bOaRD 1 (io-pnpmb-01) - Output channels 1-16
+# ============================================
+
+setp wsum.0.hold FaLSE
+setp wsum.0.bit.0.weight 1
+setp wsum.0.bit.1.weight 2
+setp wsum.0.bit.2.weight 4
+setp wsum.0.bit.3.weight 8
+setp wsum.0.bit.4.weight 16
+setp wsum.0.bit.5.weight 32
+setp wsum.0.bit.6.weight 64
+setp wsum.0.bit.7.weight 128
+setp wsum.0.bit.8.weight 256
+setp wsum.0.bit.9.weight 512
+setp wsum.0.bit.10.weight 1024
+setp wsum.0.bit.11.weight 2048
+setp wsum.0.bit.12.weight 4096
+setp wsum.0.bit.13.weight 8192
+setp wsum.0.bit.14.weight 16384
+setp wsum.0.bit.15.weight 32768
+
+net pnpmb01-out-bitmask-lo    wsum.0.sum
+net pnpmb01-out-bitmask-lo    convsu1.in
+net pnpmb01-out-word-lo       convsu1.out
+net pnpmb01-out-word-lo       hm2_modbus.0.io-pnpmb-01.outputs-a-00
+
+net io-pnpmb01-out01 => wsum.0.bit.0.in
+net io-pnpmb01-out02 => wsum.0.bit.1.in
+net io-pnpmb01-out03 => wsum.0.bit.2.in
+net io-pnpmb01-out04 => wsum.0.bit.3.in
+net io-pnpmb01-out05 => wsum.0.bit.4.in
+net io-pnpmb01-out06 => wsum.0.bit.5.in
+net io-pnpmb01-out07 => wsum.0.bit.6.in
+net io-pnpmb01-out08 => wsum.0.bit.7.in
+net io-pnpmb01-out09 => wsum.0.bit.8.in
+net io-pnpmb01-out10 => wsum.0.bit.9.in
+net io-pnpmb01-out11 => wsum.0.bit.10.in
+net io-pnpmb01-out12 => wsum.0.bit.11.in
+net io-pnpmb01-out13 => wsum.0.bit.12.in
+net io-pnpmb01-out14 => wsum.0.bit.13.in
+net io-pnpmb01-out15 => wsum.0.bit.14.in
+net io-pnpmb01-out16 => wsum.0.bit.15.in
+
+# ============================================
+# bOaRD 1 (io-pnpmb-01) - Output channels 17-32
+# ============================================
+
+setp wsum.1.hold FaLSE
+setp wsum.1.bit.0.weight 1
+setp wsum.1.bit.1.weight 2
+setp wsum.1.bit.2.weight 4
+setp wsum.1.bit.3.weight 8
+setp wsum.1.bit.4.weight 16
+setp wsum.1.bit.5.weight 32
+setp wsum.1.bit.6.weight 64
+setp wsum.1.bit.7.weight 128
+setp wsum.1.bit.8.weight 256
+setp wsum.1.bit.9.weight 512
+setp wsum.1.bit.10.weight 1024
+setp wsum.1.bit.11.weight 2048
+setp wsum.1.bit.12.weight 4096
+setp wsum.1.bit.13.weight 8192
+setp wsum.1.bit.14.weight 16384
+setp wsum.1.bit.15.weight 32768
+
+net pnpmb01-out-bitmask-hi    wsum.1.sum
+net pnpmb01-out-bitmask-hi    convsu2.in
+net pnpmb01-out-word-hi       convsu2.out
+net pnpmb01-out-word-hi       hm2_modbus.0.io-pnpmb-01.outputs-b-00
+
+net io-pnpmb01-out17 => wsum.1.bit.0.in
+net io-pnpmb01-out18 => wsum.1.bit.1.in
+net io-pnpmb01-out19 => wsum.1.bit.2.in
+net io-pnpmb01-out20 => wsum.1.bit.3.in
+net io-pnpmb01-out21 => wsum.1.bit.4.in
+net io-pnpmb01-out22 => wsum.1.bit.5.in
+net io-pnpmb01-out23 => wsum.1.bit.6.in
+net io-pnpmb01-out24 => wsum.1.bit.7.in
+net io-pnpmb01-out25 => wsum.1.bit.8.in
+net io-pnpmb01-out26 => wsum.1.bit.9.in
+net io-pnpmb01-out27 => wsum.1.bit.10.in
+net io-pnpmb01-out28 => wsum.1.bit.11.in
+net io-pnpmb01-out29 => wsum.1.bit.12.in
+net io-pnpmb01-out30 => wsum.1.bit.13.in
+net io-pnpmb01-out31 => wsum.1.bit.14.in
+net io-pnpmb01-out32 => wsum.1.bit.15.in
+
+# ============================================
+# bOaRD 2 (io-pnpmb-02) - Input channels 1-16
+# ============================================
+
+net io-pnpmb02-allinputs-a   io-pnpmb02-inputs-a.in
+net io-pnpmb02-allinputs-a   hm2_modbus.0.io-pnpmb-02.inputs-a-00
+
+net io-pnpmb02-in01 <= io-pnpmb02-inputs-a.out-00
+net io-pnpmb02-in02 <= io-pnpmb02-inputs-a.out-01
+net io-pnpmb02-in03 <= io-pnpmb02-inputs-a.out-02
+net io-pnpmb02-in04 <= io-pnpmb02-inputs-a.out-03
+net io-pnpmb02-in05 <= io-pnpmb02-inputs-a.out-04
+net io-pnpmb02-in06 <= io-pnpmb02-inputs-a.out-05
+net io-pnpmb02-in07 <= io-pnpmb02-inputs-a.out-06
+net io-pnpmb02-in08 <= io-pnpmb02-inputs-a.out-07
+net io-pnpmb02-in09 <= io-pnpmb02-inputs-a.out-08
+net io-pnpmb02-in10 <= io-pnpmb02-inputs-a.out-09
+net io-pnpmb02-in11 <= io-pnpmb02-inputs-a.out-10
+net io-pnpmb02-in12 <= io-pnpmb02-inputs-a.out-11
+net io-pnpmb02-in13 <= io-pnpmb02-inputs-a.out-12
+net io-pnpmb02-in14 <= io-pnpmb02-inputs-a.out-13
+net io-pnpmb02-in15 <= io-pnpmb02-inputs-a.out-14
+net io-pnpmb02-in16 <= io-pnpmb02-inputs-a.out-15
+
+# ============================================
+# bOaRD 2 (io-pnpmb-02) - Input channels 17-32
+# ============================================
+
+net io-pnpmb02-allinputs-b   io-pnpmb02-inputs-b.in
+net io-pnpmb02-allinputs-b   hm2_modbus.0.io-pnpmb-02.inputs-b-00
+
+net io-pnpmb02-in17 <= io-pnpmb02-inputs-b.out-00
+net io-pnpmb02-in18 <= io-pnpmb02-inputs-b.out-01
+net io-pnpmb02-in19 <= io-pnpmb02-inputs-b.out-02
+net io-pnpmb02-in20 <= io-pnpmb02-inputs-b.out-03
+net io-pnpmb02-in21 <= io-pnpmb02-inputs-b.out-04
+net io-pnpmb02-in22 <= io-pnpmb02-inputs-b.out-05
+net io-pnpmb02-in23 <= io-pnpmb02-inputs-b.out-06
+net io-pnpmb02-in24 <= io-pnpmb02-inputs-b.out-07
+net io-pnpmb02-in25 <= io-pnpmb02-inputs-b.out-08
+net io-pnpmb02-in26 <= io-pnpmb02-inputs-b.out-09
+net io-pnpmb02-in27 <= io-pnpmb02-inputs-b.out-10
+net io-pnpmb02-in28 <= io-pnpmb02-inputs-b.out-11
+net io-pnpmb02-in29 <= io-pnpmb02-inputs-b.out-12
+net io-pnpmb02-in30 <= io-pnpmb02-inputs-b.out-13
+net io-pnpmb02-in31 <= io-pnpmb02-inputs-b.out-14
+net io-pnpmb02-in32 <= io-pnpmb02-inputs-b.out-15
+
+# ============================================
+# bOaRD 2 (io-pnpmb-02) - Output channels 1-16
+# ============================================
+
+setp wsum.2.hold FaLSE
+setp wsum.2.bit.0.weight 1
+setp wsum.2.bit.1.weight 2
+setp wsum.2.bit.2.weight 4
+setp wsum.2.bit.3.weight 8
+setp wsum.2.bit.4.weight 16
+setp wsum.2.bit.5.weight 32
+setp wsum.2.bit.6.weight 64
+setp wsum.2.bit.7.weight 128
+setp wsum.2.bit.8.weight 256
+setp wsum.2.bit.9.weight 512
+setp wsum.2.bit.10.weight 1024
+setp wsum.2.bit.11.weight 2048
+setp wsum.2.bit.12.weight 4096
+setp wsum.2.bit.13.weight 8192
+setp wsum.2.bit.14.weight 16384
+setp wsum.2.bit.15.weight 32768
+
+net pnpmb02-out-bitmask-lo    wsum.2.sum
+net pnpmb02-out-bitmask-lo    convsu3.in
+net pnpmb02-out-word-lo       convsu3.out
+net pnpmb02-out-word-lo       hm2_modbus.0.io-pnpmb-02.outputs-a-00
+
+net io-pnpmb02-out01 => wsum.2.bit.0.in
+net io-pnpmb02-out02 => wsum.2.bit.1.in
+net io-pnpmb02-out03 => wsum.2.bit.2.in
+net io-pnpmb02-out04 => wsum.2.bit.3.in
+net io-pnpmb02-out05 => wsum.2.bit.4.in
+net io-pnpmb02-out06 => wsum.2.bit.5.in
+net io-pnpmb02-out07 => wsum.2.bit.6.in
+net io-pnpmb02-out08 => wsum.2.bit.7.in
+net io-pnpmb02-out09 => wsum.2.bit.8.in
+net io-pnpmb02-out10 => wsum.2.bit.9.in
+net io-pnpmb02-out11 => wsum.2.bit.10.in
+net io-pnpmb02-out12 => wsum.2.bit.11.in
+net io-pnpmb02-out13 => wsum.2.bit.12.in
+net io-pnpmb02-out14 => wsum.2.bit.13.in
+net io-pnpmb02-out15 => wsum.2.bit.14.in
+net io-pnpmb02-out16 => wsum.2.bit.15.in
+
+# ============================================
+# bOaRD 2 (io-pnpmb-02) - Output channels 17-32
+# ============================================
+
+setp wsum.3.hold FaLSE
+setp wsum.3.bit.0.weight 1
+setp wsum.3.bit.1.weight 2
+setp wsum.3.bit.2.weight 4
+setp wsum.3.bit.3.weight 8
+setp wsum.3.bit.4.weight 16
+setp wsum.3.bit.5.weight 32
+setp wsum.3.bit.6.weight 64
+setp wsum.3.bit.7.weight 128
+setp wsum.3.bit.8.weight 256
+setp wsum.3.bit.9.weight 512
+setp wsum.3.bit.10.weight 1024
+setp wsum.3.bit.11.weight 2048
+setp wsum.3.bit.12.weight 4096
+setp wsum.3.bit.13.weight 8192
+setp wsum.3.bit.14.weight 16384
+setp wsum.3.bit.15.weight 32768
+
+net pnpmb02-out-bitmask-hi    wsum.3.sum
+net pnpmb02-out-bitmask-hi    convsu4.in
+net pnpmb02-out-word-hi       convsu4.out
+net pnpmb02-out-word-hi       hm2_modbus.0.io-pnpmb-02.outputs-b-00
+
+net io-pnpmb02-out17 => wsum.3.bit.0.in
+net io-pnpmb02-out18 => wsum.3.bit.1.in
+net io-pnpmb02-out19 => wsum.3.bit.2.in
+net io-pnpmb02-out20 => wsum.3.bit.3.in
+net io-pnpmb02-out21 => wsum.3.bit.4.in
+net io-pnpmb02-out22 => wsum.3.bit.5.in
+net io-pnpmb02-out23 => wsum.3.bit.6.in
+net io-pnpmb02-out24 => wsum.3.bit.7.in
+net io-pnpmb02-out25 => wsum.3.bit.8.in
+net io-pnpmb02-out26 => wsum.3.bit.9.in
+net io-pnpmb02-out27 => wsum.3.bit.10.in
+net io-pnpmb02-out28 => wsum.3.bit.11.in
+net io-pnpmb02-out29 => wsum.3.bit.12.in
+net io-pnpmb02-out30 => wsum.3.bit.13.in
+net io-pnpmb02-out31 => wsum.3.bit.14.in
+net io-pnpmb02-out32 => wsum.3.bit.15.in
+
+# NOTE: wsum.4 (size 2) is used by the VFD spindle control word logic
+# in the spindle HaL file. Reference there updated from wsum.3 to wsum.4.

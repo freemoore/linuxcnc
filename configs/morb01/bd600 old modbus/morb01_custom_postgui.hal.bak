@@ -1,0 +1,107 @@
+# morb01_custom_postgui.hal
+# This file will not be overwritten when you run PNCconf again
+########################################################################
+# --- Spindle fault detection ---
+# wcomp window: 0 = no fault, any non-zero = fault
+setp spindle-fault-detect.min 0
+setp spindle-fault-detect.max 1
+
+#net vfd-fault-raw    hm2_modbus.0.bd600vfd.fault-current => faultcodeconv.in
+net vfd-fault-raw    hm2_modbus.0.bd600vfd.fault-live => faultcodeconv.in
+net vfd-fault-float  faultcodeconv.out                   => spindle-fault-detect.in
+
+# wcomp.over = TRUE when fault-current >= 1
+net spindle-vfd-fault   spindle-fault-detect.over           => feed-hold-or.in0 bd600-spindle-panel.fault-led
+
+# in1 left unconnected for now (vacuum/toolchange/etc later)
+net feed-hold-active    feed-hold-or.out                    => motion.feed-hold
+
+# fault-code display - direct from modbus pin to panel
+net vfd-fault-raw => bd600-spindle-panel.fault-code
+########################################################################
+# --- Speed display ---
+# RPM feedback (U32 -> float -> HAL_HBar)
+net spindle-vel-fb-rpm  hm2_modbus.0.bd600vfd.rpm          => rpmdispconv.in
+net vfd-rpm-float       rpmdispconv.out                     => bd600-spindle-panel.rpm-actual
+# RPM commanded (float -> HAL_Label)
+net spindle-vel-cmd-rpm-abs                                 => bd600-spindle-panel.rpm-cmd
+########################################################################
+# --- Set frequency display: U32 (Hz x100) -> float -> Hz ---
+#setp freqdispscale.gain 0.1
+#net vfd-set-freq-raw    hm2_modbus.0.bd600vfd.set-freq      => freqdispconv.in
+#net vfd-set-freq-f      freqdispconv.out                    => freqdispscale.in
+#net vfd-set-freq-hz     freqdispscale.out                   => bd600-spindle-panel.freq-set
+########################################################################
+# --- Output current display: U32 (A x100) -> float -> A ---
+setp ampsdispscale.gain 0.01
+net vfd-amps-raw        hm2_modbus.0.bd600vfd.output-current => ampsdispconv.in
+net vfd-amps-f          ampsdispconv.out                    => ampsdispscale.in
+net vfd-amps-disp       ampsdispscale.out                   => bd600-spindle-panel.amps-out
+########################################################################
+# --- Drive status and bus voltage (direct U32) ---
+net vfd-status          hm2_modbus.0.bd600vfd.status        => bd600-spindle-panel.drive-status
+net vfd-bus-voltage     hm2_modbus.0.bd600vfd.bus-voltage   => bd600-spindle-panel.volts-out
+########################################################################
+# --- Fault detail registers ---
+# fault-freq-set: U32 (Hz x100) -> float -> Hz
+#setp freqfaultscale.gain 0.01
+#net vfd-freqfault-raw   hm2_modbus.0.bd600vfd.fault-freq-set => freqfaultconv.in
+#net vfd-freqfault-f     freqfaultconv.out                   => freqfaultscale.in
+#net vfd-freqfault-disp  freqfaultscale.out                  => bd600-spindle-panel.fault-freq-set
+########################################################################
+# fault-freq-run: U32 (Hz x100) -> float -> Hz
+#setp rpmfaultscale.gain 0.01
+#net vfd-rpmfault-raw    hm2_modbus.0.bd600vfd.fault-freq-run => rpmfaultconv.in
+#net vfd-rpmfault-f      rpmfaultconv.out                    => rpmfaultscale.in
+#net vfd-rpmfault-disp   rpmfaultscale.out                   => bd600-spindle-panel.fault-freq-run
+########################################################################
+# fault-amps: U32 (A x100) -> float -> A
+#setp ampfaultscale.gain 0.01
+#net vfd-ampfault-raw    hm2_modbus.0.bd600vfd.fault-amps    => ampfaultconv.in
+#net vfd-ampfault-f      ampfaultconv.out                    => ampfaultscale.in
+#net vfd-ampfault-disp   ampfaultscale.out                   => bd600-spindle-panel.fault-amps
+########################################################################
+# fault-voltage: direct U32
+#net vfd-fault-v         hm2_modbus.0.bd600vfd.fault-voltage => bd600-spindle-panel.fault-voltage
+########################################################################
+# --- Accel/decel display: U32 (s x10) -> float -> s ---
+setp accelscale.gain 0.1
+net vfd-accel-raw       hm2_modbus.0.bd600vfd.accel-time    => accelconv.in
+net vfd-accel-f         accelconv.out                       => accelscale.in
+net vfd-accel-disp      accelscale.out                      => bd600-spindle-panel.accel-time
+########################################################################
+setp decelscale.gain 0.1
+net vfd-decel-raw       hm2_modbus.0.bd600vfd.decel-time    => decelconv.in
+net vfd-decel-f         decelconv.out                       => decelscale.in
+net vfd-decel-disp      decelscale.out                      => bd600-spindle-panel.decel-time
+########################################################################
+# --- Static VFD parameter writes ---
+setp hm2_modbus.0.bd600vfd.set-accel-time 25
+setp hm2_modbus.0.bd600vfd.set-decel-time 25
+########################################################################
+# --- Fault reset button ---
+#setp fault-reset-mux.in0 0
+#setp fault-reset-mux.in1 2
+#net fault-reset-btn-bit bd600-spindle-panel.fault-reset-btn => fault-reset-mux.sel
+#net fault-reset-float   fault-reset-mux.out                 => fault-reset-conv.in
+#net fault-reset-cmd     fault-reset-conv.out                => hm2_modbus.0.bd600vfd.param-init
+
+# fault-reset-mux already loaded as mux2
+setp fault-reset-mux.in1 7    # fault reset command
+net fault-reset-btn-bit  bd600-spindle-panel.fault-reset-btn => fault-reset-mux.sel
+#net spindle-run-cmd      => fault-reset-mux.in0
+net fault-reset-out      fault-reset-mux.out => fault-reset-conv.in
+net fault-reset-cmd      fault-reset-conv.out => hm2_modbus.0.bd600vfd.cmd-run
+
+
+########################################################################
+# --- Compact spindle status panel (AXIS sidebar) ---
+# rpm-cmd and rpm-actual reuse existing signals
+net spindle-vel-cmd-rpm-abs                => spindle-status.rpm-cmd
+net vfd-rpm-float                          => spindle-status.rpm-actual
+
+
+setp spindle-at-speed-detect.scale 1.01
+net spindle-vel-cmd-rpm-abs => spindle-at-speed-detect.in1
+net vfd-rpm-float           => spindle-at-speed-detect.in2
+net spindle-at-speed        spindle-at-speed-detect.out => spindle-status.at-speed-led

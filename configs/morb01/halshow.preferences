@@ -1,51 +1,16 @@
 # Halshow settings
 # This file is generated automatically.
-wm geometry . 682x807+748+27
-placeFrames 0.33880597014925373
-set ::ratio 0.33880597014925373
+wm geometry . 710x368+720+27
+placeFrames 0.39065108514190316
+set ::ratio 0.39065108514190316
 set ::old_w_leftf 160
 set ::watchlist {
-    pin+hm2_modbus.0.hs321vfd.accel-time
-    pin+hm2_modbus.0.hs321vfd.bus-voltage
-    pin+hm2_modbus.0.hs321vfd.decel-time
-    pin+hm2_modbus.0.hs321vfd.fault-amps
-    pin+hm2_modbus.0.hs321vfd.fault-current
-    pin+hm2_modbus.0.hs321vfd.fault-freq-run
-    pin+hm2_modbus.0.hs321vfd.fault-freq-set
-    pin+hm2_modbus.0.hs321vfd.fault-prev1
-    pin+hm2_modbus.0.hs321vfd.fault-prev2
-    pin+hm2_modbus.0.hs321vfd.fault-voltage
-    pin+hm2_modbus.0.hs321vfd.output-current
-    pin+hm2_modbus.0.hs321vfd.output-voltage
-    pin+hm2_modbus.0.hs321vfd.rpm
-    pin+hm2_modbus.0.hs321vfd.running-freq
-    pin+hm2_modbus.0.hs321vfd.set-accel-time
-    pin+hm2_modbus.0.hs321vfd.set-decel-time
-    pin+hm2_modbus.0.hs321vfd.set-freq
-    pin+hm2_modbus.0.hs321vfd.set-pc-max-rpm
-    pin+hm2_modbus.0.hs321vfd.set-status
-    pin+hm2_modbus.0.hs321vfd.status
-    pin+hs321-spindle-panel.amps-out
-    pin+hs321-spindle-panel.drive-status
-    pin+hs321-spindle-panel.fault-code
-    pin+hs321-spindle-panel.fault-led
-    pin+hs321-spindle-panel.fault-voltage
-    pin+hs321-spindle-panel.freq-set
-    pin+hs321-spindle-panel.rpm-actual
-    pin+hs321-spindle-panel.rpm-cmd
-    pin+hs321-spindle-panel.volts-out
-    pin+hm2_modbus.0.hs321vfd.param-init
-    pin+motion.feed-hold
-    pin+spindle-fault-detect.over
-    sig+vfd-fault-raw
-    pin+spindle-fault-detect.in
-    pin+faultcodeconv.in
-    pin+faultcodeconv.out
-    pin+spindle-at-speed-detect.in1
-    pin+spindle-at-speed-detect.in2
-    pin+spindle-at-speed-detect.out
-    pin+spindle-status.at-speed-led
-    pin+spindle.0.at-speed
+    pin+halui.spindle.0.forward
+    pin+spindle.0.forward
+    pin+spindle.0.speed-out-abs
+    pin+bd600.cmd-run.00.float
+    pin+bd600.cmd-run.00.int
+    pin+bd600.cmd-run.num_errors
 }
 set ::workmode watchhal
 set ::watchInterval 100

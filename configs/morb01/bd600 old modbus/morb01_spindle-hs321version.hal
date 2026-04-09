@@ -1,0 +1,39 @@
+######### set spindle status: 0=stop, 1=fwd run, 2=rev run
+net spindle-cw	spindle.0.forward 
+setp wsum.4.bit.0.weight 1
+net spindle-cw	wsum.4.bit.0.in
+net spindle-ccw	spindle.0.reverse
+setp wsum.4.bit.1.weight 2
+net spindle-ccw	wsum.4.bit.1.in
+net spindle-cmd wsum.4.sum hm2_modbus.0.bd600vfd.set-status
+###########
+setp   pid.s.Pgain     [SPINDLE_0]P
+setp   pid.s.Igain     [SPINDLE_0]I
+setp   pid.s.Dgain     [SPINDLE_0]D
+setp   pid.s.bias      [SPINDLE_0]BIAS
+setp   pid.s.FF0       [SPINDLE_0]FF0
+setp   pid.s.FF1       [SPINDLE_0]FF1
+setp   pid.s.FF2       [SPINDLE_0]FF2
+setp   pid.s.deadband  [SPINDLE_0]DEADBAND
+setp   pid.s.maxoutput [SPINDLE_0]MAX_OUTPUT
+setp   pid.s.error-previous-target true
+net spindle-enable        	=>  pid.s.enable
+net spindle-vel-cmd-rpm-abs =>  pid.s.command
+net spindle-vel-fb-rpm      =>  hm2_modbus.0.bd600vfd.rpm 
+net spindle-output       	<=  pid.s.output
+setp spindlemaxvel.max 10000
+setp spindlemaxvel.min 0
+setp fq-to-pc.gain 0.55556   
+net spindle-vel-cmd-rpm-abs spindle.0.speed-out-abs
+net spindle-vel-cmd-rpm-abs fq-to-pc.in
+net vfd-pc-of-max-rpm-cmd fq-to-pc.out
+net vfd-pc-of-max-rpm-cmd spindlemaxvel.in
+net vfd-pc-of-max-rpm-cmd-clamped spindlemaxvel.out
+net vfd-pc-of-max-rpm-cmd-clamped freqconv.in
+net u32-pc-of-max-rpm-cmd freqconv.out
+net u32-pc-of-max-rpm-cmd hm2_modbus.0.bd600vfd.set-pc-max-rpm
+# Spindle HALUI
+net spindle-manual-cw     halui.spindle.0.forward
+net spindle-manual-ccw    halui.spindle.0.reverse
+net spindle-manual-stop   halui.spindle.0.stop
+net jog-speed             halui.axis.jog-speed

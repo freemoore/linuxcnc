@@ -1,0 +1,42 @@
+#  ---AXIS A JOINT 3--- POSSIBLY A AXIS/SPINDLE ORIENT MOTOR -- RELAY 2KAA
+setp			pid.a.Pgain     [JOINT_2]P
+setp			pid.a.Igain     [JOINT_2]I
+setp			pid.a.Dgain     [JOINT_2]D
+setp			pid.a.bias      [JOINT_2]BIAS
+setp			pid.a.FF0       [JOINT_2]FF0
+setp			pid.a.FF1       [JOINT_2]FF1
+setp			pid.a.FF2       [JOINT_2]FF2
+setp			pid.a.deadband  [JOINT_2]DEADBAND
+setp			pid.a.maxoutput [JOINT_2]MAX_OUTPUT
+setp			pid.a.error-previous-target true
+net				a-enable		=>  pid.a.enable
+net				a-pos-cmd       =>  pid.a.command
+net				a-pos-fb        =>  pid.a.feedback
+net				a-output        <=  pid.a.output
+# ---PWM Generator signals/setup---
+setp   			[HMOT](CARD0).pwmgen.03.output-type 1
+setp 			[HMOT](CARD0).pwmgen.03.offset-mode 1 # offset mode so 50% = 0
+setp			[HMOT](CARD0).pwmgen.03.scale  [JOINT_2]OUTPUT_SCALE
+net a-output	[HMOT](CARD0).pwmgen.03.value
+#net a-pos-cmd	joint.3.motor-pos-cmd
+#net a-pos-cmd	joint.3.motor-pos-fb
+net a-enable	joint.3.amp-enable-out
+net a-enable	[HMOT](CARD0).pwmgen.03.enable
+net a-pos-cmd joint.3.motor-pos-cmd => joint.3.motor-pos-fb
+
+# ---Encoder feedback signals/setup---
+#setp			[HMOT](CARD0).encoder.03.counter-mode 0
+#setp			[HMOT](CARD0).encoder.03.filter 0
+#setp			[HMOT](CARD0).encoder.03.scale  [JOINT_2]ENCODER_SCALE
+#net a-pos-fb	[HMOT](CARD0).encoder.03.position
+#net a-vel-fb	[HMOT](CARD0).encoder.03.velocity
+
+#net a-pos-rawcounts	[HMOT](CARD0).encoder.03.rawcounts 
+
+# ---setup home / limit switch signals---
+#net home-a		[HMOT](CARD0).inmux.00.input-02
+#net home-a		joint.3.home-sw-in
+#net a-neg-limit	joint.3.neg-lim-sw-in
+#net a-pos-limit	joint.3.pos-lim-sw-in
+#  ---HALUI signals---
+net a-is-homed		halui.joint.3.is-homed

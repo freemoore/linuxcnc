@@ -1,0 +1,39 @@
+#  ---AXIS b JOINT 2--- TOOLCHANGER CAROUSEL MOTOR -- RELAY 2KAM
+setp			pid.b.Pgain     [JOINT_2]P
+setp			pid.b.Igain     [JOINT_2]I
+setp			pid.b.Dgain     [JOINT_2]D
+setp			pid.b.bias      [JOINT_2]BIAS
+setp			pid.b.FF0       [JOINT_2]FF0
+setp			pid.b.FF1       [JOINT_2]FF1
+setp			pid.b.FF2       [JOINT_2]FF2
+setp			pid.b.deadband  [JOINT_2]DEADBAND
+setp			pid.b.maxoutput [JOINT_2]MAX_OUTPUT
+setp			pid.b.error-previous-target true
+net				b-enable		=>  pid.b.enable
+net				b-pos-cmd       =>  pid.b.command
+net				b-pos-fb        =>  pid.b.feedback
+net				b-output        <=  pid.b.output
+# ---PWM Generator signals/setup---
+setp   			[HMOT](CARD0).pwmgen.04.output-type 1
+setp 			[HMOT](CARD0).pwmgen.04.offset-mode 1 # offset mode so 50% = 0
+setp			[HMOT](CARD0).pwmgen.04.scale  [JOINT_2]OUTPUT_SCALE
+net b-output	[HMOT](CARD0).pwmgen.04.value
+net b-pos-cmd	joint.4.motor-pos-cmd
+net b-enable	joint.4.amp-enable-out
+net b-enable	[HMOT](CARD0).pwmgen.04.enable
+# ---Encoder feedback signals/setup---
+#setp			[HMOT](CARD0).encoder.04.counter-mode 0
+#setp			[HMOT](CARD0).encoder.04.filter 0
+#setp			[HMOT](CARD0).encoder.04.scale  [JOINT_2]ENCODER_SCALE
+#net b-pos-fb	[HMOT](CARD0).encoder.04.position
+#net b-vel-fb	[HMOT](CARD0).encoder.04.velocity
+#net b-pos-fb	joint.4.motor-pos-fb
+#net b-pos-rawcounts	[HMOT](CARD0).encoder.04.rawcounts 
+
+# ---setup home / limit switch signals---
+#net home-b		[HMOT](CARD0).inmux.00.input-02
+net home-b		joint.4.home-sw-in
+#net b-neg-limit	joint.4.neg-lim-sw-in
+#net b-pos-limit	joint.4.pos-lim-sw-in
+#  ---HALUI signals---
+net b-is-homed		halui.joint.4.is-homed
