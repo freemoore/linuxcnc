@@ -1,16 +1,14 @@
 # Halshow settings
 # This file is generated automatically.
-wm geometry . 710x368+720+27
+wm geometry . 710x805+720+27
 placeFrames 0.39065108514190316
 set ::ratio 0.39065108514190316
 set ::old_w_leftf 160
 set ::watchlist {
-    pin+halui.spindle.0.forward
-    pin+spindle.0.forward
-    pin+spindle.0.speed-out-abs
-    pin+bd600.cmd-run.00.float
-    pin+bd600.cmd-run.00.int
-    pin+bd600.cmd-run.num_errors
+    pin+io-pnpmb01-inputs-a.in
+    pin+io-pnpmb01-inputs-b.in
+    pin+io-pnpmb02-inputs-a.in
+    pin+io-pnpmb02-inputs-b.in
 }
 set ::workmode watchhal
 set ::watchInterval 100

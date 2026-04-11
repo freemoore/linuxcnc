@@ -5,10 +5,9 @@ loadrt [KINS]KINEMATICS
 loadrt [EMCMOT]EMCMOT servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[KINS]JOINTS
 loadrt hostmot2
 loadrt hm2_eth board_ip="10.10.10.10" config="num_encoders=6 num_pwmgens=6 num_pktuarts=1 sserial_port_0=0000000" 
-##loadrt hm2_modbus ports=[HMOT](CARD0).pktuart.0 mbccbs=bd600vfd.mbccb debug=5
+loadrt hm2_modbus ports=[HMOT](CARD0).pktuart.0 mbccbs=32-io-pnpmb.mbccb debug=5
 loadrt pid names=pid.x,pid.y,pid.z,pid.a,pid.b
 loadrt scale names=freqdispscale,ampsdispscale,fq-to-pc,fault-reset-scale,accelscale,decelscale
-#loadrt conv_float_u32 names=freqconv,fault-reset-conv,
 loadrt conv_float_s32 names=freq-to-s32,freq-to-s32-cmd
 loadrt conv_u32_float names=freqdispconv,ampsdispconv,rpmdispconv,fault-code-to-float,accelconv,decelconv,faultcodeconv
 loadrt limit1 names=spindlemaxvel
@@ -32,7 +31,7 @@ addf pid.a.do-pid-calcs       	servo-thread
 addf pid.b.do-pid-calcs       	servo-thread
 addf fq-to-pc 					servo-thread
 addf spindlemaxvel 				servo-thread
-##addf hm2_modbus.0.process		servo-thread
+addf hm2_modbus.0.process		servo-thread
 addf freqdispconv 				servo-thread
 addf ampsdispconv 				servo-thread
 addf rpmdispconv 				servo-thread
@@ -45,7 +44,6 @@ addf accelscale 				servo-thread
 addf decelscale 				servo-thread
 addf spindle-fault-detect 		servo-thread
 addf feed-hold-or 				servo-thread
-#addf fault-reset-mux 			servo-thread
 addf faultcodeconv 				servo-thread
 addf spindle-at-speed-detect 	servo-thread
 addf freq-to-s32				servo-thread

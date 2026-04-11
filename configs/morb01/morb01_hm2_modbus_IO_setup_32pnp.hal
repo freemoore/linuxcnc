@@ -5,13 +5,13 @@
 # replacing 3x Geroosaty UM72 16-channel NPN boards.
 # Each 32-channel board uses 2x wsum (one per 16-bit output register)
 # and 2x bitslice (one per 16-bit input register).
-# wsum.4 (size 2) retained for VFD control word logic (spindle HAL).
+
 
 # Note: HS321 VFD config is retained in the mbccs file and may be useful
 # for future deployments (e.g. with the 7.5kW Morbidelli spindle motor).
-# Working mbccs config: hs321vfd-32-io-pnpmb.mbccs
+# Working mbccs config: 32-io-pnpmb.mbccs
 
-loadrt weighted_sum wsum_sizes=16,16,16,16,2
+loadrt weighted_sum wsum_sizes=16,16,16,16
 loadrt conv_s32_u32 names=convsu1,convsu2,convsu3,convsu4
 loadrt bitslice names=io-pnpmb01-inputs-a,io-pnpmb01-inputs-b,io-pnpmb02-inputs-a,io-pnpmb02-inputs-b personality=16,16,16,16
 
@@ -165,25 +165,25 @@ net io-pnpmb01-out32 => wsum.1.bit.15.in
 # bOaRD 2 (io-pnpmb-02) - Input channels 1-16
 # ============================================
 
-net io-pnpmb02-allinputs-a   io-pnpmb02-inputs-a.in
-net io-pnpmb02-allinputs-a   hm2_modbus.0.io-pnpmb-02.inputs-a-00
+#net io-pnpmb02-allinputs-a   io-pnpmb02-inputs-a.in
+#net io-pnpmb02-allinputs-a   hm2_modbus.0.io-pnpmb-02.inputs-a-00
 
-net io-pnpmb02-in01 <= io-pnpmb02-inputs-a.out-00
-net io-pnpmb02-in02 <= io-pnpmb02-inputs-a.out-01
-net io-pnpmb02-in03 <= io-pnpmb02-inputs-a.out-02
-net io-pnpmb02-in04 <= io-pnpmb02-inputs-a.out-03
-net io-pnpmb02-in05 <= io-pnpmb02-inputs-a.out-04
-net io-pnpmb02-in06 <= io-pnpmb02-inputs-a.out-05
-net io-pnpmb02-in07 <= io-pnpmb02-inputs-a.out-06
-net io-pnpmb02-in08 <= io-pnpmb02-inputs-a.out-07
-net io-pnpmb02-in09 <= io-pnpmb02-inputs-a.out-08
-net io-pnpmb02-in10 <= io-pnpmb02-inputs-a.out-09
-net io-pnpmb02-in11 <= io-pnpmb02-inputs-a.out-10
-net io-pnpmb02-in12 <= io-pnpmb02-inputs-a.out-11
-net io-pnpmb02-in13 <= io-pnpmb02-inputs-a.out-12
-net io-pnpmb02-in14 <= io-pnpmb02-inputs-a.out-13
-net io-pnpmb02-in15 <= io-pnpmb02-inputs-a.out-14
-net io-pnpmb02-in16 <= io-pnpmb02-inputs-a.out-15
+#net io-pnpmb02-in01 <= io-pnpmb02-inputs-a.out-00
+#net io-pnpmb02-in02 <= io-pnpmb02-inputs-a.out-01
+#net io-pnpmb02-in03 <= io-pnpmb02-inputs-a.out-02
+#net io-pnpmb02-in04 <= io-pnpmb02-inputs-a.out-03
+#net io-pnpmb02-in05 <= io-pnpmb02-inputs-a.out-04
+#net io-pnpmb02-in06 <= io-pnpmb02-inputs-a.out-05
+#net io-pnpmb02-in07 <= io-pnpmb02-inputs-a.out-06
+#net io-pnpmb02-in08 <= io-pnpmb02-inputs-a.out-07
+#net io-pnpmb02-in09 <= io-pnpmb02-inputs-a.out-08
+#net io-pnpmb02-in10 <= io-pnpmb02-inputs-a.out-09
+#net io-pnpmb02-in11 <= io-pnpmb02-inputs-a.out-10
+#net io-pnpmb02-in12 <= io-pnpmb02-inputs-a.out-11
+#net io-pnpmb02-in13 <= io-pnpmb02-inputs-a.out-12
+#net io-pnpmb02-in14 <= io-pnpmb02-inputs-a.out-13
+#net io-pnpmb02-in15 <= io-pnpmb02-inputs-a.out-14
+#net io-pnpmb02-in16 <= io-pnpmb02-inputs-a.out-15
 
 # ============================================
 # bOaRD 2 (io-pnpmb-02) - Input channels 17-32
@@ -296,6 +296,3 @@ net io-pnpmb02-out29 => wsum.3.bit.12.in
 net io-pnpmb02-out30 => wsum.3.bit.13.in
 net io-pnpmb02-out31 => wsum.3.bit.14.in
 net io-pnpmb02-out32 => wsum.3.bit.15.in
-
-# NOTE: wsum.4 (size 2) is used by the VFD spindle control word logic
-# in the spindle HaL file. Reference there updated from wsum.3 to wsum.4.

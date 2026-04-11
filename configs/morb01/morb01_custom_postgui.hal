@@ -47,3 +47,7 @@ setp spindle-at-speed-detect.scale 1.01
 net spindle-vel-cmd-rpm => spindle-at-speed-detect.in1
 net vfd-rpm-float           => spindle-at-speed-detect.in2
 net spindle-at-speed        spindle-at-speed-detect.out => spindle-status.at-speed-led
+########################################################################
+# - release suspended modbus comms for 32IO boards
+setp hm2_modbus.0.suspend 0
+
