@@ -1,14 +1,21 @@
 # Halshow settings
 # This file is generated automatically.
 wm geometry . 710x805+720+27
-placeFrames 0.39065108514190316
-set ::ratio 0.39065108514190316
+placeFrames 0.3753581661891118
+set ::ratio 0.3753581661891118
 set ::old_w_leftf 160
 set ::watchlist {
-    pin+io-pnpmb01-inputs-a.in
-    pin+io-pnpmb01-inputs-b.in
-    pin+io-pnpmb02-inputs-a.in
-    pin+io-pnpmb02-inputs-b.in
+    sig+spindleZ150mmoffsetAUP
+    sig+spindleZ150mmoffsetADOWN
+    sig+spindleZ50mmDOWNA
+    sig+spindleZ50mmDOWNB
+    sig+vacuum-on
+    sig+01WorkPieceBackEndStopZoneA
+    sig+02WorkPieceBackStopZoneB
+    sig+03WorkPieceEndStopZoneBMid
+    sig+04WorkPieceEndstopZoneCmid
+    sig+05WorkPieceBackstopZoneC
+    sig+06WorkPieceBackEndStopZoneD
 }
 set ::workmode watchhal
 set ::watchInterval 100

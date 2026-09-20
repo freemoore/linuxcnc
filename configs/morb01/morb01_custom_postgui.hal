@@ -3,6 +3,7 @@
 ########################################################################
 net spindle-cmd-s32    	freq-to-s32-cmd.out => bd600.cmd-run.00.int
 net s32-freq-cmd       freq-to-s32.out 		=> bd600.set-freq.00.int
+
 # --- Spindle fault detection ---
 # wcomp window: 0 = no fault, any non-zero = fault
 #setp spindle-fault-detect.min 0
@@ -18,36 +19,28 @@ net s32-freq-cmd       freq-to-s32.out 		=> bd600.set-freq.00.int
 ########################################################################
 # --- Speed display ---
 # RPM feedback (S32 -> float -> HAL_HBar)
-#net spindle-vel-fb-rpm            => rpmdispconv.in
-#net vfd-rpm-float       rpmdispconv.out                     => bd600-spindle-panel.rpm-actual
+#net spindle-vel-fb-rpm   => rpmdispconv.in
+#net vfd-rpm-float       rpmdispconv.out    => bd600-spindle-panel.rpm-actual
+net vfd-rpm-float        => bd600-spindle-panel.rpm-actual
 # RPM commanded (float -> HAL_Label)
-#net spindle-vel-cmd-rpm                                 => bd600-spindle-panel.rpm-cmd
+net spindle-vel-cmd-rpm                                 => bd600-spindle-panel.rpm-cmd
 ########################################################################
-# --- Output current display: U32 (A x100) -> float -> A ---
-#setp ampsdispscale.gain 0.01
-#net vfd-amps-raw        bd600.output-current => ampsdispconv.in
-#net vfd-amps-f          ampsdispconv.out                    => ampsdispscale.in
-#net vfd-amps-disp       ampsdispscale.out                   => bd600-spindle-panel.amps-out
 ########################################################################
 # --- Drive status and bus voltage (direct U32) ---
 #net vfd-status          bd600.status        => bd600-spindle-panel.drive-status
 #net vfd-bus-voltage     bd600.bus-voltage   => bd600-spindle-panel.volts-out
 ########################################################################
-# fault reset command
-#setp fault-reset-mux.in1 7    
-#net fault-reset-btn-bit  bd600-spindle-panel.fault-reset-btn => fault-reset-mux.sel
-#net fault-reset-out      fault-reset-mux.out => fault-reset-conv.in
-#net fault-reset-cmd      fault-reset-conv.out => bd600.cmd-run
+
 ########################################################################
 # --- Compact spindle status panel (AXIS sidebar) ---
 # rpm-cmd and rpm-actual reuse existing signals
-net spindle-vel-cmd-rpm                => spindle-status.rpm-cmd
-net vfd-rpm-float                          => spindle-status.rpm-actual
+#net spindle-vel-cmd-rpm                => spindle-status.rpm-cmd
+#net vfd-rpm-float                          => spindle-status.rpm-actual
 setp spindle-at-speed-detect.scale 1.01
 net spindle-vel-cmd-rpm => spindle-at-speed-detect.in1
 net vfd-rpm-float           => spindle-at-speed-detect.in2
-net spindle-at-speed        spindle-at-speed-detect.out => spindle-status.at-speed-led
+#net spindle-at-speed        spindle-at-speed-detect.out => spindle-status.at-speed-led
 ########################################################################
 # - release suspended modbus comms for 32IO boards
-setp hm2_modbus.0.suspend 0
+#setp hm2_modbus.0.suspend 0
 

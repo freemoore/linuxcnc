@@ -1,0 +1,64 @@
+# Halshow settings
+# This file is generated automatically.
+wm geometry . 926x988+984+27
+placeFrames 0.3785557986870897
+set ::ratio 0.3785557986870897
+set ::old_w_leftf 160
+set ::watchlist {
+    sig+drv-reset-signal
+    sig+input-airsupp
+    sig+input-mag_counter
+    sig+input-s-spdach
+    sig+input-s-spdzero
+    sig+input-sp_dr_rd
+    sig+input-th_dn
+    sig+input-th_up
+    sig+input-tl-cw
+    sig+input-tla-f-pos
+    sig+input-tla-r-pos
+    sig+input-tla-rest
+    sig+input-tlclamp
+    sig+input-tlmagccw
+    sig+input-tlunclamp
+    sig+input-tlunclbtn
+    sig+machine-is-enabled
+    sig+machine-is-on
+    sig+output-arm_mot
+    sig+output-ambo
+    sig+output-tlairblast
+    sig+output-tlholddn
+    sig+output-tlholdup
+    sig+output-tlmagdir
+    sig+output-tlmagmove
+    sig+output-tool_rel
+    sig+s-enable
+    sig+spindle-cw
+    sig+spindle-ccw
+    sig+spindle-manual-cw
+    sig+spindle-manual-ccw
+    sig+spindle-manual-stop
+    sig+spindle-vel-cmd-rpm
+    sig+tool-change-confirmed
+    sig+tool-change-request
+    sig+tool-number
+    sig+tool-prepare-confirmed
+    sig+tool-prepare-request
+    pin+spindle.0.amp-fault-in
+    pin+spindle.0.at-speed
+    pin+spindle.0.speed-cmd-rps
+    pin+pid.s.output
+    pin+hm2_7i97.0.encoder.03.rawcounts
+    pin+hm2_7i97.0.encoder.03.input-a
+    pin+hm2_7i97.0.encoder.03.input-b
+    pin+hm2_7i97.0.encoder.03.input-index
+    pin+hm2_7i97.0.encoder.03.reset
+    pin+hm2_7i97.0.encoder.03.count
+    pin+pid.a.output
+}
+set ::workmode watchhal
+set ::watchInterval 100
+set ::col1_width 100
+set ::ffmts 
+set ::ifmts 
+set ::alwaysOnTop 0
+set ::autoSaveWatchlist 1

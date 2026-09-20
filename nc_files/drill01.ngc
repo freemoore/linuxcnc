@@ -1,0 +1,9 @@
+G90 G54
+G0 X0 Y0
+G43 H1 Z10.        ;(tool length comp, clearance height)
+S4000 M3           ;(spindle on)
+G83 X0 Y0 Z-65. R5. Q10. F600
+G80                ;(cancel cycle)
+G0 Z10.
+M5
+M2

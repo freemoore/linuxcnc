@@ -1,26 +1,72 @@
-#setp [HMOT](CARD0).[HMOT](CARD1).output-00-invert 1
+setp [HMOT](CARD0).[HMOT](CARD1).output-00-invert 1
 
-net	  relay_4KA1 [HMOT](CARD0).[HMOT](CARD1).output-07
-net	  relay_4KA59 [HMOT](CARD0).[HMOT](CARD1).output-08
-net	  relay_4KA58 [HMOT](CARD0).[HMOT](CARD1).output-09
-net	  relay_2KAM [HMOT](CARD0).[HMOT](CARD1).output-10
-net	  relay_2KAA [HMOT](CARD0).[HMOT](CARD1).output-11
-net	  relay_UNUSED_01 [HMOT](CARD0).[HMOT](CARD1).output-13
-
-net   x-servopack-fault [HMOT](CARD0).[HMOT](CARD1).input-02
-
-#		x-enable relay is relay-2KAX 
-net	  	x-enable			[HMOT](CARD0).[HMOT](CARD1).output-04
-#		y-enable-relay is relay-2KAY 
-net	  	y-enable 			[HMOT](CARD0).[HMOT](CARD1).output-05
-#	  	z-enable-relay is relay-2KAZ 
-net	  	z-enable			[HMOT](CARD0).[HMOT](CARD1).output-06
+#probably minispeed 01
+#net	  relay_2KAM [HMOT](CARD0).[HMOT](CARD1).output-02
+#probably minispeed  02
+#net	  relay_2KAA [HMOT](CARD0).[HMOT](CARD1).output-03
 #		relay-2KAZ1 is Z Brake
-net   	z-brake-release		[HMOT](CARD0).[HMOT](CARD1).output-12
+net   	z-brake-release		[HMOT](CARD0).[HMOT](CARD1).output-04
+#		secondary-spindle is relay-4KA1 
+#net	  	secondary-spindle			[HMOT](CARD0).[HMOT](CARD1).output-05
 
+#		taking 4KA1 and using it for vacuum hold-down pump on
+net	  	vacuum-on			[HMOT](CARD0).[HMOT](CARD1).output-05
 
+#main spindle toolchange---------------------
+#wire 572	3YV62	tool release foot out brake on - to 7i84 output 09
+#wire 573	3YV63	foot in brake off - to 7i84 output 10
+
+net tool-release [HMOT](CARD0).[HMOT](CARD1).output-09
+net tool-capture [HMOT](CARD0).[HMOT](CARD1).output-10
+
+net toolrelease-button [HMOT](CARD0).[HMOT](CARD1).input-31
+net toolcapture-button [HMOT](CARD0).[HMOT](CARD1).input-30
+
+net spindle-enable spindleisoffnot.in
+net spindle-is-off spindleisoffnot.out
+
+net spindle-is-off toolchangesafetyand.in0
+net toolrelease-button toolchangesafetyand.in1
+net tool-release toolchangesafetyand.out
+
+setp toolcaptureoneshot.width 1
+net toolcapture-button toolcaptureoneshot.in
+net tool-capture toolcaptureoneshot.out
+#----------------------------------------------
+
+#spindle pneumatic stages
+#wire 551	3YV51	Main spindle Z offset bottom stage DOWN
+#[HMOT](CARD0).[HMOT](CARD1).output-11
+#wire 550	3YV50	Main spindle Z offset bottom stage UP
+#[HMOT](CARD0).[HMOT](CARD1).output-12
+
+net spindleZ150mmoffsetADOWN [HMOT](CARD0).[HMOT](CARD1).output-11
+net spindleZ150mmoffsetAUP [HMOT](CARD0).[HMOT](CARD1).output-12
+
+#wire 569	3YV59	Main spindle Z offset top stage
+#wire 568	3YV58	Main spindle Z offset mid stage
+net spindleZ50mmDOWNA [HMOT](CARD0).[HMOT](CARD1).output-13
+net spindleZ50mmDOWNB [HMOT](CARD0).[HMOT](CARD1).output-14
+
+#----------------------------------
+#Table pneumatic backstops: 
+#wire 033	backstops/endstops for X-negative zone A
+net 01WorkPieceBackEndStopZoneA [HMOT](CARD0).[HMOT](CARD2).output-08
+#wire 034	backstops for zone B
+net 02WorkPieceBackStopZoneB [HMOT](CARD0).[HMOT](CARD2).output-09
+#wire 035	endstop zone B mid table
+net 03WorkPieceEndStopZoneBMid [HMOT](CARD0).[HMOT](CARD2).output-10
+#wire 036	endstop zone C mid table (ram stuck but air OK)
+net 04WorkPieceEndstopZoneCmid [HMOT](CARD0).[HMOT](CARD2).output-11
+#wire 037	backstops for zone C
+net 05WorkPieceBackstopZoneC [HMOT](CARD0).[HMOT](CARD2).output-12
+#wire 038	backstops/endstops for X-positive zone D
+net 06WorkPieceBackEndStopZoneD [HMOT](CARD0).[HMOT](CARD2).output-13
+
+#----------------------------------------------
 ##MORBIDELLI SPINDLE FAULT CHAIN: (SUPERSEDED BY MODBUS)
 ##power to VFD is supplied by BREAKER 4QF15 which is monitored by wire blue 25 to blue 514. 25 goes to VFD relay FAULT terminal 30C (relay common, NC to term. 30B). (30A isn't connected). 30B is wire 80, system +24VDC supply. 514 suspected signal to PR2 Input. Logic: if breaker broken, or if vfd is faulted, this line goes low. 
 ##additional safety: 511 VFD terminal P1 to BREAKER 5QFFR IN, OUT is 517 to BRAKING RESISTOR IN, OUT is 512 to DC brake terminal -. Breaker sensor is 500 NC to 506; if Braking resistor overcurrents, breaker trips, 506 to THERM input on VFD trips and VFD faults out.  
 
 
+net   x-servopack-fault [HMOT](CARD0).[HMOT](CARD1).input-02

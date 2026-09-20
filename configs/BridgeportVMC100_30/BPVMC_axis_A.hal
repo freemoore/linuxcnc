@@ -1,0 +1,52 @@
+#  ---AXIS A JOINT 3---
+setp   pid.a.Pgain     [JOINT_3]P
+setp   pid.a.Igain     [JOINT_3]I
+setp   pid.a.Dgain     [JOINT_3]D
+setp   pid.a.bias      [JOINT_3]BIAS
+setp   pid.a.FF0       [JOINT_3]FF0
+setp   pid.a.FF1       [JOINT_3]FF1
+setp   pid.a.FF2       [JOINT_3]FF2
+setp   pid.a.deadband  [JOINT_3]DEADBAND
+setp   pid.a.maxoutput [JOINT_3]MAX_OUTPUT
+setp   pid.a.error-previous-target true
+net a-index-enable  =>  pid.a.index-enable
+net a-enable        =>  pid.a.enable
+net a-pos-cmd       =>  pid.a.command
+net a-pos-fb        =>  pid.a.feedback
+net a-output        <=  pid.a.output
+# ---PWM Generator signals/setup---
+setp   [HMOT](CARD0).pwmgen.03.output-type 1
+setp   [HMOT](CARD0).pwmgen.03.offset-mode 1 # offset mode so 50% = 0
+setp   [HMOT](CARD0).pwmgen.03.scale  [JOINT_3]OUTPUT_SCALE
+setp   [HMOT](CARD0).pwmgen.03.dither 1
+net a-output                             => [HMOT](CARD0).pwmgen.03.value
+net a-pos-cmd    		joint.3.motor-pos-cmd
+# ---Enable delay for amp fault reset
+setp a-ena-delay.on-delay       1.5
+setp a-ena-delay.off-delay      0
+net a-enable     		joint.3.amp-enable-out  
+net a-enable			a-ena-delay.in
+net a-enable-delayed 	a-ena-delay.out
+net a-enable-delayed	[HMOT](CARD0).pwmgen.03.enable
+# ---Amp fault signals:
+net input-a_ot     a-amp-nok.in0
+net input-a_ready  a-amp-nok.in1
+net a-amp-nok-s    a-amp-nok.out      a-fault-armed.in0
+net a-enable-delayed                  a-fault-armed.in1
+net a-amp-fault    a-fault-armed.out  joint.3.amp-fault-in
+# ---Encoder feedback signals/setup---
+setp    [HMOT](CARD0).encoder.03.counter-mode 0
+setp    [HMOT](CARD0).encoder.03.filter 0
+setp    [HMOT](CARD0).encoder.03.index-invert 1
+setp    [HMOT](CARD0).encoder.03.index-mask 0
+setp    [HMOT](CARD0).encoder.03.index-mask-invert 0
+setp    [HMOT](CARD0).encoder.03.scale  [JOINT_3]ENCODER_SCALE
+net a-pos-fb               <=  [HMOT](CARD0).encoder.03.position
+net a-vel-fb               <=  [HMOT](CARD0).encoder.03.velocity
+net a-pos-fb               =>  joint.3.motor-pos-fb
+net a-index-enable    joint.3.index-enable  <=>  [HMOT](CARD0).encoder.03.index-enable
+net a-pos-rawcounts        <=  [HMOT](CARD0).encoder.03.rawcounts
+# ---setup home / limit switch signals---
+net a-home-a     	=>  joint.3.home-sw-in
+net a-neg-limit     =>  joint.3.neg-lim-sw-in
+net a-pos-limit     =>  joint.3.pos-lim-sw-in
