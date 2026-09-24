@@ -33,8 +33,6 @@ GEOMETRY = !XYZA
 CYCLE_TIME = 100
 EMBED_TAB_NAME=PSNG
 EMBED_TAB_COMMAND=gladevcp -c probe -x {XID} -u psng/python/probe_screen.py -H psng/psng.hal psng/probe_screen.glade
-EMBED_TAB_NAME=ATC
-EMBED_TAB_COMMAND=gladevcp -c atc -x {XID} -H atc_panel/atc.hal atc_panel/atc.glade
 
 
 [FILTER]

@@ -1,0 +1,23 @@
+# ATC tab - loaded by gladevcp -H after the panel, pins are atc.<widget-id>
+# Status only: every net here just feeds an LED/label.
+
+net input-tool-arm-rest                => atc.in-arm-rest
+net input-tool-arm-release-position    => atc.in-arm-release
+net input-tool-arm-fasten-position     => atc.in-arm-fasten
+net input-tool-holder-up               => atc.in-pocket-up
+net input-tool-holder-dn               => atc.in-pocket-dn
+net input-tool-clamp                   => atc.in-clamped
+net input-tool-unclamp                 => atc.in-unclamped
+net input-tool-magazine-index-pulse    => atc.in-mag-index
+net input-magazine-counter             => atc.in-mag-counter
+net carousel-ready                     => atc.car-ready
+net carousel-homed                     => atc.car-homed
+net output-tool-magazine-guard-lock    => atc.out-lock
+net output-tool-arm-motor              => atc.out-arm-motor
+net output-arm-motor-brake-override    => atc.out-ambo
+net output-tool-release                => atc.out-unclamp
+net output-tool-holder-down            => atc.out-pocket-dn
+net output-tool-taper-air-blast        => atc.out-blast
+net output-tool-magazine-fwd           => atc.out-mag-fwd
+net output-tool-magazine-rev           => atc.out-mag-rev
+net carousel-pos-i                     => atc.car-pos
