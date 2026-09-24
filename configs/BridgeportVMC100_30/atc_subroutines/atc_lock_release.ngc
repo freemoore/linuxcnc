@@ -1,0 +1,5 @@
+o<atc_lock_release> sub
+; P1 high = lock pin retracted, magazine free to turn
+M64 P1
+o<atc_lock_release> endsub
+M2

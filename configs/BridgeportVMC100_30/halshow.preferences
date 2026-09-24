@@ -1,59 +1,52 @@
 # Halshow settings
 # This file is generated automatically.
-wm geometry . 926x988+984+27
+wm geometry . 950x985+960+27
 placeFrames 0.3785557986870897
 set ::ratio 0.3785557986870897
 set ::old_w_leftf 160
 set ::watchlist {
-    sig+drv-reset-signal
-    sig+input-airsupp
-    sig+input-mag_counter
-    sig+input-s-spdach
-    sig+input-s-spdzero
-    sig+input-sp_dr_rd
-    sig+input-th_dn
-    sig+input-th_up
-    sig+input-tl-cw
-    sig+input-tla-f-pos
-    sig+input-tla-r-pos
-    sig+input-tla-rest
-    sig+input-tlclamp
-    sig+input-tlmagccw
-    sig+input-tlunclamp
-    sig+input-tlunclbtn
-    sig+machine-is-enabled
-    sig+machine-is-on
-    sig+output-arm_mot
-    sig+output-ambo
-    sig+output-tlairblast
-    sig+output-tlholddn
-    sig+output-tlholdup
-    sig+output-tlmagdir
-    sig+output-tlmagmove
-    sig+output-tool_rel
-    sig+s-enable
-    sig+spindle-cw
-    sig+spindle-ccw
-    sig+spindle-manual-cw
-    sig+spindle-manual-ccw
-    sig+spindle-manual-stop
-    sig+spindle-vel-cmd-rpm
-    sig+tool-change-confirmed
-    sig+tool-change-request
-    sig+tool-number
-    sig+tool-prepare-confirmed
-    sig+tool-prepare-request
-    pin+spindle.0.amp-fault-in
-    pin+spindle.0.at-speed
-    pin+spindle.0.speed-cmd-rps
-    pin+pid.s.output
-    pin+hm2_7i97.0.encoder.03.rawcounts
-    pin+hm2_7i97.0.encoder.03.input-a
-    pin+hm2_7i97.0.encoder.03.input-b
-    pin+hm2_7i97.0.encoder.03.input-index
-    pin+hm2_7i97.0.encoder.03.reset
-    pin+hm2_7i97.0.encoder.03.count
-    pin+pid.a.output
+    sig+output-tool-arm-motor
+    sig+output-arm-motor-brake-override
+    sig+output-tool-holder-down
+    sig+output-tool-holder-up
+    sig+output-tool-magazine-guard-lock
+    sig+output-tool-magazine-fwd
+    sig+output-tool-release
+    sig+input-tool-arm-rest
+    sig+input-tool-arm-release-position
+    sig+input-tool-arm-fasten-position
+    sig+input-tool-holder-up
+    sig+input-tool-holder-dn
+    sig+input-tool-clamp
+    sig+input-tool-unclamp
+    sig+input-tool-magazine-cw
+    sig+input-tool-magazine-ccw
+    sig+input-magazine-counter
+    sig+carousel-ready
+    sig+carousel-enable
+    sig+output-tool-magazine-rev
+    pin+carousel.0.current-position
+    pin+carousel.0.homed
+    pin+carousel.0.index-enable
+    pin+carousel.0.motor-fwd
+    pin+carousel.0.motor-rev
+    pin+carousel.0.pocket-number
+    pin+carousel.0.ready
+    pin+carousel.0.rev-pulse
+    pin+carousel.0.scale
+    pin+carousel.0.sense-0
+    pin+carousel.0.sense-1
+    pin+carousel.0.time
+    pin+carousel.0.unhome
+    pin+motion.feed-inhibit
+    pin+motion.digital-out-05
+    pin+motion.digital-out-06
+    sig+mag-guard-active
+    pin+mag-guardlock-or.in0
+    pin+mag-guardlock-or.in1
+    pin+mag-guardlock-or.out
+    pin+iocontrol.0.tool-changed
+    pin+iocontrol.0.tool-change
 }
 set ::workmode watchhal
 set ::watchInterval 100

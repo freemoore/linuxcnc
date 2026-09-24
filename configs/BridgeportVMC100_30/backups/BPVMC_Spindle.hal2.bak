@@ -1,0 +1,71 @@
+#  ---SPINDLE---
+setp   pid.s.Pgain     [SPINDLE_0]P
+setp   pid.s.Igain     [SPINDLE_0]I
+setp   pid.s.Dgain     [SPINDLE_0]D
+setp   pid.s.bias      [SPINDLE_0]BIAS
+setp   pid.s.FF0       [SPINDLE_0]FF0
+setp   pid.s.FF1       [SPINDLE_0]FF1
+setp   pid.s.FF2       [SPINDLE_0]FF2
+setp   pid.s.deadband  [SPINDLE_0]DEADBAND
+setp   pid.s.maxoutput [SPINDLE_0]MAX_OUTPUT
+setp   pid.s.error-previous-target true
+
+net spindle-index-enable   <=> pid.s.index-enable
+net spindle-enable          =>  pid.s.enable
+net spindle-vel-cmd-rpm      =>  pid.s.command
+net spindle-vel-fb-rpm       =>  pid.s.feedback
+net spindle-output           <=  pid.s.output
+
+# ---setup spindle control signals---
+
+net spindle-vel-cmd-rps         <=  spindle.0.speed-out-rps
+net spindle-vel-cmd-rps-abs     <=  spindle.0.speed-out-rps-abs
+net spindle-vel-cmd-rpm         <=  spindle.0.speed-out
+net spindle-vel-cmd-rpm-abs     <=  spindle.0.speed-out-abs
+net s-enable                    <=  spindle.0.on
+net spindle-cw                  <=  spindle.0.forward
+net spindle-ccw                 <=  spindle.0.reverse
+#net spindle-brake               <=  spindle.0.brake
+
+# ---PWM Generator signals/setup---
+
+setp   [HMOT](CARD0).pwmgen.05.output-type 1
+setp   [HMOT](CARD0).pwmgen.05.offset-mode 1 # offset mode so 50% = 0v
+setp   [HMOT](CARD0).pwmgen.05.scale  [SPINDLE_0]OUTPUT_SCALE
+setp   [HMOT](CARD0).pwmgen.05.dither 1
+
+net spindle-output              => [HMOT](CARD0).pwmgen.05.value
+
+# ---Enable delay for amp fault reset---
+setp s-ena-delay.on-delay       1.5
+setp s-ena-delay.off-delay      0
+#net s-enable            joint.0.amp-enable-out
+net s-enable            s-ena-delay.in
+net s-enable-delayed    s-ena-delay.out
+net s-enable-delayed    [HMOT](CARD0).pwmgen.05.enable
+
+# ---Amp fault signals:
+#net input-spindle-over-temp   spindle-amp-nok.in0
+#net input-spindle-ready       spindle-amp-nok.in1
+#net spindle-amp-nok-s         spindle-amp-nok.out      spindle-fault-armed.in0
+#net s-enable-delayed                                   spindle-fault-armed.in1
+#net spindle-amp-fault         spindle-fault-armed.out  spindle.0.amp-fault-in
+
+# ---Encoder feedback signals/setup---
+
+setp    [HMOT](CARD0).encoder.05.counter-mode 0
+setp    [HMOT](CARD0).encoder.05.filter 0
+setp    [HMOT](CARD0).encoder.05.index-invert 1
+setp    [HMOT](CARD0).encoder.05.index-mask 0
+setp    [HMOT](CARD0).encoder.05.index-mask-invert 0
+setp    [HMOT](CARD0).encoder.05.scale  4000
+
+net spindle-vel-fb-rps      <=  [HMOT](CARD0).encoder.05.velocity
+net spindle-vel-fb-rps      =>  spindle.0.speed-in
+net spindle-index-enable    spindle.0.index-enable  <=>  [HMOT](CARD0).encoder.05.index-enable
+net spindle-revs            <=  [HMOT](CARD0).encoder.05.rawcounts
+
+net input-spindle-speed-achieved  =>  spindle.0.at-speed
+#net spindle-at-speed           =>  spindle.0.at-speed
+
+#sets spindle-at-speed true

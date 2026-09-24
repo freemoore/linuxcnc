@@ -1,78 +1,60 @@
 #  ---SPINDLE---
-# PID retained but bypassed until spindle encoder feedback is wired.
-setp   pid.s.Pgain     [SPINDLE_0]P
-setp   pid.s.Igain     [SPINDLE_0]I
-setp   pid.s.Dgain     [SPINDLE_0]D
-setp   pid.s.bias      [SPINDLE_0]BIAS
-setp   pid.s.FF0       [SPINDLE_0]FF0
-setp   pid.s.FF1       [SPINDLE_0]FF1
-setp   pid.s.FF2       [SPINDLE_0]FF2
-setp   pid.s.deadband  [SPINDLE_0]DEADBAND
-setp   pid.s.maxoutput [SPINDLE_0]MAX_OUTPUT
-setp   pid.s.error-previous-target true
 
-# --- CLOSED LOOP: uncomment when encoder is in. Also swap the
-#     pwmgen.05.value net below from spindle-vel-cmd-rpm to spindle-output.
-net spindle-index-enable  	=>  pid.s.index-enable
-net spindle-enable        	=>  pid.s.enable
-net spindle-vel-cmd-rpm     =>  pid.s.command
+# ---everyday velocity run (Simodrive closes its own loop)---
 
-#next line shorts pid so fb = output
-net spindle-vel-cmd-rpm 	=>  pid.s.command
-#and should be:
-#net spindle-vel-fb-rpm     =>  pid.s.feedback
+net spindle-vel-cmd-rps         <=  spindle.0.speed-out-rps
+net spindle-vel-cmd-rpm         <=  spindle.0.speed-out
+net spindle-vel-cmd-rpm-abs     <=  spindle.0.speed-out-abs
+net s-enable                    <=  spindle.0.on
+net s-enable          			=>  spindle-pwm-en-or.in0
+net orient-enable     			=>  spindle-pwm-en-or.in1
+net spindle-pwm-enable  		<=  spindle-pwm-en-or.out
+net spindle-pwm-enable  		=>  [HMOT](CARD0).pwmgen.05.enable
 
-net spindle-output        	<=  pid.s.output
+net spindle-cw                  <=  spindle.0.forward
+net spindle-ccw                 <=  spindle.0.reverse
 
-# ---setup spindle control signals---
-
-net spindle-vel-cmd-rps        	<=  spindle.0.speed-out-rps
-net spindle-vel-cmd-rps-abs    	<=  spindle.0.speed-out-rps-abs
-net spindle-vel-cmd-rpm        	<=  spindle.0.speed-out
-net spindle-vel-cmd-rpm-abs    	<=  spindle.0.speed-out-abs
-net s-enable             		<=  spindle.0.on
-net spindle-cw                 	<=  spindle.0.forward
-net spindle-ccw                	<=  spindle.0.reverse
-#net spindle-brake              <=  spindle.0.brake
+net input-spindle-speed-achieved  =>  spindle.0.at-speed
+net spindle-drive-not-ready        =>  spindle.0.amp-fault-in
 
 # ---PWM Generator signals/setup---
-
 setp   [HMOT](CARD0).pwmgen.05.output-type 1
 setp   [HMOT](CARD0).pwmgen.05.offset-mode 1 # offset mode so 50% = 0v
 setp   [HMOT](CARD0).pwmgen.05.scale  [SPINDLE_0]OUTPUT_SCALE
 setp   [HMOT](CARD0).pwmgen.05.dither 1
 
-# OPEN LOOP: signed RPM command straight to the DAC, sign = direction
-net spindle-vel-cmd-rpm        =>  [HMOT](CARD0).pwmgen.05.value
+# ---Cartridge encoder (Renishaw ABZ) — position feedback for orient/sync---
+setp    [HMOT](CARD0).encoder.05.counter-mode 0
+setp    [HMOT](CARD0).encoder.05.filter 0
+setp    [HMOT](CARD0).encoder.05.index-invert 1
+setp    [HMOT](CARD0).encoder.05.scale  [SPINDLE_0]ENCODER_SCALE
 
-#setp s-ena-delay.on-delay       1.5
-#setp s-ena-delay.off-delay      0
-#net s-enable     		joint.0.amp-enable-out  
-#net s-enable			s-ena-delay.in
-#net s-enable-delayed 	s-ena-delay.out
-#net s-enable-delayed	[HMOT](CARD0).pwmgen.05.enable
+net spindle-position    <=  [HMOT](CARD0).encoder.05.position
+net spindle-position    =>  spindle.0.revs
+net spindle-position    =>  s_orient.0.position
+net spindle-position    =>  orient-pid.feedback
 
+# shared 3-way index-enable (encoder / spindle / orient) — per forum fix
+net spindle-index-enable    [HMOT](CARD0).encoder.05.index-enable   spindle.0.index-enable
+net spindle-index-enable    s_orient.0.index-enable
 
-# ---spindle drive enable and start---
-# output-spin_strt also lands on CARD1 output-04 in BPVMC_IO.hal
-net s-enable                   =>  [HMOT](CARD0).pwmgen.05.enable
-#net output-spin_strt           <=  spindle.0.on
+# ---M19 orient (s_orient — homes to index unconditionally before orienting)---
+net spindle-cmd-out          <=  spindle-mux.out
+net spindle-cmd-out          =>  [HMOT](CARD0).pwmgen.05.value
+net spindle-vel-cmd-rpm      =>  spindle-mux.in0
+net orient-pid-out	orient-pid.output        =>  spindle-mux.in1
 
+net orient-enable   spindle.0.orient        	=>  s_orient.0.enable  orient-pid.enable  spindle-mux.sel
+net orient-angle    spindle.0.orient-angle  	=>  s_orient.0.angle
+net orient-mode     spindle.0.orient-mode   	=>  s_orient.0.mode
+net orient-command  s_orient.0.command      	=>  orient-pid.command
+net spindle-oriented  s_orient.0.is-oriented  	=>  spindle.0.is-oriented
 
-# ---Amp fault signals:
-#net input-x_ot     x-amp-nok.in0
-#net input-x_ready  x-amp-nok.in1
-#net x-amp-nok-s    x-amp-nok.out      x-fault-armed.in0
-#net x-enable-delayed                  x-fault-armed.in1
-#net x-amp-fault    x-fault-armed.out  joint.5.amp-fault-in
-
-net input-s-spdach  			=>  spindle.0.at-speed
-
-#net spindle-revs               =>  spindle.0.revs
-#net spindle-at-speed           =>  spindle.0.at-speed
-#net spindle-vel-fb-rps         =>  spindle.0.speed-in
-#net spindle-index-enable      <=>  spindle.0.index-enable
-
-# ---Setup spindle at speed signals---
-
-#sets spindle-at-speed true
+setp orient-pid.Pgain      [SPINDLE_0]ORIENT_P
+setp orient-pid.Igain      [SPINDLE_0]ORIENT_I
+setp orient-pid.Dgain      [SPINDLE_0]ORIENT_D
+setp orient-pid.FF0        0
+setp orient-pid.FF1        0
+setp orient-pid.maxoutput  [SPINDLE_0]ORIENT_MAX_OUTPUT
+setp orient-pid.deadband   [SPINDLE_0]ORIENT_DEADBAND
+setp s_orient.0.tolerance  [SPINDLE_0]ORIENT_TOLERANCE

@@ -1,0 +1,5 @@
+o<atc_lock_engage> sub
+; P1 low = lock pin engaged. Only use with magazine stopped.
+M65 P1
+o<atc_lock_engage> endsub
+M2

@@ -1,0 +1,14 @@
+o<atc_pocket_down> sub
+; Needs arm at rest. Cannot check lock state (no feedback) - make sure
+; the magazine has been positioned with atc_pocket first.
+M66 P3 L0 Q0
+o1 if [#5399 LT 1]
+  (abort, atc_pocket_down: arm not at rest)
+o1 endif
+M64 P5
+M66 P5 L3 Q5
+o2 if [#5399 LT 0]
+  (abort, atc_pocket_down: no down feedback in 5s)
+o2 endif
+o<atc_pocket_down> endsub
+M2

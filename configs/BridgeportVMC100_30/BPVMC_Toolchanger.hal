@@ -1,0 +1,161 @@
+# ============================================================
+# ATC carousel and tool change IO - Bridgeport VMC1000/30
+# Load after BPVMC_IO.hal in the main HAL file
+# ============================================================
+# Requires in INI [EMCMOT] section:
+#   NUM_DIGITAL_IN  = 8   (or more)
+#   NUM_DIGITAL_OUT = 8   (or more)
+#   NUM_ANALOG_OUT  = 1   (or more)
+# ============================================================
+
+# --- Carousel component ---
+# encoding=index : sense-0 = index/home pulse, sense-1 = per-pocket counter
+# pockets=30     : VMC1000-30
+loadrt carousel pockets=30 encoding=index num_sense=2
+
+# float->s32 for pocket number (M68 E0 outputs float, carousel wants s32)
+loadrt conv_float_s32 names=pocketnoconv
+
+addf carousel.0        servo-thread
+addf pocketnoconv  servo-thread
+
+# Pocket number: set by M68 E0 Q#<selected_pocket> in NGC
+net carousel-pocket-f  motion.analog-out-00  pocketnoconv.in
+net carousel-pocket-i  pocketnoconv.out  carousel.0.pocket-number
+
+# Enable: M64 P0 = start carousel, M65 P0 = stop
+net carousel-enable    motion.digital-out-00  carousel.0.enable
+
+# Ready: M66 P0 L3 Q60 = wait for in-position
+net carousel-ready     carousel.0.ready       motion.digital-in-00
+
+# In index encoding: sense-0 = index/home pulse, sense-1 = pocket counter
+net input-tool-magazine-index-pulse 	=> carousel.0.sense-0
+net input-magazine-counter               => carousel.0.sense-1
+
+# Magazine motor outputs - driven by carousel component
+net output-tool-magazine-fwd <= carousel.0.motor-fwd
+net output-tool-magazine-rev <= carousel.0.motor-rev
+
+# Full speed (motor is on/off, not variable)
+setp carousel.0.fwd-dc  1.0
+setp carousel.0.rev-dc  1.0
+
+# Debounce - tune if magazine overshoots its pocket
+# Value is servo-thread cycles; at 1kHz servo, 50 = 50ms
+setp carousel.0.debounce  50
+
+# Home offset:
+setp carousel.0.home-offset	1
+
+# ============================================================
+# ATC digital output mapping  (NGC M64/M65 Pn)
+# Each net was created with no driver in BPVMC_IO.hal;
+# motion.digital-out-0n is the sole driver here.
+# ============================================================
+
+# P1 : guard lock (18CR / 19CR) - required for ALL ATC motion
+# nb this signal now connected below in manual jog section
+#net output-tool-magazine-guard-lock <= motion.digital-out-01
+
+# P2 : arm motor (21CR)
+net output-tool-arm-motor <= motion.digital-out-02
+
+# P3 : arm brake override / ambo (52CR)
+#      Must be asserted BEFORE P2 to release the motor brake
+net output-arm-motor-brake-override <= motion.digital-out-03
+
+# P4 : spindle unclamp / tool release (11CR)
+#net output-tool-release <= motion.digital-out-04
+
+
+# P5 : tool pocket up/down (9CR/10CR)
+net output-tool-holder-down  motion.digital-out-05  mag-th-not.in
+net output-tool-holder-up	 mag-th-not.out
+
+
+# P7 : taper air blast (8CR)
+net output-tool-taper-air-blast <= motion.digital-out-07
+
+
+# ============================================================
+# ATC digital input mapping  (NGC M66 Pn)
+# ============================================================
+
+# P0 : carousel ready - wired above from carousel.0.ready
+
+# P1 : arm has reached release position (both grippers loaded)
+net input-tool-arm-release-position => motion.digital-in-01
+
+# P2 : arm has completed 180° (new tool presented to spindle)
+net input-tool-arm-fasten-position => motion.digital-in-02
+
+# P3 : arm at rest / home position
+net input-tool-arm-rest => motion.digital-in-03
+
+# P4 : tool holder up feedback
+net input-tool-holder-up => motion.digital-in-04
+
+# P5 : tool holder down feedback
+net input-tool-holder-dn => motion.digital-in-05
+
+# P6 : tool clamped (spindle drawbar feedback)
+net input-tool-clamp => motion.digital-in-06
+
+# P7 : tool unclamped (spindle drawbar feedback)
+net input-tool-unclamp => motion.digital-in-07
+
+
+# ============================================================
+# --- manual tool release ---
+# ============================================================
+
+# --- manual tool release, interlocked ---
+
+net input-tool-unclamp-button    => man-unclamp.in-00
+net input-spindle-speed-is-zero  => man-unclamp.in-01
+net machine-is-on  halui.machine.is-on    => man-unclamp.in-02
+net program-idle   halui.program.is-idle  => man-unclamp.in-03
+
+net tool-unclamp-manual  man-unclamp.and       => tool-unclamp-or.in0
+net tool-unclamp-auto    motion.digital-out-04 => tool-unclamp-or.in1
+net output-tool-release  tool-unclamp-or.out  
+
+
+# ============================================================
+# --- manual magazine jog ---
+# ============================================================
+
+net input-tool-magazine-cw  => mag-jog-both.in0
+net input-tool-magazine-ccw => mag-jog-both.in1
+
+setp mag-guard-hold.on-delay 1
+net mag-jog-both-held  mag-jog-both.out => mag-guard-hold.in
+
+setp mag-guard-unlock.width 20
+net mag-guard-trigger  mag-guard-hold.out => mag-guard-unlock.in
+net mag-guard-active   mag-guard-unlock.out
+
+net tc-guardlock      motion.digital-out-01 => mag-guardlock-or.in0
+net mag-guard-active                         => mag-guardlock-or.in1
+net output-tool-magazine-guard-lock <= mag-guardlock-or.out
+
+net input-tool-magazine-cw  => mag-jog-fwd.in-00
+net input-tool-holder-up    => mag-jog-fwd.in-01
+net mag-guard-active        => mag-jog-fwd.in-02
+net mag-jog-fwd 			=> mag-jog-fwd.and => carousel.0.jog-fwd
+
+net input-tool-magazine-ccw => mag-jog-rev.in-00
+net input-tool-holder-up    => mag-jog-rev.in-01
+net mag-guard-active        => mag-jog-rev.in-02
+net mag-jog-rev				=> mag-jog-rev.and => carousel.0.jog-rev
+
+# ============================================================
+# --- toolholder up/down safety interlock ---
+# ============================================================
+
+#net th-up-cmd    motion.digital-out-06 => mag-th.reset
+#net th-down-cmd  motion.digital-out-05 => mag-th.set
+
+#net output-tool-holder-up   <= mag-th.out
+#net output-tool-holder-down <= mag-th.out-not

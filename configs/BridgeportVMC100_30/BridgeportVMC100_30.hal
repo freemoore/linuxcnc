@@ -1,22 +1,23 @@
-
 loadrt [KINS]KINEMATICS
-loadrt [EMCMOT]EMCMOT servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[KINS]JOINTS
+loadrt [EMCMOT]EMCMOT servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[KINS]JOINTS num_dio=[EMCMOT]NUM_DIGITAL_IO
 loadrt hostmot2
 loadrt hm2_eth board_ip="10.10.10.10" config="num_encoders=6 num_pwmgens=6 num_pktuarts=1 sserial_port_0=0000000" 
-loadrt pid names=pid.x,pid.y,pid.z,pid.a,pid.s
-
+loadrt pid names=pid.x,pid.y,pid.z,pid.a,orient-pid
 loadrt abs names=abs.spindle
 loadrt lowpass names=lowpass.spindle
+loadrt timedelay names=x-ena-delay,y-ena-delay,z-ena-delay,a-ena-delay,s-ena-delay,mag-guard-hold
+loadrt oneshot   names=drv-reset,mag-guard-unlock
+loadrt or2  names=x-amp-nok,y-amp-nok,z-amp-nok,a-amp-nok,s-amp-nok,tool-unclamp-or,spindle-pwm-en-or,mag-guardlock-or
+loadrt and2 names=x-fault-armed,y-fault-armed,z-fault-armed,a-fault-armed,s-fault-armed,mag-jog-both
+loadrt logic names=man-unclamp,mag-jog-fwd,mag-jog-rev personality=0x104,0x103,0x103
+loadrt s_orient names=s_orient.0
+loadrt mux2 names=spindle-mux
+loadrt not names=mag-th-not
 
-loadrt timedelay names=x-ena-delay,y-ena-delay,z-ena-delay,a-ena-delay,s-ena-delay
-loadrt oneshot   names=drv-reset
 
-loadrt or2  names=x-amp-nok,y-amp-nok,z-amp-nok,a-amp-nok,s-amp-nok
-loadrt and2 names=x-fault-armed,y-fault-armed,z-fault-armed,a-fault-armed,s-fault-armed
 
 setp    [HMOT](CARD0).pwmgen.pwm_frequency 75000
 setp    [HMOT](CARD0).watchdog.timeout_ns 10000000
-
 
 addf [HMOT](CARD0).read         servo-thread
 addf motion-command-handler   	servo-thread
@@ -25,7 +26,7 @@ addf pid.x.do-pid-calcs       	servo-thread
 addf pid.y.do-pid-calcs       	servo-thread
 addf pid.z.do-pid-calcs       	servo-thread
 addf pid.a.do-pid-calcs       	servo-thread
-addf pid.s.do-pid-calcs       	servo-thread
+addf orient-pid.do-pid-calcs   	servo-thread
 addf x-ena-delay  				servo-thread
 addf y-ena-delay  				servo-thread
 addf z-ena-delay  				servo-thread
@@ -43,73 +44,66 @@ addf a-fault-armed 				servo-thread
 addf s-amp-nok     				servo-thread
 addf s-fault-armed 				servo-thread
 addf abs.spindle             	servo-thread
+addf man-unclamp  				servo-thread
+addf tool-unclamp-or  			servo-thread
 addf lowpass.spindle          	servo-thread
+addf s_orient.0 				servo-thread
+addf spindle-mux 				servo-thread
+addf spindle-pwm-en-or 			servo-thread
+addf mag-jog-both 				servo-thread
+addf mag-guard-hold 			servo-thread
+addf mag-guard-unlock 			servo-thread
+addf mag-guardlock-or 			servo-thread
+addf mag-jog-fwd 				servo-thread
+addf mag-jog-rev 				servo-thread
+addf mag-th-not					servo-thread
 addf [HMOT](CARD0).write        servo-thread
-
-# external output signals
-
-# external input signals
-
-# --- HOME-X ---
-#net x-home-x     <=  [HMOT](CARD0).gpio.050.in
-
-# --- HOME-Y ---
-#net y-home-y     <=  [HMOT](CARD0).gpio.051.in
-
-# --- HOME-Z ---
-#net z-home-z     <=  [HMOT](CARD0).gpio.052.in
-
 
 #******************************
 # connect miscellaneous signals
 #******************************
 
 #  ---HALUI signals---
-
-net axis-select-x  halui.axis.x.select
-net jog-x-pos      halui.axis.x.plus
-net jog-x-neg      halui.axis.x.minus
-net jog-x-analog   halui.axis.x.analog
-net x-is-homed     halui.joint.0.is-homed
-net axis-select-y  halui.axis.y.select
-net jog-y-pos      halui.axis.y.plus
-net jog-y-neg      halui.axis.y.minus
-net jog-y-analog   halui.axis.y.analog
-net y-is-homed     halui.joint.1.is-homed
-net axis-select-z  halui.axis.z.select
-net jog-z-pos      halui.axis.z.plus
-net jog-z-neg      halui.axis.z.minus
-net jog-z-analog   halui.axis.z.analog
-net z-is-homed     halui.joint.2.is-homed
-net axis-select-a  halui.axis.a.select
-net jog-a-pos      halui.axis.a.plus
-net jog-a-neg      halui.axis.a.minus
-net jog-a-analog   halui.axis.a.analog
-net a-is-homed     halui.joint.3.is-homed
-net jog-selected-pos      halui.axis.selected.plus
-net jog-selected-neg      halui.axis.selected.minus
-net spindle-manual-cw     halui.spindle.0.forward
-net spindle-manual-ccw    halui.spindle.0.reverse
-net spindle-manual-stop   halui.spindle.0.stop
-net machine-is-on         halui.machine.is-on
-net jog-speed             halui.axis.jog-speed
-net MDI-mode              halui.mode.is-mdi
+net axis-select-x  			halui.axis.x.select
+net jog-x-pos      			halui.axis.x.plus
+net jog-x-neg      			halui.axis.x.minus
+net jog-x-analog   			halui.axis.x.analog
+net x-is-homed     			halui.joint.0.is-homed
+net axis-select-y  			halui.axis.y.select
+net jog-y-pos      			halui.axis.y.plus
+net jog-y-neg      			halui.axis.y.minus
+net jog-y-analog   			halui.axis.y.analog
+net y-is-homed     			halui.joint.1.is-homed
+net axis-select-z  			halui.axis.z.select
+net jog-z-pos      			halui.axis.z.plus
+net jog-z-neg      			halui.axis.z.minus
+net jog-z-analog   			halui.axis.z.analog
+net z-is-homed     			halui.joint.2.is-homed
+net axis-select-a  			halui.axis.a.select
+net jog-a-pos      			halui.axis.a.plus
+net jog-a-neg      			halui.axis.a.minus
+net jog-a-analog   			halui.axis.a.analog
+net a-is-homed     			halui.joint.3.is-homed
+net jog-selected-pos      	halui.axis.selected.plus
+net jog-selected-neg      	halui.axis.selected.minus
+net spindle-manual-cw     	halui.spindle.0.forward
+net spindle-manual-ccw   	halui.spindle.0.reverse
+net spindle-manual-stop  	halui.spindle.0.stop
+net machine-is-on        	halui.machine.is-on
+net jog-speed            	halui.axis.jog-speed
+net MDI-mode             	halui.mode.is-mdi
 
 #  ---coolant signals---
-
 net coolant-mist      <=  iocontrol.0.coolant-mist
 net coolant-flood     <=  iocontrol.0.coolant-flood
 
 #  ---probe signal---
-
-net probe-in     =>  motion.probe-input
+net digitising-probe-input     =>  motion.probe-input
 
 #  ---motion control signals---
-
 net in-position               <=  motion.in-position
 net machine-is-enabled        <=  motion.motion-enabled
 
-#  ---digital in / out signals---
 # terminal block X141 on the 611 power unit (leftmost) has terminals R and M(15)
 # - short these together to reset drive errors. 
 # do a 0.5s oneshot on linuxcnc's 'power on button' signal. 
@@ -120,18 +114,16 @@ setp drv-reset.falling        0
 setp drv-reset.retriggerable  0
 
 net machine-is-enabled      	drv-reset.in  
-net drv-reset-signal		  	drv-reset.out          [HMOT](CARD0).ssr.00.out-00
+net drv-reset-signal		  	drv-reset.out       [HMOT](CARD0).ssr.00.out-00
+# this should startup the probe receiver
+#net machine-is-enabled		[HMOT](CARD0).ssr.00.out-01
+setp [HMOT](CARD0).ssr.00.out-01 1
 
 #  ---estop signals---
-
 net estop-out     <=  iocontrol.0.user-enable-out
 net estop-out     =>  iocontrol.0.emc-enable-in
 
 #  ---toolchange signals for custom tool changer---
 
-net tool-number             <=  iocontrol.0.tool-prep-number
-net tool-change-request     <=  iocontrol.0.tool-change
-net tool-change-confirmed   =>  iocontrol.0.tool-changed
-net tool-prepare-request    <=  iocontrol.0.tool-prepare
-net tool-prepare-confirmed  =>  iocontrol.0.tool-prepared
 
+#net tool-prepared 			iocontrol.0.tool-prepare 	=> 	 iocontrol.0.tool-prepared

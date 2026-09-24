@@ -1,0 +1,14 @@
+o<atc_unclamp> sub
+; Only at release position, so the arm is holding the tool.
+; (For manual loading use the physical unclamp button.)
+M66 P1 L0 Q0
+o1 if [#5399 LT 1]
+  (abort, atc_unclamp: arm not at release position)
+o1 endif
+M64 P4
+M66 P7 L3 Q1
+o2 if [#5399 LT 0]
+  (abort, atc_unclamp: no unclamp feedback in 1s)
+o2 endif
+o<atc_unclamp> endsub
+M2

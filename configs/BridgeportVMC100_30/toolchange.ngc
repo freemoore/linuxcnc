@@ -1,0 +1,298 @@
+o<toolchange> sub
+
+; ============================================================
+; Bridgeport VMC1000/30 - ATC tool change subroutine
+; Uses LinuxCNC carousel.9 component for magazine indexing
+;
+; Call from main program via T# M6
+;
+; Digital outputs (M64/M65 Pn) - mapped in BPVMC_Toolchanger.hal:
+;   P0 = carousel enable
+;   P1 = guard lock
+;   P2 = arm motor (21CR)
+;   P3 = arm brake override / ambo (52CR)
+;   P4 = spindle unclamp / tool release (11CR)
+;   P5 = tool pocket up (9CR)
+;  #### P6 = tool pocket up (10CR) #### not any more
+;   P7 = taper air blast (8CR)
+;
+; Digital inputs (M66 Pn L# Q<timeout_sec>):
+;   P0 = carousel ready
+;   P1 = arm release position (both tools grabbed)
+;   P2 = arm fasten position (new tool at spindle)
+;   P3 = arm at rest
+;   P4 = tool holder up feedback
+;   P5 = tool holder down feedback
+;   P6 = tool clamped
+;   P7 = tool unclamped
+;
+; M66 L modes used here:
+;   L0 = immediate read (no wait)
+;   L2 = wait for signal to go LOW (falling edge)
+;   L3 = wait for signal to be HIGH (returns immediately if already HIGH)
+;
+; Required INI settings:
+;   [CHANGE_POSITION]Z = <tool-change Z in machine coords, e.g. -5.0>
+;                        Must give Z clearance for arm to swing freely
+;   [EMCMOT]NUM_DIGITAL_IN  = 8
+;   [EMCMOT]NUM_DIGITAL_OUT = 8
+;   [EMCMOT]NUM_ANALOG_OUT  = 1
+; ============================================================
+
+G90             ; force absolute mode - never trust incoming modal state
+                ; (PSNG's probe cycle, or anything else, may leave G91 active)
+
+;(print, toolchange.ngc loaded and running)
+ (debug, TC: entered - tool=#<selected_tool> pocket=#<selected_pocket>)
+
+; Orient spindle to tool change position
+ (debug, TC: M19 spindle orient)
+M19 R35.5 q3 p0
+
+; Move to tool change Z height (machine absolute)
+ (debug, TC: moving to tool change Z)
+G53 G0 Z[#<_ini[CHANGE_POSITION]Z>]
+
+; Assert guard lock - required before any ATC motion
+ (debug, TC: guard lock ON)
+M64 P1
+
+
+; ============================================================
+; Step 1: Pocket UP so magazine can rotate
+; (interlock: magazine will not rotate with pocket extended)
+; ============================================================
+ (debug, TC: step 1 - pocket up for carousel rotation)
+M65 P5          ; ensure pocket-down de-asserted
+M66 P4 L3 Q5   ; wait for th_up (5s timeout)
+O10 if [#5399 LT 0]
+   (debug, TC: ABORT step 1 - pocket failed to raise)
+  (abort, tool pocket failed to raise before magazine index)
+  o<toolchange> return [-1]
+O10 endif
+ (debug, TC: step 1 OK - pocket up confirmed)
+
+
+; ============================================================
+; Arm reset: ensure arm is at rest before proceeding
+; Done here (after Z and pocket-up) so cam geometry is correct
+; ============================================================
+(debug, reading arm-rest state)
+M66 P3 L0 Q0        ; immediate read of arm-rest
+O35 if [#5399 LT 1]
+   (debug, TC: arm not at rest - running recovery cycle)
+  M64 P3            ; ambo on
+  M64 P2            ; arm motor on
+  M66 P3 L3 Q20    ; wait for arm-rest HIGH (full recovery cycle)
+  M65 P2            ; motor off
+  M65 P3            ; ambo off
+  O36 if [#5399 LT 0]
+    M65 P2
+    M65 P3
+    (abort, arm recovery failed - check 21CR 52CR arm sensors)
+    o<toolchange> return [-1]
+  O36 endif
+   (debug, TC: arm recovery OK)
+O35 endif
+
+
+; ============================================================
+; Step 2: Index carousel to selected pocket
+; ============================================================
+ (debug, TC: step 2 - indexing carousel to pocket #<selected_pocket>)
+M68 E0 Q#<selected_pocket>  ; set target pocket
+M64 P0                       ; carousel enable
+M66 P0 L3 Q60               ; wait for carousel in-position (60s)
+M65 P1			;ajm speculative position lock
+M65 P0                       ; carousel disable (holds via detent)
+O20 if [#5399 LT 0]
+   (debug, TC: ABORT step 2 - carousel timed out)
+  (abort, carousel failed to reach pocket #<selected_pocket>)
+  o<toolchange> return [-1]
+O20 endif
+ (debug, TC: step 2 OK - carousel in position)
+
+
+; ============================================================
+; Step 3: Pocket DOWN - present new tool to arm path
+; ============================================================
+ (debug, TC: step 3 - pocket down to present tool)
+M64 P5          ; tool pocket down
+M66 P5 L3 Q5   ; wait for th_dn (5s)
+O30 if [#5399 LT 0]
+   (debug, TC: ABORT step 3 - pocket failed to lower)
+  (abort, tool pocket failed to lower)
+  o<toolchange> return [-1]
+O30 endif
+ (debug, TC: step 3 OK - pocket down confirmed)
+
+
+; ============================================================
+; Step 4: Start arm cycle
+; ambo (P3) releases motor brake; arm motor (P2) runs the geneva cam.
+; Cam cycle: arm DOWN -> grips both tools -> ROTATE 180deg -> arm UP
+; Motor pauses at release and fasten positions for spindle operations.
+; ============================================================
+ (debug, TC: step 4 - confirming arm at rest before cycle)
+M66 P3 L3 Q3   ; confirm arm-at-rest is HIGH (3s)
+O40 if [#5399 LT 0]
+   (debug, TC: ABORT step 4 - arm not at rest)
+  (abort, arm not at rest before cycle start - check tla-rest sensor)
+  o<toolchange> return [-1]
+O40 endif
+ (debug, TC: arm at rest confirmed - asserting ambo and starting motor)
+
+M64 P3          ; ambo on (release arm brake)
+M64 P2          ; arm motor on
+
+ (debug, TC: waiting for arm to leave rest)
+M66 P3 L2 Q5   ; wait for arm-rest to go LOW (arm moving)
+O45 if [#5399 LT 0]
+   (debug, TC: ABORT step 4 - arm did not leave rest)
+  (abort, arm did not leave rest - check 21CR, 52CR, CB12)
+  M65 P2
+  M65 P3
+  o<toolchange> return [-1]
+O45 endif
+ (debug, TC: arm left rest - motor running)
+
+
+; ============================================================
+; Step 5: Wait for arm release position - both tools grabbed
+; PAUSE motor here while spindle operates
+; ============================================================
+ (debug, TC: step 5 - waiting for arm release position)
+M66 P1 L3 Q10  ; wait for ToolArmReleasePosition (10s)
+O50 if [#5399 LT 0]
+   (debug, TC: ABORT step 5 - arm did not reach release position)
+  (abort, arm did not reach release position)
+  M65 P2
+  M65 P3
+  o<toolchange> return [-1]
+O50 endif
+ (debug, TC: step 5 OK - arm at release position - pausing motor)
+M65 P2          ; motor off - hold at release position
+
+
+; ============================================================
+; Step 6: Spindle unclamp
+; Arm stationary at release position. Old tool in gripper.
+; Sidepal diagram: ~200ms from release position before let-tool.
+; ============================================================
+ (debug, TC: step 6 - spindle unclamp)
+G4 P0.2         ; 200ms settle
+M64 P4          ; spindle unclamp (11CR)
+
+M66 P7 L3 Q1   ; wait for tlunclamp feedback (1s)
+
+O60 if [#5399 LT 0]
+   (debug, TC: ABORT step 6 - spindle did not unclamp)
+  (abort, spindle did not unclamp)
+  M65 P4
+  M65 P3
+  o<toolchange> return [-1]
+O60 endif
+ (debug, TC: step 6 OK - spindle unclamped)
+
+
+; ============================================================
+; Step 7: Taper wash (air blast cleans spindle taper)
+; Arm still paused at release position, taper now exposed.
+; ============================================================
+ (debug, TC: step 7 - taper air blast)
+G4 P0.5
+M64 P7          ; taper air blast on
+G4 P1.3
+M65 P7          ; air blast off
+ (debug, TC: step 7 OK - air blast done)
+
+
+; Restart motor - arm rotates 180deg, new tool travels to spindle
+ (debug, TC: restarting arm motor for 180deg rotation)
+M64 P2
+
+
+; ============================================================
+; Step 8: Wait for arm fasten position - new tool at spindle
+; PAUSE motor here while spindle clamps
+; ============================================================
+ (debug, TC: step 8 - waiting for arm fasten position)
+M66 P2 L3 Q10  ; wait for ToolArmFastenPosition (10s)
+O70 if [#5399 LT 0]
+   (debug, TC: ABORT step 8 - arm did not reach fasten position)
+  (abort, arm did not reach fasten position)
+  M65 P4
+  M65 P2
+  M65 P3
+  o<toolchange> return [-1]
+O70 endif
+ (debug, TC: step 8 OK - arm at fasten position - pausing motor)
+M65 P2          ; motor off - hold at fasten position
+
+
+; ============================================================
+; Step 9: Spindle clamp
+; Arm stationary at fasten position. New tool presented to spindle.
+; ============================================================
+ (debug, TC: step 9 - spindle clamp)
+G4 P0.3         ; brief settle
+M65 P4          ; clamp tool (de-assert unclamp - drawbar springs in)
+
+M66 P6 L3 Q1.8   ; wait for tlclamp feedback (3s)
+; NOTE: if tlclamp sensor not fitted/reliable, replace M66 with: G4 P3
+O80 if [#5399 LT 0]
+   (debug, TC: ABORT step 9 - spindle did not clamp)
+  (abort, spindle did not clamp - TOOL MAY BE IN SPINDLE UNCLAMPED - CHECK BEFORE MOVING)
+  M65 P2
+  M65 P3
+  o<toolchange> return [-1]
+O80 endif
+ (debug, TC: step 9 OK - spindle clamped)
+
+
+; Restart motor - arm returns to rest
+ (debug, TC: restarting arm motor to return to rest)
+M64 P2
+
+
+; ============================================================
+; Step 10: Wait for arm to return to rest
+; ============================================================
+ (debug, TC: step 10 - waiting for arm to return to rest)
+M66 P3 L3 Q15  ; wait for arm-at-rest HIGH (15s)
+O90 if [#5399 LT 0]
+   (debug, TC: ABORT step 10 - arm did not return to rest)
+  (abort, arm did not return to rest)
+  M65 P2
+  M65 P3
+  o<toolchange> return [-1]
+O90 endif
+ (debug, TC: step 10 OK - arm at rest)
+
+M65 P2          ; arm motor off
+M65 P3          ; ambo off (brake re-applies)
+
+
+; ============================================================
+; Step 11: Pocket UP - secures old tool in carousel
+; ============================================================
+ (debug, TC: step 11 - pocket up to secure old tool)
+M65 P5          ; assert pocket-up (by de-asserting pocket-down)
+M66 P4 L3 Q5   ; wait for th_up (5s)
+O100 if [#5399 LT 0]
+   (debug, TC: ABORT step 11 - pocket failed to raise)
+  (abort, tool pocket failed to raise after arm return)
+  o<toolchange> return [-1]
+O100 endif
+ (debug, TC: step 11 OK - pocket up)
+
+
+; ============================================================
+; Step 12: Release guard lock and done
+; ============================================================
+; (debug, TC: step 12 - releasing guard lock)
+M65 P1          ; guard lock off
+
+ (debug, TC: tool change complete)
+o<toolchange> endsub [1]
+M2

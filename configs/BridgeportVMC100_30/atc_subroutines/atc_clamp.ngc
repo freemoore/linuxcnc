@@ -1,0 +1,8 @@
+o<atc_clamp> sub
+M65 P4
+M66 P6 L3 Q1.8
+o1 if [#5399 LT 0]
+  (abort, atc_clamp: no clamp feedback in 1.8s - TOOL MAY BE LOOSE)
+o1 endif
+o<atc_clamp> endsub
+M2

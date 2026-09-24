@@ -1,2 +1,18 @@
 # Include your custom HAL commands here
 # This file will not be overwritten when you run PNCconf again
+
+#---------------------------------
+loadrt message names=airloss,airgood,probelowbat,probesigfault messages="air supply off - motion inhibited,air supply on,probe battery is low,probe signal fault"
+addf airloss servo-thread
+addf airgood servo-thread
+addf probelowbat servo-thread
+addf probesigfault servo-thread
+setp airloss.edge 1
+setp airgood.edge 0
+setp probelowbat.edge 1
+setp probesigfault.edge 1
+
+net input-air-supply-absent => 	airloss.trigger
+net input-air-supply-absent  => motion.feed-inhibit
+net input-air-supply-absent =>	airgood.trigger
+#---------------------------------

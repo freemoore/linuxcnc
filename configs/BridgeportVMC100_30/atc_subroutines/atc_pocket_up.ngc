@@ -1,0 +1,8 @@
+o<atc_pocket_up> sub
+M65 P5
+M66 P4 L3 Q5
+o1 if [#5399 LT 0]
+  (abort, atc_pocket_up: no up feedback in 5s)
+o1 endif
+o<atc_pocket_up> endsub
+M2

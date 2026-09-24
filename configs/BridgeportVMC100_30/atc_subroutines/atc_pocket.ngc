@@ -1,0 +1,26 @@
+o<atc_pocket> sub
+; Index carousel to pocket #1.  Usage: o<atc_pocket> call [12]
+; Releases lock, moves, re-engages lock. Pocket must be up, arm at rest.
+o1 if [[#1 LT 1] OR [#1 GT 30]]
+  (abort, atc_pocket: pocket must be 1-30)
+o1 endif
+M66 P4 L0 Q0
+o2 if [#5399 LT 1]
+  (abort, atc_pocket: pocket not up - run atc_pocket_up)
+o2 endif
+M66 P3 L0 Q0
+o3 if [#5399 LT 1]
+  (abort, atc_pocket: arm not at rest - run atc_arm_rest)
+o3 endif
+M64 P1                  ; lock release
+M68 E0 Q#1
+M64 P0                  ; carousel enable
+M66 P0 L3 Q60           ; wait ready
+#<ok> = #5399
+M65 P0
+M65 P1                  ; lock engage
+o4 if [#<ok> LT 0]
+  (abort, atc_pocket: carousel timed out)
+o4 endif
+o<atc_pocket> endsub
+M2

@@ -1,0 +1,18 @@
+o<atc_arm_rest> sub
+; Recovery: run arm until rest. Same as toolchange.ngc O35 block.
+; WARNING: passes through grip/swap - check spindle and pocket state first.
+M66 P3 L0 Q0
+o1 if [#5399 EQ 1]
+  o<atc_arm_rest> return
+o1 endif
+M64 P3
+M64 P2
+M66 P3 L3 Q20
+#<ok> = #5399
+M65 P2
+M65 P3
+o2 if [#<ok> LT 0]
+  (abort, atc_arm_rest: rest not reached - check 21CR 52CR sensors)
+o2 endif
+o<atc_arm_rest> endsub
+M2
