@@ -1,0 +1,8 @@
+o<atc_req_arm_rest> sub
+; Abort unless input P3 is HIGH
+M66 P3 L0 Q0
+o1 if [#5399 LT 1]
+  (abort, arm not at rest - run atc_arm_reset)
+o1 endif
+o<atc_req_arm_rest> endsub
+M2

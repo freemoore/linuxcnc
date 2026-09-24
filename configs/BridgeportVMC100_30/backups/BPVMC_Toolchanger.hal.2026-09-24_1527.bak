@@ -9,8 +9,15 @@
 # ============================================================
 
 # --- Carousel component ---
-# carousel.0, pocketnoconv and pocketposconv are loaded and added to the
-# servo thread in BridgeportVMC100_30.hal
+# encoding=index : sense-0 = index/home pulse, sense-1 = per-pocket counter
+# pockets=30     : VMC1000-30
+loadrt carousel pockets=30 encoding=index num_sense=2
+
+# float->s32 for pocket number (M68 E0 outputs float, carousel wants s32)
+loadrt conv_float_s32 names=pocketnoconv
+
+addf carousel.0        servo-thread
+addf pocketnoconv  servo-thread
 
 # Pocket number: set by M68 E0 Q#<selected_pocket> in NGC
 net carousel-pocket-f  motion.analog-out-00  pocketnoconv.in

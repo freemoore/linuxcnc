@@ -1,0 +1,8 @@
+o<atc_req_arm_release> sub
+; Abort unless input P1 is HIGH
+M66 P1 L0 Q0
+o1 if [#5399 LT 1]
+  (abort, arm not at release position)
+o1 endif
+o<atc_req_arm_release> endsub
+M2

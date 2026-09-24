@@ -1,0 +1,5 @@
+o<atc_arm_stop> sub
+M65 P2                  ; arm motor off
+M65 P3                  ; ambo off, brake on
+o<atc_arm_stop> endsub
+M2

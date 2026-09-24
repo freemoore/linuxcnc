@@ -1,0 +1,10 @@
+o<atc_arm_reset> sub
+; Run arm to rest, then brake. Also the recovery sweep.
+; WARNING: passes through grip/swap - check spindle and pocket first.
+M66 P3 L0 Q0
+o1 if [#5399 LT 1]
+  o<atc_arm_run_to> call [3] [20]
+o1 endif
+o<atc_arm_stop> call
+o<atc_arm_reset> endsub
+M2

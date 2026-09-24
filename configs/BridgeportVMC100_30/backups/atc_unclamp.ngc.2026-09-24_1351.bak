@@ -4,7 +4,6 @@ o<atc_req_arm_release> call
 M64 P4
 M66 P7 L3 Q1
 o1 if [#5399 LT 0]
-  M65 P4                ; re-clamp
   (abort, atc_unclamp: no unclamp feedback in 1s)
 o1 endif
 o<atc_unclamp> endsub

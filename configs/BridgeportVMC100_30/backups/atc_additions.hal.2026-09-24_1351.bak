@@ -1,0 +1,10 @@
+# --- additions for atc_home / atc_step ---
+# P6 is currently unused
+net carousel-unhome  motion.digital-out-06 => carousel.0.unhome
+
+# current pocket readback for atc_step (M66 E0)
+# NB if conv_s32_float is already loaded elsewhere, merge names= into that loadrt
+loadrt conv_s32_float names=pocketposconv
+addf pocketposconv servo-thread
+net carousel-pos-i  carousel.0.current-position => pocketposconv.in
+net carousel-pos-f  pocketposconv.out => motion.analog-in-00

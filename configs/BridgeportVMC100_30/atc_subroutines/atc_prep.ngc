@@ -1,5 +1,5 @@
 o<atc_prep> sub
-; Orient spindle and move to tool-change Z. Same as toolchange.ngc preamble.
+; Orient spindle and move to tool-change Z
 G90
 M19 R35.5 Q3 P0
 G53 G0 Z[#<_ini[CHANGE_POSITION]Z>]

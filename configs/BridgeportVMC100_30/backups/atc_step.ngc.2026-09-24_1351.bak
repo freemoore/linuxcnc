@@ -1,0 +1,19 @@
+o<atc_step> sub
+; Move one pocket.  [1] = forward, [-1] = reverse
+; If unhomed (position reads outside 1-30), homes to pocket 1 and stops there.
+M66 E0 L0               ; current pocket (carousel.0.current-position)
+#<cur> = #5399
+o1 if [[#<cur> LT 1] OR [#<cur> GT 30]]
+  (debug, atc_step: unhomed - homing to pocket 1, no step taken)
+  o<atc_pocket> call [1]
+  o<atc_step> return
+o1 endif
+#<t> = [#<cur> + #1]
+o2 if [#<t> GT 30]
+  #<t> = 1
+o2 elseif [#<t> LT 1]
+  #<t> = 30
+o2 endif
+o<atc_pocket> call [#<t>]
+o<atc_step> endsub
+M2

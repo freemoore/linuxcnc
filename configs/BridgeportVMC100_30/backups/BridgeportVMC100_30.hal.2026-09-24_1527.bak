@@ -13,9 +13,6 @@ loadrt logic names=man-unclamp,mag-jog-fwd,mag-jog-rev personality=0x104,0x103,0
 loadrt s_orient names=s_orient.0
 loadrt mux2 names=spindle-mux
 loadrt not names=mag-th-not
-# carousel: encoding=index (sense-0 = index/home pulse, sense-1 = per-pocket counter), 30 pockets
-loadrt carousel pockets=30 encoding=index num_sense=2
-loadrt conv_float_s32 names=pocketnoconv
 loadrt conv_s32_float names=pocketposconv
 
 
@@ -61,8 +58,6 @@ addf mag-guardlock-or 			servo-thread
 addf mag-jog-fwd 				servo-thread
 addf mag-jog-rev 				servo-thread
 addf mag-th-not					servo-thread
-addf pocketnoconv				servo-thread
-addf carousel.0					servo-thread
 addf pocketposconv				servo-thread
 addf [HMOT](CARD0).write        servo-thread
 

@@ -57,7 +57,7 @@ PYTHON_PATH = /usr/share/linuxcnc/ncfiles/remap_lib/python-stdglue/python/
 RETAIN_G43 = 0
 INI_VARS = 1
 HAL_PIN_VARS = 1
-SUBROUTINE_PATH = ./:macros:psng/macros:atc_subroutines
+SUBROUTINE_PATH = ./:macros:psng/macros
 #REMAP=M6   modalgroup=6  prolog=change_prolog  ngc=psng_manual_change  epilog=change_epilog
 REMAP=M6   modalgroup=6  prolog=change_prolog  ngc=toolchange  epilog=change_epilog
 # ---- PSNG end ---- #
@@ -66,7 +66,7 @@ REMAP=M6   modalgroup=6  prolog=change_prolog  ngc=toolchange  epilog=change_epi
 EMCMOT = motmod
 COMM_TIMEOUT = 1.0
 SERVO_PERIOD = 1000000
-NUM_DIGITAL_IO = 9
+NUM_DIGITAL_IO = 8
 NUM_ANALOG_OUT = 1
 
 [HMOT]

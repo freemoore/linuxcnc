@@ -12,10 +12,10 @@ M66 P2 L0 Q0
 o1 if [#<rest> EQ 1]
   o<atc_req_pocket_down> call
   o<atc_prep> call
-  o<atc_arm_run_to> call [1] [5]
+  o<atc_arm_run_to> call [1] [10]
 o1 elseif [#<rel> EQ 1]
   o<atc_req_unclamped> call
-  o<atc_arm_run_to> call [2] [5]
+  o<atc_arm_run_to> call [2] [10]
 o1 elseif [#<fas> EQ 1]
   o<atc_req_clamped> call
   o<atc_arm_reset> call

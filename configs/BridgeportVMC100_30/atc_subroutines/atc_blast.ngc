@@ -1,5 +1,5 @@
 o<atc_blast> sub
-; Taper wash, 1.3s as SIDEPAL T2
+; Taper wash, 1.3s (SIDEPAL T2)
 M64 P7
 G4 P1.3
 M65 P7

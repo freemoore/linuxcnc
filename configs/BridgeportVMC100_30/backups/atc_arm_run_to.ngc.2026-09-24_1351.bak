@@ -1,0 +1,15 @@
+o<atc_arm_run_to> sub
+; Run arm until input P#1 goes HIGH, timeout #2 s. Motor stops, ambo stays on.
+; Usage: o<atc_arm_run_to> call [1] [10]
+M64 P3                  ; ambo on
+M64 P2                  ; arm motor on
+M66 P#1 L3 Q#2
+#<ok> = #5399
+M65 P2
+o1 if [#<ok> LT 0]
+  o<atc_arm_stop> call
+  (debug, atc_arm_run_to: timed out waiting for input P#1)
+  (abort, atc_arm_run_to: arm did not reach position - see debug line)
+o1 endif
+o<atc_arm_run_to> endsub
+M2

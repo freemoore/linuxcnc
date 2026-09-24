@@ -1,0 +1,10 @@
+o<atc_home> sub
+; Force re-home: pulse carousel.0.unhome (P6, rising edge), then go to
+; pocket 1 - the carousel homes itself on enable when unhomed.
+M65 P0
+M64 P6
+G4 P0.1
+M65 P6
+o<atc_pocket> call [1]
+o<atc_home> endsub
+M2

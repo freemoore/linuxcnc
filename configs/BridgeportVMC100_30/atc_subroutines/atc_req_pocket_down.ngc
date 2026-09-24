@@ -1,0 +1,8 @@
+o<atc_req_pocket_down> sub
+; Abort unless input P5 is HIGH
+M66 P5 L0 Q0
+o1 if [#5399 LT 1]
+  (abort, pocket not down - run atc_pocket_down)
+o1 endif
+o<atc_req_pocket_down> endsub
+M2
