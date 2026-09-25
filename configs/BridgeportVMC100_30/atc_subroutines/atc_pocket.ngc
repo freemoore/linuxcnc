@@ -6,15 +6,20 @@ o1 if [[#1 LT 1] OR [#1 GT 30]]
 o1 endif
 o<atc_req_pocket_up> call
 o<atc_req_arm_rest> call
-o<atc_lock_release> call
-M68 E0 Q#1
-M64 P0                  ; carousel enable
-M66 P0 L3 Q60           ; wait ready
-#<ok> = #5399
-M65 P0                  ; carousel disable
-o<atc_lock_engage> call
-o2 if [#<ok> LT 0]
-  (abort, atc_pocket: carousel timed out)
-o2 endif
+; Make sure carousel.comp is idle: it only starts on enable going TRUE, and
+; sits in its 'done' state while enable stays TRUE.
+M65 P0
+G4 P0.05
+; Unhomed: home first. Index homing always ends at pocket 1.
+M66 P8 L0 Q0            ; homed
+o3 if [#5399 LT 1]
+  o<atc_pocket_move> call [1]
+o3 endif
+; Already there - nothing to do
+M66 E0 L0               ; current pocket
+o4 if [#5399 EQ #1]
+  o<atc_pocket> return
+o4 endif
+o<atc_pocket_move> call [#1]
 o<atc_pocket> endsub
 M2

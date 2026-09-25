@@ -1,0 +1,20 @@
+o<atc_pocket> sub
+; Index carousel to pocket #1.  Usage: o<atc_pocket> call [12]
+; Homes first if the carousel is unhomed.
+o1 if [[#1 LT 1] OR [#1 GT 30]]
+  (abort, atc_pocket: pocket must be 1-30)
+o1 endif
+o<atc_req_pocket_up> call
+o<atc_req_arm_rest> call
+o<atc_lock_release> call
+M68 E0 Q#1
+M64 P0                  ; carousel enable
+M66 P0 L3 Q60           ; wait ready
+#<ok> = #5399
+M65 P0                  ; carousel disable
+o<atc_lock_engage> call
+o2 if [#<ok> LT 0]
+  (abort, atc_pocket: carousel timed out)
+o2 endif
+o<atc_pocket> endsub
+M2

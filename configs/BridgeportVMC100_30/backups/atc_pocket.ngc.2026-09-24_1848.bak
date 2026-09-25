@@ -1,0 +1,34 @@
+o<atc_pocket> sub
+; Index carousel to pocket #1.  Usage: o<atc_pocket> call [12]
+; Homes first if the carousel is unhomed.
+o1 if [[#1 LT 1] OR [#1 GT 30]]
+  (abort, atc_pocket: pocket must be 1-30)
+o1 endif
+o<atc_req_pocket_up> call
+o<atc_req_arm_rest> call
+; Already there? (homed and current = target) - nothing to do
+M66 P8 L0 Q0            ; homed
+#<homed> = #5399
+M66 E0 L0               ; current pocket
+o3 if [[#<homed> EQ 1] AND [#5399 EQ #1]]
+  o<atc_pocket> return
+o3 endif
+o<atc_lock_release> call
+G4 P0.2                 ; shotbolt clear before the magazine moves
+M68 E0 Q#1
+M64 P0                  ; carousel enable
+M66 P0 L4 Q1            ; wait for ready to DROP - move really started
+o4 if [#5399 LT 0]
+  M65 P0
+  o<atc_lock_engage> call
+  (abort, atc_pocket: carousel did not start)
+o4 endif
+M66 P0 L3 Q60           ; wait ready (HAL drops the shotbolt on arrival)
+#<ok> = #5399
+o<atc_lock_engage> call ; M65 P1 before disable - no re-release
+M65 P0                  ; carousel disable
+o2 if [#<ok> LT 0]
+  (abort, atc_pocket: carousel timed out)
+o2 endif
+o<atc_pocket> endsub
+M2

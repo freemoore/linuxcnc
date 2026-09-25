@@ -33,7 +33,6 @@ net input-tool-holder-up [HMOT](CARD0).[HMOT](CARD1).input-13
 net input-tool-holder-dn [HMOT](CARD0).[HMOT](CARD1).input-14
 net input-tool-magazine-index-pulse [HMOT](CARD0).[HMOT](CARD1).input-15
 net input-magazine-counter [HMOT](CARD0).[HMOT](CARD1).input-16-not
-net input-magazine-counter-inverted [HMOT](CARD0).[HMOT](CARD1).input-16
 net input-z-over-temp [HMOT](CARD0).[HMOT](CARD1).input-17-not
 net input-y-over-temp [HMOT](CARD0).[HMOT](CARD1).input-18-not
 net input-x-over-temp [HMOT](CARD0).[HMOT](CARD1).input-19-not
@@ -52,10 +51,4 @@ net input-tool-arm-fasten-position [HMOT](CARD0).[HMOT](CARD1).input-28
 net digitising-probe-input [HMOT](CARD0).[HMOT](CARD1).input-29
 net probe-signal-fault [HMOT](CARD0).[HMOT](CARD1).input-30
 net probe-low-voltage [HMOT](CARD0).[HMOT](CARD1).input-31
-
-# Tool setter on 7i97T isolated inputs (TB4). NC contacts fed from +24V,
-# IN COMMON 0,1 (TB4-3) to GND. Healthy = contact closed = input TRUE, so the
-# -not pins give TRUE when triggered / on overtravel (and on a broken wire).
-net input-tool-setter-probe      [HMOT](CARD0).inmux.00.input-00-not
-net input-tool-setter-overtravel [HMOT](CARD0).inmux.00.input-01-not
 

@@ -1,0 +1,11 @@
+o<on_abort> sub
+; Runs on every abort ([RS274NGC]ON_ABORT_COMMAND). An (abort,...) flushes
+; any M64/M65 queued just before it, so ATC clean-up must happen here.
+; Deliberately left alone: P3 ambo (stays on so the arm can be eased by hand)
+; and P4 unclamp (re-clamping while the arm holds a tool could fight the arm).
+M65 P0                  ; carousel disable (lets carousel.comp return to idle)
+M65 P1                  ; shotbolt engaged
+M65 P2                  ; arm motor off
+M65 P7                  ; air blast off
+o<on_abort> endsub
+M2

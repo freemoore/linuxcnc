@@ -7,7 +7,7 @@ loadrt abs names=abs.spindle
 loadrt lowpass names=lowpass.spindle
 loadrt timedelay names=x-ena-delay,y-ena-delay,z-ena-delay,a-ena-delay,s-ena-delay,mag-guard-hold
 loadrt oneshot   names=drv-reset,mag-guard-unlock
-loadrt or2  names=x-amp-nok,y-amp-nok,z-amp-nok,a-amp-nok,s-amp-nok,tool-unclamp-or,spindle-pwm-en-or,mag-guardlock-or,probe-input-or
+loadrt or2  names=x-amp-nok,y-amp-nok,z-amp-nok,a-amp-nok,s-amp-nok,tool-unclamp-or,spindle-pwm-en-or,mag-guardlock-or
 loadrt and2 names=x-fault-armed,y-fault-armed,z-fault-armed,a-fault-armed,s-fault-armed,mag-jog-both
 loadrt logic names=man-unclamp,mag-jog-fwd,mag-jog-rev personality=0x104,0x103,0x103
 loadrt s_orient names=s_orient.0
@@ -17,7 +17,6 @@ loadrt not names=mag-th-not
 loadrt carousel pockets=30 encoding=index num_sense=2
 loadrt conv_float_s32 names=pocketnoconv
 loadrt conv_s32_float names=pocketposconv
-loadrt lut5 names=mag-carousel-arrived,mag-shotbolt-gate
 
 
 
@@ -55,19 +54,16 @@ addf lowpass.spindle          	servo-thread
 addf s_orient.0 				servo-thread
 addf spindle-mux 				servo-thread
 addf spindle-pwm-en-or 			servo-thread
-addf probe-input-or				servo-thread
 addf mag-jog-both 				servo-thread
 addf mag-guard-hold 			servo-thread
 addf mag-guard-unlock 			servo-thread
+addf mag-guardlock-or 			servo-thread
 addf mag-jog-fwd 				servo-thread
 addf mag-jog-rev 				servo-thread
 addf mag-th-not					servo-thread
 addf pocketnoconv				servo-thread
 addf carousel.0					servo-thread
 addf pocketposconv				servo-thread
-addf mag-carousel-arrived		servo-thread
-addf mag-shotbolt-gate			servo-thread
-addf mag-guardlock-or 			servo-thread
 addf [HMOT](CARD0).write        servo-thread
 
 #******************************
@@ -109,10 +105,7 @@ net coolant-mist      <=  iocontrol.0.coolant-mist
 net coolant-flood     <=  iocontrol.0.coolant-flood
 
 #  ---probe signal---
-# wireless spindle probe OR tool setter -> motion.probe-input (G38 / PSNG)
-net digitising-probe-input     =>  probe-input-or.in0
-net input-tool-setter-probe    =>  probe-input-or.in1
-net probe-input               probe-input-or.out  =>  motion.probe-input
+net digitising-probe-input     =>  motion.probe-input
 
 #  ---motion control signals---
 net in-position               <=  motion.in-position

@@ -53,9 +53,3 @@ net digitising-probe-input [HMOT](CARD0).[HMOT](CARD1).input-29
 net probe-signal-fault [HMOT](CARD0).[HMOT](CARD1).input-30
 net probe-low-voltage [HMOT](CARD0).[HMOT](CARD1).input-31
 
-# Tool setter on 7i97T isolated inputs (TB4). NC contacts fed from +24V,
-# IN COMMON 0,1 (TB4-3) to GND. Healthy = contact closed = input TRUE, so the
-# -not pins give TRUE when triggered / on overtravel (and on a broken wire).
-net input-tool-setter-probe      [HMOT](CARD0).inmux.00.input-00-not
-net input-tool-setter-overtravel [HMOT](CARD0).inmux.00.input-01-not
-

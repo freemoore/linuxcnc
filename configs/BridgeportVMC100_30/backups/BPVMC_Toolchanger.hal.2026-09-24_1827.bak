@@ -23,13 +23,8 @@ net carousel-enable    motion.digital-out-00  carousel.0.enable
 net carousel-ready     carousel.0.ready       motion.digital-in-00
 
 # In index encoding: sense-0 = index/home pulse, sense-1 = pocket counter
-# sense-1 gets the INVERTED counter: carousel counts and stops on the
-# falling edge of each pocket pulse, and its final check expects the
-# counter OFF - both as per SIDEPAL timing (dev/BPVMCSchematic.pdf p11).
-# Homing (index AND sense-1) then latches at the falling edge of the
-# pulse the index rises in - same pocket as before.
 net input-tool-magazine-index-pulse 	=> carousel.0.sense-0
-net input-magazine-counter-inverted      => carousel.0.sense-1
+net input-magazine-counter               => carousel.0.sense-1
 
 # Magazine motor outputs - driven by carousel component
 net output-tool-magazine-fwd <= carousel.0.motor-fwd
@@ -39,13 +34,11 @@ net output-tool-magazine-rev <= carousel.0.motor-rev
 setp carousel.0.fwd-dc  1.0
 setp carousel.0.rev-dc  1.0
 
-# Debounce: in carousel.comp this is NOT an input filter - it keeps the
-# motor running this many servo cycles AFTER the target pocket is counted.
-# 0 = stop on the counting edge (SIDEPAL: stop on pulse falling edge).
-setp carousel.0.debounce  0
+# Debounce - tune if magazine overshoots its pocket
+# Value is servo-thread cycles; at 1kHz servo, 50 = 50ms
+setp carousel.0.debounce  50
 
-# Home offset: only used in 'counts' encoding - index-mode homing always
-# sets current-position = 1. Kept for reference.
+# Home offset:
 setp carousel.0.home-offset	1
 
 # Current pocket readback for atc_step (M66 E0)
@@ -116,8 +109,6 @@ net input-tool-unclamp => motion.digital-in-07
 # P8 : carousel homed (atc_step)
 net carousel-homed  carousel.0.homed => motion.digital-in-08
 
-# P9 : carousel arrived - wired in the shotbolt section below
-
 
 # ============================================================
 # --- manual tool release ---
@@ -149,23 +140,7 @@ setp mag-guard-unlock.width 20
 net mag-guard-trigger  mag-guard-hold.out => mag-guard-unlock.in
 net mag-guard-active   mag-guard-unlock.out
 
-# Carousel arrived = enable AND ready AND NOT active (lut5 0x8).
-# Only true once THIS enable's move has finished - unlike ready alone, which
-# stays TRUE from the last move and isn't cleared during homing.
-# NGC waits on it (M66 P9); the shotbolt gate uses it.
-setp mag-carousel-arrived.function 0x8
-net carousel-enable                         => mag-carousel-arrived.in-0
-net carousel-ready                          => mag-carousel-arrived.in-1
-net carousel-active   carousel.0.active     => mag-carousel-arrived.in-2
-net carousel-arrived  mag-carousel-arrived.out => motion.digital-in-09
-
-# Shotbolt gate: NGC P1 releases the shotbolt, but it drops the instant the
-# carousel arrives - same servo cycle as the motor stop.
-# out = P1 AND NOT arrived (lut5 0x2)
-setp mag-shotbolt-gate.function 0x2
-net tc-guardlock      motion.digital-out-01 => mag-shotbolt-gate.in-0
-net carousel-arrived                        => mag-shotbolt-gate.in-1
-net tc-guardlock-gated mag-shotbolt-gate.out => mag-guardlock-or.in0
+net tc-guardlock      motion.digital-out-01 => mag-guardlock-or.in0
 net mag-guard-active                         => mag-guardlock-or.in1
 net output-tool-magazine-guard-lock <= mag-guardlock-or.out
 

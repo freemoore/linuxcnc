@@ -1,0 +1,16 @@
+o<atc_pocket_move> sub
+; One carousel move to pocket #1 (or a home, if unhomed). Called by atc_pocket
+; only - it does the interlock checks.
+o<atc_lock_release> call
+G4 P0.2                 ; shotbolt clear before the magazine moves
+M68 E0 Q#1
+M64 P0                  ; carousel enable
+M66 P9 L3 Q60           ; wait 'arrived' - HAL drops the shotbolt the same cycle
+#<ok> = #5399
+o<atc_lock_engage> call ; M65 P1 before disable
+M65 P0                  ; carousel disable
+o1 if [#<ok> LT 0]
+  (abort, atc_pocket: carousel did not arrive in 60s)
+o1 endif
+o<atc_pocket_move> endsub
+M2

@@ -50,10 +50,9 @@ The repo root is `~/linuxcnc`, which is shared with other machine configs. **Onl
   - geneva cam driven by a motor with a brake override
 - **Magazine control:**
   - The magazine is driven by the LinuxCNC `carousel` component in index mode.
-  - `sense-0` is `input-tool-magazine-index-pulse` (7i84 input 15). `sense-1` is `input-magazine-counter-inverted` (raw 7i84 input 16). See Magazine sensors below.
+  - `sense-0` is `input-tool-magazine-index-pulse` (7i84 input 15). `sense-1` is `input-magazine-counter` (7i84 input 16, inverted).
   - The component drives `output-tool-magazine-fwd` and `output-tool-magazine-rev`.
-  - Debounce is 0. See `BPVMC_Toolchanger.hal`.
-  - **Every abort unhomes the carousel** (`on_abort.ngc` pulses P6). The next magazine move re-homes first, which takes up to one revolution.
+  - Debounce is 50 ms and home offset is 1. See `BPVMC_Toolchanger.hal`.
 - **Reference: `dev/BPVMCSchematic.pdf`** (a scan, not searchable):
   - pp. 1–10: Bridgeport drawing 0238630, the VMC 800/1000-30 TNC407 electrical sheets
   - p. 11: the SIDEPAL HL-20 **timing diagram**
@@ -67,56 +66,25 @@ The repo root is `~/linuxcnc`, which is shared with other machine configs. **Onl
 - **Magazine sensors:**
   - **Pocket counter:** one narrow pulse per pocket. It's a short blink as each pocket passes and is **off when aligned**.
   - **Index (origin):** spans about 2 pocket pulses.
-  - **Polarity:** `input-magazine-counter` (7i84 `input-16-not`) has the same polarity as the diagram: high = pulse. The ATC tab shows this one.
-  - **The carousel gets the inverse.** `carousel.0.sense-1` is fed `input-magazine-counter-inverted` (raw `input-16`), so the carousel counts and stops on the pulse's **falling** edge.
-- **`carousel` component, index mode.** Source: linuxcnc `src/hal/components/carousel.comp`. Check it rather than guessing.
-  - **Starting:** it only starts on `enable` going FALSE→TRUE. After a move it sits in state 9 until `enable` drops.
-  - **`ready` is unreliable as a "done" signal.** It stays TRUE after `enable` drops, and it's never cleared during homing. Use `carousel-arrived` instead (enable AND ready AND NOT active, on **in P9**). The shotbolt gate uses the same signal.
-  - **"The toolchanger has failed the final alignment check"** means the carousel stopped *before* reaching its target, usually because `enable` dropped mid-move. It's not a sensor check.
-  - **`debounce` is not a filter.** It's extra motor run time after the target pocket is counted. Kept at 0.
-  - **`home-offset` is unused in index mode.** Homing always sets the current position to 1.
-- **Aborts:** `(abort, …)` discards any M64/M65 queued just before it, so clean-up placed before an abort does NOT run.
-  - Clean-up belongs in `atc_subroutines/on_abort.ngc`, which runs on every abort via `ON_ABORT_COMMAND`.
-  - It leaves ambo (P3) on, on purpose, and doesn't touch unclamp (P4).
+  - **Polarity:** `input-magazine-counter` currently comes from 7i84 `input-16-not`, which is the same polarity as the diagram: high = pulse.
+- **Carousel component behaviour:**
+  - `carousel.0.ready` stays TRUE after `enable` is dropped.
+  - "The toolchanger has failed the final alignment check" is the component's own error. It means the pocket sensor wasn't in the expected state after stopping.
 - **Where the logic lives:**
   - All former TNC PLC I/O is on named HAL signals in `BPVMC_IO.hal`. Each can be toggled from halshow; the `.halshow` watchlists in this folder are for that.
   - M6 is remapped to `toolchange.ngc` (see `[RS274NGC]`), which calls the subroutines in `atc_subroutines/` via M64/M65 outputs mapped in `BPVMC_Toolchanger.hal`.
   - Probing and tool setting use PSNG (`psng/`), customised for this ATC.
 
-## Probing
-- **`motion.probe-input` = the wireless spindle probe OR the tool setter probe** (`probe-input-or`, in the main HAL). PSNG and G38 see either one.
-- **Tool setter:** a generic 4-wire NC setter on 7i97T isolated inputs (**TB4**; TB5 looks similar, so don't mix them up). Contacts are fed from +24 V; IN COMMON 0,1 (TB4-3) goes to the 24 V supply's 0 V. **Not** TB4-13/14, which are the 7i97T's logic GND.
-  - **Brown/orange = probe** → `inmux.00.input-00-not` → `input-tool-setter-probe`.
-  - **Blue/green = overtravel** → `inmux.00.input-01-not` → `input-tool-setter-overtravel` → **`joint.2.neg-lim-sw-in`**. A trip drops the machine out. Re-enable with Override Limits; after that, Z can only jog up.
-  - **Fail-safe:** an open contact or broken wire reads as triggered. Untouched, the inputs read TRUE and both signals are FALSE.
-  - Some of these setters have an internal diode, so if a pair reads dead, swap its ends.
-  - 7i97T inputs 0–7 double as MPG encoder inputs; prefer 8–15 for plain inputs in future.
-- **Wireless spindle probe: DeKe GP-800.** Manuals: `~/Documents/wirelessProbe.pdf` (the clearer one) and `wirelessProbe2.pdf`. Receiver wires:
-  - **Brown = power on/off** (a receiver input): **LOW = probe ON**, open = OFF ("standby").
-  - Green = trigger → 7i84 in 29 (`digitising-probe-input`).
-  - Yellow = alarm, **LOW = no radio link**, HIGH = link OK or probe off → in 30 (`probe-signal-fault`).
-  - White = low battery (LOW = low) → in 31 (`probe-low-voltage`).
-  - **Battery:** 3 months in standby, 1 month powered on.
-  - **Brown is believed to be on 7i97T SSR out-01,** which the main HAL currently holds permanently ON (`setp … ssr.00.out-01 1`). So the probe is always on, and the battery drains.
-  - The `probelowbat` / `probesigfault` message components in `custom.hal` are loaded but not connected.
-  - **When the probe is off, its trigger output reads "not triggered",** so a G38 with the probe asleep would never trip. Any power management MUST prevent that.
-
 ## Status
-**Working:**
-- X, Z and A; the spindle with encoder feedback and M19 orient; the wireless probe; the manual magazine buttons; PSNG.
-- **ATC, as of 24/09/2026:** carousel homing, stepping ±1 and go-to-pocket, the shotbolt timing, abort recovery (re-homes), and full `M6 Tn` tool changes all work. Built on `atc_subroutines/`, with `toolchange.ngc` as the M6 remap.
-- **ATC tab** (`atc_panel/`): embedded in Axis next to PSNG. It has LEDs for all ATC I/O and one button per subroutine, and is the main troubleshooting tool.
-- **Tool setter, as of 25/09/2026:** wired and its inputs work. Press tests (probe trigger; overtravel limit trip and recovery) still to be confirmed.
+**Working:** X, Z and A; the spindle with encoder feedback and M19 orient; the probe; the manual magazine buttons; PSNG.
 
-**Current task: GP-800 wireless probe power management (battery saving).** Power the probe only for probing, and make sure a G38 can never run with the probe asleep. See Probing above.
-
-**Next task: take PSNG out of the tool change (option A, agreed 24/09).**
-- **The problem:** PSNG's `on_tool_change` (`psng/python/probe_screen.py` ~line 3221) runs `o<psng_probe_tool_setter> call` by MDI **while the M6 is still executing**, then shows "Tool #N … probed OK". It's wired through `psng/psng.hal` (`iocontrol.0.tool-change` → `probe.toolchange-change`).
-- **Symptoms:** `M6 Tn` has to be issued 2–3 times, and there's a "0: not in a subroutine definition" error.
-- **Plan:** loop the iocontrol tool-change handshake back so M6 completes without PSNG. Measure tools only when they're refreshed (a new tool into the magazine, or a replaced or re-ground cutter), using PSNG's Probe Tool Setter.
+**Current task: the ATC subroutine set in `atc_subroutines/`.** A restructure is in progress and uncommitted:
+- new `atc_req_*` subroutines, plus `atc_arm_run_to`, `atc_arm_reset`, `atc_arm_stop`, `atc_home` and `atc_step`
+- new `atc_additions.hal`
+- `atc_arm_rest` removed
 
 **Outstanding:**
-1. Tool holder up/down: it jams halfway if commanded down with the magazine misaligned. Should `atc_pocket_down` require an aligned magazine?
-2. The manual magazine jog path still releases the shotbolt for 20 s via a oneshot, not in step with the stop.
+1. Carousel positioning is unreliable. Not yet diagnosed.
+2. Tool holder up/down is unreliable. Cause unknown.
 3. The Y axis hardware (see above).
 4. Deferred: a once-per-rev error on the AEDL encoders from an off-centre code disc. It waits for the Hardinge lathe to be converted, which is needed to make a tapered adapter.
