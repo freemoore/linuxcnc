@@ -15,8 +15,4 @@ setp probesigfault.edge 1
 net input-air-supply-absent => 	airloss.trigger
 net input-air-supply-absent  => motion.feed-inhibit
 net input-air-supply-absent =>	airgood.trigger
-
-# GP-800 probe warnings (signals built in BridgeportVMC100_30.hal)
-net probe-low-voltage    =>  probelowbat.trigger
-net probe-signal-alarm   =>  probesigfault.trigger
 #---------------------------------

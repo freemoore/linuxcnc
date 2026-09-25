@@ -1,0 +1,14 @@
+o<probe_wake> sub
+; Wake the GP-800 wireless probe and wait for its radio link.
+; Each call (re)starts the 2 min power hold (probe-power-hold in the main HAL).
+; Call this before any hand-written G38 - motion.probe-input reads 'tripped'
+; while the probe isn't ready, so G38 is refused rather than crashing.
+M64 P8                  ; wake request (rising edge retriggers the hold)
+G4 P0.05
+M65 P8
+M66 P10 L3 Q5           ; probe-ready: powered AND link OK
+o1 if [#5399 LT 0]
+  (abort, wireless probe not ready - no radio link within 5s)
+o1 endif
+o<probe_wake> endsub
+M2

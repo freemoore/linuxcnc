@@ -1,0 +1,12 @@
+; Machine-specific PSNG hook - overrides psng/macros/_psng_hook.ngc
+; (macros/ is ahead of psng/macros on SUBROUTINE_PATH).
+; Called at the start of every PSNG macro with #1 = macro ID:
+; 1 manual_change 2 tool_diameter 3 probe_table 4 probe_tool_setter
+; 5 probe_workpiece 6 xminus 7 xplus 8 yminus 9 yplus
+
+o<_psng_hook> sub
+#<hooked_macro> = #1
+; Every probing cycle wakes the GP-800 (even tool setter cycles - see CLAUDE.md)
+o<probe_wake> call
+o<_psng_hook> endsub
+M2

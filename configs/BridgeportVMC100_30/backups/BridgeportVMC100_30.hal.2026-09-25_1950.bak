@@ -5,9 +5,9 @@ loadrt hm2_eth board_ip="10.10.10.10" config="num_encoders=6 num_pwmgens=6 num_p
 loadrt pid names=pid.x,pid.y,pid.z,pid.a,orient-pid
 loadrt abs names=abs.spindle
 loadrt lowpass names=lowpass.spindle
-loadrt timedelay names=x-ena-delay,y-ena-delay,z-ena-delay,a-ena-delay,s-ena-delay,mag-guard-hold,probe-link-grace
-loadrt oneshot   names=drv-reset,mag-guard-unlock,probe-power-hold
-loadrt or2  names=x-amp-nok,y-amp-nok,z-amp-nok,a-amp-nok,s-amp-nok,tool-unclamp-or,spindle-pwm-en-or,mag-guardlock-or
+loadrt timedelay names=x-ena-delay,y-ena-delay,z-ena-delay,a-ena-delay,s-ena-delay,mag-guard-hold
+loadrt oneshot   names=drv-reset,mag-guard-unlock
+loadrt or2  names=x-amp-nok,y-amp-nok,z-amp-nok,a-amp-nok,s-amp-nok,tool-unclamp-or,spindle-pwm-en-or,mag-guardlock-or,probe-input-or
 loadrt and2 names=x-fault-armed,y-fault-armed,z-fault-armed,a-fault-armed,s-fault-armed,mag-jog-both
 loadrt logic names=man-unclamp,mag-jog-fwd,mag-jog-rev personality=0x104,0x103,0x103
 loadrt s_orient names=s_orient.0
@@ -17,7 +17,7 @@ loadrt not names=mag-th-not
 loadrt carousel pockets=30 encoding=index num_sense=2
 loadrt conv_float_s32 names=pocketnoconv
 loadrt conv_s32_float names=pocketposconv
-loadrt lut5 names=mag-carousel-arrived,mag-shotbolt-gate,probe-ready-logic,probe-input-logic,probe-alarm-logic
+loadrt lut5 names=mag-carousel-arrived,mag-shotbolt-gate
 
 
 
@@ -55,6 +55,7 @@ addf lowpass.spindle          	servo-thread
 addf s_orient.0 				servo-thread
 addf spindle-mux 				servo-thread
 addf spindle-pwm-en-or 			servo-thread
+addf probe-input-or				servo-thread
 addf mag-jog-both 				servo-thread
 addf mag-guard-hold 			servo-thread
 addf mag-guard-unlock 			servo-thread
@@ -67,11 +68,6 @@ addf pocketposconv				servo-thread
 addf mag-carousel-arrived		servo-thread
 addf mag-shotbolt-gate			servo-thread
 addf mag-guardlock-or 			servo-thread
-addf probe-power-hold			servo-thread
-addf probe-link-grace			servo-thread
-addf probe-ready-logic			servo-thread
-addf probe-input-logic			servo-thread
-addf probe-alarm-logic			servo-thread
 addf [HMOT](CARD0).write        servo-thread
 
 #******************************
@@ -113,41 +109,10 @@ net coolant-mist      <=  iocontrol.0.coolant-mist
 net coolant-flood     <=  iocontrol.0.coolant-flood
 
 #  ---probe signal---
-# GP-800 wireless probe power management (receiver brown wire on SSR out-01:
-# SSR on = brown to 0V = probe ON). NGC pulses P8 (o<probe_wake>, called by
-# every PSNG macro via macros/_psng_hook.ngc); each pulse (re)starts a 2 min hold.
-setp probe-power-hold.width         120
-setp probe-power-hold.retriggerable 1
-setp probe-power-hold.rising        1
-setp probe-power-hold.falling       0
-net probe-wake-request  motion.digital-out-08  =>  probe-power-hold.in
-net probe-power         probe-power-hold.out   =>  [HMOT](CARD0).ssr.00.out-01
-
-# Ready = powered AND radio link OK (probe-signal-fault is the receiver's yellow
-# alarm line, TRUE = no link). lut5 0x2 = in-0 AND NOT in-1. NGC waits on din P10.
-setp probe-ready-logic.function 0x2
-net probe-power                          =>  probe-ready-logic.in-0
-net probe-signal-fault                   =>  probe-ready-logic.in-1
-net probe-ready    probe-ready-logic.out  =>  motion.digital-in-10
-
-# motion.probe-input = wireless trigger OR tool setter OR NOT probe-ready.
-# Crash guard: a G38 with the wireless probe asleep or unlinked is refused as
-# 'already tripped' (the probe's own output reads 'not triggered' when off).
-# lut5 0xEF = in-0 OR in-1 OR NOT in-2
-setp probe-input-logic.function 0xEF
-net digitising-probe-input               =>  probe-input-logic.in-0
-net input-tool-setter-probe              =>  probe-input-logic.in-1
-net probe-ready                          =>  probe-input-logic.in-2
-net probe-input    probe-input-logic.out  =>  motion.probe-input
-
-# Signal-fault alarm: powered for >3 s (radio link-up grace) AND no link.
-# lut5 0x8 = in-0 AND in-1. Message component is in custom.hal.
-setp probe-link-grace.on-delay  3
-setp probe-link-grace.off-delay 0
-net probe-power                          =>  probe-link-grace.in
-net probe-power-settled probe-link-grace.out => probe-alarm-logic.in-0
-net probe-signal-fault                   =>  probe-alarm-logic.in-1
-net probe-signal-alarm probe-alarm-logic.out
+# wireless spindle probe OR tool setter -> motion.probe-input (G38 / PSNG)
+net digitising-probe-input     =>  probe-input-or.in0
+net input-tool-setter-probe    =>  probe-input-or.in1
+net probe-input               probe-input-or.out  =>  motion.probe-input
 
 #  ---motion control signals---
 net in-position               <=  motion.in-position
@@ -164,7 +129,9 @@ setp drv-reset.retriggerable  0
 
 net machine-is-enabled      	drv-reset.in  
 net drv-reset-signal		  	drv-reset.out       [HMOT](CARD0).ssr.00.out-00
-# SSR out-01 = probe receiver power on/off - see probe power management above
+# this should startup the probe receiver
+#net machine-is-enabled		[HMOT](CARD0).ssr.00.out-01
+setp [HMOT](CARD0).ssr.00.out-01 1
 
 #  ---estop signals---
 net estop-out     <=  iocontrol.0.user-enable-out

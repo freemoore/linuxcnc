@@ -84,14 +84,7 @@ The repo root is `~/linuxcnc`, which is shared with other machine configs. **Onl
   - Probing and tool setting use PSNG (`psng/`), customised for this ATC.
 
 ## Probing
-- **`motion.probe-input` = the wireless probe OR the tool setter OR NOT `probe-ready`** (`probe-input-logic`, a lut5 in the main HAL). It's a crash guard: the GP-800's output reads "not triggered" when it's off, so while the probe isn't ready every G38 is refused as "already tripped".
-  - **Side effect:** the tool setter can only be used while the GP-800 is powered and linked, so a flat probe battery also blocks tool setting.
-- **GP-800 power management:**
-  - **Power:** P8 (dout) pulses → retriggerable oneshot `probe-power-hold` (**2 min**) → `probe-power` → SSR out-01 (the receiver's brown wire).
-  - **Ready:** `probe-ready` = powered AND NOT `probe-signal-fault` → **din P10**.
-  - **Waking:** `macros/probe_wake.ngc` pulses P8, then waits up to 5 s for P10. `macros/_psng_hook.ngc` (which overrides PSNG's) calls it at the start of **every** PSNG macro, tool setter cycles included; that's Andy's choice. **Hand-written G38 code must call `o<probe_wake>` first.**
-  - **Warnings (`custom.hal`):** low battery fires any time. The signal-fault message fires when the probe is powered for more than 3 s (the radio link-up grace) with no link.
-  - **Future:** once the probe is trusted to the ATC and has a tool number, switch to "powered while the probe is the tool in the spindle". It isn't trusted yet, because one ATC failure mode dropped a tool onto the table.
+- **`motion.probe-input` = the wireless spindle probe OR the tool setter probe** (`probe-input-or`, in the main HAL). PSNG and G38 see either one.
 - **Tool setter:** a generic 4-wire NC setter on 7i97T isolated inputs (**TB4**; TB5 looks similar, so don't mix them up). Contacts are fed from +24 V; IN COMMON 0,1 (TB4-3) goes to the 24 V supply's 0 V. **Not** TB4-13/14, which are the 7i97T's logic GND.
   - **Brown/orange = probe** → `inmux.00.input-00-not` → `input-tool-setter-probe`.
   - **Blue/green = overtravel** → `inmux.00.input-01-not` → `input-tool-setter-overtravel` → **`joint.2.neg-lim-sw-in`**. A trip drops the machine out. Re-enable with Override Limits; after that, Z can only jog up.
@@ -104,8 +97,9 @@ The repo root is `~/linuxcnc`, which is shared with other machine configs. **Onl
   - Yellow = alarm, **LOW = no radio link**, HIGH = link OK or probe off → in 30 (`probe-signal-fault`).
   - White = low battery (LOW = low) → in 31 (`probe-low-voltage`).
   - **Battery:** 3 months in standby, 1 month powered on.
-  - **Brown is on 7i97T SSR out-01** (assumed from the old HAL comment; confirm the probe actually sleeps when idle). `shutdown.hal` switches it off.
-  - **When the probe is off, its trigger output reads "not triggered",** so a G38 with the probe asleep would never trip. The crash guard above prevents that.
+  - **Brown is believed to be on 7i97T SSR out-01,** which the main HAL currently holds permanently ON (`setp … ssr.00.out-01 1`). So the probe is always on, and the battery drains.
+  - The `probelowbat` / `probesigfault` message components in `custom.hal` are loaded but not connected.
+  - **When the probe is off, its trigger output reads "not triggered",** so a G38 with the probe asleep would never trip. Any power management MUST prevent that.
 
 ## Status
 **Working:**
@@ -114,7 +108,7 @@ The repo root is `~/linuxcnc`, which is shared with other machine configs. **Onl
 - **ATC tab** (`atc_panel/`): embedded in Axis next to PSNG. It has LEDs for all ATC I/O and one button per subroutine, and is the main troubleshooting tool.
 - **Tool setter, as of 25/09/2026:** wired and its inputs work. Press tests (probe trigger; overtravel limit trip and recovery) still to be confirmed.
 
-**Current task: GP-800 wireless probe power management.** Implemented 25/09 and waiting for a machine test. See Probing above.
+**Current task: GP-800 wireless probe power management (battery saving).** Power the probe only for probing, and make sure a G38 can never run with the probe asleep. See Probing above.
 
 **Next task: take PSNG out of the tool change (option A, agreed 24/09).**
 - **The problem:** PSNG's `on_tool_change` (`psng/python/probe_screen.py` ~line 3221) runs `o<psng_probe_tool_setter> call` by MDI **while the M6 is still executing**, then shows "Tool #N … probed OK". It's wired through `psng/psng.hal` (`iocontrol.0.tool-change` → `probe.toolchange-change`).
@@ -124,6 +118,5 @@ The repo root is `~/linuxcnc`, which is shared with other machine configs. **Onl
 **Outstanding:**
 1. Tool holder up/down: it jams halfway if commanded down with the magazine misaligned. Should `atc_pocket_down` require an aligned magazine?
 2. The manual magazine jog path still releases the shotbolt for 20 s via a oneshot, not in step with the stop.
-3. Once the ATC has a track record: give the GP-800 a tool number, trust it to the ATC, and switch probe power to "while in spindle".
 3. The Y axis hardware (see above).
 4. Deferred: a once-per-rev error on the AEDL encoders from an off-centre code disc. It waits for the Hardinge lathe to be converted, which is needed to make a tapered adapter.
