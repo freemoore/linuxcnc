@@ -51,4 +51,4 @@ net input-z-ref    	 =>  joint.2.home-sw-in
 # Tool setter overtravel acts as Z negative hard limit: trip drops the machine
 # out; re-enable with Override Limits, and only Z+ jogging is allowed.
 net input-tool-setter-overtravel =>  joint.2.neg-lim-sw-in
-#net z-pos-limit     =>  joint.2.pos-lim-sw-in
+

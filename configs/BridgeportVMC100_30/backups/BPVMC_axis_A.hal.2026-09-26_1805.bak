@@ -47,3 +47,6 @@ net a-pos-fb               =>  joint.3.motor-pos-fb
 net a-index-enable    joint.3.index-enable  <=>  [HMOT](CARD0).encoder.03.index-enable
 net a-pos-rawcounts        <=  [HMOT](CARD0).encoder.03.rawcounts
 # ---setup home / limit switch signals---
+net a-home-a     	=>  joint.3.home-sw-in
+net a-neg-limit     =>  joint.3.neg-lim-sw-in
+net a-pos-limit     =>  joint.3.pos-lim-sw-in

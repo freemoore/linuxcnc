@@ -1,0 +1,33 @@
+# Extra GladeVCP handler for the PSNG tab: makes the whole screen more compact,
+# so that the text output box is visible. Loaded after PSNG's own handler with
+# a second -u option in the INI [DISPLAY] EMBED_TAB_COMMAND.
+# PSNG's own files are not changed.
+from gi.repository import Gdk, GdkPixbuf, Gtk
+
+SCALE = 0.8      # icons and fixed widget sizes
+FONT_PT = 9      # font size for the PSNG process only
+
+class HandlerClass:
+    def __init__(self, halcomp, builder, useropts):
+        css = Gtk.CssProvider()
+        css.load_from_data((
+            "* { font-size: %gpt; }"
+            " button { padding: 1px 3px; min-height: 0; }"
+            " spinbutton, entry { min-height: 0; padding-top: 0; padding-bottom: 0; }"
+            % FONT_PT).encode())
+        Gtk.StyleContext.add_provider_for_screen(
+            Gdk.Screen.get_default(), css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION + 1)
+        for obj in builder.get_objects():
+            if isinstance(obj, Gtk.Image) and obj.get_storage_type() == Gtk.ImageType.PIXBUF:
+                pb = obj.get_pixbuf()
+                obj.set_from_pixbuf(pb.scale_simple(
+                    max(1, int(pb.get_width() * SCALE)), max(1, int(pb.get_height() * SCALE)),
+                    GdkPixbuf.InterpType.BILINEAR))
+            if isinstance(obj, Gtk.Widget) and not isinstance(obj, Gtk.Window):
+                w, h = obj.get_size_request()
+                if w > 0 or h > 0:
+                    obj.set_size_request(int(w * SCALE) if w > 0 else -1,
+                                         int(h * SCALE) if h > 0 else -1)
+
+def get_handlers(halcomp, builder, useropts):
+    return [HandlerClass(halcomp, builder, useropts)]

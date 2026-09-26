@@ -15,14 +15,7 @@ net spindle-cw                  <=  spindle.0.forward
 net spindle-ccw                 <=  spindle.0.reverse
 
 net input-spindle-speed-achieved  =>  spindle.0.at-speed
-# ---Spindle drive fault: 611 spindle 'ready' contact (7i84 in 12).
-# Active 1.5 s after machine enable, same pattern as the axes.
-setp s-ena-delay.on-delay   1.5
-setp s-ena-delay.off-delay  0
-net machine-is-enabled                          =>  s-ena-delay.in
-net s-machine-enabled-delayed  s-ena-delay.out  =>  s-fault-armed.in1
-net spindle-drive-not-ready                     =>  s-fault-armed.in0
-net spindle-drive-fault        s-fault-armed.out  =>  spindle.0.amp-fault-in
+net spindle-drive-not-ready        =>  spindle.0.amp-fault-in
 
 # ---PWM Generator signals/setup---
 setp   [HMOT](CARD0).pwmgen.05.output-type 1

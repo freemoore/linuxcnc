@@ -113,7 +113,7 @@ net MDI-mode             	halui.mode.is-mdi
 
 #  ---coolant signals---
 net coolant-mist      <=  iocontrol.0.coolant-mist
-net output-coolant    <=  iocontrol.0.coolant-flood    # M8 -> 7CR flood pump
+net coolant-flood     <=  iocontrol.0.coolant-flood
 
 #  ---probe signal---
 # GP-800 wireless probe power management (receiver brown wire on SSR out-01:

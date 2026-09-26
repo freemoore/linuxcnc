@@ -1,0 +1,58 @@
+# GladeVCP handler for the ATC tab: shows the magazine contents from the tool table.
+# Random toolchanger: pocket 0 = spindle (shown on its own line). Pockets are
+# shown in two halves side by side. The carousel's current pocket is bold.
+import os
+import linuxcnc
+from gi.repository import GLib, Pango
+
+class HandlerClass:
+    def __init__(self, halcomp, builder, useropts):
+        self.builder = builder
+        self.store = builder.get_object("mag-store")
+        self.car_pos = builder.get_object("car-pos")
+        self.spindle = builder.get_object("mag-spindle")
+        ini = linuxcnc.ini(os.environ["INI_FILE_NAME"])
+        self.tbl = os.path.join(os.path.dirname(os.environ["INI_FILE_NAME"]),
+                                ini.find("EMCIO", "TOOL_TABLE") or "tool.tbl")
+        self.pockets = int(ini.find("ATC", "POCKETS") or 30)
+        self.last = None
+        self.refresh()
+        GLib.timeout_add(1000, self.refresh)
+
+    def read_table(self):
+        tools = {}
+        with open(self.tbl) as f:
+            for line in f:
+                data, _, comment = line.partition(";")
+                words = {w[0].upper(): w[1:] for w in data.split() if len(w) > 1}
+                if "T" in words and "P" in words:
+                    tools[int(words["P"])] = (int(words["T"]), comment.strip())
+        return tools
+
+    def refresh(self):
+        try:
+            pos = int(self.car_pos.hal_pin.get()) if self.car_pos is not None else 0
+            key = (os.path.getmtime(self.tbl), pos)
+            if key == self.last:
+                return True
+            self.last = key
+            tools = self.read_table()
+        except Exception as e:
+            print("atc.py: cannot read tool table:", e)
+            return True
+        self.store.clear()
+        half = (self.pockets + 1) // 2
+        bold, norm = Pango.Weight.BOLD, Pango.Weight.NORMAL
+        def cell(p):
+            if p > self.pockets:
+                return ["", "", "", norm]
+            t, desc = tools.get(p, (None, ""))
+            return [str(p), "" if t is None else "T%d" % t, desc, bold if p == pos else norm]
+        for r in range(1, half + 1):
+            self.store.append(cell(r) + cell(r + half))
+        t, desc = tools.get(0, (None, ""))
+        self.spindle.set_text("Spindle: " + ("empty" if t is None else "T%d  %s" % (t, desc)))
+        return True
+
+def get_handlers(halcomp, builder, useropts):
+    return [HandlerClass(halcomp, builder, useropts)]

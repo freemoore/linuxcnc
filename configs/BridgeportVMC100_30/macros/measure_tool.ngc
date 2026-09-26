@@ -1,0 +1,32 @@
+o<measure_tool> sub
+; Measure the length of the tool in the spindle on the tool setter, and write
+; it to the tool table. Use after a new tool goes into the magazine, or after
+; a cutter is replaced or reground.
+; Length = touch Z - PSNG setter height + PSNG block height (the same
+; calculation as psng_manual_change.ngc). Calibrate the setter height first
+; with PSNG's Probe Tool Setter button, using the GP-800.
+M73                     ; restore modal state on error
+o<_psng_hook> call [1]  ; wakes the GP-800 (the probe guard needs it)
+o1 if [#5400 LE 0]
+  (abort, measure_tool: no tool in the spindle)
+o1 endif
+#<tool> = #5400
+G90
+G49
+G53 G0 Z[#<_ini[CHANGE_POSITION]Z>]
+G53 G0 X[#<_ini[TOOLSENSOR]X>] Y[#<_ini[TOOLSENSOR]Y>]
+G53 G0 Z[#<_ini[TOOLSENSOR]Z>]
+o<_psng_probe_tool> call [#<_ini[TOOLSENSOR]MAXPROBE>]
+o2 if [#<_value> EQ -1]
+  (abort, measure_tool: probe already tripped at start)
+o2 elseif [#<_value> EQ -2]
+  (abort, measure_tool: no contact with the tool setter)
+o2 elseif [#<_value> LT 0]
+  (abort, measure_tool: probe error)
+o2 endif
+G53 G1 Z[#<_ini[TOOLSENSOR]Z>] F[#<_ini[TOOLSENSOR]RAPID_SPEED>]
+G10 L1 P#<tool> Z[#5063 - #<_hal[probe.setterheight]> + #<_hal[probe.blockheight]>]
+G43
+(debug, measure_tool: T#<tool> length = #5063 - setter #<_hal[probe.setterheight]>)
+o<measure_tool> endsub
+M2

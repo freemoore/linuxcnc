@@ -20,64 +20,57 @@ o<toolchange> sub
 
 G90             ; never trust incoming modal state (PSNG may leave G91)
 
-;(debug, TC: entered - tool=#<selected_tool> pocket=#<selected_pocket>)
-
-; Random toolchanger: pocket 0 is the spindle. If the requested tool is
-; already in the spindle, there is nothing to do.
-o5 if [#<selected_pocket> EQ 0]
-  ;(debug, TC: tool #<selected_tool> is already in the spindle)
-  o<toolchange> return [1]
-o5 endif
+(debug, TC: entered - tool=#<selected_tool> pocket=#<selected_pocket>)
 
 ; Orient spindle, move to tool change Z
-;(debug, TC: prep - M19 and tool change Z)
+(debug, TC: prep - M19 and tool change Z)
 o<atc_prep> call
 
 ; Pocket up so the magazine can turn. Aborts if the arm isn't at rest -
 ; recover by hand / atc_arm_reset after checking spindle and pocket.
-;(debug, TC: pocket up)
+(debug, TC: pocket up)
 o<atc_pocket_up> call
 
 ; Index to the new tool. Magazine lock is released only for the move
 ; (atc_lock_release / atc_lock_engage, inside atc_pocket).
-;(debug, TC: indexing to pocket #<selected_pocket>)
+(debug, TC: indexing to pocket #<selected_pocket>)
 o<atc_pocket> call [#<selected_pocket>]
 
 ; Present new tool to the arm path
-;(debug, TC: pocket down)
+(debug, TC: pocket down)
 o<atc_pocket_down> call
 
 ; Arm: rest -> release (both tools gripped). Motor stops, ambo stays on.
-;(debug, TC: arm to release position)
+(debug, TC: arm to release position)
 o<atc_arm_run_to> call [1] [5]
 
 ; Unclamp old tool (SIDEPAL: ~200ms from release position)
 G4 P0.2
-;(debug, TC: unclamp)
+(debug, TC: unclamp)
 o<atc_unclamp> call
 
 ; Taper wash
 G4 P0.5
-;(debug, TC: air blast)
+(debug, TC: air blast)
 o<atc_blast> call
 
 ; Arm: release -> fasten (180deg swap, new tool at spindle)
-;(debug, TC: arm to fasten position)
+(debug, TC: arm to fasten position)
 o<atc_arm_run_to> call [2] [5]
 
 ; Clamp new tool
 G4 P0.3
-;(debug, TC: clamp)
+(debug, TC: clamp)
 o<atc_clamp> call
 
 ; Arm: fasten -> rest, then motor off and brake on
-;(debug, TC: arm to rest)
+(debug, TC: arm to rest)
 o<atc_arm_reset> call
 
 ; Pocket up - secures old tool in the carousel
-;(debug, TC: pocket up)
+(debug, TC: pocket up)
 o<atc_pocket_up> call
 
-;(debug, TC: tool change complete)
+(debug, TC: tool change complete)
 o<toolchange> endsub [1]
 M2

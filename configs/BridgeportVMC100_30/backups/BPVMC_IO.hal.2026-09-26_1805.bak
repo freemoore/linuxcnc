@@ -29,7 +29,6 @@ net input-y-ref [HMOT](CARD0).[HMOT](CARD1).input-10-not
 net input-z-ref [HMOT](CARD0).[HMOT](CARD1).input-11-not
 #net input-24cr [HMOT](CARD0).[HMOT](CARD1).input-12
 net input-spindle-drive-ready [HMOT](CARD0).[HMOT](CARD1).input-12
-net spindle-drive-not-ready [HMOT](CARD0).[HMOT](CARD1).input-12-not
 net input-tool-holder-up [HMOT](CARD0).[HMOT](CARD1).input-13
 net input-tool-holder-dn [HMOT](CARD0).[HMOT](CARD1).input-14
 net input-tool-magazine-index-pulse [HMOT](CARD0).[HMOT](CARD1).input-15
