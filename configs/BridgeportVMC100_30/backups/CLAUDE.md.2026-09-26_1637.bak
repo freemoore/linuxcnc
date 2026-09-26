@@ -10,7 +10,6 @@ The repo root is `~/linuxcnc`, which is shared with other machine configs. **Onl
 - **ABSOLUTE: never change, create or delete any file without Andy's explicit OK first.** Show the proposed change (a diff for edits) before saving. This applies even to small fixes and to files Claude wrote itself.
 - **ABSOLUTE: always make a backup before changing any file.** Copy it into this folder's `backups/`, named `<file>.<YYYY-MM-DD_HHMM>.bak`, and never overwrite an existing backup.
 - **Don't commit without Andy's OK either.**
-- **Writing style (trial from 26/09):** engineering standard English (ASD-STE100 style). Use short sentences, active voice and one instruction per sentence. Do not use "no X, no Y, no Z" lists of negatives.
 - **Never use PNCconf, and never suggest it.** This config is customised well beyond what PNCconf can handle, and running it would overwrite hand edits.
 - **Never start LinuxCNC, `halrun` or `halcmd` against the real hardware, or do anything that could enable drives or move the machine, unless Andy asks.** Reading files and static checks are fine.
 - **Don't rename HAL signals.** Use full descriptive names (e.g. `output-tool-magazine-fwd`). An older scheme of short abbreviations (`tlmagdir`, `mag_counter`, …) was retired and must not come back.

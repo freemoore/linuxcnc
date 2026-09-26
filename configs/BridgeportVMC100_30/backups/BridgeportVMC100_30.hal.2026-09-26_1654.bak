@@ -6,7 +6,7 @@ loadrt pid names=pid.x,pid.y,pid.z,pid.a,orient-pid
 loadrt abs names=abs.spindle
 loadrt lowpass names=lowpass.spindle
 loadrt timedelay names=x-ena-delay,y-ena-delay,z-ena-delay,a-ena-delay,s-ena-delay,mag-guard-hold,probe-link-grace,startup-settle
-loadrt oneshot   names=drv-reset,mag-guard-unlock,probe-power-hold,air-restored-pulse
+loadrt oneshot   names=drv-reset,mag-guard-unlock,probe-power-hold
 loadrt or2  names=x-amp-nok,y-amp-nok,z-amp-nok,a-amp-nok,s-amp-nok,tool-unclamp-or,spindle-pwm-en-or,mag-guardlock-or
 loadrt and2 names=x-fault-armed,y-fault-armed,z-fault-armed,a-fault-armed,s-fault-armed,mag-jog-both,air-absent-gate
 loadrt logic names=man-unclamp,mag-jog-fwd,mag-jog-rev personality=0x104,0x103,0x103
@@ -58,7 +58,6 @@ addf spindle-pwm-en-or 			servo-thread
 addf mag-jog-both 				servo-thread
 addf startup-settle				servo-thread
 addf air-absent-gate			servo-thread
-addf air-restored-pulse		servo-thread
 addf mag-guard-hold 			servo-thread
 addf mag-guard-unlock 			servo-thread
 addf mag-jog-fwd 				servo-thread

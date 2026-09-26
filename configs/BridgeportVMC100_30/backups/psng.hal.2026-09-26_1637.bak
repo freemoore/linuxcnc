@@ -6,11 +6,8 @@
 #unlinkp iocontrol.0.tool-prepare
 #unlinkp iocontrol.0.tool-prepared
 #
-# ATC machine: M6 is toolchange.ngc; PSNG must not take part in tool changes.
-# Handshake looped back. Measure tools on refresh with PSNG's Probe Tool Setter.
-#net tool-change            probe.toolchange-change      <=   iocontrol.0.tool-change 
-#net tool-changed           probe.toolchange-changed     =>   iocontrol.0.tool-changed
-net tool-change-loopback   iocontrol.0.tool-change      =>   iocontrol.0.tool-changed
+net tool-change            probe.toolchange-change      <=   iocontrol.0.tool-change 
+net tool-changed           probe.toolchange-changed     =>   iocontrol.0.tool-changed
 net tool-number            probe.toolchange-number      <=   iocontrol.0.tool-number
 net tool-prep-number       probe.toolchange-prep-number <=   iocontrol.0.tool-prep-number
 net tool-prep-loopback     iocontrol.0.tool-prepare     <=   iocontrol.0.tool-prepared
