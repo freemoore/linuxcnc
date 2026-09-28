@@ -58,9 +58,5 @@ net probe-low-voltage [HMOT](CARD0).[HMOT](CARD1).input-31
 # IN COMMON 0,1 (TB4-3) to GND. Healthy = contact closed = input TRUE, so the
 # -not pins give TRUE when triggered / on overtravel (and on a broken wire).
 net input-tool-setter-probe      [HMOT](CARD0).inmux.00.input-00-not
-# Setter contact bounces when it opens on the retract: debounce 5 ms
-# (slow filter, 100 scans at 20 kHz). Only input 00 uses the slow filter.
-setp [HMOT](CARD0).inmux.00.slow_scans  100
-setp [HMOT](CARD0).inmux.00.input-00-slow  1
 net input-tool-setter-overtravel [HMOT](CARD0).inmux.00.input-01-not
 

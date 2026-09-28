@@ -7,8 +7,6 @@ M65 P0                  ; carousel disable (lets carousel.comp return to idle)
 M65 P1                  ; shotbolt engaged
 M65 P2                  ; arm motor off
 M65 P7                  ; air blast off
-M65 P9                  ; probe select back to both
-M65 P10
 ; Unhome the carousel (P6 rising edge): an abort mid-move leaves the magazine
 ; between pockets, so the next carousel move re-homes first.
 M64 P6

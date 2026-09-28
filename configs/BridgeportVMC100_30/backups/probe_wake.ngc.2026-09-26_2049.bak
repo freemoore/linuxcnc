@@ -6,9 +6,9 @@ o<probe_wake> sub
 M64 P8                  ; wake request (rising edge retriggers the hold)
 G4 P0.05
 M65 P8
-M66 P10 L3 Q6           ; probe-ready: powered > 4 s AND link OK (measured ~4 s)
+M66 P10 L3 Q5           ; probe-ready: powered AND link OK
 o1 if [#5399 LT 0]
-  (abort, wireless probe not ready - no radio link within 6s)
+  (abort, wireless probe not ready - no radio link within 5s)
 o1 endif
 o<probe_wake> endsub
 M2

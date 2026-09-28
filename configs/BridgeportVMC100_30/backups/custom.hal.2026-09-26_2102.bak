@@ -33,6 +33,6 @@ setp air-restored-pulse.width   0.5
 net air-supply-restored  air-restored-pulse.out => airgood.trigger
 
 # GP-800 probe warnings (signals built in BridgeportVMC100_30.hal)
-net probe-lowbat-alarm   =>  probelowbat.trigger
+net probe-low-voltage    =>  probelowbat.trigger
 net probe-signal-alarm   =>  probesigfault.trigger
 #---------------------------------

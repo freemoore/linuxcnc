@@ -138,19 +138,14 @@ net probe-signal-fault                   =>  probe-ready-logic.in-1
 net probe-power-settled                  =>  probe-ready-logic.in-2
 net probe-ready    probe-ready-logic.out  =>  motion.digital-in-10
 
-# motion.probe-input = (wireless AND NOT setter-only) OR (setter AND NOT
-# wireless-only) OR NOT probe-ready.
+# motion.probe-input = wireless trigger OR tool setter OR NOT probe-ready.
 # Crash guard: a G38 with the wireless probe asleep or unlinked is refused as
 # 'already tripped' (the probe's own output reads 'not triggered' when off).
-# Probe select: out P9 = tool setter only, out P10 = GP-800 only. Set per PSNG
-# macro in macros/_psng_hook.ngc; reset by _psng_modal_restore and on_abort.
-# lut5 in-0 wireless, in-1 setter, in-2 ready, in-3 P9, in-4 P10 -> 0xFAFCFEF
-setp probe-input-logic.function 0xFAFCFEF
+# lut5 0xEF = in-0 OR in-1 OR NOT in-2
+setp probe-input-logic.function 0xEF
 net digitising-probe-input               =>  probe-input-logic.in-0
 net input-tool-setter-probe              =>  probe-input-logic.in-1
 net probe-ready                          =>  probe-input-logic.in-2
-net probe-select-setter   motion.digital-out-09  =>  probe-input-logic.in-3
-net probe-select-wireless motion.digital-out-10  =>  probe-input-logic.in-4
 net probe-input    probe-input-logic.out  =>  motion.probe-input
 
 # Signal-fault alarm: powered for >4 s (receiver start-up grace) AND no link.

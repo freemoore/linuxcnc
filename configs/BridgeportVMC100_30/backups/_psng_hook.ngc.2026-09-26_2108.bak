@@ -6,15 +6,6 @@
 
 o<_psng_hook> sub
 #<hooked_macro> = #1
-; Probe select for this cycle (reset by _psng_modal_restore and on_abort):
-; tool setter cycles use the setter only, workpiece cycles the GP-800 only.
-o10 if [[#1 EQ 1] OR [#1 EQ 2] OR [#1 EQ 4]]
-  M65 P10
-  M64 P9                ; tool setter only
-o10 else
-  M65 P9
-  M64 P10               ; GP-800 only
-o10 endif
 ; Every probing cycle wakes the GP-800 (even tool setter cycles - see CLAUDE.md)
 o<probe_wake> call
 o<_psng_hook> endsub

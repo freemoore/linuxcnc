@@ -1,0 +1,29 @@
+; Machine-specific override of psng/macros/_psng_modal_restore.ngc (macros/ is
+; ahead of psng/macros on SUBROUTINE_PATH). Same as PSNG's file, plus: reset the
+; probe select outputs (P9, P10) set by macros/_psng_hook.ngc.
+; Restores modal states from global named paramaters
+o<_psng_modal_restore> sub
+
+; Restore absolute / incremental
+o<restore_absolute> if [#<_psng_absolute>]
+    G90
+o<restore_absolute> else
+    G91
+o<restore_absolute> endif
+
+; Restore metric / imperial
+o<restore_metric> if [#<_psng_metric>]
+    G21
+o<restore_metric> else
+    G20
+o<restore_metric> endif
+
+; Restore feed - MUST be done after restoring metric/imperal
+F#<_psng_feed>
+
+; Probe select back to both probes
+M65 P9
+M65 P10
+
+o<_psng_modal_restore> endsub
+M2

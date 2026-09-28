@@ -27,8 +27,6 @@ o2 endif
 G53 G1 Z[#<_ini[TOOLSENSOR]Z>] F[#<_ini[TOOLSENSOR]RAPID_SPEED>]
 G10 L1 P#<tool> Z[#5063 - #<_hal[probe.setterheight]> + #<_hal[probe.blockheight]>]
 G43
-M65 P9                  ; probe select back to both
-M65 P10
 (debug, measure_tool: T#<tool> length = #5063 - setter #<_hal[probe.setterheight]>)
 o<measure_tool> endsub
 M2

@@ -8,7 +8,7 @@ loadrt lowpass names=lowpass.spindle
 loadrt timedelay names=x-ena-delay,y-ena-delay,z-ena-delay,a-ena-delay,s-ena-delay,mag-guard-hold,probe-link-grace,startup-settle
 loadrt oneshot   names=drv-reset,mag-guard-unlock,probe-power-hold,air-restored-pulse
 loadrt or2  names=x-amp-nok,y-amp-nok,z-amp-nok,a-amp-nok,s-amp-nok,tool-unclamp-or,spindle-pwm-en-or,mag-guardlock-or
-loadrt and2 names=x-fault-armed,y-fault-armed,z-fault-armed,a-fault-armed,s-fault-armed,mag-jog-both,air-absent-gate,probe-lowbat-gate
+loadrt and2 names=x-fault-armed,y-fault-armed,z-fault-armed,a-fault-armed,s-fault-armed,mag-jog-both,air-absent-gate
 loadrt logic names=man-unclamp,mag-jog-fwd,mag-jog-rev personality=0x104,0x103,0x103
 loadrt s_orient names=s_orient.0
 loadrt mux2 names=spindle-mux
@@ -75,7 +75,6 @@ addf probe-link-grace			servo-thread
 addf probe-ready-logic			servo-thread
 addf probe-input-logic			servo-thread
 addf probe-alarm-logic			servo-thread
-addf probe-lowbat-gate			servo-thread
 addf [HMOT](CARD0).write        servo-thread
 
 #******************************
@@ -117,9 +116,8 @@ net coolant-mist      <=  iocontrol.0.coolant-mist
 net output-coolant    <=  iocontrol.0.coolant-flood    # M8 -> 7CR flood pump
 
 #  ---probe signal---
-# GP-800 wireless probe power management. SSR out-01 switches the receiver's
-# +24 V supply (red); brown is tied to 0 V (always 'probe on' when powered).
-# Receiver off -> probe loses link and sleeps. NGC pulses P8 (o<probe_wake>, called by
+# GP-800 wireless probe power management (receiver brown wire on SSR out-01:
+# SSR on = brown to 0V = probe ON). NGC pulses P8 (o<probe_wake>, called by
 # every PSNG macro via macros/_psng_hook.ngc); each pulse (re)starts a 2 min hold.
 setp probe-power-hold.width         120
 setp probe-power-hold.retriggerable 1
@@ -128,45 +126,31 @@ setp probe-power-hold.falling       0
 net probe-wake-request  motion.digital-out-08  =>  probe-power-hold.in
 net probe-power         probe-power-hold.out   =>  [HMOT](CARD0).ssr.00.out-01
 
-# Ready = powered AND powered for > 4 s (receiver start-up; its outputs float
-# while unpowered) AND radio link OK (probe-signal-fault is the receiver's yellow
-# alarm line, TRUE = no link). lut5 in-0 = power, in-1 = fault, in-2 = settled:
-# 0x20 = in-0 AND NOT in-1 AND in-2. NGC waits on din P10.
-setp probe-ready-logic.function 0x20
+# Ready = powered AND radio link OK (probe-signal-fault is the receiver's yellow
+# alarm line, TRUE = no link). lut5 0x2 = in-0 AND NOT in-1. NGC waits on din P10.
+setp probe-ready-logic.function 0x2
 net probe-power                          =>  probe-ready-logic.in-0
 net probe-signal-fault                   =>  probe-ready-logic.in-1
-net probe-power-settled                  =>  probe-ready-logic.in-2
 net probe-ready    probe-ready-logic.out  =>  motion.digital-in-10
 
-# motion.probe-input = (wireless AND NOT setter-only) OR (setter AND NOT
-# wireless-only) OR NOT probe-ready.
+# motion.probe-input = wireless trigger OR tool setter OR NOT probe-ready.
 # Crash guard: a G38 with the wireless probe asleep or unlinked is refused as
 # 'already tripped' (the probe's own output reads 'not triggered' when off).
-# Probe select: out P9 = tool setter only, out P10 = GP-800 only. Set per PSNG
-# macro in macros/_psng_hook.ngc; reset by _psng_modal_restore and on_abort.
-# lut5 in-0 wireless, in-1 setter, in-2 ready, in-3 P9, in-4 P10 -> 0xFAFCFEF
-setp probe-input-logic.function 0xFAFCFEF
+# lut5 0xEF = in-0 OR in-1 OR NOT in-2
+setp probe-input-logic.function 0xEF
 net digitising-probe-input               =>  probe-input-logic.in-0
 net input-tool-setter-probe              =>  probe-input-logic.in-1
 net probe-ready                          =>  probe-input-logic.in-2
-net probe-select-setter   motion.digital-out-09  =>  probe-input-logic.in-3
-net probe-select-wireless motion.digital-out-10  =>  probe-input-logic.in-4
 net probe-input    probe-input-logic.out  =>  motion.probe-input
 
-# Signal-fault alarm: powered for >4 s (receiver start-up grace) AND no link.
+# Signal-fault alarm: powered for >3 s (radio link-up grace) AND no link.
 # lut5 0x8 = in-0 AND in-1. Message component is in custom.hal.
-setp probe-link-grace.on-delay  4
+setp probe-link-grace.on-delay  3
 setp probe-link-grace.off-delay 0
 net probe-power                          =>  probe-link-grace.in
 net probe-power-settled probe-link-grace.out => probe-alarm-logic.in-0
 net probe-signal-fault                   =>  probe-alarm-logic.in-1
 net probe-signal-alarm probe-alarm-logic.out
-
-# Low-battery warning: the white line reads 'low' for ~2.4 s while the receiver
-# starts. Gate it with probe-power-settled, like the signal-fault warning.
-net probe-power-settled                  =>  probe-lowbat-gate.in0
-net probe-low-voltage                    =>  probe-lowbat-gate.in1
-net probe-lowbat-alarm  probe-lowbat-gate.out
 
 #  ---motion control signals---
 net in-position               <=  motion.in-position
