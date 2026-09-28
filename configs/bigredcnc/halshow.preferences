@@ -1,0 +1,41 @@
+# Halshow settings
+# This file is generated automatically.
+wm geometry . 809x963+841+27
+placeFrames 0.36637390213299875
+set ::ratio 0.36637390213299875
+set ::old_w_leftf 160
+set ::watchlist {
+    pin+motion.probe-input
+    sig+toolsetter-probe
+    pin+hm2_7i96s.0.7i84.1.0.input-00
+    pin+hm2_7i96s.0.7i84.1.0.input-01
+    pin+hm2_7i96s.0.7i84.1.0.input-02
+    pin+hm2_7i96s.0.7i84.1.0.input-03
+    pin+hm2_7i96s.0.7i84.1.0.input-04
+    pin+hm2_7i96s.0.7i84.1.0.input-05
+    pin+hm2_7i96s.0.7i84.1.0.input-06
+    pin+hm2_7i96s.0.7i84.1.0.input-07
+    pin+hm2_7i96s.0.7i84.1.0.input-08
+    pin+hm2_7i96s.0.7i84.1.0.input-09
+    pin+hm2_7i96s.0.7i84.1.0.input-10
+    pin+hm2_7i96s.0.7i84.1.0.input-11
+    pin+hm2_7i96s.0.7i84.1.0.input-12
+    pin+hm2_7i96s.0.7i84.1.0.input-13
+    pin+hm2_7i96s.0.7i84.1.0.input-14
+    pin+hm2_7i96s.0.7i84.1.0.input-15
+    pin+mb2hal.st500_ctrl_word.00.int
+    pin+mb2hal.st500_fault.00.int
+    pin+mb2hal.st500_speed_ref.00.int
+    pin+mb2hal.st500_speed_ref_rb.00.int
+    pin+mb2hal.st500_status.00.int
+    sig+ctrlword-i
+    sig+ctrlword-final
+    sig+chiller-vacuum-dust
+}
+set ::workmode watchhal
+set ::watchInterval 100
+set ::col1_width 100
+set ::ffmts 
+set ::ifmts 
+set ::alwaysOnTop 0
+set ::autoSaveWatchlist 1

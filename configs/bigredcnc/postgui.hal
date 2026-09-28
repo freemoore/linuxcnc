@@ -1,0 +1,5 @@
+# Put HAL commands in this file that you want to run after the GUI loads
+
+net spindle-rpm-cmd   => pyvcp.rpm-cmd
+net spindle-rpm-fb    => pyvcp.rpm-fb
+net spindle-at-speed  => pyvcp.at-speed

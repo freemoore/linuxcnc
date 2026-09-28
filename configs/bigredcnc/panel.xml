@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pyvcp>
+  <labelframe text="Spindle">
+    <font>('Helvetica',11)</font>
+
+    <hbox>
+      <label><text>"Cmd  "</text></label>
+      <number>
+        <halpin>"rpm-cmd"</halpin>
+        <font>('Helvetica',14)</font>
+        <format>"6.0f"</format>
+      </number>
+      <label><text>" rpm"</text></label>
+    </hbox>
+
+    <label><text>"Actual"</text></label>
+    <bar>
+      <halpin>"rpm-fb"</halpin>
+      <min_>0</min_>
+      <max_>24000</max_>
+      <bgcolor>"grey75"</bgcolor>
+      <fillcolor>"green"</fillcolor>
+    </bar>
+
+    <hbox>
+      <led>
+        <halpin>"at-speed"</halpin>
+        <size>16</size>
+        <on_color>"green"</on_color>
+        <off_color>"grey50"</off_color>
+      </led>
+      <label><text>"  At speed"</text></label>
+    </hbox>
+  </labelframe>
+</pyvcp>

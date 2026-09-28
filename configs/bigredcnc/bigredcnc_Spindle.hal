@@ -1,0 +1,87 @@
+# ============================================================
+# bigredcnc_Spindle.hal
+# ST500 VFD control via mb2hal (Modbus RTU, RS485)
+# ============================================================
+
+# --- Modbus comms to VFD ---
+loadusr -W mb2hal config=/home/freemoore/linuxcnc/configs/bigredcnc/st500.ini
+
+# --- HAL logic components ---
+loadrt mux4 names=ctrlword_mux
+loadrt conv_float_s32 names=ctrlword2i,speed2i
+loadrt scale names=speed_scale
+loadrt limit1 names=speed_floor
+loadrt mux2 names=ctrlword_override
+loadrt scale names=freq2rpm
+loadrt near names=at_speed_check
+loadrt and2 names=at_speed_and
+
+
+addf speed_floor 		servo-thread
+addf speed_scale 		servo-thread
+addf speed2i 			servo-thread
+addf ctrlword_mux 		servo-thread
+addf ctrlword_override 	servo-thread
+addf ctrlword2i 		servo-thread
+addf freq2rpm       	servo-thread
+addf at_speed_check 	servo-thread
+addf at_speed_and   	servo-thread
+
+
+# --- Control word logic (start/stop/direction) ---
+# sel0 = spindle.0.on, sel1 = spindle.0.reverse
+# 00 (off,fwd)  -> in0 = 6  (decel stop)
+# 01 (on,fwd)   -> in1 = 1  (forward run)
+# 10 (off,rev)  -> in2 = 6  (decel stop)
+# 11 (on,rev)   -> in3 = 2  (reverse run)
+
+net spindle-on      	spindle.0.on      		=> ctrlword_mux.sel0
+net spindle-reverse 	spindle.0.reverse 		=> ctrlword_mux.sel1
+
+setp ctrlword_mux.in0 	6
+setp ctrlword_mux.in1 	1
+setp ctrlword_mux.in2 	6
+setp ctrlword_mux.in3 	2
+
+#net ctrlword-f 		ctrlword_mux.out 		=> ctrlword2i.in
+
+#net fault-reset-request 						=> ctrlword_override.sel
+setp ctrlword_override.sel 0
+net ctrlword-f          ctrlword_mux.out 		=> ctrlword_override.in0
+setp ctrlword_override.in1 7
+
+net ctrlword-final 		ctrlword_override.out 	=> ctrlword2i.in
+net ctrlword-i 			ctrlword2i.out   		=> mb2hal.st500_ctrl_word.00.int
+
+
+net spindle-speed-cmd spindle.0.speed-out-rps-abs => speed_floor.in
+setp speed_floor.min 50
+setp speed_floor.max 400
+
+net speed-floored speed_floor.out 				=> speed_scale.in
+setp speed_scale.gain 25
+setp speed_scale.offset 0.0
+
+net speed-scaled 		speed_scale.out 		=> speed2i.in
+net speed-i      		speed2i.out     		=> mb2hal.st500_speed_ref.00.int
+
+# --- Status/fault readback (informational, halshow only for now) ---
+#mb2hal.st500_status - 1=fwd, 2=rev, 3=stopped
+#mb2hal.st500_fault  - 0=no fault, see ST500 manual fault table
+
+
+# --- Spindle speed feedback (d0.00 running frequency, 0.01Hz units) ---
+# rpm = reg * 0.01Hz * 30   (800Hz = 24000rpm, 4-pole)
+net spindle-freq-fb mb2hal.st500_freq_fb.00.float => freq2rpm.in
+setp freq2rpm.gain 3
+setp freq2rpm.offset 0.0
+net spindle-rpm-fb  freq2rpm.out => at_speed_check.in2
+
+# --- At-speed ---
+net spindle-rpm-cmd spindle.0.speed-out-abs => at_speed_check.in1
+setp at_speed_check.difference 150
+setp at_speed_check.scale 1.05
+
+net spindle-near   		at_speed_check.out 		=> at_speed_and.in0
+net spindle-on                       			=> at_speed_and.in1
+net spindle-at-speed 	at_speed_and.out 		=> spindle.0.at-speed

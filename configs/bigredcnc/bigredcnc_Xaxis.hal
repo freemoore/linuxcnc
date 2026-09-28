@@ -1,0 +1,30 @@
+# Axis: X  Joint: 0,1  Output: 0
+# Position-mode stepgen (no PID — closed loop handled in drive)
+
+# joint-0 enable chain
+net joint-0-index-enable <=> joint.0.index-enable
+
+net joint-0-enable <= joint.0.amp-enable-out
+net joint-0-enable => hm2_[MESA](BOARD).0.stepgen.00.enable
+
+# Joint 0 Step Generator Settings
+setp hm2_[MESA](BOARD).0.stepgen.00.dirsetup      [JOINT_0](DIRSETUP)
+setp hm2_[MESA](BOARD).0.stepgen.00.dirhold       [JOINT_0](DIRHOLD)
+setp hm2_[MESA](BOARD).0.stepgen.00.steplen       [JOINT_0](STEPLEN)
+setp hm2_[MESA](BOARD).0.stepgen.00.stepspace     [JOINT_0](STEPSPACE)
+setp hm2_[MESA](BOARD).0.stepgen.00.position-scale [JOINT_0](SCALE)
+setp hm2_[MESA](BOARD).0.stepgen.00.maxvel        [JOINT_0](STEPGEN_MAX_VEL)
+setp hm2_[MESA](BOARD).0.stepgen.00.maxaccel      [JOINT_0](STEPGEN_MAX_ACC)
+setp hm2_[MESA](BOARD).0.stepgen.00.step_type     0
+setp hm2_[MESA](BOARD).0.stepgen.00.control-type  0
+
+
+# position command and feedback (direct — no PID)
+net joint-0-pos-cmd <= joint.0.motor-pos-cmd
+net joint-0-pos-cmd => hm2_[MESA](BOARD).0.stepgen.00.position-cmd
+
+net joint-0-pos-fb <= hm2_[MESA](BOARD).0.stepgen.00.position-fb
+net joint-0-pos-fb => joint.0.motor-pos-fb
+
+net x-limit hm2_[MESA](BOARD).0.7i84.1.0.input-01-not
+net x-limit => joint.0.home-sw-in

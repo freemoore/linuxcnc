@@ -1,0 +1,8 @@
+# Manual Tool Change Dialog
+loadusr -W hal_manualtoolchange
+net tool-number hal_manualtoolchange.number <= iocontrol.0.tool-prep-number
+net tool-change-request hal_manualtoolchange.change <= iocontrol.0.tool-change
+net tool-change-confirmed iocontrol.0.tool-changed => hal_manualtoolchange.changed
+
+# tool prep loopback
+net tool-prep-loop iocontrol.0.tool-prepare => iocontrol.0.tool-prepared

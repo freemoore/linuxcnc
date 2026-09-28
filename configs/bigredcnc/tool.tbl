@@ -1,0 +1,8 @@
+T11  P1  D5  ;5
+T1  P2  D2  ;chamfer tool
+T2  P2  D5  ;5mm drill
+T14  P14  D5  ;5mm endmill
+T50  P50  Z44.825374  D50  ;50mm table flattener
+T5  P5  D3.175  ;1_8th in or 3.175mm single flute
+T36  P36  D3.175  ;3.175mm endmill
+T7  P7  D3.175  ;3.175mm endmill

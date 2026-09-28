@@ -1,0 +1,32 @@
+# This file was created with the Mesa Configuration Tool on Aug 03 2026 17:08:35
+# If you make changes to this file DO NOT use the Configuration Tool
+
+# Inputs
+#net probe-input motion.probe-input <= hm2_[MESA](BOARD).0.gpio.015.in
+
+# E-Stop Chain
+loadrt estop_latch count=1
+addf estop-latch.0 servo-thread
+
+
+# PNOZ 23-24 via Mesa input
+net sr-latched  <= hm2_[MESA](BOARD).0.inm.00.input-00
+net sr-dropped  <= hm2_[MESA](BOARD).0.inm.00.input-00-not          => estop-latch.0.fault-in
+
+net estop-user-enable iocontrol.0.user-enable-out     => estop-latch.0.ok-in
+net estop-reset       iocontrol.0.user-request-enable => estop-latch.0.reset
+net estop-ok          estop-latch.0.ok-out            => iocontrol.0.emc-enable-in
+net estop-ok          								  => hm2_[MESA](BOARD).0.ssr.00.out-00  
+
+
+
+net chiller-vacuum-dust iocontrol.0.coolant-flood     => hm2_[MESA](BOARD).0.ssr.00.out-01
+net toolsetter-probe motion.probe-input 			  <= hm2_[MESA](BOARD).0.7i84.1.0.input-04
+													
+
+
+
+
+
+
+
